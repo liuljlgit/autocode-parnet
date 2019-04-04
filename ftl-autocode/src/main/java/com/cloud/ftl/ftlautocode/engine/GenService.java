@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 @Service
 public class GenService {
@@ -56,6 +57,7 @@ public class GenService {
         GenConst.commonReplaceMap.put("daoPackagePath",genReq.getDaoPath());
         GenConst.commonReplaceMap.put("entityPackagePath",genReq.getEntityPath());
         GenConst.commonReplaceMap.put("tableColEntitys",GenConst.tableColEntitys);
+        GenConst.commonReplaceMap.put("IdColEntity",GenConst.tableColEntitys.stream().filter(e->e.getKey().equals("PRI")).collect(Collectors.toList()).get(0));
     }
 
     /**
