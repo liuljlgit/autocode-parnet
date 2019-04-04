@@ -63,7 +63,7 @@ public class RedisConfig {
     }
 
     /**
-     * 不使用事务
+     * 使用字符串序列器
      * @param connectionFactory
      * @return
      */
@@ -79,7 +79,7 @@ public class RedisConfig {
     }
 
     /**
-     * 使用事务
+     * 使用对象序列器
      * @param connectionFactory
      * @return
      */
