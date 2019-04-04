@@ -1,5 +1,7 @@
 package com.cloud.ftl.ftlbasic.exception;
 
+import com.cloud.ftl.ftlbasic.webEntity.CodeEnum;
+import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,7 +28,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public String defultExcepitonHandler(HttpServletRequest request, Exception e) {
-        return null;
+        logger.error(e.getMessage(),e);
+        return RespEntity.error(CodeEnum.EXEC_ERROR,null);
     }
 
     /**
@@ -38,7 +41,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusiException.class)
     @ResponseBody
     public String busiExcepitonHandler(HttpServletRequest request, BusiException e) {
-        return null;
+        Integer code = e.getCode() == null ? CodeEnum.EXEC_BUSI_ERROR.getCode() : e.getCode();
+        String msg = e.getMsg() == null ? CodeEnum.EXEC_BUSI_ERROR.getMsg() : e.getMsg();
+        logger.error(msg,e);
+        return RespEntity.error(code,msg,null);
     }
 
 }
