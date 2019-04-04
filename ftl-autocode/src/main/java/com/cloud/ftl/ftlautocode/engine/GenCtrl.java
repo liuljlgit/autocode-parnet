@@ -11,19 +11,19 @@ import java.util.Objects;
 
 /*  请求参数如下所示:
     {
-    "mySqlUrl":"jdbc:mysql://192.168.123.135:3306/test",
-    "mySqlName":"root",
-    "mySqlPass":"root",
-    "mySqlDriver":"com.mysql.jdbc.Driver",
-    "projectBasePath":"E:\\myProject\\ftl-autocode",
-    "ctrlPath":"com.cloud.gen.ftlautocode.test.controller",
-    "inftServicePath":"com.cloud.gen.ftlautocode.test.service.inft",
-    "implServicePath":"com.cloud.gen.ftlautocode.test.service.impl",
-    "daoPath":"com.cloud.gen.ftlautocode.test.dao",
-    "entityPath":"com.cloud.gen.ftlautocode.test.entity",
-    "xmlPath":"mybatis.mapper.test",
-    "isUpdate":true,
-    "tableNames":["daily_amount","load_time"]
+        "mySqlUrl":"jdbc:mysql://192.168.123.135:3306/test",
+        "mySqlName":"root",
+        "mySqlPass":"root",
+        "mySqlDriver":"com.mysql.jdbc.Driver",
+        "projectBasePath":"E:\\myProject\\autocode-parnet\\ftl-autocode",
+        "ctrlPath":"com.cloud.ftl.ftlautocode.test.controller",
+        "inftServicePath":"com.cloud.ftl.ftlautocode.test.service.inft",
+        "implServicePath":"com.cloud.ftl.ftlautocode.test.service.impl",
+        "daoPath":"com.cloud.ftl.ftlautocode.test.dao",
+        "entityPath":"com.cloud.ftl.ftlautocode.test.entity",
+        "xmlPath":"mybatis.mapper.test",
+        "isUpdate":true,
+        "tableNames":["daily_amount","load_time"]
     }
 */
 

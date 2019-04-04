@@ -76,7 +76,12 @@ public class GenService {
      * @param genReq
      */
     public void genInftServiceFile(GenReq genReq) {
-
+        FreemarkerUtil.outputFile(genReq.getInftServicePath(),
+                GenConst.INFT_SERVICE_FTL_PATH,
+                "I"+GenConst.commonReplaceMap.get("className").toString().concat("Service"),
+                true,
+                genReq.getUpdate(),
+                GenConst.commonReplaceMap);
     }
 
     /**
@@ -84,7 +89,12 @@ public class GenService {
      * @param genReq
      */
     public void genImplServiceFile(GenReq genReq) {
-
+        FreemarkerUtil.outputFile(genReq.getImplServicePath(),
+                GenConst.IMPL_SERVICE_FTL_PATH,
+                GenConst.commonReplaceMap.get("className").toString().concat("ServiceImpl"),
+                true,
+                genReq.getUpdate(),
+                GenConst.commonReplaceMap);
     }
 
     /**
@@ -105,7 +115,12 @@ public class GenService {
      * @param genReq
      */
     public void genDaoFile(GenReq genReq) {
-
+        FreemarkerUtil.outputFile(genReq.getDaoPath(),
+                GenConst.DAO_FTL_PATH,
+                "I"+GenConst.commonReplaceMap.get("className").toString().concat("Dao"),
+                true,
+                genReq.getUpdate(),
+                GenConst.commonReplaceMap);
     }
 
     /**
@@ -113,7 +128,12 @@ public class GenService {
      * @param genReq
      */
     public void genXmlFile(GenReq genReq) {
-
+        FreemarkerUtil.outputFile(genReq.getXmlPath(),
+                GenConst.XML_FTL_PATH,
+                GenConst.commonReplaceMap.get("objectName").toString(),
+                false,
+                genReq.getUpdate(),
+                GenConst.commonReplaceMap);
     }
 
 }
