@@ -23,11 +23,13 @@
         <redis-spring-starter.version>1.3.8.RELEASE</redis-spring-starter.version>
         <ftl.autocode.version>0.0.1-SNAPSHOT</ftl.autocode.version>
         <ftl.basic.version>0.0.1-SNAPSHOT</ftl.basic.version>
+        <ftl.test.version>0.0.1-SNAPSHOT</ftl.test.version>
     </properties>
 
     <modules>
         <module>ftl-autocode</module>
         <module>ftl-basic</module>
+        <module>ftl-test</module>
     </modules>
     
     
@@ -120,6 +122,12 @@
                 <groupId>com.cloud.ftl</groupId>
                 <artifactId>ftl-basic</artifactId>
                 <version>${ftl.basic.version}</version>
+            </dependency>
+    
+            <dependency>
+                <groupId>com.cloud.ftl</groupId>
+                <artifactId>ftl-test</artifactId>
+                <version>${ftl.test.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ftl-autocode" />
         <module name="ftl-basic" />
+        <module name="ftl-test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="autocode-parnet" target="1.8" />
       <module name="ftl-autocode" target="1.8" />
       <module name="ftl-basic" target="1.8" />
+      <module name="ftl-test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

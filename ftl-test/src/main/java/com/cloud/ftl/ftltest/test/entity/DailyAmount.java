@@ -1,0 +1,204 @@
+package com.cloud.ftl.ftltest.test.entity;
+
+import java.util.Date;
+import java.math.BigDecimal;
+
+public class DailyAmount {
+
+    /**
+     * field comment:日前报量管理ID
+     */
+	private Long daId;
+
+    /**
+     * field comment:电企业ID：来源于cloud_sys.entity.entity_id
+     */
+	private Integer entityId;
+
+    /**
+     * field comment:用电时间
+     */
+	private Date dateTime;
+
+    /**
+     * field comment:结算盈利
+     */
+	private BigDecimal settProfit;
+
+    /**
+     * field comment:支出金额
+     */
+	private BigDecimal expendProfit;
+
+    /**
+     * field comment:收入金额
+     */
+	private BigDecimal incomeProfit;
+
+    /**
+     * field comment:盈利小时数
+     */
+	private Byte profitHours;
+
+    /**
+     * field comment:亏损小时数
+     */
+	private Byte deficitHours;
+
+    /**
+     * field comment:当天最大负偏差率(%)
+     */
+	private BigDecimal minusDeviation;
+
+    /**
+     * field comment:当天最大正偏差率(%)
+     */
+	private BigDecimal positiveDeviation;
+
+    /**
+     * field comment:状态 (0) 弃用 （1）正常
+     */
+	private Byte status;
+
+    /**
+     * field comment:
+     */
+	private Byte ce;
+
+    /**
+     * field comment:
+     */
+	private Byte sa;
+
+    /**
+     * field comment:创建时间
+     */
+	private Date createTime;
+
+    /**
+     * field comment:更新时间
+     */
+	private Date statusTime;
+
+
+    public Long getDaId() {
+        return daId;
+    }
+
+    public void setDaId(Long daId) {
+        this.daId = daId;
+    }
+
+    public Integer getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(Integer entityId) {
+        this.entityId = entityId;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public BigDecimal getSettProfit() {
+        return settProfit;
+    }
+
+    public void setSettProfit(BigDecimal settProfit) {
+        this.settProfit = settProfit;
+    }
+
+    public BigDecimal getExpendProfit() {
+        return expendProfit;
+    }
+
+    public void setExpendProfit(BigDecimal expendProfit) {
+        this.expendProfit = expendProfit;
+    }
+
+    public BigDecimal getIncomeProfit() {
+        return incomeProfit;
+    }
+
+    public void setIncomeProfit(BigDecimal incomeProfit) {
+        this.incomeProfit = incomeProfit;
+    }
+
+    public Byte getProfitHours() {
+        return profitHours;
+    }
+
+    public void setProfitHours(Byte profitHours) {
+        this.profitHours = profitHours;
+    }
+
+    public Byte getDeficitHours() {
+        return deficitHours;
+    }
+
+    public void setDeficitHours(Byte deficitHours) {
+        this.deficitHours = deficitHours;
+    }
+
+    public BigDecimal getMinusDeviation() {
+        return minusDeviation;
+    }
+
+    public void setMinusDeviation(BigDecimal minusDeviation) {
+        this.minusDeviation = minusDeviation;
+    }
+
+    public BigDecimal getPositiveDeviation() {
+        return positiveDeviation;
+    }
+
+    public void setPositiveDeviation(BigDecimal positiveDeviation) {
+        this.positiveDeviation = positiveDeviation;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public Byte getCe() {
+        return ce;
+    }
+
+    public void setCe(Byte ce) {
+        this.ce = ce;
+    }
+
+    public Byte getSa() {
+        return sa;
+    }
+
+    public void setSa(Byte sa) {
+        this.sa = sa;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getStatusTime() {
+        return statusTime;
+    }
+
+    public void setStatusTime(Date statusTime) {
+        this.statusTime = statusTime;
+    }
+
+}
