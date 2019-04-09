@@ -81,6 +81,37 @@ public class DailyAmount {
 	private Date statusTime;
 
 
+    public static final transient String PROP_DA_ID = "daId";
+
+    public static final transient String PROP_ENTITY_ID = "entityId";
+
+    public static final transient String PROP_DATE_TIME = "dateTime";
+
+    public static final transient String PROP_SETT_PROFIT = "settProfit";
+
+    public static final transient String PROP_EXPEND_PROFIT = "expendProfit";
+
+    public static final transient String PROP_INCOME_PROFIT = "incomeProfit";
+
+    public static final transient String PROP_PROFIT_HOURS = "profitHours";
+
+    public static final transient String PROP_DEFICIT_HOURS = "deficitHours";
+
+    public static final transient String PROP_MINUS_DEVIATION = "minusDeviation";
+
+    public static final transient String PROP_POSITIVE_DEVIATION = "positiveDeviation";
+
+    public static final transient String PROP_STATUS = "status";
+
+    public static final transient String PROP_CE = "ce";
+
+    public static final transient String PROP_SA = "sa";
+
+    public static final transient String PROP_CREATE_TIME = "createTime";
+
+    public static final transient String PROP_STATUS_TIME = "statusTime";
+
+
     public Long getDaId() {
         return daId;
     }

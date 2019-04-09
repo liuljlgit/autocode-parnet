@@ -1,7 +1,6 @@
 package com.cloud.ftl.ftltest.test.entity;
 
 import java.util.Date;
-import java.math.BigDecimal;
 
 public class LoadTime {
 
@@ -39,6 +38,21 @@ public class LoadTime {
      * field comment:更新时间
      */
 	private Date statusTime;
+
+
+    public static final transient String PROP_LT_ID = "ltId";
+
+    public static final transient String PROP_ENTITY_ID = "entityId";
+
+    public static final transient String PROP_START_TIME = "startTime";
+
+    public static final transient String PROP_END_TIME = "endTime";
+
+    public static final transient String PROP_STATUS = "status";
+
+    public static final transient String PROP_CREATE_TIME = "createTime";
+
+    public static final transient String PROP_STATUS_TIME = "statusTime";
 
 
     public Long getLtId() {

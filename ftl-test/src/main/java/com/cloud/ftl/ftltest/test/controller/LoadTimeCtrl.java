@@ -2,14 +2,13 @@ package com.cloud.ftl.ftltest.test.controller;
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
+import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Objects;
 
 /**

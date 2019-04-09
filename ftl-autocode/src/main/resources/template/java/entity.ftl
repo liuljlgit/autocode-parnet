@@ -14,6 +14,11 @@ public class ${className} {
 
 <#list tableColEntitys as col>
 
+    public static final transient String PROP_${col.field?upper_case} = "${col.fieldJavaName}";
+</#list>
+
+<#list tableColEntitys as col>
+
     public ${col.fieldJavaType} get${col.fieldJavaName?cap_first}() {
         return ${col.fieldJavaName};
     }
