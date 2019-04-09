@@ -35,8 +35,9 @@ public class GenService {
                 String key = rs.getString("key");
                 String comment = rs.getString("Comment");
                 String fieldJavaType = DbTypeEnum.getDbTypeEnum(type).getJavaTypeName();
+                String fieldDbType = DbTypeEnum.getDbTypeEnum(type).getDbTypeName();
                 String fieldJavaName = HumpUtil.convertToJava(field);
-                TableColEntity tableColEntity = new TableColEntity(field,type,key,comment,fieldJavaType,fieldJavaName);
+                TableColEntity tableColEntity = new TableColEntity(field,type,key,comment,fieldJavaType,fieldJavaName,fieldDbType);
                 GenConst.tableColEntitys.add(tableColEntity);
             }
         } catch (SQLException e) {
@@ -132,7 +133,7 @@ public class GenService {
     public void genXmlFile(GenReq genReq) {
         FreemarkerUtil.outputFile(genReq.getXmlPath(),
                 GenConst.XML_FTL_PATH,
-                GenConst.commonReplaceMap.get("objectName").toString(),
+                GenConst.commonReplaceMap.get("className").toString()+"Mapper",
                 false,
                 genReq.getUpdate(),
                 GenConst.commonReplaceMap);

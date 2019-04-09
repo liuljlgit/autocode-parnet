@@ -35,13 +35,19 @@ public class TableColEntity {
      */
     private String fieldJavaName;
 
-    public TableColEntity(String field, String type, String key, String comment, String fieldJavaType, String fieldJavaName) {
+    /**
+     * db类型
+     */
+    private String fieldDbType;
+
+    public TableColEntity(String field, String type, String key, String comment, String fieldJavaType, String fieldJavaName,String fieldDbType) {
         this.field = field;
         this.type = type;
         this.key = key;
         this.comment = comment;
         this.fieldJavaType = fieldJavaType;
         this.fieldJavaName = fieldJavaName;
+        this.fieldDbType = fieldDbType;
     }
 
     public String getField() {
@@ -90,5 +96,13 @@ public class TableColEntity {
 
     public void setFieldJavaName(String fieldJavaName) {
         this.fieldJavaName = fieldJavaName;
+    }
+
+    public String getFieldDbType() {
+        return fieldDbType;
+    }
+
+    public void setFieldDbType(String fieldDbType) {
+        this.fieldDbType = fieldDbType;
     }
 }
