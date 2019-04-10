@@ -17,6 +17,11 @@
 
     </sql>
 
+    <!--获取最大的主键-->
+    <select id="selectMax${className}Id" resultType="java.lang.Long">
+        select IFNULL(max(${IdColEntity.field}), 0) from `${tableName}`
+    </select>
+
     <!--根据主键获取对象-->
     <select id="load${className}ByKey" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from ${tableName}

@@ -23,6 +23,11 @@
         da_id,entity_id,date_time,sett_profit,expend_profit,income_profit,profit_hours,deficit_hours,minus_deviation,positive_deviation,status,ce,sa,create_time,status_time
     </sql>
 
+    <!--获取最大的主键-->
+    <select id="selectMaxDailyAmountId" resultType="java.lang.Long">
+        select IFNULL(max(da_id), 0) from `daily_amount`
+    </select>
+
     <!--根据主键获取对象-->
     <select id="loadDailyAmountByKey" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from daily_amount

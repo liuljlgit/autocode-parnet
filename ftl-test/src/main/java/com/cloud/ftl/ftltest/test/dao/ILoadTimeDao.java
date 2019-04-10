@@ -11,6 +11,12 @@ import com.cloud.ftl.ftltest.test.entity.LoadTime;
 public interface ILoadTimeDao {
 
     /**
+     * 获取表的最大ID
+     * @return
+     */
+     Long selectMaxLoadTimeId();
+
+    /**
      * 根据主键获取对象
      * @param ltId
      * @return

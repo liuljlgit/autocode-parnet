@@ -4,6 +4,7 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
+import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class DailyAmountCtrl{
          throw new BusiException("请输入要获取的数据的ID") ;
       }
       DailyAmount dailyAmount = dailyAmountService.loadDailyAmountByKey(daId);
-      return RespEntity.ok(dailyAmount);
+      return RespEntity.ok(new DailyAmountResp(dailyAmount));
    }
 
 

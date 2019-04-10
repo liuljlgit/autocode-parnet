@@ -11,6 +11,12 @@ import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 public interface IDailyAmountDao {
 
     /**
+     * 获取表的最大ID
+     * @return
+     */
+     Long selectMaxDailyAmountId();
+
+    /**
      * 根据主键获取对象
      * @param daId
      * @return

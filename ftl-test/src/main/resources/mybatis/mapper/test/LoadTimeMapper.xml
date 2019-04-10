@@ -15,6 +15,11 @@
         lt_id,entity_id,start_time,end_time,status,create_time,status_time
     </sql>
 
+    <!--获取最大的主键-->
+    <select id="selectMaxLoadTimeId" resultType="java.lang.Long">
+        select IFNULL(max(lt_id), 0) from `load_time`
+    </select>
+
     <!--根据主键获取对象-->
     <select id="loadLoadTimeByKey" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from load_time

@@ -56,6 +56,18 @@ public class GenReq {
     private String implServicePath;
 
     /**
+     * 生成redis接口文件的包路径
+     * "com.cloud.gen.ftlautocode.test.cache.inft"
+     */
+    private String inftRedisPath;
+
+    /**
+     * 生成redis实现文件的包路径
+     * "com.cloud.gen.ftlautocode.test.cache.impl"
+     */
+    private String implRedisPath;
+
+    /**
      * 生成dao文件的包路径
      * "com.cloud.gen.ftlautocode.test.dao"
      */
@@ -66,6 +78,18 @@ public class GenReq {
      * "com.cloud.gen.ftlautocode.test.entity"
      */
     private String entityPath;
+
+    /**
+     * 生成请求实体文件的包路径
+     * "com.cloud.gen.ftlautocode.test.webentity.req"
+     */
+    private String reqPath;
+
+    /**
+     * 生成返回实体文件的包路径
+     * "com.cloud.gen.ftlautocode.test.webentity.resp"
+     */
+    private String respPath;
 
     /**
      * 生成xml文件的目录路径
@@ -188,5 +212,37 @@ public class GenReq {
 
     public void setTableNames(List<String> tableNames) {
         this.tableNames = tableNames;
+    }
+
+    public String getInftRedisPath() {
+        return inftRedisPath;
+    }
+
+    public void setInftRedisPath(String inftRedisPath) {
+        this.inftRedisPath = inftRedisPath;
+    }
+
+    public String getImplRedisPath() {
+        return implRedisPath;
+    }
+
+    public void setImplRedisPath(String implRedisPath) {
+        this.implRedisPath = implRedisPath;
+    }
+
+    public String getReqPath() {
+        return reqPath;
+    }
+
+    public void setReqPath(String reqPath) {
+        this.reqPath = reqPath;
+    }
+
+    public String getRespPath() {
+        return respPath;
+    }
+
+    public void setRespPath(String respPath) {
+        this.respPath = respPath;
     }
 }
