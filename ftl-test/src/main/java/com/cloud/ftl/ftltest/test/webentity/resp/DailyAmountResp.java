@@ -34,19 +34,19 @@ public class DailyAmountResp extends DailyAmount{
 		CommonUtil.copyPropertiesIgnoreNull(dailyAmount,this);
 	}
 
-	
+
 	@Override
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	public Date getDateTime() {
 		return super.getDateTime();
 	}
-	
+
 	@Override
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	public Date getCreateTime() {
 		return super.getCreateTime();
 	}
-	
+
 	@Override
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	public Date getStatusTime() {

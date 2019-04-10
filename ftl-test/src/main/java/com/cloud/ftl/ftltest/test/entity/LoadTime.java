@@ -1,9 +1,10 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.util.Date;
-import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.webEntity.BaseEntity;
 
-public class LoadTime {
+import java.util.Date;
+
+public class LoadTime extends BaseEntity{
 
     /**
      * field comment:实际负荷导入数据记录ID
@@ -60,7 +61,8 @@ public class LoadTime {
         return ltId;
     }
 
-    public void setLtId(Long ltId) {
+    public void setLtId(Long ltId) throws Exception {
+        addCriteria("lt_id",ltId);
         this.ltId = ltId;
     }
 
@@ -68,7 +70,8 @@ public class LoadTime {
         return entityId;
     }
 
-    public void setEntityId(Integer entityId) {
+    public void setEntityId(Integer entityId) throws Exception {
+        addCriteria("entity_id",entityId);
         this.entityId = entityId;
     }
 
@@ -76,7 +79,8 @@ public class LoadTime {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Date startTime) throws Exception {
+        addCriteria("start_time",startTime);
         this.startTime = startTime;
     }
 
@@ -84,7 +88,8 @@ public class LoadTime {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Date endTime) throws Exception {
+        addCriteria("end_time",endTime);
         this.endTime = endTime;
     }
 
@@ -92,7 +97,8 @@ public class LoadTime {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Byte status) throws Exception {
+        addCriteria("status",status);
         this.status = status;
     }
 
@@ -100,7 +106,8 @@ public class LoadTime {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Date createTime) throws Exception {
+        addCriteria("create_time",createTime);
         this.createTime = createTime;
     }
 
@@ -108,7 +115,8 @@ public class LoadTime {
         return statusTime;
     }
 
-    public void setStatusTime(Date statusTime) {
+    public void setStatusTime(Date statusTime) throws Exception {
+        addCriteria("status_time",statusTime);
         this.statusTime = statusTime;
     }
 

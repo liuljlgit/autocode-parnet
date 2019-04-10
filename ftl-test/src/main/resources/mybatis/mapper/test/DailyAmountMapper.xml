@@ -23,6 +23,35 @@
         da_id,entity_id,date_time,sett_profit,expend_profit,income_profit,profit_hours,deficit_hours,minus_deviation,positive_deviation,status,ce,sa,create_time,status_time
     </sql>
 
+    <sql id="where_sql">
+        <foreach collection="criterias" item="criteria" separator=" ">
+            <if test="criteria.valid">
+                ${criteria.opt}
+                <trim prefix="(" prefixOverrides="and|or" suffix=")">
+                    <foreach collection="criteria.criterions" item="criterion">
+                        <choose>
+                            <when test="criterion.noValue">
+                                ${criterion.condition}
+                            </when>
+                            <when test="criterion.oneValue">
+                                ${criterion.condition} #{criterion.value1}
+                            </when>
+                            <when test="criterion.secondValue">
+                                ${criterion.condition} #{criterion.value1} and #{criterion.value2}
+                            </when>
+                            <when test="criterion.listValue">
+                                ${criterion.condition}
+                                <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
+                                    #{listItem}
+                                </foreach>
+                            </when>
+                        </choose>
+                    </foreach>
+                </trim>
+            </if>
+        </foreach>
+    </sql>
+
     <!--获取最大的主键-->
     <select id="selectMaxDailyAmountId" resultType="java.lang.Long">
         select IFNULL(max(da_id), 0) from `daily_amount`

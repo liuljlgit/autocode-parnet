@@ -2,8 +2,9 @@ package ${entityPackagePath};
 
 import java.util.Date;
 import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.webEntity.BaseEntity;
 
-public class ${className} {
+public class ${className} extends BaseEntity{
 <#list tableColEntitys as col>
 
     /**
@@ -23,7 +24,8 @@ public class ${className} {
         return ${col.fieldJavaName};
     }
 
-    public void set${col.fieldJavaName?cap_first}(${col.fieldJavaType} ${col.fieldJavaName}) {
+    public void set${col.fieldJavaName?cap_first}(${col.fieldJavaType} ${col.fieldJavaName}) throws Exception {
+        addCriteria("${col.field}",${col.fieldJavaName});
         this.${col.fieldJavaName} = ${col.fieldJavaName};
     }
 </#list>

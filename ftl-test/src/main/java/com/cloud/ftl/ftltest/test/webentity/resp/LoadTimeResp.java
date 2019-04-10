@@ -26,25 +26,25 @@ public class LoadTimeResp extends LoadTime{
 		CommonUtil.copyPropertiesIgnoreNull(loadTime,this);
 	}
 
-	
+
 	@Override
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	public Date getStartTime() {
 		return super.getStartTime();
 	}
-	
+
 	@Override
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	public Date getEndTime() {
 		return super.getEndTime();
 	}
-	
+
 	@Override
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	public Date getCreateTime() {
 		return super.getCreateTime();
 	}
-	
+
 	@Override
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	public Date getStatusTime() {

@@ -1,9 +1,11 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.util.Date;
-import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.webEntity.BaseEntity;
 
-public class DailyAmount {
+import java.math.BigDecimal;
+import java.util.Date;
+
+public class DailyAmount extends BaseEntity{
 
     /**
      * field comment:日前报量管理ID
@@ -116,7 +118,8 @@ public class DailyAmount {
         return daId;
     }
 
-    public void setDaId(Long daId) {
+    public void setDaId(Long daId) throws Exception {
+        addCriteria("da_id",daId);
         this.daId = daId;
     }
 
@@ -124,7 +127,8 @@ public class DailyAmount {
         return entityId;
     }
 
-    public void setEntityId(Integer entityId) {
+    public void setEntityId(Integer entityId) throws Exception {
+        addCriteria("entity_id",entityId);
         this.entityId = entityId;
     }
 
@@ -132,7 +136,8 @@ public class DailyAmount {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(Date dateTime) throws Exception {
+        addCriteria("date_time",dateTime);
         this.dateTime = dateTime;
     }
 
@@ -140,7 +145,8 @@ public class DailyAmount {
         return settProfit;
     }
 
-    public void setSettProfit(BigDecimal settProfit) {
+    public void setSettProfit(BigDecimal settProfit) throws Exception {
+        addCriteria("sett_profit",settProfit);
         this.settProfit = settProfit;
     }
 
@@ -148,7 +154,8 @@ public class DailyAmount {
         return expendProfit;
     }
 
-    public void setExpendProfit(BigDecimal expendProfit) {
+    public void setExpendProfit(BigDecimal expendProfit) throws Exception {
+        addCriteria("expend_profit",expendProfit);
         this.expendProfit = expendProfit;
     }
 
@@ -156,7 +163,8 @@ public class DailyAmount {
         return incomeProfit;
     }
 
-    public void setIncomeProfit(BigDecimal incomeProfit) {
+    public void setIncomeProfit(BigDecimal incomeProfit) throws Exception {
+        addCriteria("income_profit",incomeProfit);
         this.incomeProfit = incomeProfit;
     }
 
@@ -164,7 +172,8 @@ public class DailyAmount {
         return profitHours;
     }
 
-    public void setProfitHours(Byte profitHours) {
+    public void setProfitHours(Byte profitHours) throws Exception {
+        addCriteria("profit_hours",profitHours);
         this.profitHours = profitHours;
     }
 
@@ -172,7 +181,8 @@ public class DailyAmount {
         return deficitHours;
     }
 
-    public void setDeficitHours(Byte deficitHours) {
+    public void setDeficitHours(Byte deficitHours) throws Exception {
+        addCriteria("deficit_hours",deficitHours);
         this.deficitHours = deficitHours;
     }
 
@@ -180,7 +190,8 @@ public class DailyAmount {
         return minusDeviation;
     }
 
-    public void setMinusDeviation(BigDecimal minusDeviation) {
+    public void setMinusDeviation(BigDecimal minusDeviation) throws Exception {
+        addCriteria("minus_deviation",minusDeviation);
         this.minusDeviation = minusDeviation;
     }
 
@@ -188,7 +199,8 @@ public class DailyAmount {
         return positiveDeviation;
     }
 
-    public void setPositiveDeviation(BigDecimal positiveDeviation) {
+    public void setPositiveDeviation(BigDecimal positiveDeviation) throws Exception {
+        addCriteria("positive_deviation",positiveDeviation);
         this.positiveDeviation = positiveDeviation;
     }
 
@@ -196,7 +208,8 @@ public class DailyAmount {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Byte status) throws Exception {
+        addCriteria("status",status);
         this.status = status;
     }
 
@@ -204,7 +217,8 @@ public class DailyAmount {
         return ce;
     }
 
-    public void setCe(Byte ce) {
+    public void setCe(Byte ce) throws Exception {
+        addCriteria("ce",ce);
         this.ce = ce;
     }
 
@@ -212,7 +226,8 @@ public class DailyAmount {
         return sa;
     }
 
-    public void setSa(Byte sa) {
+    public void setSa(Byte sa) throws Exception {
+        addCriteria("sa",sa);
         this.sa = sa;
     }
 
@@ -220,7 +235,8 @@ public class DailyAmount {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Date createTime) throws Exception {
+        addCriteria("create_time",createTime);
         this.createTime = createTime;
     }
 
@@ -228,7 +244,8 @@ public class DailyAmount {
         return statusTime;
     }
 
-    public void setStatusTime(Date statusTime) {
+    public void setStatusTime(Date statusTime) throws Exception {
+        addCriteria("status_time",statusTime);
         this.statusTime = statusTime;
     }
 

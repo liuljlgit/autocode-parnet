@@ -17,6 +17,35 @@
 
     </sql>
 
+    <sql id="where_sql">
+        <foreach collection="criterias" item="criteria" separator=" ">
+            <if test="criteria.valid">
+                ${r'${'}criteria.opt}
+                <trim prefix="(" prefixOverrides="and|or" suffix=")">
+                    <foreach collection="criteria.criterions" item="criterion">
+                        <choose>
+                            <when test="criterion.noValue">
+                                ${r'${'}criterion.condition}
+                            </when>
+                            <when test="criterion.oneValue">
+                                ${r'${'}criterion.condition} ${r'#{'}criterion.value1}
+                            </when>
+                            <when test="criterion.secondValue">
+                                ${r'${'}criterion.condition} ${r'#{'}criterion.value1} and ${r'#{'}criterion.value2}
+                            </when>
+                            <when test="criterion.listValue">
+                                ${r'${'}criterion.condition}
+                                <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
+                                    ${r'#{'}listItem}
+                                </foreach>
+                            </when>
+                        </choose>
+                    </foreach>
+                </trim>
+            </if>
+        </foreach>
+    </sql>
+
     <!--获取最大的主键-->
     <select id="selectMax${className}Id" resultType="java.lang.Long">
         select IFNULL(max(${IdColEntity.field}), 0) from `${tableName}`
