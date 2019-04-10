@@ -3,6 +3,7 @@ package ${entityPackagePath};
 import java.util.Date;
 import java.math.BigDecimal;
 import com.cloud.ftl.ftlbasic.webEntity.BaseEntity;
+import com.cloud.ftl.ftlbasic.enums.Opt;
 
 public class ${className} extends BaseEntity{
 <#list tableColEntitys as col>
@@ -26,6 +27,11 @@ public class ${className} extends BaseEntity{
 
     public void set${col.fieldJavaName?cap_first}(${col.fieldJavaType} ${col.fieldJavaName}) throws Exception {
         addCriteria("${col.field}",${col.fieldJavaName});
+        this.${col.fieldJavaName} = ${col.fieldJavaName};
+    }
+
+    public void set${col.fieldJavaName?cap_first}(Opt opt,${col.fieldJavaType} ${col.fieldJavaName}) throws Exception {
+        addCriteria("${col.field}",${col.fieldJavaName},opt);
         this.${col.fieldJavaName} = ${col.fieldJavaName};
     }
 </#list>

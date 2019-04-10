@@ -47,4 +47,17 @@ public class BaseEntity {
         criteria.addCriterion("and "+field+" "+Opt.EQUAL.getCode()+" ",value);
         criterias.add(criteria);
     }
+
+    /**
+     * 对对象进行set操作的时候调用
+     * @throws Exception
+     */
+    public void addCriteria(String field,Object value,Opt opt) throws Exception {
+        Criteria criteria = new Criteria(Opt.AND.getCode());
+        if(CollectionUtils.isEmpty(criterias)){
+            criterias = new ArrayList<>();
+        }
+        criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value);
+        criterias.add(criteria);
+    }
 }

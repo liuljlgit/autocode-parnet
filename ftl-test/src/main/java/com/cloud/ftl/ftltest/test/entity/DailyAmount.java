@@ -1,5 +1,6 @@
 package com.cloud.ftl.ftltest.test.entity;
 
+import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.webEntity.BaseEntity;
 
 import java.math.BigDecimal;
@@ -123,12 +124,22 @@ public class DailyAmount extends BaseEntity{
         this.daId = daId;
     }
 
+    public void setDaId(Opt opt, Long daId) throws Exception {
+        addCriteria("da_id",daId,opt);
+        this.daId = daId;
+    }
+
     public Integer getEntityId() {
         return entityId;
     }
 
     public void setEntityId(Integer entityId) throws Exception {
         addCriteria("entity_id",entityId);
+        this.entityId = entityId;
+    }
+
+    public void setEntityId(Opt opt,Integer entityId) throws Exception {
+        addCriteria("entity_id",entityId,opt);
         this.entityId = entityId;
     }
 
@@ -141,12 +152,22 @@ public class DailyAmount extends BaseEntity{
         this.dateTime = dateTime;
     }
 
+    public void setDateTime(Opt opt,Date dateTime) throws Exception {
+        addCriteria("date_time",dateTime,opt);
+        this.dateTime = dateTime;
+    }
+
     public BigDecimal getSettProfit() {
         return settProfit;
     }
 
     public void setSettProfit(BigDecimal settProfit) throws Exception {
         addCriteria("sett_profit",settProfit);
+        this.settProfit = settProfit;
+    }
+
+    public void setSettProfit(Opt opt,BigDecimal settProfit) throws Exception {
+        addCriteria("sett_profit",settProfit,opt);
         this.settProfit = settProfit;
     }
 
@@ -159,12 +180,22 @@ public class DailyAmount extends BaseEntity{
         this.expendProfit = expendProfit;
     }
 
+    public void setExpendProfit(Opt opt,BigDecimal expendProfit) throws Exception {
+        addCriteria("expend_profit",expendProfit,opt);
+        this.expendProfit = expendProfit;
+    }
+
     public BigDecimal getIncomeProfit() {
         return incomeProfit;
     }
 
     public void setIncomeProfit(BigDecimal incomeProfit) throws Exception {
         addCriteria("income_profit",incomeProfit);
+        this.incomeProfit = incomeProfit;
+    }
+
+    public void setIncomeProfit(Opt opt,BigDecimal incomeProfit) throws Exception {
+        addCriteria("income_profit",incomeProfit,opt);
         this.incomeProfit = incomeProfit;
     }
 
@@ -177,12 +208,22 @@ public class DailyAmount extends BaseEntity{
         this.profitHours = profitHours;
     }
 
+    public void setProfitHours(Opt opt,Byte profitHours) throws Exception {
+        addCriteria("profit_hours",profitHours,opt);
+        this.profitHours = profitHours;
+    }
+
     public Byte getDeficitHours() {
         return deficitHours;
     }
 
     public void setDeficitHours(Byte deficitHours) throws Exception {
         addCriteria("deficit_hours",deficitHours);
+        this.deficitHours = deficitHours;
+    }
+
+    public void setDeficitHours(Opt opt,Byte deficitHours) throws Exception {
+        addCriteria("deficit_hours",deficitHours,opt);
         this.deficitHours = deficitHours;
     }
 
@@ -195,12 +236,22 @@ public class DailyAmount extends BaseEntity{
         this.minusDeviation = minusDeviation;
     }
 
+    public void setMinusDeviation(Opt opt,BigDecimal minusDeviation) throws Exception {
+        addCriteria("minus_deviation",minusDeviation,opt);
+        this.minusDeviation = minusDeviation;
+    }
+
     public BigDecimal getPositiveDeviation() {
         return positiveDeviation;
     }
 
     public void setPositiveDeviation(BigDecimal positiveDeviation) throws Exception {
         addCriteria("positive_deviation",positiveDeviation);
+        this.positiveDeviation = positiveDeviation;
+    }
+
+    public void setPositiveDeviation(Opt opt,BigDecimal positiveDeviation) throws Exception {
+        addCriteria("positive_deviation",positiveDeviation,opt);
         this.positiveDeviation = positiveDeviation;
     }
 
@@ -213,12 +264,22 @@ public class DailyAmount extends BaseEntity{
         this.status = status;
     }
 
+    public void setStatus(Opt opt,Byte status) throws Exception {
+        addCriteria("status",status,opt);
+        this.status = status;
+    }
+
     public Byte getCe() {
         return ce;
     }
 
     public void setCe(Byte ce) throws Exception {
         addCriteria("ce",ce);
+        this.ce = ce;
+    }
+
+    public void setCe(Opt opt,Byte ce) throws Exception {
+        addCriteria("ce",ce,opt);
         this.ce = ce;
     }
 
@@ -231,6 +292,11 @@ public class DailyAmount extends BaseEntity{
         this.sa = sa;
     }
 
+    public void setSa(Opt opt,Byte sa) throws Exception {
+        addCriteria("sa",sa,opt);
+        this.sa = sa;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -240,12 +306,22 @@ public class DailyAmount extends BaseEntity{
         this.createTime = createTime;
     }
 
+    public void setCreateTime(Opt opt,Date createTime) throws Exception {
+        addCriteria("create_time",createTime,opt);
+        this.createTime = createTime;
+    }
+
     public Date getStatusTime() {
         return statusTime;
     }
 
     public void setStatusTime(Date statusTime) throws Exception {
         addCriteria("status_time",statusTime);
+        this.statusTime = statusTime;
+    }
+
+    public void setStatusTime(Opt opt,Date statusTime) throws Exception {
+        addCriteria("status_time",statusTime,opt);
         this.statusTime = statusTime;
     }
 
