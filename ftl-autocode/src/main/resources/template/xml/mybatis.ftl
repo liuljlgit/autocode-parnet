@@ -12,11 +12,7 @@
 
     <sql id="Base_Column_List">
     <#list tableColEntitys as col>
-    <#if col_has_next>
-        ${col.field},
-    <#else>
-        ${col.field}
-    </#if>
+        ${col.field}<#if col_index < (tableColEntitys?size - 1)>,</#if>
     </#list>
     </sql>
 
