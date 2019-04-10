@@ -3,8 +3,8 @@
 <mapper namespace="com.cloud.ftl.ftltest.test.dao.IDailyAmountDao">
     <resultMap id="BaseResultMap" type="com.cloud.ftl.ftltest.test.entity.DailyAmount">
         <id column="da_id" jdbcType="BIGINT" property="daId" />
-        <result column="entity_id" jdbcType="INT" property="entityId" />
-        <result column="date_time" jdbcType="DATETIME" property="dateTime" />
+        <result column="entity_id" jdbcType="INTEGER" property="entityId" />
+        <result column="date_time" jdbcType="TIMESTAMP" property="dateTime" />
         <result column="sett_profit" jdbcType="DECIMAL" property="settProfit" />
         <result column="expend_profit" jdbcType="DECIMAL" property="expendProfit" />
         <result column="income_profit" jdbcType="DECIMAL" property="incomeProfit" />
@@ -20,29 +20,15 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        da_id,
-        entity_id,
-        date_time,
-        sett_profit,
-        expend_profit,
-        income_profit,
-        profit_hours,
-        deficit_hours,
-        minus_deviation,
-        positive_deviation,
-        status,
-        ce,
-        sa,
-        create_time,
-        status_time
+        da_id,entity_id,date_time,sett_profit,expend_profit,income_profit,profit_hours,deficit_hours,minus_deviation,positive_deviation,status,ce,sa,create_time,status_time
     </sql>
 
     <!--根据主键获取对象-->
-  <select id="loadDailyAmountByKey" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" /> from daily_amount
-    <where>
-        AND da_id = #{da_id}
-    </where>
-  </select>
+    <select id="loadDailyAmountByKey" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from daily_amount
+        <where>
+            AND da_id = #{daId}
+        </where>
+    </select>
 
 </mapper>

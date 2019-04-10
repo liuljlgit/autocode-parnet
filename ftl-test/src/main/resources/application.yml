@@ -7,7 +7,7 @@ spring:
   #数据源配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.123.135:3306/test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    url: jdbc:mysql://192.168.123.136:3306/test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     username: root
     password: root
   #redis配置
@@ -23,6 +23,12 @@ spring:
         max-wait: -1
         max-idle: 8
         min-idle: 0
+
+#mybatis配置
+mybatis:
+  type-aliases-package: com.cloud.**.entity
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
 
 #打印sql
 debug : true

@@ -36,8 +36,9 @@ public class GenService {
                 String comment = rs.getString("Comment");
                 String fieldJavaType = DbTypeEnum.getDbTypeEnum(type).getJavaTypeName();
                 String fieldDbType = DbTypeEnum.getDbTypeEnum(type).getDbTypeName();
+                String fieldMybatisType = DbTypeEnum.getDbTypeEnum(type).getMybatisTypeName();
                 String fieldJavaName = HumpUtil.convertToJava(field);
-                TableColEntity tableColEntity = new TableColEntity(field,type,key,comment,fieldJavaType,fieldJavaName,fieldDbType);
+                TableColEntity tableColEntity = new TableColEntity(field,type,key,comment,fieldJavaType,fieldJavaName,fieldDbType,fieldMybatisType);
                 GenConst.tableColEntitys.add(tableColEntity);
             }
         } catch (SQLException e) {

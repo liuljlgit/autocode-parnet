@@ -1,7 +1,7 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.util.Date;
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class DailyAmount {
 
