@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.ftl.ftltest.test.dao.ILoadTimeDao">
+    <resultMap id="BaseResultMap" type="com.cloud.ftl.ftltest.test.entity.LoadTime">
+        <id column="lt_id" jdbcType="BIGINT" property="ltId" />
+        <result column="entity_id" jdbcType="INT" property="entityId" />
+        <result column="start_time" jdbcType="DATETIME" property="startTime" />
+        <result column="end_time" jdbcType="DATETIME" property="endTime" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="create_time" jdbcType="DATETIME" property="createTime" />
+        <result column="status_time" jdbcType="DATETIME" property="statusTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        lt_id,
+        entity_id,
+        start_time,
+        end_time,
+        status,
+        create_time,
+        status_time
+    </sql>
+
+    <!--根据主键获取对象-->
+  <select id="loadLoadTimeByKey" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from load_time
+    <where>
+        AND lt_id = #{lt_id}
+    </where>
+  </select>
+
+</mapper>

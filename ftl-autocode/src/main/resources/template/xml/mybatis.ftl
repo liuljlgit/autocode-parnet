@@ -10,4 +10,22 @@
         </#list>
     </resultMap>
 
+    <sql id="Base_Column_List">
+    <#list tableColEntitys as col>
+    <#if col_has_next>
+        ${col.field},
+    <#else>
+        ${col.field}
+    </#if>
+    </#list>
+    </sql>
+
+    <!--根据主键获取对象-->
+  <select id="load${className}ByKey" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from ${tableName}
+    <where>
+        AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.field}}
+    </where>
+  </select>
+
 </mapper>

@@ -52,6 +52,7 @@ public class GenService {
     public void initCommonReplaceMap(GenReq genReq,String tableName) {
         GenConst.commonReplaceMap.put("className", HumpUtil.toUpperCaseFirstOne(HumpUtil.convertToJava(tableName)));
         GenConst.commonReplaceMap.put("objectName", HumpUtil.toLowerCaseFirstOne(HumpUtil.convertToJava(tableName)));
+        GenConst.commonReplaceMap.put("tableName", tableName);
         GenConst.commonReplaceMap.put("ctrlPackagePath",genReq.getCtrlPath());
         GenConst.commonReplaceMap.put("inftServicePackagePath",genReq.getInftServicePath());
         GenConst.commonReplaceMap.put("implServicePackagePath",genReq.getImplServicePath());

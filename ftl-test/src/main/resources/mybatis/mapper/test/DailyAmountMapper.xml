@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.ftl.ftltest.test.dao.IDailyAmountDao">
+    <resultMap id="BaseResultMap" type="com.cloud.ftl.ftltest.test.entity.DailyAmount">
+        <id column="da_id" jdbcType="BIGINT" property="daId" />
+        <result column="entity_id" jdbcType="INT" property="entityId" />
+        <result column="date_time" jdbcType="DATETIME" property="dateTime" />
+        <result column="sett_profit" jdbcType="DECIMAL" property="settProfit" />
+        <result column="expend_profit" jdbcType="DECIMAL" property="expendProfit" />
+        <result column="income_profit" jdbcType="DECIMAL" property="incomeProfit" />
+        <result column="profit_hours" jdbcType="TINYINT" property="profitHours" />
+        <result column="deficit_hours" jdbcType="TINYINT" property="deficitHours" />
+        <result column="minus_deviation" jdbcType="DECIMAL" property="minusDeviation" />
+        <result column="positive_deviation" jdbcType="DECIMAL" property="positiveDeviation" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="ce" jdbcType="TINYINT" property="ce" />
+        <result column="sa" jdbcType="TINYINT" property="sa" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="status_time" jdbcType="TIMESTAMP" property="statusTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        da_id,
+        entity_id,
+        date_time,
+        sett_profit,
+        expend_profit,
+        income_profit,
+        profit_hours,
+        deficit_hours,
+        minus_deviation,
+        positive_deviation,
+        status,
+        ce,
+        sa,
+        create_time,
+        status_time
+    </sql>
+
+    <!--根据主键获取对象-->
+  <select id="loadDailyAmountByKey" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from daily_amount
+    <where>
+        AND da_id = #{da_id}
+    </where>
+  </select>
+
+</mapper>
