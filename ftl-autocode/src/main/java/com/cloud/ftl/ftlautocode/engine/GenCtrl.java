@@ -68,6 +68,8 @@ public class GenCtrl {
             genService.genReqFile(genReq);
             //10.生成req文件
             genService.genRespFile(genReq);
+            //11.生成queryentity文件
+            genService.genQueryEntityFile(genReq);
         }
         //返回
         return "生成文件成功!";

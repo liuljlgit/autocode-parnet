@@ -1,10 +1,11 @@
-package ${entityPackagePath};
+package ${queryEntityPackagePath};
 
 import java.util.Date;
 import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 
-public class ${className} {
+public class ${className}Query extends BaseQuery {
 <#list tableColEntitys as col>
 
     /**
@@ -24,7 +25,13 @@ public class ${className} {
         return ${col.fieldJavaName};
     }
 
-    public void set${col.fieldJavaName?cap_first}(${col.fieldJavaType} ${col.fieldJavaName}) {
+    public void set${col.fieldJavaName?cap_first}(${col.fieldJavaType} ${col.fieldJavaName}) throws Exception {
+        addCriteria("${col.field}",${col.fieldJavaName});
+        this.${col.fieldJavaName} = ${col.fieldJavaName};
+    }
+
+    public void set${col.fieldJavaName?cap_first}(Opt opt,${col.fieldJavaType} ${col.fieldJavaName}) throws Exception {
+        addCriteria("${col.field}",${col.fieldJavaName},opt);
         this.${col.fieldJavaName} = ${col.fieldJavaName};
     }
 </#list>

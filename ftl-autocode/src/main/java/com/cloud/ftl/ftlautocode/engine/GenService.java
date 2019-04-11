@@ -61,6 +61,7 @@ public class GenService {
         GenConst.commonReplaceMap.put("implRedisPackagePath",genReq.getImplRedisPath());
         GenConst.commonReplaceMap.put("daoPackagePath",genReq.getDaoPath());
         GenConst.commonReplaceMap.put("entityPackagePath",genReq.getEntityPath());
+        GenConst.commonReplaceMap.put("queryEntityPackagePath",genReq.getQueryEntityPath());
         GenConst.commonReplaceMap.put("reqPackagePath",genReq.getReqPath());
         GenConst.commonReplaceMap.put("respPackagePath",genReq.getRespPath());
         GenConst.commonReplaceMap.put("tableColEntitys",GenConst.tableColEntitys);
@@ -183,6 +184,7 @@ public class GenService {
                 genReq.getUpdate(),
                 GenConst.commonReplaceMap);
     }
+
     /**
      * 生成resp文件
      * @param genReq
@@ -191,6 +193,19 @@ public class GenService {
         FreemarkerUtil.outputFile(genReq.getRespPath(),
                 GenConst.RESP_PATH,
                 GenConst.commonReplaceMap.get("className").toString().concat("Resp"),
+                true,
+                genReq.getUpdate(),
+                GenConst.commonReplaceMap);
+    }
+
+    /**
+     * 生成queryentity文件
+     * @param genReq
+     */
+    public void genQueryEntityFile(GenReq genReq) {
+        FreemarkerUtil.outputFile(genReq.getQueryEntityPath(),
+                GenConst.QUERY_ENTITY_PATH,
+                GenConst.commonReplaceMap.get("className").toString().concat("Query"),
                 true,
                 genReq.getUpdate(),
                 GenConst.commonReplaceMap);

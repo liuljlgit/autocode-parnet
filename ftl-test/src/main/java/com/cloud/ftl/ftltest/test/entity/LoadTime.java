@@ -1,11 +1,8 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import com.cloud.ftl.ftlbasic.enums.Opt;
-import com.cloud.ftl.ftlbasic.webEntity.BaseEntity;
-
 import java.util.Date;
 
-public class LoadTime extends BaseEntity{
+public class LoadTime {
 
     /**
      * field comment:实际负荷导入数据记录ID
@@ -62,13 +59,7 @@ public class LoadTime extends BaseEntity{
         return ltId;
     }
 
-    public void setLtId(Long ltId) throws Exception {
-        addCriteria("lt_id",ltId);
-        this.ltId = ltId;
-    }
-
-    public void setLtId(Opt opt, Long ltId) throws Exception {
-        addCriteria("lt_id",ltId,opt);
+    public void setLtId(Long ltId) {
         this.ltId = ltId;
     }
 
@@ -76,13 +67,7 @@ public class LoadTime extends BaseEntity{
         return entityId;
     }
 
-    public void setEntityId(Integer entityId) throws Exception {
-        addCriteria("entity_id",entityId);
-        this.entityId = entityId;
-    }
-
-    public void setEntityId(Opt opt,Integer entityId) throws Exception {
-        addCriteria("entity_id",entityId,opt);
+    public void setEntityId(Integer entityId) {
         this.entityId = entityId;
     }
 
@@ -90,13 +75,7 @@ public class LoadTime extends BaseEntity{
         return startTime;
     }
 
-    public void setStartTime(Date startTime) throws Exception {
-        addCriteria("start_time",startTime);
-        this.startTime = startTime;
-    }
-
-    public void setStartTime(Opt opt,Date startTime) throws Exception {
-        addCriteria("start_time",startTime,opt);
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
@@ -104,13 +83,7 @@ public class LoadTime extends BaseEntity{
         return endTime;
     }
 
-    public void setEndTime(Date endTime) throws Exception {
-        addCriteria("end_time",endTime);
-        this.endTime = endTime;
-    }
-
-    public void setEndTime(Opt opt,Date endTime) throws Exception {
-        addCriteria("end_time",endTime,opt);
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
@@ -118,13 +91,7 @@ public class LoadTime extends BaseEntity{
         return status;
     }
 
-    public void setStatus(Byte status) throws Exception {
-        addCriteria("status",status);
-        this.status = status;
-    }
-
-    public void setStatus(Opt opt,Byte status) throws Exception {
-        addCriteria("status",status,opt);
+    public void setStatus(Byte status) {
         this.status = status;
     }
 
@@ -132,13 +99,7 @@ public class LoadTime extends BaseEntity{
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) throws Exception {
-        addCriteria("create_time",createTime);
-        this.createTime = createTime;
-    }
-
-    public void setCreateTime(Opt opt,Date createTime) throws Exception {
-        addCriteria("create_time",createTime,opt);
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
@@ -146,13 +107,7 @@ public class LoadTime extends BaseEntity{
         return statusTime;
     }
 
-    public void setStatusTime(Date statusTime) throws Exception {
-        addCriteria("status_time",statusTime);
-        this.statusTime = statusTime;
-    }
-
-    public void setStatusTime(Opt opt,Date statusTime) throws Exception {
-        addCriteria("status_time",statusTime,opt);
+    public void setStatusTime(Date statusTime) {
         this.statusTime = statusTime;
     }
 

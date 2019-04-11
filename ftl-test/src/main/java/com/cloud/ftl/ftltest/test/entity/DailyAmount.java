@@ -1,12 +1,9 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import com.cloud.ftl.ftlbasic.enums.Opt;
-import com.cloud.ftl.ftlbasic.webEntity.BaseEntity;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class DailyAmount extends BaseEntity{
+public class DailyAmount {
 
     /**
      * field comment:日前报量管理ID
@@ -119,13 +116,7 @@ public class DailyAmount extends BaseEntity{
         return daId;
     }
 
-    public void setDaId(Long daId) throws Exception {
-        addCriteria("da_id",daId);
-        this.daId = daId;
-    }
-
-    public void setDaId(Opt opt, Long daId) throws Exception {
-        addCriteria("da_id",daId,opt);
+    public void setDaId(Long daId) {
         this.daId = daId;
     }
 
@@ -133,13 +124,7 @@ public class DailyAmount extends BaseEntity{
         return entityId;
     }
 
-    public void setEntityId(Integer entityId) throws Exception {
-        addCriteria("entity_id",entityId);
-        this.entityId = entityId;
-    }
-
-    public void setEntityId(Opt opt,Integer entityId) throws Exception {
-        addCriteria("entity_id",entityId,opt);
+    public void setEntityId(Integer entityId) {
         this.entityId = entityId;
     }
 
@@ -147,13 +132,7 @@ public class DailyAmount extends BaseEntity{
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) throws Exception {
-        addCriteria("date_time",dateTime);
-        this.dateTime = dateTime;
-    }
-
-    public void setDateTime(Opt opt,Date dateTime) throws Exception {
-        addCriteria("date_time",dateTime,opt);
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -161,13 +140,7 @@ public class DailyAmount extends BaseEntity{
         return settProfit;
     }
 
-    public void setSettProfit(BigDecimal settProfit) throws Exception {
-        addCriteria("sett_profit",settProfit);
-        this.settProfit = settProfit;
-    }
-
-    public void setSettProfit(Opt opt,BigDecimal settProfit) throws Exception {
-        addCriteria("sett_profit",settProfit,opt);
+    public void setSettProfit(BigDecimal settProfit) {
         this.settProfit = settProfit;
     }
 
@@ -175,13 +148,7 @@ public class DailyAmount extends BaseEntity{
         return expendProfit;
     }
 
-    public void setExpendProfit(BigDecimal expendProfit) throws Exception {
-        addCriteria("expend_profit",expendProfit);
-        this.expendProfit = expendProfit;
-    }
-
-    public void setExpendProfit(Opt opt,BigDecimal expendProfit) throws Exception {
-        addCriteria("expend_profit",expendProfit,opt);
+    public void setExpendProfit(BigDecimal expendProfit) {
         this.expendProfit = expendProfit;
     }
 
@@ -189,13 +156,7 @@ public class DailyAmount extends BaseEntity{
         return incomeProfit;
     }
 
-    public void setIncomeProfit(BigDecimal incomeProfit) throws Exception {
-        addCriteria("income_profit",incomeProfit);
-        this.incomeProfit = incomeProfit;
-    }
-
-    public void setIncomeProfit(Opt opt,BigDecimal incomeProfit) throws Exception {
-        addCriteria("income_profit",incomeProfit,opt);
+    public void setIncomeProfit(BigDecimal incomeProfit) {
         this.incomeProfit = incomeProfit;
     }
 
@@ -203,13 +164,7 @@ public class DailyAmount extends BaseEntity{
         return profitHours;
     }
 
-    public void setProfitHours(Byte profitHours) throws Exception {
-        addCriteria("profit_hours",profitHours);
-        this.profitHours = profitHours;
-    }
-
-    public void setProfitHours(Opt opt,Byte profitHours) throws Exception {
-        addCriteria("profit_hours",profitHours,opt);
+    public void setProfitHours(Byte profitHours) {
         this.profitHours = profitHours;
     }
 
@@ -217,13 +172,7 @@ public class DailyAmount extends BaseEntity{
         return deficitHours;
     }
 
-    public void setDeficitHours(Byte deficitHours) throws Exception {
-        addCriteria("deficit_hours",deficitHours);
-        this.deficitHours = deficitHours;
-    }
-
-    public void setDeficitHours(Opt opt,Byte deficitHours) throws Exception {
-        addCriteria("deficit_hours",deficitHours,opt);
+    public void setDeficitHours(Byte deficitHours) {
         this.deficitHours = deficitHours;
     }
 
@@ -231,13 +180,7 @@ public class DailyAmount extends BaseEntity{
         return minusDeviation;
     }
 
-    public void setMinusDeviation(BigDecimal minusDeviation) throws Exception {
-        addCriteria("minus_deviation",minusDeviation);
-        this.minusDeviation = minusDeviation;
-    }
-
-    public void setMinusDeviation(Opt opt,BigDecimal minusDeviation) throws Exception {
-        addCriteria("minus_deviation",minusDeviation,opt);
+    public void setMinusDeviation(BigDecimal minusDeviation) {
         this.minusDeviation = minusDeviation;
     }
 
@@ -245,13 +188,7 @@ public class DailyAmount extends BaseEntity{
         return positiveDeviation;
     }
 
-    public void setPositiveDeviation(BigDecimal positiveDeviation) throws Exception {
-        addCriteria("positive_deviation",positiveDeviation);
-        this.positiveDeviation = positiveDeviation;
-    }
-
-    public void setPositiveDeviation(Opt opt,BigDecimal positiveDeviation) throws Exception {
-        addCriteria("positive_deviation",positiveDeviation,opt);
+    public void setPositiveDeviation(BigDecimal positiveDeviation) {
         this.positiveDeviation = positiveDeviation;
     }
 
@@ -259,13 +196,7 @@ public class DailyAmount extends BaseEntity{
         return status;
     }
 
-    public void setStatus(Byte status) throws Exception {
-        addCriteria("status",status);
-        this.status = status;
-    }
-
-    public void setStatus(Opt opt,Byte status) throws Exception {
-        addCriteria("status",status,opt);
+    public void setStatus(Byte status) {
         this.status = status;
     }
 
@@ -273,13 +204,7 @@ public class DailyAmount extends BaseEntity{
         return ce;
     }
 
-    public void setCe(Byte ce) throws Exception {
-        addCriteria("ce",ce);
-        this.ce = ce;
-    }
-
-    public void setCe(Opt opt,Byte ce) throws Exception {
-        addCriteria("ce",ce,opt);
+    public void setCe(Byte ce) {
         this.ce = ce;
     }
 
@@ -287,13 +212,7 @@ public class DailyAmount extends BaseEntity{
         return sa;
     }
 
-    public void setSa(Byte sa) throws Exception {
-        addCriteria("sa",sa);
-        this.sa = sa;
-    }
-
-    public void setSa(Opt opt,Byte sa) throws Exception {
-        addCriteria("sa",sa,opt);
+    public void setSa(Byte sa) {
         this.sa = sa;
     }
 
@@ -301,13 +220,7 @@ public class DailyAmount extends BaseEntity{
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) throws Exception {
-        addCriteria("create_time",createTime);
-        this.createTime = createTime;
-    }
-
-    public void setCreateTime(Opt opt,Date createTime) throws Exception {
-        addCriteria("create_time",createTime,opt);
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
@@ -315,13 +228,7 @@ public class DailyAmount extends BaseEntity{
         return statusTime;
     }
 
-    public void setStatusTime(Date statusTime) throws Exception {
-        addCriteria("status_time",statusTime);
-        this.statusTime = statusTime;
-    }
-
-    public void setStatusTime(Opt opt,Date statusTime) throws Exception {
-        addCriteria("status_time",statusTime,opt);
+    public void setStatusTime(Date statusTime) {
         this.statusTime = statusTime;
     }
 

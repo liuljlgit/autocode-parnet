@@ -80,6 +80,12 @@ public class GenReq {
     private String entityPath;
 
     /**
+     * 生成查询实体文件的包路径
+     * "com.cloud.gen.ftlautocode.test.queryentity"
+     */
+    private String queryEntityPath;
+
+    /**
      * 生成请求实体文件的包路径
      * "com.cloud.gen.ftlautocode.test.webentity.req"
      */
@@ -244,5 +250,13 @@ public class GenReq {
 
     public void setRespPath(String respPath) {
         this.respPath = respPath;
+    }
+
+    public String getQueryEntityPath() {
+        return queryEntityPath;
+    }
+
+    public void setQueryEntityPath(String queryEntityPath) {
+        this.queryEntityPath = queryEntityPath;
     }
 }
