@@ -1,6 +1,6 @@
 package com.cloud.ftl.ftlbasic.redis;
 
-import com.cloud.ftl.ftlbasic.utils.CommonUtil;
+import com.cloud.ftl.ftlbasic.utils.SerializableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +138,7 @@ public abstract class BaseRedis<K, V> {
         boolean result = getRedisTemplate(suppressTran).execute((RedisCallback<Boolean>) connection -> {
             RedisSerializer<String> serializer = getRedisTemplate(true).getStringSerializer();
             byte[] byteKey = serializer.serialize(key);
-            byte[] byteValue = CommonUtil.transObj2ByteArray(value);
+            byte[] byteValue = SerializableUtil.transObj2ByteArray(value);
             if (seconds > 0) {
                 connection.setEx(byteKey, seconds, byteValue);
             } else {
@@ -183,7 +183,7 @@ public abstract class BaseRedis<K, V> {
             if (value == null) {
                 return null;
             }
-            T dataObj = CommonUtil.transByteArray2Obj(value, clazz);
+            T dataObj = SerializableUtil.transByteArray2Obj(value, clazz);
             return dataObj;
         });
         return result;
@@ -238,7 +238,7 @@ public abstract class BaseRedis<K, V> {
             List<byte[]> listByteValues = connection.mGet(listByteKeys.toArray(new byte[listByteKeys.size()][]));
             List<T> listValue = new ArrayList<T>();
             for (byte[] value : listByteValues) {
-                listValue.add(CommonUtil.transByteArray2Obj(value, clazz));
+                listValue.add(SerializableUtil.transByteArray2Obj(value, clazz));
             }
             return listValue;
         });
@@ -308,7 +308,7 @@ public abstract class BaseRedis<K, V> {
         boolean result = getRedisTemplate(suppressTran).execute((RedisCallback<Boolean>) connection -> {
             RedisSerializer<String> serializer = getRedisTemplate(true).getStringSerializer();
             byte[] byteKey = serializer.serialize(key);
-            byte[] byteValue = CommonUtil.transObj2ByteArray(value);
+            byte[] byteValue = SerializableUtil.transObj2ByteArray(value);
             connection.sAdd(byteKey, byteValue);
             return true;
         });
@@ -334,7 +334,7 @@ public abstract class BaseRedis<K, V> {
             byte[][] byteValues = new byte[values.size()][];
             int i = 0;
             for (Serializable v : values) {
-                byteValues[i++] = CommonUtil.transObj2ByteArray(v);
+                byteValues[i++] = SerializableUtil.transObj2ByteArray(v);
             }
             connection.sAdd(byteKey, byteValues);
             return true;
@@ -378,7 +378,7 @@ public abstract class BaseRedis<K, V> {
             Iterator<byte[]> iter = setValue.iterator();
             Set<T> result1 = new HashSet<T>();
             while (iter.hasNext()) {
-                T tmp = CommonUtil.transByteArray2Obj(iter.next(), clazz);
+                T tmp = SerializableUtil.transByteArray2Obj(iter.next(), clazz);
                 result1.add(tmp);
             }
             if (result1.size() == 0) {
@@ -442,7 +442,7 @@ public abstract class BaseRedis<K, V> {
         boolean result = getRedisTemplate(suppressTran).execute((RedisCallback<Boolean>) connection -> {
             RedisSerializer<String> serializer = getRedisTemplate(true).getStringSerializer();
             byte[] byteKey = serializer.serialize(key);
-            byte[] byteValue = CommonUtil.transObj2ByteArray(value);
+            byte[] byteValue = SerializableUtil.transObj2ByteArray(value);
             Long index = connection.sRem(byteKey, byteValue);
             return index == null ? false : index > 0L;
         });
@@ -592,7 +592,7 @@ public abstract class BaseRedis<K, V> {
             RedisSerializer<String> serializer = getRedisTemplate(true).getStringSerializer();
             byte[] byteKey = serializer.serialize(key);
             byte[] byteField = serializer.serialize(field);
-            byte[] byteValue = CommonUtil.transObj2ByteArray(value);
+            byte[] byteValue = SerializableUtil.transObj2ByteArray(value);
             connection.hSet(byteKey, byteField, byteValue);
             if (seconds.equals(0L)) {
                 connection.persist(byteKey);
@@ -630,7 +630,7 @@ public abstract class BaseRedis<K, V> {
 
                 return null;
             }
-            T dataObj = CommonUtil.transByteArray2Obj(value, clazz);
+            T dataObj = SerializableUtil.transByteArray2Obj(value, clazz);
             return dataObj;
         });
         return result;
@@ -836,7 +836,7 @@ public abstract class BaseRedis<K, V> {
         boolean result = getRedisTemplate(suppressTran).execute((RedisCallback<Boolean>) connection -> {
             RedisSerializer<String> serializer = getRedisTemplate(true).getStringSerializer();
             byte[] byteKey = serializer.serialize(key);
-            byte[] byteValue = CommonUtil.transObj2ByteArray(value);
+            byte[] byteValue = SerializableUtil.transObj2ByteArray(value);
             Boolean result1 = connection.setNX(byteKey, byteValue);
             if (seconds > 0 && (null == result1 && !suppressTran) || (result1 && suppressTran)){
                 connection.expire(byteKey, seconds);
@@ -916,7 +916,7 @@ public abstract class BaseRedis<K, V> {
         boolean result = getRedisTemplate(true).execute((RedisCallback<Boolean>) connection -> {
             RedisSerializer<String> serializer = getRedisTemplate(true).getStringSerializer();
             byte[] byteKey = serializer.serialize(key);
-            byte[] byteValue = CommonUtil.transObj2ByteArray(value);
+            byte[] byteValue = SerializableUtil.transObj2ByteArray(value);
             if (length > 0L) {
                 connection.multi();
                 connection.lPush(byteKey, byteValue) ;
@@ -945,7 +945,7 @@ public abstract class BaseRedis<K, V> {
         boolean result = pojoRedisTemplate.execute((RedisCallback<Boolean>) connection -> {
             RedisSerializer<String> serializer = getRedisTemplate(true).getStringSerializer();
             byte[] byteKey = serializer.serialize(key);
-            byte[] byteValue = CommonUtil.transObj2ByteArray(value);
+            byte[] byteValue = SerializableUtil.transObj2ByteArray(value);
             connection.lPush(byteKey, byteValue);
             if (seconds.equals(0L)) {
                 connection.persist(byteKey);
@@ -988,7 +988,7 @@ public abstract class BaseRedis<K, V> {
             List<byte[]> listByteValues = connection.lRange(byteKey, begin, end);
             List<T> listValue = new ArrayList<T>(listByteValues.size());
             for (byte[] value : listByteValues) {
-                listValue.add(CommonUtil.transByteArray2Obj(value, clazz));
+                listValue.add(SerializableUtil.transByteArray2Obj(value, clazz));
             }
             return listValue;
         });

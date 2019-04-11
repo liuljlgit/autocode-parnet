@@ -1,6 +1,6 @@
 package com.cloud.ftl.ftlbasic.redis;
 
-import com.cloud.ftl.ftlbasic.utils.CommonUtil;
+import com.cloud.ftl.ftlbasic.utils.SerializableUtil;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
@@ -22,12 +22,12 @@ public class PojoSerializable<T extends Serializable> implements RedisSerializer
 
     @Override
     public byte[] serialize(T t) throws SerializationException {
-        return CommonUtil.transObj2ByteArray(t);
+        return SerializableUtil.transObj2ByteArray(t);
     }
 
     @Override
     public T deserialize(byte[] bytes) throws SerializationException {
-        return CommonUtil.transByteArray2Obj(bytes, clazz);
+        return SerializableUtil.transByteArray2Obj(bytes, clazz);
     }
 
 }
