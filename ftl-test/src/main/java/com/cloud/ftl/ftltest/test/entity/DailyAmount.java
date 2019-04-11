@@ -82,34 +82,49 @@ public class DailyAmount {
 
 
     public static final transient String PROP_DA_ID = "daId";
+    public static final transient String TABLE_DA_ID = "da_id";
 
     public static final transient String PROP_ENTITY_ID = "entityId";
+    public static final transient String TABLE_ENTITY_ID = "entity_id";
 
     public static final transient String PROP_DATE_TIME = "dateTime";
+    public static final transient String TABLE_DATE_TIME = "date_time";
 
     public static final transient String PROP_SETT_PROFIT = "settProfit";
+    public static final transient String TABLE_SETT_PROFIT = "sett_profit";
 
     public static final transient String PROP_EXPEND_PROFIT = "expendProfit";
+    public static final transient String TABLE_EXPEND_PROFIT = "expend_profit";
 
     public static final transient String PROP_INCOME_PROFIT = "incomeProfit";
+    public static final transient String TABLE_INCOME_PROFIT = "income_profit";
 
     public static final transient String PROP_PROFIT_HOURS = "profitHours";
+    public static final transient String TABLE_PROFIT_HOURS = "profit_hours";
 
     public static final transient String PROP_DEFICIT_HOURS = "deficitHours";
+    public static final transient String TABLE_DEFICIT_HOURS = "deficit_hours";
 
     public static final transient String PROP_MINUS_DEVIATION = "minusDeviation";
+    public static final transient String TABLE_MINUS_DEVIATION = "minus_deviation";
 
     public static final transient String PROP_POSITIVE_DEVIATION = "positiveDeviation";
+    public static final transient String TABLE_POSITIVE_DEVIATION = "positive_deviation";
 
     public static final transient String PROP_STATUS = "status";
+    public static final transient String TABLE_STATUS = "status";
 
     public static final transient String PROP_CE = "ce";
+    public static final transient String TABLE_CE = "ce";
 
     public static final transient String PROP_SA = "sa";
+    public static final transient String TABLE_SA = "sa";
 
     public static final transient String PROP_CREATE_TIME = "createTime";
+    public static final transient String TABLE_CREATE_TIME = "create_time";
 
     public static final transient String PROP_STATUS_TIME = "statusTime";
+    public static final transient String TABLE_STATUS_TIME = "status_time";
 
 
     public Long getDaId() {

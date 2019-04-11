@@ -1,10 +1,9 @@
 package com.cloud.ftl.ftltest.test.dao;
 
+import org.springframework.stereotype.Repository;
+import java.util.List;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
   * 接口类 IDailyAmountDao

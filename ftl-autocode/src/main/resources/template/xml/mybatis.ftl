@@ -21,27 +21,54 @@
         <foreach collection="criterias" item="criteria" separator=" ">
             <if test="criteria.valid">
                 ${r'${'}criteria.opt}
-                <trim prefix="(" prefixOverrides="and|or" suffix=")">
-                    <foreach collection="criteria.criterions" item="criterion">
-                        <choose>
-                            <when test="criterion.noValue">
-                                ${r'${'}criterion.condition}
-                            </when>
-                            <when test="criterion.oneValue">
-                                ${r'${'}criterion.condition} ${r'#{'}criterion.value1}
-                            </when>
-                            <when test="criterion.secondValue">
-                                ${r'${'}criterion.condition} ${r'#{'}criterion.value1} and ${r'#{'}criterion.value2}
-                            </when>
-                            <when test="criterion.listValue">
-                                ${r'${'}criterion.condition}
-                                <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
-                                    ${r'#{'}listItem}
-                                </foreach>
-                            </when>
-                        </choose>
-                    </foreach>
-                </trim>
+                <choose>
+                    <when test="criteria.criterions.size() > 1">
+                        <trim prefix="(" prefixOverrides="and|or" suffix=")">
+                            <foreach collection="criteria.criterions" item="criterion">
+                                <choose>
+                                    <when test="criterion.noValue">
+                                        ${r'${'}criterion.condition}
+                                    </when>
+                                    <when test="criterion.oneValue">
+                                        ${r'${'}criterion.condition} ${r'#{'}criterion.value1}
+                                    </when>
+                                    <when test="criterion.secondValue">
+                                        ${r'${'}criterion.condition} ${r'#{'}criterion.value1} and ${r'#{'}criterion.value2}
+                                    </when>
+                                    <when test="criterion.listValue">
+                                        ${r'${'}criterion.condition}
+                                        <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
+                                            ${r'#{'}listItem}
+                                        </foreach>
+                                    </when>
+                                </choose>
+                            </foreach>
+                        </trim>
+                    </when>
+                    <otherwise>
+                        <trim prefixOverrides="and|or">
+                            <foreach collection="criteria.criterions" item="criterion">
+                                <choose>
+                                    <when test="criterion.noValue">
+                                        ${r'${'}criterion.condition}
+                                    </when>
+                                    <when test="criterion.oneValue">
+                                        ${r'${'}criterion.condition} ${r'#{'}criterion.value1}
+                                    </when>
+                                    <when test="criterion.secondValue">
+                                        ${r'${'}criterion.condition} ${r'#{'}criterion.value1} and ${r'#{'}criterion.value2}
+                                    </when>
+                                    <when test="criterion.listValue">
+                                        ${r'${'}criterion.condition}
+                                        <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
+                                            ${r'#{'}listItem}
+                                        </foreach>
+                                    </when>
+                                </choose>
+                            </foreach>
+                        </trim>
+                    </otherwise>
+                </choose>
             </if>
         </foreach>
     </sql>

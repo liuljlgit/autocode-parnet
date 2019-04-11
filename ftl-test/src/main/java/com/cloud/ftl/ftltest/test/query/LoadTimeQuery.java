@@ -1,9 +1,9 @@
 package com.cloud.ftl.ftltest.test.query;
 
-import com.cloud.ftl.ftlbasic.enums.Opt;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
-
 import java.util.Date;
+import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
+import com.cloud.ftl.ftlbasic.enums.Opt;
 
 public class LoadTimeQuery extends BaseQuery {
 

@@ -24,19 +24,19 @@ public class LoadTimeCtrl{
   private ILoadTimeService loadTimeService;
 
 
-  /**
-   * LoadTime 根据主键获取单个数据
-   * @return
-   * @throws Exception
-   */
-   @GetMapping(value = "/{ltId}")
-   public String loadLoadTimeByKey(@PathVariable(value="ltId") Long ltId) throws Exception {
-      if(Objects.isNull(ltId)){
+    /**
+    * LoadTime 根据主键获取单个数据
+    * @return
+    * @throws Exception
+    */
+    @GetMapping(value = "/{ltId}")
+    public String loadLoadTimeByKey(@PathVariable(value="ltId") Long ltId) throws Exception {
+        if(Objects.isNull(ltId)){
          throw new BusiException("请输入要获取的数据的ID") ;
-      }
-      LoadTime loadTime = loadTimeService.loadLoadTimeByKey(ltId);
-      return RespEntity.ok(new LoadTimeResp(loadTime));
-   }
+        }
+        LoadTime loadTime = loadTimeService.loadLoadTimeByKey(ltId);
+        return RespEntity.ok(new LoadTimeResp(loadTime));
+    }
 
 
 	//------------------------ custom code begin ------------------------//

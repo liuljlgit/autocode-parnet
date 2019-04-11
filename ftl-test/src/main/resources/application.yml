@@ -36,6 +36,6 @@ logging:
   level:
     root: INFO
     com:
-      gen: debug
+      cloud: debug
 
 

@@ -1,9 +1,8 @@
 package com.cloud.ftl.ftltest.test.service.inft;
 
+import java.util.List;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
-
-import java.util.List;
 
 /**
  * ILoadTimeService service接口类

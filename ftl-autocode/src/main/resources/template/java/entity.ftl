@@ -16,6 +16,7 @@ public class ${className} {
 <#list tableColEntitys as col>
 
     public static final transient String PROP_${col.field?upper_case} = "${col.fieldJavaName}";
+    public static final transient String TABLE_${col.field?upper_case} = "${col.field}";
 </#list>
 
 <#list tableColEntitys as col>
