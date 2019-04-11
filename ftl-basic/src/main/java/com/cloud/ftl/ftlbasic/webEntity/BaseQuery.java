@@ -21,6 +21,32 @@ public class BaseQuery {
     }
 
     /**
+     * and Criteria
+     * @throws Exception
+     */
+    public Criteria andCriteria() throws Exception {
+        Criteria criteria = new Criteria(Opt.AND.getCode());
+        if(CollectionUtils.isEmpty(criterias)){
+            criterias = new ArrayList<>();
+        }
+        criterias.add(criteria);
+        return criteria;
+    }
+
+    /**
+     * or Criteria
+     * @throws Exception
+     */
+    public Criteria orCriteria() throws Exception {
+        Criteria criteria = new Criteria(Opt.OR.getCode());
+        if(CollectionUtils.isEmpty(criterias)){
+            criterias = new ArrayList<>();
+        }
+        criterias.add(criteria);
+        return criteria;
+    }
+
+    /**
      * 自定义生成一个Criteria
      * @param criteria
      * @throws Exception

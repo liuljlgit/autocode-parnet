@@ -4,6 +4,7 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,11 +32,11 @@ public class DailyAmountCtrl{
    */
    @GetMapping(value = "/{daId}")
    public String loadDailyAmountByKey(@PathVariable(value="daId") Long daId) throws Exception {
-      if(Objects.isNull(daId)){
+       if(Objects.isNull(daId)){
          throw new BusiException("请输入要获取的数据的ID") ;
-      }
-      DailyAmount dailyAmount = dailyAmountService.loadDailyAmountByKey(daId);
-      return RespEntity.ok(dailyAmount);
+       }
+       DailyAmount dailyAmount = dailyAmountService.loadDailyAmountByKey(daId);
+       return RespEntity.ok(new DailyAmountResp(dailyAmount));
    }
 
 

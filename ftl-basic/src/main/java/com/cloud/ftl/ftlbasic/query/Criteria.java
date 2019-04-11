@@ -124,7 +124,7 @@ public class Criteria {
      * @return
      * @throws Exception
      */
-    public Criteria and(Opt opt,String field,Object... values) throws Exception {
+    public Criteria and(String field,Opt opt,Object... values) throws Exception {
         if(values.length>2){
             throw new Exception("values length can not bigger than 2");
         }
@@ -158,7 +158,7 @@ public class Criteria {
      * @return
      * @throws Exception
      */
-    public Criteria or(Opt opt,String field,Object... values) throws Exception {
+    public Criteria or(String field,Opt opt,Object... values) throws Exception {
         if(values.length>2){
             throw new Exception("values length can not bigger than 2");
         }

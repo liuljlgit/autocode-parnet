@@ -4,6 +4,7 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import ${inftServicePackagePath}.I${className}Service;
 import ${entityPackagePath}.${className};
+import ${respPackagePath}.${className}Resp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class ${className}Ctrl{
          throw new BusiException("请输入要获取的数据的ID") ;
       }
       ${className} ${objectName} = ${objectName}Service.load${className}ByKey(${IdColEntity.fieldJavaName});
-      return RespEntity.ok(${objectName});
+      return RespEntity.ok(new ${className}Resp(${objectName}));
    }
 
 
