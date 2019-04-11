@@ -57,4 +57,12 @@
         </where>
     </select>
 
+    <!--查询列表-->
+    <select id="findLoadTimeList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from load_time
+        <where>
+            <include refid="where_sql" />
+        </where>
+    </select>
+
 </mapper>

@@ -59,4 +59,12 @@
         </where>
     </select>
 
+    <!--查询列表-->
+    <select id="find${className}List" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from ${tableName}
+        <where>
+            <include refid="where_sql" />
+        </where>
+    </select>
+
 </mapper>

@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.List;
 import ${entityPackagePath}.${className};
 import ${inftServicePackagePath}.I${className}Service;
 import ${daoPackagePath}.I${className}Dao;
+import ${queryEntityPackagePath}.${className}Query;
 
 /**
  * I${className}Service service实现类
@@ -38,5 +40,18 @@ public class ${className}ServiceImpl implements I${className}Service {
             throw new BusiException("没有符合条件的记录！") ;
         }
         return ${objectName};
+    }
+
+    /**
+     * 查询列表
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    public List<${className}> find${className}List(${className}Query query) throws Exception {
+        if(Objects.isNull(query)){
+            throw new BusiException("查询参数不能为空");
+        }
+        return ${objectName}Dao.find${className}List(query);
     }
 }

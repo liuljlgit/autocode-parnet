@@ -65,4 +65,12 @@
         </where>
     </select>
 
+    <!--查询列表-->
+    <select id="findDailyAmountList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from daily_amount
+        <where>
+            <include refid="where_sql" />
+        </where>
+    </select>
+
 </mapper>

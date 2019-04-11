@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.List;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.dao.ILoadTimeDao;
+import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 
 /**
  * ILoadTimeService service实现类
@@ -38,5 +40,18 @@ public class LoadTimeServiceImpl implements ILoadTimeService {
             throw new BusiException("没有符合条件的记录！") ;
         }
         return loadTime;
+    }
+
+    /**
+     * 查询列表
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    public List<LoadTime> findLoadTimeList(LoadTimeQuery query) throws Exception {
+        if(Objects.isNull(query)){
+            throw new BusiException("查询参数不能为空");
+        }
+        return loadTimeDao.findLoadTimeList(query);
     }
 }

@@ -4,6 +4,7 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
+import com.cloud.ftl.ftltest.test.webentity.resp.LoadTimeResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class LoadTimeCtrl{
          throw new BusiException("请输入要获取的数据的ID") ;
       }
       LoadTime loadTime = loadTimeService.loadLoadTimeByKey(ltId);
-      return RespEntity.ok(loadTime);
+      return RespEntity.ok(new LoadTimeResp(loadTime));
    }
 
 
