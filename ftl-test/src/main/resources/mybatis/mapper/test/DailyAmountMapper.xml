@@ -111,6 +111,9 @@
         <if test="page != null and pageSize != null and page > 0" >
             limit #{index},#{pageSize}
         </if>
+        <if test="orderByClause!=null and orderByClause!=''">
+            order by ${orderByClause}
+        </if>
     </select>
 
     <!--查询列表总数-->

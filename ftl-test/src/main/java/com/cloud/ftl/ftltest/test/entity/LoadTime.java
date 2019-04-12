@@ -4,8 +4,9 @@ import java.util.Date;
 import java.math.BigDecimal;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.webEntity.BasePage;
+import java.io.Serializable;
 
-public class LoadTime extends BasePage {
+public class LoadTime extends BasePage implements Serializable {
 
     /**
      * field comment:实际负荷导入数据记录ID

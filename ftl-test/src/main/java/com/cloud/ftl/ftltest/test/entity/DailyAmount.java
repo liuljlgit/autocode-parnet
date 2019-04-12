@@ -4,8 +4,9 @@ import java.util.Date;
 import java.math.BigDecimal;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.webEntity.BasePage;
+import java.io.Serializable;
 
-public class DailyAmount extends BasePage {
+public class DailyAmount extends BasePage implements Serializable {
 
     /**
      * field comment:日前报量管理ID

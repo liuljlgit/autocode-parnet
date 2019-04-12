@@ -12,12 +12,22 @@ public class BaseQuery extends BasePage {
 
     private List<Criteria> criterias;
 
+    private String orderByClause;
+
     public List<Criteria> getCriterias() {
         return criterias;
     }
 
     public void setCriterias(List<Criteria> criterias) {
         this.criterias = criterias;
+    }
+
+    public String getOrderByClause() {
+        return orderByClause;
+    }
+
+    public void setOrderByClause(String orderByClause) {
+        this.orderByClause = orderByClause;
     }
 
     /**

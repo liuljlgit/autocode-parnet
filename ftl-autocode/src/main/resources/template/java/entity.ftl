@@ -4,8 +4,9 @@ import java.util.Date;
 import java.math.BigDecimal;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.webEntity.BasePage;
+import java.io.Serializable;
 
-public class ${className} extends BasePage {
+public class ${className} extends BasePage implements Serializable {
 <#list tableColEntitys as col>
 
     /**
