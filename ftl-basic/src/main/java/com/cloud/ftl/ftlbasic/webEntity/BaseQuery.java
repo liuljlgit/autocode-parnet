@@ -3,6 +3,7 @@ package com.cloud.ftl.ftlbasic.webEntity;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.query.Criteria;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,5 +96,22 @@ public class BaseQuery extends BasePage {
         }
         criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value);
         criterias.add(criteria);
+    }
+
+    /**
+     * 增加排序操作
+     * @param field
+     * @param opt
+     * @throws Exception
+     */
+    public void addOrderBy(String field,Opt opt) throws Exception {
+        if(!Opt.ASC.equals(opt) && !Opt.DESC.equals(opt)){
+            throw new Exception("opt not equal Opt.ASC and also not equal Opt.DESC");
+        }
+        if(StringUtils.isEmpty(orderByClause)){
+            orderByClause = field + " "+opt.getCode();
+        }else{
+            orderByClause = orderByClause + "," +field + " "+opt.getCode();
+        }
     }
 }

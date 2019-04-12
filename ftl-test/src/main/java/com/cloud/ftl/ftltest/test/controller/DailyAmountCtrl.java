@@ -1,16 +1,19 @@
 package com.cloud.ftl.ftltest.test.controller;
 
+import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.utils.BeanUtil;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
-import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
-import com.cloud.ftl.ftltest.test.webentity.req.DailyAmountReq;
 import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
+import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftltest.test.webentity.req.DailyAmountReq;
+import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -46,8 +49,16 @@ public class DailyAmountCtrl{
     @PostMapping(value = "/dailyamount/list")
     public String getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
         DailyAmountQuery query = BeanUtil.createBean(dailyAmountReq, DailyAmountQuery.class);
-        PageBean<DailyAmount> pageList = dailyAmountService.getDailyAmountPageList(query);
-        return RespEntity.ok(pageList);
+        query.setEntityId(10000);
+        query.setDateTime(Opt.LESS,new Date());
+        query.andCriteria().and(DailyAmount.TABLE_DA_ID,Opt.IN,new ArrayList<Long>(){{
+            add(1000009L);
+            add(1000010L);
+            add(1000011L);
+            add(1000012L);
+        }}).or(DailyAmount.TABLE_PROFIT_HOURS,Opt.BETWEEN,1,100);
+        query.setOrderByClause(DailyAmount.TABLE_DA_ID+" "+Opt.DESC);
+        return RespEntity.ok(dailyAmountService.findDailyAmountList(query));
     }
 
     /**

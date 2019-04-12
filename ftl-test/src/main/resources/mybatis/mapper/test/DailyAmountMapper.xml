@@ -108,11 +108,11 @@
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="page != null and pageSize != null and page > 0" >
-            limit #{index},#{pageSize}
-        </if>
         <if test="orderByClause!=null and orderByClause!=''">
             order by ${orderByClause}
+        </if>
+        <if test="page != null and pageSize != null and page > 0" >
+            limit #{index},#{pageSize}
         </if>
     </select>
 
