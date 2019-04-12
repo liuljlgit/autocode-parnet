@@ -101,17 +101,20 @@ public class BaseQuery extends BasePage {
     /**
      * 增加排序操作
      * @param field
-     * @param opt
+     * @param desc
      * @throws Exception
      */
-    public void addOrderBy(String field,Opt opt) throws Exception {
-        if(!Opt.ASC.equals(opt) && !Opt.DESC.equals(opt)){
-            throw new Exception("opt not equal Opt.ASC and also not equal Opt.DESC");
+    public void addOrderBy(String field,Boolean desc) throws Exception {
+        String order;
+        if(desc){
+            order = Opt.DESC.getCode();
+        }else{
+            order = Opt.ASC.getCode();
         }
         if(StringUtils.isEmpty(orderByClause)){
-            orderByClause = field + " "+opt.getCode();
+            orderByClause = field + " "+order;
         }else{
-            orderByClause = orderByClause + "," +field + " "+opt.getCode();
+            orderByClause = orderByClause + "," +field + " "+order;
         }
     }
 }

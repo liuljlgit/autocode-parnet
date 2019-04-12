@@ -1,10 +1,9 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.util.Date;
-import java.math.BigDecimal;
-import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.webEntity.BasePage;
+
 import java.io.Serializable;
+import java.util.Date;
 
 public class LoadTime extends BasePage implements Serializable {
 
@@ -45,25 +44,18 @@ public class LoadTime extends BasePage implements Serializable {
 
 
     public static final transient String PROP_LT_ID = "ltId";
-    public static final transient String TABLE_LT_ID = "lt_id";
 
     public static final transient String PROP_ENTITY_ID = "entityId";
-    public static final transient String TABLE_ENTITY_ID = "entity_id";
 
     public static final transient String PROP_START_TIME = "startTime";
-    public static final transient String TABLE_START_TIME = "start_time";
 
     public static final transient String PROP_END_TIME = "endTime";
-    public static final transient String TABLE_END_TIME = "end_time";
 
     public static final transient String PROP_STATUS = "status";
-    public static final transient String TABLE_STATUS = "status";
 
     public static final transient String PROP_CREATE_TIME = "createTime";
-    public static final transient String TABLE_CREATE_TIME = "create_time";
 
     public static final transient String PROP_STATUS_TIME = "statusTime";
-    public static final transient String TABLE_STATUS_TIME = "status_time";
 
 
     public Long getLtId() {
