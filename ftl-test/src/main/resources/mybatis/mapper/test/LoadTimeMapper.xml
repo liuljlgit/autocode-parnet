@@ -15,6 +15,14 @@
         lt_id,entity_id,start_time,end_time,status,create_time,status_time
     </sql>
 
+    <sql id="Base_Object_List">
+        #{ltId},#{entityId},#{startTime},#{endTime},#{status},#{createTime},#{statusTime}
+    </sql>
+
+    <sql id="Base_Item_List">
+        #{item.ltId},#{item.entityId},#{item.startTime},#{item.endTime},#{item.status},#{item.createTime},#{item.statusTime}
+    </sql>
+
     <sql id="where_sql">
         <if test="criterias != null">
             <foreach collection="criterias" item="criteria" separator=" ">
@@ -102,6 +110,151 @@
         select count(*) from load_time
         <where>
             <include refid="where_sql" />
+        </where>
+    </select>
+
+    <!--插入对象-->
+    <insert id="addLoadTime">
+        insert into load_time(<include refid="Base_Column_List" />)
+        values(<include refid="Base_Object_List" />)
+    </insert>
+
+    <!--批量插入对象-->
+    <insert id="batchAddLoadTime">
+        insert into load_time(<include refid="Base_Column_List" />)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (<include refid="Base_Item_List" />)
+        </foreach>
+    </insert>
+
+    <!--更新对象-->
+    <update id="updateLoadTime">
+        update load_time
+        <set>
+            <if test="ltId != null">
+                lt_id = #{ltId},
+            </if>
+            <if test="entityId != null">
+                entity_id = #{entityId},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="statusTime != null">
+                status_time = #{statusTime}
+            </if>
+        </set>
+        <where>
+            AND lt_id = #{ltId}
+        </where>
+    </update>
+
+    <!--批量更新对象-->
+    <update id="batchUpdateLoadTime">
+        <foreach collection="list" separator=";" item="item">
+            update load_time
+            <set>
+                <if test="item.ltId != null">
+                    lt_id = #{item.ltId},
+                </if>
+                <if test="item.entityId != null">
+                    entity_id = #{item.entityId},
+                </if>
+                <if test="item.startTime != null">
+                    start_time = #{item.startTime},
+                </if>
+                <if test="item.endTime != null">
+                    end_time = #{item.endTime},
+                </if>
+                <if test="item.status != null">
+                    status = #{item.status},
+                </if>
+                <if test="item.createTime != null">
+                    create_time = #{item.createTime},
+                </if>
+                <if test="item.statusTime != null">
+                    status_time = #{item.statusTime}
+                </if>
+            </set>
+            <where>
+                AND lt_id = #{item.ltId}
+            </where>
+        </foreach>
+    </update>
+
+    <!--更新对象(全更新)-->
+    <update id="fullUpdateLoadTime">
+        update load_time
+        <set>
+            lt_id = #{ltId},
+            entity_id = #{entityId},
+            start_time = #{startTime},
+            end_time = #{endTime},
+            status = #{status},
+            create_time = #{createTime},
+            status_time = #{statusTime}
+        </set>
+        <where>
+            AND lt_id = #{ltId}
+        </where>
+    </update>
+
+    <!--批量更新对象(全更新)-->
+    <update id="batchFullUpdateLoadTime">
+        <foreach collection="list" separator=";" item="item">
+            update load_time
+            <set>
+                lt_id = #{item.ltId},
+                entity_id = #{item.entityId},
+                start_time = #{item.startTime},
+                end_time = #{item.endTime},
+                status = #{item.status},
+                create_time = #{item.createTime},
+                status_time = #{item.statusTime}
+            </set>
+            <where>
+                AND lt_id = #{item.ltId}
+            </where>
+        </foreach>
+    </update>
+
+    <!--根据主键删除对象-->
+    <delete id="deleteLoadTime">
+        delete from load_time
+        <where>
+            AND lt_id = #{ltId}
+        </where>
+    </delete>
+
+    <!-- 批量删除对象 -->
+    <delete id="batchDeleteLoadTime">
+        delete from load_time
+        <where>
+            lt_id in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+                #{item}
+            </foreach>
+        </where>
+    </delete>
+
+    <!--根据ID列表获取记录列表-->
+    <select id="findLoadTimeByIdList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from load_time
+        <where>
+            lt_id in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+                #{item}
+            </foreach>
         </where>
     </select>
 

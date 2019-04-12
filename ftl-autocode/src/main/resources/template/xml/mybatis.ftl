@@ -17,6 +17,20 @@
 
     </sql>
 
+    <sql id="Base_Object_List">
+    <#list tableColEntitys as col>
+<#if col_index == 0>        ${r'#{'}${col.fieldJavaName}}<#else>${r'#{'}${col.fieldJavaName}}</#if><#if col_index < (tableColEntitys?size - 1)>,</#if><#rt>
+    </#list>
+
+    </sql>
+
+    <sql id="Base_Item_List">
+    <#list tableColEntitys as col>
+<#if col_index == 0>        ${r'#{item.'}${col.fieldJavaName}}<#else>${r'#{item.'}${col.fieldJavaName}}</#if><#if col_index < (tableColEntitys?size - 1)>,</#if><#rt>
+    </#list>
+
+    </sql>
+
     <sql id="where_sql">
         <if test="criterias != null">
             <foreach collection="criterias" item="criteria" separator=" ">
@@ -104,6 +118,111 @@
         select count(*) from ${tableName}
         <where>
             <include refid="where_sql" />
+        </where>
+    </select>
+
+    <!--插入对象-->
+    <insert id="add${className}">
+        insert into ${tableName}(<include refid="Base_Column_List" />)
+        values(<include refid="Base_Object_List" />)
+    </insert>
+
+    <!--批量插入对象-->
+    <insert id="batchAdd${className}">
+        insert into ${tableName}(<include refid="Base_Column_List" />)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (<include refid="Base_Item_List" />)
+        </foreach>
+    </insert>
+
+    <!--更新对象-->
+    <update id="update${className}">
+        update ${tableName}
+        <set>
+            <#list tableColEntitys as col>
+            <if test="${col.fieldJavaName} != null">
+                ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+            </if>
+            </#list>
+        </set>
+        <where>
+            AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
+        </where>
+    </update>
+
+    <!--批量更新对象-->
+    <update id="batchUpdate${className}">
+        <foreach collection="list" separator=";" item="item">
+            update ${tableName}
+            <set>
+                <#list tableColEntitys as col>
+                <if test="item.${col.fieldJavaName} != null">
+                    ${col.field} = ${r'#{item.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+                </if>
+                </#list>
+            </set>
+            <where>
+                AND ${IdColEntity.field} = ${r'#{item.'}${IdColEntity.fieldJavaName}}
+            </where>
+        </foreach>
+    </update>
+
+    <!--更新对象(全更新)-->
+    <update id="fullUpdate${className}">
+        update ${tableName}
+        <set>
+            <#list tableColEntitys as col>
+            ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+            </#list>
+        </set>
+        <where>
+            AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
+        </where>
+    </update>
+
+    <!--批量更新对象(全更新)-->
+    <update id="batchFullUpdate${className}">
+        <foreach collection="list" separator=";" item="item">
+            update ${tableName}
+            <set>
+                <#list tableColEntitys as col>
+                ${col.field} = ${r'#{item.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+                </#list>
+            </set>
+            <where>
+                AND ${IdColEntity.field} = ${r'#{item.'}${IdColEntity.fieldJavaName}}
+            </where>
+        </foreach>
+    </update>
+
+    <!--根据主键删除对象-->
+    <delete id="delete${className}">
+        delete from ${tableName}
+        <where>
+            AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
+        </where>
+    </delete>
+
+    <!-- 批量删除对象 -->
+    <delete id="batchDelete${className}">
+        delete from ${tableName}
+        <where>
+            ${IdColEntity.field} in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+                ${r'#{'}item}
+            </foreach>
+        </where>
+    </delete>
+
+    <!--根据ID列表获取记录列表-->
+    <select id="find${className}ByIdList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from ${tableName}
+        <where>
+            ${IdColEntity.field} in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+                ${r'#{'}item}
+            </foreach>
         </where>
     </select>
 

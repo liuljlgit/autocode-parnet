@@ -38,4 +38,63 @@ public interface I${className}Dao {
      * @return
      */
     Long getTotal${className}(${className}Query query);
+
+    /**
+     * 新增对象
+     * @param ${objectName}
+     * @return
+     */
+    Integer add${className}(${className} ${objectName});
+
+    /**
+     * 批量新增对象
+     * @param list
+     */
+    void batchAdd${className}(List<${className}> list);
+
+    /**
+     * 更新对象
+     * @param ${objectName}
+     * @return
+     */
+    Integer update${className}(${className} ${objectName});
+
+    /**
+     * 批量更新对象
+     * @param list
+     */
+    void batchUpdate${className}(List<${className}> list);
+
+    /**
+     * 更新对象（全更新）
+     * @param ${objectName}
+     * @return
+     */
+    Integer fullUpdate${className}(${className} ${objectName});
+
+    /**
+     * 批量更新对象（全更新）
+     * @param list
+     */
+    void batchFullUpdate${className}(List<${className}> list);
+
+    /**
+     * 删除对象
+     * @param ${IdColEntity.fieldJavaName}
+     * @return
+     */
+    Integer delete${className}(${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName});
+
+    /**
+     * 批量删除对象
+     * @param list
+     */
+    void batchDelete${className}(List<Long> list);
+
+   /**
+    * 根据ID列表从数据库中查询列表
+    * @param list
+    * @return
+    */
+    List<${className}> find${className}ByIdList(List<${IdColEntity.fieldJavaType}> list);
 }
