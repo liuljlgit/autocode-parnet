@@ -27,7 +27,7 @@ import java.util.Objects;
         "respPath":"com.cloud.ftl.ftltest.test.webentity.resp",
         "reqPath":"com.cloud.ftl.ftltest.test.webentity.req",
         "xmlPath":"mybatis.mapper.test",
-        "isUpdate":true,
+        "update":true,
         "tableNames":["daily_amount","load_time"]
     }
 */

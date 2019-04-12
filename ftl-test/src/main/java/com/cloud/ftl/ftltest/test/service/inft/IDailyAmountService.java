@@ -1,10 +1,9 @@
 package com.cloud.ftl.ftltest.test.service.inft;
 
+import java.util.List;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
-
-import java.util.List;
 
 /**
  * IDailyAmountService service接口类

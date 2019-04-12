@@ -108,7 +108,7 @@ public class GenReq {
      * 1.如果是，那么是customcode里面的代码将不会被替换
      * 2.如果不是，将会生成新的文件
      */
-    private Boolean isUpdate = Boolean.FALSE;
+    private Boolean update = Boolean.FALSE;
 
     /**
      * 表名称数组
@@ -205,11 +205,11 @@ public class GenReq {
     }
 
     public Boolean getUpdate() {
-        return isUpdate;
+        return update;
     }
 
     public void setUpdate(Boolean update) {
-        isUpdate = update;
+        this.update = update;
     }
 
     public List<String> getTableNames() {

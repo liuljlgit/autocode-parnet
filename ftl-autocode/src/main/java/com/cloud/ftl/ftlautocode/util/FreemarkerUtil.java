@@ -37,7 +37,7 @@ public class FreemarkerUtil {
 			if(isUpdate){
 				//获取自定义代码进行替换
 				String fileContent = FileUtil.readFile(new File(getOutPutFilePath(fileName,packagePath,createJava)));
-				data.put("customCode",getCustomCode(fileContent));
+				data.put("customCode",getCustomCode(fileContent,createJava));
 			}
 			fileWriter = new FileWriter(getOutPutFilePath(fileName,packagePath,createJava));
 			temp.process(data, fileWriter);
@@ -84,13 +84,21 @@ public class FreemarkerUtil {
 	/**
 	 * 得到自定义代码
 	 * @param fileContent
+	 * @param createJava
 	 * @return
 	 */
-	public static String getCustomCode(String fileContent) {
+	public static String getCustomCode(String fileContent, Boolean createJava) {
 		String result = "";
 		if(fileContent != null) {
-			String beginCode = GenConst.JAVA_CUSTOM_BEGIN_CODE;
-			String endCode = GenConst.JAVA_CUSTOM_END_CODE;
+			String beginCode;
+			String endCode;
+			if(createJava){
+				beginCode = GenConst.JAVA_CUSTOM_BEGIN_CODE;
+				endCode = GenConst.JAVA_CUSTOM_END_CODE;
+			}else{
+				beginCode = GenConst.XML_CUSTOM_BEGIN_CODE;
+				endCode = GenConst.XML_CUSTOM_END_CODE;
+			}
 			int startIndex = fileContent.indexOf(beginCode) + beginCode.length();
 			int endIndex = fileContent.indexOf(endCode);
 			if(startIndex != -1 && endIndex != -1) {
