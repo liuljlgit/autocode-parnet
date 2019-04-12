@@ -70,12 +70,12 @@ public class LoadTimeQuery extends BaseQuery {
     }
 
     public void setLtId(Long ltId) throws Exception {
-        addCriteria("lt_id",ltId);
+        addCriteria(LoadTimeQuery.TABLE_LT_ID,ltId);
         this.ltId = ltId;
     }
 
     public void setLtId(Opt opt,Long ltId) throws Exception {
-        addCriteria("lt_id",ltId,opt);
+        addCriteria(LoadTimeQuery.TABLE_LT_ID,ltId,opt);
         this.ltId = ltId;
     }
 
@@ -84,12 +84,12 @@ public class LoadTimeQuery extends BaseQuery {
     }
 
     public void setEntityId(Integer entityId) throws Exception {
-        addCriteria("entity_id",entityId);
+        addCriteria(LoadTimeQuery.TABLE_ENTITY_ID,entityId);
         this.entityId = entityId;
     }
 
     public void setEntityId(Opt opt,Integer entityId) throws Exception {
-        addCriteria("entity_id",entityId,opt);
+        addCriteria(LoadTimeQuery.TABLE_ENTITY_ID,entityId,opt);
         this.entityId = entityId;
     }
 
@@ -98,12 +98,12 @@ public class LoadTimeQuery extends BaseQuery {
     }
 
     public void setStartTime(Date startTime) throws Exception {
-        addCriteria("start_time",startTime);
+        addCriteria(LoadTimeQuery.TABLE_START_TIME,startTime);
         this.startTime = startTime;
     }
 
     public void setStartTime(Opt opt,Date startTime) throws Exception {
-        addCriteria("start_time",startTime,opt);
+        addCriteria(LoadTimeQuery.TABLE_START_TIME,startTime,opt);
         this.startTime = startTime;
     }
 
@@ -112,12 +112,12 @@ public class LoadTimeQuery extends BaseQuery {
     }
 
     public void setEndTime(Date endTime) throws Exception {
-        addCriteria("end_time",endTime);
+        addCriteria(LoadTimeQuery.TABLE_END_TIME,endTime);
         this.endTime = endTime;
     }
 
     public void setEndTime(Opt opt,Date endTime) throws Exception {
-        addCriteria("end_time",endTime,opt);
+        addCriteria(LoadTimeQuery.TABLE_END_TIME,endTime,opt);
         this.endTime = endTime;
     }
 
@@ -126,12 +126,12 @@ public class LoadTimeQuery extends BaseQuery {
     }
 
     public void setStatus(Byte status) throws Exception {
-        addCriteria("status",status);
+        addCriteria(LoadTimeQuery.TABLE_STATUS,status);
         this.status = status;
     }
 
     public void setStatus(Opt opt,Byte status) throws Exception {
-        addCriteria("status",status,opt);
+        addCriteria(LoadTimeQuery.TABLE_STATUS,status,opt);
         this.status = status;
     }
 
@@ -140,12 +140,12 @@ public class LoadTimeQuery extends BaseQuery {
     }
 
     public void setCreateTime(Date createTime) throws Exception {
-        addCriteria("create_time",createTime);
+        addCriteria(LoadTimeQuery.TABLE_CREATE_TIME,createTime);
         this.createTime = createTime;
     }
 
     public void setCreateTime(Opt opt,Date createTime) throws Exception {
-        addCriteria("create_time",createTime,opt);
+        addCriteria(LoadTimeQuery.TABLE_CREATE_TIME,createTime,opt);
         this.createTime = createTime;
     }
 
@@ -154,12 +154,12 @@ public class LoadTimeQuery extends BaseQuery {
     }
 
     public void setStatusTime(Date statusTime) throws Exception {
-        addCriteria("status_time",statusTime);
+        addCriteria(LoadTimeQuery.TABLE_STATUS_TIME,statusTime);
         this.statusTime = statusTime;
     }
 
     public void setStatusTime(Opt opt,Date statusTime) throws Exception {
-        addCriteria("status_time",statusTime,opt);
+        addCriteria(LoadTimeQuery.TABLE_STATUS_TIME,statusTime,opt);
         this.statusTime = statusTime;
     }
 

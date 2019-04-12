@@ -1,9 +1,10 @@
 package com.cloud.ftl.ftltest.test.query;
 
-import java.util.Date;
-import java.math.BigDecimal;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 public class DailyAmountQuery extends BaseQuery {
 
@@ -134,12 +135,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setDaId(Long daId) throws Exception {
-        addCriteria("da_id",daId);
+        addCriteria(DailyAmountQuery.TABLE_DA_ID,daId);
         this.daId = daId;
     }
 
     public void setDaId(Opt opt,Long daId) throws Exception {
-        addCriteria("da_id",daId,opt);
+        addCriteria(DailyAmountQuery.TABLE_DA_ID,daId,opt);
         this.daId = daId;
     }
 
@@ -148,12 +149,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setEntityId(Integer entityId) throws Exception {
-        addCriteria("entity_id",entityId);
+        addCriteria(DailyAmountQuery.TABLE_ENTITY_ID,entityId);
         this.entityId = entityId;
     }
 
     public void setEntityId(Opt opt,Integer entityId) throws Exception {
-        addCriteria("entity_id",entityId,opt);
+        addCriteria(DailyAmountQuery.TABLE_ENTITY_ID,entityId,opt);
         this.entityId = entityId;
     }
 
@@ -162,12 +163,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setDateTime(Date dateTime) throws Exception {
-        addCriteria("date_time",dateTime);
+        addCriteria(DailyAmountQuery.TABLE_DATE_TIME,dateTime);
         this.dateTime = dateTime;
     }
 
     public void setDateTime(Opt opt,Date dateTime) throws Exception {
-        addCriteria("date_time",dateTime,opt);
+        addCriteria(DailyAmountQuery.TABLE_DATE_TIME,dateTime,opt);
         this.dateTime = dateTime;
     }
 
@@ -176,12 +177,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setSettProfit(BigDecimal settProfit) throws Exception {
-        addCriteria("sett_profit",settProfit);
+        addCriteria(DailyAmountQuery.TABLE_SETT_PROFIT,settProfit);
         this.settProfit = settProfit;
     }
 
     public void setSettProfit(Opt opt,BigDecimal settProfit) throws Exception {
-        addCriteria("sett_profit",settProfit,opt);
+        addCriteria(DailyAmountQuery.TABLE_SETT_PROFIT,settProfit,opt);
         this.settProfit = settProfit;
     }
 
@@ -190,12 +191,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setExpendProfit(BigDecimal expendProfit) throws Exception {
-        addCriteria("expend_profit",expendProfit);
+        addCriteria(DailyAmountQuery.TABLE_EXPEND_PROFIT,expendProfit);
         this.expendProfit = expendProfit;
     }
 
     public void setExpendProfit(Opt opt,BigDecimal expendProfit) throws Exception {
-        addCriteria("expend_profit",expendProfit,opt);
+        addCriteria(DailyAmountQuery.TABLE_EXPEND_PROFIT,expendProfit,opt);
         this.expendProfit = expendProfit;
     }
 
@@ -204,12 +205,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setIncomeProfit(BigDecimal incomeProfit) throws Exception {
-        addCriteria("income_profit",incomeProfit);
+        addCriteria(DailyAmountQuery.TABLE_INCOME_PROFIT,incomeProfit);
         this.incomeProfit = incomeProfit;
     }
 
     public void setIncomeProfit(Opt opt,BigDecimal incomeProfit) throws Exception {
-        addCriteria("income_profit",incomeProfit,opt);
+        addCriteria(DailyAmountQuery.TABLE_INCOME_PROFIT,incomeProfit,opt);
         this.incomeProfit = incomeProfit;
     }
 
@@ -218,12 +219,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setProfitHours(Byte profitHours) throws Exception {
-        addCriteria("profit_hours",profitHours);
+        addCriteria(DailyAmountQuery.TABLE_PROFIT_HOURS,profitHours);
         this.profitHours = profitHours;
     }
 
     public void setProfitHours(Opt opt,Byte profitHours) throws Exception {
-        addCriteria("profit_hours",profitHours,opt);
+        addCriteria(DailyAmountQuery.TABLE_PROFIT_HOURS,profitHours,opt);
         this.profitHours = profitHours;
     }
 
@@ -232,12 +233,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setDeficitHours(Byte deficitHours) throws Exception {
-        addCriteria("deficit_hours",deficitHours);
+        addCriteria(DailyAmountQuery.TABLE_DEFICIT_HOURS,deficitHours);
         this.deficitHours = deficitHours;
     }
 
     public void setDeficitHours(Opt opt,Byte deficitHours) throws Exception {
-        addCriteria("deficit_hours",deficitHours,opt);
+        addCriteria(DailyAmountQuery.TABLE_DEFICIT_HOURS,deficitHours,opt);
         this.deficitHours = deficitHours;
     }
 
@@ -246,12 +247,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setMinusDeviation(BigDecimal minusDeviation) throws Exception {
-        addCriteria("minus_deviation",minusDeviation);
+        addCriteria(DailyAmountQuery.TABLE_MINUS_DEVIATION,minusDeviation);
         this.minusDeviation = minusDeviation;
     }
 
     public void setMinusDeviation(Opt opt,BigDecimal minusDeviation) throws Exception {
-        addCriteria("minus_deviation",minusDeviation,opt);
+        addCriteria(DailyAmountQuery.TABLE_MINUS_DEVIATION,minusDeviation,opt);
         this.minusDeviation = minusDeviation;
     }
 
@@ -260,12 +261,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setPositiveDeviation(BigDecimal positiveDeviation) throws Exception {
-        addCriteria("positive_deviation",positiveDeviation);
+        addCriteria(DailyAmountQuery.TABLE_POSITIVE_DEVIATION,positiveDeviation);
         this.positiveDeviation = positiveDeviation;
     }
 
     public void setPositiveDeviation(Opt opt,BigDecimal positiveDeviation) throws Exception {
-        addCriteria("positive_deviation",positiveDeviation,opt);
+        addCriteria(DailyAmountQuery.TABLE_POSITIVE_DEVIATION,positiveDeviation,opt);
         this.positiveDeviation = positiveDeviation;
     }
 
@@ -274,12 +275,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setStatus(Byte status) throws Exception {
-        addCriteria("status",status);
+        addCriteria(DailyAmountQuery.TABLE_STATUS,status);
         this.status = status;
     }
 
     public void setStatus(Opt opt,Byte status) throws Exception {
-        addCriteria("status",status,opt);
+        addCriteria(DailyAmountQuery.TABLE_STATUS,status,opt);
         this.status = status;
     }
 
@@ -288,12 +289,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setCe(Byte ce) throws Exception {
-        addCriteria("ce",ce);
+        addCriteria(DailyAmountQuery.TABLE_CE,ce);
         this.ce = ce;
     }
 
     public void setCe(Opt opt,Byte ce) throws Exception {
-        addCriteria("ce",ce,opt);
+        addCriteria(DailyAmountQuery.TABLE_CE,ce,opt);
         this.ce = ce;
     }
 
@@ -302,12 +303,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setSa(Byte sa) throws Exception {
-        addCriteria("sa",sa);
+        addCriteria(DailyAmountQuery.TABLE_SA,sa);
         this.sa = sa;
     }
 
     public void setSa(Opt opt,Byte sa) throws Exception {
-        addCriteria("sa",sa,opt);
+        addCriteria(DailyAmountQuery.TABLE_SA,sa,opt);
         this.sa = sa;
     }
 
@@ -316,12 +317,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setCreateTime(Date createTime) throws Exception {
-        addCriteria("create_time",createTime);
+        addCriteria(DailyAmountQuery.TABLE_CREATE_TIME,createTime);
         this.createTime = createTime;
     }
 
     public void setCreateTime(Opt opt,Date createTime) throws Exception {
-        addCriteria("create_time",createTime,opt);
+        addCriteria(DailyAmountQuery.TABLE_CREATE_TIME,createTime,opt);
         this.createTime = createTime;
     }
 
@@ -330,12 +331,12 @@ public class DailyAmountQuery extends BaseQuery {
     }
 
     public void setStatusTime(Date statusTime) throws Exception {
-        addCriteria("status_time",statusTime);
+        addCriteria(DailyAmountQuery.TABLE_STATUS_TIME,statusTime);
         this.statusTime = statusTime;
     }
 
     public void setStatusTime(Opt opt,Date statusTime) throws Exception {
-        addCriteria("status_time",statusTime,opt);
+        addCriteria(DailyAmountQuery.TABLE_STATUS_TIME,statusTime,opt);
         this.statusTime = statusTime;
     }
 

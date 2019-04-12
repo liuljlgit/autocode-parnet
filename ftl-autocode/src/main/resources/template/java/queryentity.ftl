@@ -27,12 +27,12 @@ public class ${className}Query extends BaseQuery {
     }
 
     public void set${col.fieldJavaName?cap_first}(${col.fieldJavaType} ${col.fieldJavaName}) throws Exception {
-        addCriteria("${col.field}",${col.fieldJavaName});
+        addCriteria(${className}Query.TABLE_${col.field?upper_case},${col.fieldJavaName});
         this.${col.fieldJavaName} = ${col.fieldJavaName};
     }
 
     public void set${col.fieldJavaName?cap_first}(Opt opt,${col.fieldJavaType} ${col.fieldJavaName}) throws Exception {
-        addCriteria("${col.field}",${col.fieldJavaName},opt);
+        addCriteria(${className}Query.TABLE_${col.field?upper_case},${col.fieldJavaName},opt);
         this.${col.fieldJavaName} = ${col.fieldJavaName};
     }
 </#list>
