@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
+import org.springframework.util.CollectionUtils;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import ${entityPackagePath}.${className};
 import ${inftServicePackagePath}.I${className}Service;
@@ -41,6 +42,21 @@ public class ${className}ServiceImpl implements I${className}Service {
             throw new BusiException("没有符合条件的记录！") ;
         }
         return ${objectName};
+    }
+
+    /**
+     * 普通查询获取单个结果
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ${className} selectOne${className}(${className}Query query) throws Exception {
+        List<${className}> list = find${className}List(query);
+        if(!CollectionUtils.isEmpty(list)){
+            return list.get(0);
+        }
+        return null;
     }
 
     /**

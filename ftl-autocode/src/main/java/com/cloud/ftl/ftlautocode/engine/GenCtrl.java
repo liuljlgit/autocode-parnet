@@ -11,7 +11,7 @@ import java.util.Objects;
 
 /*  请求参数如下所示:
     {
-        "mySqlUrl":"jdbc:mysql://192.168.123.136:3306/test",
+        "mySqlUrl":"jdbc:mysql://192.168.123.135:3306/test",
         "mySqlName":"root",
         "mySqlPass":"root",
         "mySqlDriver":"com.mysql.jdbc.Driver",
@@ -20,9 +20,10 @@ import java.util.Objects;
         "inftServicePath":"com.cloud.ftl.ftltest.test.service.inft",
         "implServicePath":"com.cloud.ftl.ftltest.test.service.impl",
         "inftRedisPath":"com.cloud.ftl.ftltest.test.cache.inft",
-        "implRedisPath":"com.cloud.ftl.ftltest.test.cache.inft",
+        "implRedisPath":"com.cloud.ftl.ftltest.test.cache.impl",
         "daoPath":"com.cloud.ftl.ftltest.test.dao",
         "entityPath":"com.cloud.ftl.ftltest.test.entity",
+        "queryEntityPath":"com.cloud.ftl.ftltest.test.query",
         "respPath":"com.cloud.ftl.ftltest.test.webentity.resp",
         "reqPath":"com.cloud.ftl.ftltest.test.webentity.req",
         "xmlPath":"mybatis.mapper.test",

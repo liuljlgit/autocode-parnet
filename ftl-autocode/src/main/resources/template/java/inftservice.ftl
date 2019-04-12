@@ -20,6 +20,14 @@ public interface I${className}Service {
     ${className} load${className}ByKey(${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception;
 
     /**
+     * 普通查询获取单个结果
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    ${className} selectOne${className}(${className}Query query) throws Exception;
+
+    /**
      * 分页查询列表
      * @param query
      * @return

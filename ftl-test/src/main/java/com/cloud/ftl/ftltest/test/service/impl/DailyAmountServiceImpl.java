@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +43,21 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
             throw new BusiException("没有符合条件的记录！") ;
         }
         return dailyAmount;
+    }
+
+    /**
+     * 普通查询获取单个结果
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public DailyAmount selectOneDailyAmount(DailyAmountQuery query) throws Exception {
+        List<DailyAmount> list = findDailyAmountList(query);
+        if(!CollectionUtils.isEmpty(list)){
+            return list.get(0);
+        }
+        return null;
     }
 
     /**
