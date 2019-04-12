@@ -18,4 +18,8 @@ public interface I${className}Redis {
      */
     void initMax${className}Id();
 
+    //------------------------ custom code begin ------------------------//
+    ${customCode!""}
+    //======================== custom code end ========================//
+
 }

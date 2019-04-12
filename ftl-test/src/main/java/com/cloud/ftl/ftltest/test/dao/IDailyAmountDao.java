@@ -98,4 +98,9 @@ public interface IDailyAmountDao {
     * @return
     */
     List<DailyAmount> findDailyAmountByIdList(List<Long> list);
+
+    //------------------------ custom code begin ------------------------//
+    
+    //======================== custom code end ========================//
+
 }

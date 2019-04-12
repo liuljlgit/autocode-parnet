@@ -18,7 +18,6 @@ import java.util.Objects;
  * @author lijun
  */
 @RestController
-@RequestMapping("/${className?lower_case}")
 public class ${className}Ctrl{
 
   @Autowired
@@ -30,7 +29,7 @@ public class ${className}Ctrl{
     * @return
     * @throws Exception
     */
-    @GetMapping(value = "/{${IdColEntity.fieldJavaName}}")
+    @GetMapping(value = "/${className?lower_case}/{${IdColEntity.fieldJavaName}}")
     public String load${className}ByKey(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
          throw new BusiException("请输入要获取的数据的ID") ;
@@ -44,15 +43,41 @@ public class ${className}Ctrl{
     * @return
     * @throws Exception
     */
-    @PostMapping(value = "/list")
+    @PostMapping(value = "/${className?lower_case}/list")
     public String get${className}PageList(@RequestBody ${className}Req ${objectName}Req) throws Exception {
         ${className}Query query = BeanUtil.createBean(${objectName}Req, ${className}Query.class);
         PageBean<${className}> pageList = ${objectName}Service.get${className}PageList(query);
         return RespEntity.ok(pageList);
     }
 
+    /**
+    * ${className} 新增或者修改记录，根据主键判断，主键为空则新增，否则修改。
+    * @return
+    * @throws Exception
+    */
+    @PostMapping(value = "/${className?lower_case}")
+    public String save${className}(@RequestBody ${className}Req ${objectName}Req) throws  Exception{
+        ${className} ${objectName} = BeanUtil.createBean(${objectName}Req, ${className}.class);
+        ${objectName}Service.save${className}(${objectName});
+        return RespEntity.ok();
+    }
+
+    /**
+    * ${className} 根据主键删除数据
+    * @return
+    * @throws Exception
+    */
+    @DeleteMapping(value = "/${className?lower_case}/{${IdColEntity.fieldJavaName}}")
+    public String delete${className}(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws  Exception{
+        if(Objects.isNull(${IdColEntity.fieldJavaName})){
+           throw new BusiException("删除主键不可为空") ;
+        }
+        ${objectName}Service.delete${className}(${IdColEntity.fieldJavaName});
+        return RespEntity.ok();
+    }
 
 	//------------------------ custom code begin ------------------------//
     ${customCode!""}
 	//======================== custom code end ========================//
+
 }

@@ -18,7 +18,6 @@ import java.util.Objects;
  * @author lijun
  */
 @RestController
-@RequestMapping("/dailyamount")
 public class DailyAmountCtrl{
 
   @Autowired
@@ -30,7 +29,7 @@ public class DailyAmountCtrl{
     * @return
     * @throws Exception
     */
-    @GetMapping(value = "/{daId}")
+    @GetMapping(value = "/dailyamount/{daId}")
     public String loadDailyAmountByKey(@PathVariable(value="daId") Long daId) throws Exception {
         if(Objects.isNull(daId)){
          throw new BusiException("请输入要获取的数据的ID") ;
@@ -44,15 +43,41 @@ public class DailyAmountCtrl{
     * @return
     * @throws Exception
     */
-    @PostMapping(value = "/list")
+    @PostMapping(value = "/dailyamount/list")
     public String getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
         DailyAmountQuery query = BeanUtil.createBean(dailyAmountReq, DailyAmountQuery.class);
         PageBean<DailyAmount> pageList = dailyAmountService.getDailyAmountPageList(query);
         return RespEntity.ok(pageList);
     }
 
+    /**
+    * DailyAmount 新增或者修改记录，根据主键判断，主键为空则新增，否则修改。
+    * @return
+    * @throws Exception
+    */
+    @PostMapping(value = "/dailyamount")
+    public String saveDailyAmount(@RequestBody DailyAmountReq dailyAmountReq) throws  Exception{
+        DailyAmount dailyAmount = BeanUtil.createBean(dailyAmountReq, DailyAmount.class);
+        dailyAmountService.saveDailyAmount(dailyAmount);
+        return RespEntity.ok();
+    }
+
+    /**
+    * DailyAmount 根据主键删除数据
+    * @return
+    * @throws Exception
+    */
+    @DeleteMapping(value = "/dailyamount/{daId}")
+    public String deleteDailyAmount(@PathVariable(value="daId") Long daId) throws  Exception{
+        if(Objects.isNull(daId)){
+           throw new BusiException("删除主键不可为空") ;
+        }
+        dailyAmountService.deleteDailyAmount(daId);
+        return RespEntity.ok();
+    }
 
 	//------------------------ custom code begin ------------------------//
     
 	//======================== custom code end ========================//
+
 }

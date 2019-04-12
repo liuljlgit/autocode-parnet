@@ -97,4 +97,9 @@ public interface I${className}Dao {
     * @return
     */
     List<${className}> find${className}ByIdList(List<${IdColEntity.fieldJavaType}> list);
+
+    //------------------------ custom code begin ------------------------//
+    ${customCode!""}
+    //======================== custom code end ========================//
+
 }

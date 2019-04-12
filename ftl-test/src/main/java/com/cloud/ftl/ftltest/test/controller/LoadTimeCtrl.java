@@ -18,7 +18,6 @@ import java.util.Objects;
  * @author lijun
  */
 @RestController
-@RequestMapping("/loadtime")
 public class LoadTimeCtrl{
 
   @Autowired
@@ -30,7 +29,7 @@ public class LoadTimeCtrl{
     * @return
     * @throws Exception
     */
-    @GetMapping(value = "/{ltId}")
+    @GetMapping(value = "/loadtime/{ltId}")
     public String loadLoadTimeByKey(@PathVariable(value="ltId") Long ltId) throws Exception {
         if(Objects.isNull(ltId)){
          throw new BusiException("请输入要获取的数据的ID") ;
@@ -44,15 +43,41 @@ public class LoadTimeCtrl{
     * @return
     * @throws Exception
     */
-    @PostMapping(value = "/list")
+    @PostMapping(value = "/loadtime/list")
     public String getLoadTimePageList(@RequestBody LoadTimeReq loadTimeReq) throws Exception {
         LoadTimeQuery query = BeanUtil.createBean(loadTimeReq, LoadTimeQuery.class);
         PageBean<LoadTime> pageList = loadTimeService.getLoadTimePageList(query);
         return RespEntity.ok(pageList);
     }
 
+    /**
+    * LoadTime 新增或者修改记录，根据主键判断，主键为空则新增，否则修改。
+    * @return
+    * @throws Exception
+    */
+    @PostMapping(value = "/loadtime")
+    public String saveLoadTime(@RequestBody LoadTimeReq loadTimeReq) throws  Exception{
+        LoadTime loadTime = BeanUtil.createBean(loadTimeReq, LoadTime.class);
+        loadTimeService.saveLoadTime(loadTime);
+        return RespEntity.ok();
+    }
+
+    /**
+    * LoadTime 根据主键删除数据
+    * @return
+    * @throws Exception
+    */
+    @DeleteMapping(value = "/loadtime/{ltId}")
+    public String deleteLoadTime(@PathVariable(value="ltId") Long ltId) throws  Exception{
+        if(Objects.isNull(ltId)){
+           throw new BusiException("删除主键不可为空") ;
+        }
+        loadTimeService.deleteLoadTime(ltId);
+        return RespEntity.ok();
+    }
 
 	//------------------------ custom code begin ------------------------//
     
 	//======================== custom code end ========================//
+
 }

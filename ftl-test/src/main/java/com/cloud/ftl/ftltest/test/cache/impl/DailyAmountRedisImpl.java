@@ -67,4 +67,8 @@ public class DailyAmountRedisImpl extends BaseRedis<String, DailyAmount> impleme
         });
     }
 
+    //------------------------ custom code begin ------------------------//
+    
+    //======================== custom code end ========================//
+        
 }

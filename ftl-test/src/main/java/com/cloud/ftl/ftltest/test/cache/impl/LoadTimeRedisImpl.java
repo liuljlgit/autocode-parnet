@@ -67,4 +67,8 @@ public class LoadTimeRedisImpl extends BaseRedis<String, LoadTime> implements IL
         });
     }
 
+    //------------------------ custom code begin ------------------------//
+    
+    //======================== custom code end ========================//
+        
 }

@@ -98,4 +98,9 @@ public interface ILoadTimeDao {
     * @return
     */
     List<LoadTime> findLoadTimeByIdList(List<Long> list);
+
+    //------------------------ custom code begin ------------------------//
+    
+    //======================== custom code end ========================//
+
 }
