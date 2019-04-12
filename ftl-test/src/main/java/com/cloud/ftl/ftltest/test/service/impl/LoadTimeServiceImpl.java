@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.dao.ILoadTimeDao;
@@ -43,11 +44,30 @@ public class LoadTimeServiceImpl implements ILoadTimeService {
     }
 
     /**
+     * 分页查询列表
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public PageBean<LoadTime> getLoadTimePageList(LoadTimeQuery query) throws Exception {
+        if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
+            throw new BusiException("page and pageSize can not be null");
+        }
+        Long total = loadTimeDao.getTotalLoadTime(query);
+        Long totalPage = (long)Math.ceil((double)total / query.getPageSize());
+        List<LoadTime> loadTimeList = findLoadTimeList(query);
+        return new PageBean<>(totalPage,total,loadTimeList);
+    }
+
+
+    /**
      * 查询列表
      * @param query
      * @return
      * @throws Exception
      */
+    @Override
     public List<LoadTime> findLoadTimeList(LoadTimeQuery query) throws Exception {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");

@@ -1,6 +1,7 @@
 package com.cloud.ftl.ftltest.test.service.inft;
 
 import java.util.List;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 
@@ -17,6 +18,14 @@ public interface ILoadTimeService {
      * @throws Exception
      */
     LoadTime loadLoadTimeByKey(Long ltId) throws Exception;
+
+    /**
+     * 分页查询列表
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    PageBean<LoadTime> getLoadTimePageList(LoadTimeQuery query) throws Exception;
 
     /**
      * 查询列表

@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import ${entityPackagePath}.${className};
 import ${inftServicePackagePath}.I${className}Service;
 import ${daoPackagePath}.I${className}Dao;
@@ -43,11 +44,30 @@ public class ${className}ServiceImpl implements I${className}Service {
     }
 
     /**
+     * 分页查询列表
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public PageBean<${className}> get${className}PageList(${className}Query query) throws Exception {
+        if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
+            throw new BusiException("page and pageSize can not be null");
+        }
+        Long total = ${objectName}Dao.getTotal${className}(query);
+        Long totalPage = (long)Math.ceil((double)total / query.getPageSize());
+        List<${className}> ${objectName}List = find${className}List(query);
+        return new PageBean<>(totalPage,total,${objectName}List);
+    }
+
+
+    /**
      * 查询列表
      * @param query
      * @return
      * @throws Exception
      */
+    @Override
     public List<${className}> find${className}List(${className}Query query) throws Exception {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");

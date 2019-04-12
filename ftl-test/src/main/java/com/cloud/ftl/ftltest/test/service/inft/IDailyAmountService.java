@@ -1,6 +1,7 @@
 package com.cloud.ftl.ftltest.test.service.inft;
 
 import java.util.List;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
 
@@ -17,6 +18,14 @@ public interface IDailyAmountService {
      * @throws Exception
      */
     DailyAmount loadDailyAmountByKey(Long daId) throws Exception;
+
+    /**
+     * 分页查询列表
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    PageBean<DailyAmount> getDailyAmountPageList(DailyAmountQuery query) throws Exception;
 
     /**
      * 查询列表

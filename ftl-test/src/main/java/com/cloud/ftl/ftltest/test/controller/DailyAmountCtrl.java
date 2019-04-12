@@ -1,19 +1,16 @@
 package com.cloud.ftl.ftltest.test.controller;
 
-import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
+import com.cloud.ftl.ftlbasic.utils.BeanUtil;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
+import com.cloud.ftl.ftltest.test.webentity.req.DailyAmountReq;
+import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 /**
@@ -39,12 +36,19 @@ public class DailyAmountCtrl{
          throw new BusiException("请输入要获取的数据的ID") ;
         }
         DailyAmount dailyAmount = dailyAmountService.loadDailyAmountByKey(daId);
-        DailyAmountQuery query = new DailyAmountQuery();
-        query.setEntityId(10000);
-        query.andCriteria().and(DailyAmountQuery.TABLE_DA_ID, Opt.BETWEEN,1000010L,1000013L)
-                .or(DailyAmountQuery.TABLE_DA_ID,Opt.BETWEEN,1000014L,1000015L);
-        List<DailyAmount> dailyAmountList = dailyAmountService.findDailyAmountList(query);
         return RespEntity.ok(new DailyAmountResp(dailyAmount));
+    }
+
+   /**
+    * DailyAmount 根据实体对象查询列表
+    * @return
+    * @throws Exception
+    */
+    @PostMapping(value = "/list")
+    public String getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
+        DailyAmountQuery query = BeanUtil.createBean(dailyAmountReq, DailyAmountQuery.class);
+        PageBean<DailyAmount> pageList = dailyAmountService.getDailyAmountPageList(query);
+        return RespEntity.ok(pageList);
     }
 
 

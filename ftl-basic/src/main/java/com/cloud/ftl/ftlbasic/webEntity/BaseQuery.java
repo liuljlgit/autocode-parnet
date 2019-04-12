@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BaseQuery {
+public class BaseQuery extends BasePage {
 
     private List<Criteria> criterias;
 

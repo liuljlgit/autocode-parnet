@@ -31,4 +31,11 @@ public interface ILoadTimeDao {
      * @return
      */
     List<LoadTime> findLoadTimeList(LoadTimeQuery query);
+
+    /**
+     * 获取查询总数
+     * @param query
+     * @return
+     */
+    Long getTotalLoadTime(LoadTimeQuery query);
 }

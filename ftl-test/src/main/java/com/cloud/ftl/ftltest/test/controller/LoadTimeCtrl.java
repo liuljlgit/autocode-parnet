@@ -2,14 +2,15 @@ package com.cloud.ftl.ftltest.test.controller;
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
+import com.cloud.ftl.ftlbasic.utils.BeanUtil;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.webentity.resp.LoadTimeResp;
+import com.cloud.ftl.ftltest.test.webentity.req.LoadTimeReq;
+import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 /**
@@ -36,6 +37,18 @@ public class LoadTimeCtrl{
         }
         LoadTime loadTime = loadTimeService.loadLoadTimeByKey(ltId);
         return RespEntity.ok(new LoadTimeResp(loadTime));
+    }
+
+   /**
+    * LoadTime 根据实体对象查询列表
+    * @return
+    * @throws Exception
+    */
+    @PostMapping(value = "/list")
+    public String getLoadTimePageList(@RequestBody LoadTimeReq loadTimeReq) throws Exception {
+        LoadTimeQuery query = BeanUtil.createBean(loadTimeReq, LoadTimeQuery.class);
+        PageBean<LoadTime> pageList = loadTimeService.getLoadTimePageList(query);
+        return RespEntity.ok(pageList);
     }
 
 

@@ -3,8 +3,9 @@ package ${entityPackagePath};
 import java.util.Date;
 import java.math.BigDecimal;
 import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.cloud.ftl.ftlbasic.webEntity.BasePage;
 
-public class ${className} {
+public class ${className} extends BasePage {
 <#list tableColEntitys as col>
 
     /**

@@ -31,4 +31,11 @@ public interface IDailyAmountDao {
      * @return
      */
     List<DailyAmount> findDailyAmountList(DailyAmountQuery query);
+
+    /**
+     * 获取查询总数
+     * @param query
+     * @return
+     */
+    Long getTotalDailyAmount(DailyAmountQuery query);
 }

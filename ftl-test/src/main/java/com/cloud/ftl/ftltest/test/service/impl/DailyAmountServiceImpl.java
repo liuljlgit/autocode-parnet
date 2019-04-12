@@ -1,16 +1,18 @@
 package com.cloud.ftl.ftltest.test.service.impl;
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.Objects;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftltest.test.dao.IDailyAmountDao;
+import com.cloud.ftl.ftltest.test.entity.DailyAmount;
+import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
+import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
-import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
-import com.cloud.ftl.ftltest.test.dao.IDailyAmountDao;
-import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
+import java.util.Objects;
 
 /**
  * IDailyAmountService service实现类
@@ -43,11 +45,30 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
     }
 
     /**
+     * 分页查询列表
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public PageBean<DailyAmount> getDailyAmountPageList(DailyAmountQuery query) throws Exception {
+        if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
+            throw new BusiException("page and pageSize can not be null");
+        }
+        Long total = dailyAmountDao.getTotalDailyAmount(query);
+        Long totalPage = (long)Math.ceil((double)total / query.getPageSize());
+        List<DailyAmount> dailyAmountList = findDailyAmountList(query);
+        return new PageBean<>(totalPage,total,dailyAmountList);
+    }
+
+
+    /**
      * 查询列表
      * @param query
      * @return
      * @throws Exception
      */
+    @Override
     public List<DailyAmount> findDailyAmountList(DailyAmountQuery query) throws Exception {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");

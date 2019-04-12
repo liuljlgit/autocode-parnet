@@ -31,4 +31,11 @@ public interface I${className}Dao {
      * @return
      */
     List<${className}> find${className}List(${className}Query query);
+
+    /**
+     * 获取查询总数
+     * @param query
+     * @return
+     */
+    Long getTotal${className}(${className}Query query);
 }

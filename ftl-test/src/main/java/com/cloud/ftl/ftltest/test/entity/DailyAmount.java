@@ -1,9 +1,11 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.cloud.ftl.ftlbasic.webEntity.BasePage;
 
-public class DailyAmount {
+public class DailyAmount extends BasePage {
 
     /**
      * field comment:日前报量管理ID

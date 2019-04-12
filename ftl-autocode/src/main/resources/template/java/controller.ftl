@@ -2,14 +2,15 @@ package ${ctrlPackagePath};
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
+import com.cloud.ftl.ftlbasic.utils.BeanUtil;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import ${inftServicePackagePath}.I${className}Service;
 import ${entityPackagePath}.${className};
 import ${respPackagePath}.${className}Resp;
+import ${reqPackagePath}.${className}Req;
+import ${queryEntityPackagePath}.${className}Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 /**
@@ -36,6 +37,18 @@ public class ${className}Ctrl{
         }
         ${className} ${objectName} = ${objectName}Service.load${className}ByKey(${IdColEntity.fieldJavaName});
         return RespEntity.ok(new ${className}Resp(${objectName}));
+    }
+
+   /**
+    * ${className} 根据实体对象查询列表
+    * @return
+    * @throws Exception
+    */
+    @PostMapping(value = "/list")
+    public String get${className}PageList(@RequestBody ${className}Req ${objectName}Req) throws Exception {
+        ${className}Query query = BeanUtil.createBean(${objectName}Req, ${className}Query.class);
+        PageBean<${className}> pageList = ${objectName}Service.get${className}PageList(query);
+        return RespEntity.ok(pageList);
     }
 
 
