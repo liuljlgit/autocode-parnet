@@ -15,6 +15,7 @@ public enum DbTypeEnum {
 	FLOAT("FLOAT", "Double","java.lang.Double", "DOUBLE"),
 	DECIMAL("DECIMAL", "BigDecimal","java.math.BigDecimal", "DECIMAL"),
 	NUMERIC("NUMERIC", "BigDecimal","java.math.BigDecimal", "DECIMAL"),
+	CHAR("CHAR", "String","java.lang.String", "CHAR"),
 	VARCHAR("VARCHAR", "String","java.lang.String", "VARCHAR"),
 	DATE("DATE", "Date","java.util.Date", "DATE"),
 	TIMESTAMP("TIMESTAMP", "Date","java.util.Date", "TIMESTAMP"),
