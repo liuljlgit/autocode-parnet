@@ -1,25 +1,16 @@
 package com.cloud.ftl.ftltest.test.webentity.resp;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.annotation.JSONType;
 import com.cloud.ftl.ftlbasic.utils.CommonUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 
 import java.util.Date;
 
-@JSONType(includes = {
-	LoadTime.PROP_LT_ID,
-	LoadTime.PROP_ENTITY_ID,
-	LoadTime.PROP_START_TIME,
-	LoadTime.PROP_END_TIME,
-	LoadTime.PROP_STATUS,
-	LoadTime.PROP_CREATE_TIME,
-	LoadTime.PROP_STATUS_TIME
-})
-
 /**
- * LoadTimeReq 返回实体类
+ * LoadTimeResp 返回实体类
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LoadTimeResp extends LoadTime{
 
 	public LoadTimeResp(LoadTime loadTime){
@@ -28,25 +19,25 @@ public class LoadTimeResp extends LoadTime{
 
 
 	@Override
-	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	public Date getStartTime() {
 		return super.getStartTime();
 	}
 
 	@Override
-	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	public Date getEndTime() {
 		return super.getEndTime();
 	}
 
 	@Override
-	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	public Date getCreateTime() {
 		return super.getCreateTime();
 	}
 
 	@Override
-	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	public Date getStatusTime() {
 		return super.getStatusTime();
 	}

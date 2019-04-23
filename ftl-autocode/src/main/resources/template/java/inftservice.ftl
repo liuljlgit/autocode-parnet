@@ -4,6 +4,7 @@ import java.util.List;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import ${entityPackagePath}.${className};
 import ${queryEntityPackagePath}.${className}Query;
+import ${respPackagePath}.${className}Resp;
 
 /**
  * I${className}Service service接口类
@@ -33,7 +34,7 @@ public interface I${className}Service {
      * @return
      * @throws Exception
      */
-    PageBean<${className}> get${className}PageList(${className}Query query) throws Exception;
+    PageBean<${className}Resp> get${className}PageList(${className}Query query) throws Exception;
 
     /**
      * 查询列表

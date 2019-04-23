@@ -4,6 +4,7 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.utils.BeanUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import ${inftServicePackagePath}.I${className}Service;
 import ${entityPackagePath}.${className};
 import ${respPackagePath}.${className}Resp;
@@ -30,7 +31,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @GetMapping(value = "/${className?lower_case}/{${IdColEntity.fieldJavaName}}")
-    public String load${className}ByKey(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
+    public CommonResp<${className}Resp> load${className}ByKey(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
          throw new BusiException("请输入要获取的数据的ID") ;
         }
@@ -44,9 +45,9 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @PostMapping(value = "/${className?lower_case}/list")
-    public String get${className}PageList(@RequestBody ${className}Req ${objectName}Req) throws Exception {
+    public CommonResp<PageBean<${className}Resp>> get${className}PageList(@RequestBody ${className}Req ${objectName}Req) throws Exception {
         ${className}Query query = BeanUtil.createBean(${objectName}Req, ${className}Query.class);
-        PageBean<${className}> pageList = ${objectName}Service.get${className}PageList(query);
+        PageBean<${className}Resp> pageList = ${objectName}Service.get${className}PageList(query);
         return RespEntity.ok(pageList);
     }
 
@@ -56,7 +57,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @PostMapping(value = "/${className?lower_case}")
-    public String save${className}(@RequestBody ${className}Req ${objectName}Req) throws  Exception{
+    public CommonResp<Object> save${className}(@RequestBody ${className}Req ${objectName}Req) throws  Exception{
         ${className} ${objectName} = BeanUtil.createBean(${objectName}Req, ${className}.class);
         ${objectName}Service.save${className}(${objectName});
         return RespEntity.ok();
@@ -68,7 +69,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/${className?lower_case}/{${IdColEntity.fieldJavaName}}")
-    public String delete${className}(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws  Exception{
+    public CommonResp<Object> delete${className}(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws  Exception{
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
            throw new BusiException("删除主键不可为空") ;
         }

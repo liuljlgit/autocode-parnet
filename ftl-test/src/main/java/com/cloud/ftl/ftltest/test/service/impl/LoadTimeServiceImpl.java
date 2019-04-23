@@ -17,6 +17,7 @@ import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.dao.ILoadTimeDao;
 import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 import com.cloud.ftl.ftltest.test.cache.inft.ILoadTimeRedis;
+import com.cloud.ftl.ftltest.test.webentity.resp.LoadTimeResp;
 
 /**
  * ILoadTimeService service实现类
@@ -72,13 +73,13 @@ public class LoadTimeServiceImpl implements ILoadTimeService {
      * @throws Exception
      */
     @Override
-    public PageBean<LoadTime> getLoadTimePageList(LoadTimeQuery query) throws Exception {
+    public PageBean<LoadTimeResp> getLoadTimePageList(LoadTimeQuery query) throws Exception {
         if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
             throw new BusiException("page and pageSize can not be null");
         }
         Long total = loadTimeDao.getTotalLoadTime(query);
         Long totalPage = (long)Math.ceil((double)total / query.getPageSize());
-        List<LoadTime> loadTimeList = findLoadTimeList(query);
+        List<LoadTimeResp> loadTimeList = findLoadTimeList(query).stream().map(LoadTimeResp::new).collect(Collectors.toList());
         return new PageBean<>(totalPage,total,loadTimeList);
     }
 

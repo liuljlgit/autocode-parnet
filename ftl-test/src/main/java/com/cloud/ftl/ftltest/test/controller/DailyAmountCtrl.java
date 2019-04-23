@@ -4,6 +4,7 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.utils.BeanUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
@@ -30,7 +31,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @GetMapping(value = "/dailyamount/{daId}")
-    public String loadDailyAmountByKey(@PathVariable(value="daId") Long daId) throws Exception {
+    public CommonResp<DailyAmountResp> loadDailyAmountByKey(@PathVariable(value="daId") Long daId) throws Exception {
         if(Objects.isNull(daId)){
          throw new BusiException("请输入要获取的数据的ID") ;
         }
@@ -44,9 +45,9 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/dailyamount/list")
-    public String getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
+    public CommonResp<PageBean<DailyAmountResp>> getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
         DailyAmountQuery query = BeanUtil.createBean(dailyAmountReq, DailyAmountQuery.class);
-        PageBean<DailyAmount> pageList = dailyAmountService.getDailyAmountPageList(query);
+        PageBean<DailyAmountResp> pageList = dailyAmountService.getDailyAmountPageList(query);
         return RespEntity.ok(pageList);
     }
 
@@ -56,7 +57,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/dailyamount")
-    public String saveDailyAmount(@RequestBody DailyAmountReq dailyAmountReq) throws  Exception{
+    public CommonResp<Object> saveDailyAmount(@RequestBody DailyAmountReq dailyAmountReq) throws  Exception{
         DailyAmount dailyAmount = BeanUtil.createBean(dailyAmountReq, DailyAmount.class);
         dailyAmountService.saveDailyAmount(dailyAmount);
         return RespEntity.ok();
@@ -68,7 +69,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/dailyamount/{daId}")
-    public String deleteDailyAmount(@PathVariable(value="daId") Long daId) throws  Exception{
+    public CommonResp<Object> deleteDailyAmount(@PathVariable(value="daId") Long daId) throws  Exception{
         if(Objects.isNull(daId)){
            throw new BusiException("删除主键不可为空") ;
         }

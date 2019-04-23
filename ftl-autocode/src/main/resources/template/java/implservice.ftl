@@ -17,6 +17,7 @@ import ${inftServicePackagePath}.I${className}Service;
 import ${daoPackagePath}.I${className}Dao;
 import ${queryEntityPackagePath}.${className}Query;
 import ${inftRedisPackagePath}.I${className}Redis;
+import ${respPackagePath}.${className}Resp;
 
 /**
  * I${className}Service service实现类
@@ -72,13 +73,13 @@ public class ${className}ServiceImpl implements I${className}Service {
      * @throws Exception
      */
     @Override
-    public PageBean<${className}> get${className}PageList(${className}Query query) throws Exception {
+    public PageBean<${className}Resp> get${className}PageList(${className}Query query) throws Exception {
         if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
             throw new BusiException("page and pageSize can not be null");
         }
         Long total = ${objectName}Dao.getTotal${className}(query);
         Long totalPage = (long)Math.ceil((double)total / query.getPageSize());
-        List<${className}> ${objectName}List = find${className}List(query);
+        List<${className}Resp> ${objectName}List = find${className}List(query).stream().map(${className}Resp::new).collect(Collectors.toList());
         return new PageBean<>(totalPage,total,${objectName}List);
     }
 

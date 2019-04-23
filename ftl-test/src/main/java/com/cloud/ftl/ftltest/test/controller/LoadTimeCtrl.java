@@ -4,6 +4,7 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.utils.BeanUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.webentity.resp.LoadTimeResp;
@@ -30,7 +31,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @GetMapping(value = "/loadtime/{ltId}")
-    public String loadLoadTimeByKey(@PathVariable(value="ltId") Long ltId) throws Exception {
+    public CommonResp<LoadTimeResp> loadLoadTimeByKey(@PathVariable(value="ltId") Long ltId) throws Exception {
         if(Objects.isNull(ltId)){
          throw new BusiException("请输入要获取的数据的ID") ;
         }
@@ -44,9 +45,9 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/loadtime/list")
-    public String getLoadTimePageList(@RequestBody LoadTimeReq loadTimeReq) throws Exception {
+    public CommonResp<PageBean<LoadTimeResp>> getLoadTimePageList(@RequestBody LoadTimeReq loadTimeReq) throws Exception {
         LoadTimeQuery query = BeanUtil.createBean(loadTimeReq, LoadTimeQuery.class);
-        PageBean<LoadTime> pageList = loadTimeService.getLoadTimePageList(query);
+        PageBean<LoadTimeResp> pageList = loadTimeService.getLoadTimePageList(query);
         return RespEntity.ok(pageList);
     }
 
@@ -56,7 +57,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/loadtime")
-    public String saveLoadTime(@RequestBody LoadTimeReq loadTimeReq) throws  Exception{
+    public CommonResp<Object> saveLoadTime(@RequestBody LoadTimeReq loadTimeReq) throws  Exception{
         LoadTime loadTime = BeanUtil.createBean(loadTimeReq, LoadTime.class);
         loadTimeService.saveLoadTime(loadTime);
         return RespEntity.ok();
@@ -68,7 +69,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/loadtime/{ltId}")
-    public String deleteLoadTime(@PathVariable(value="ltId") Long ltId) throws  Exception{
+    public CommonResp<Object> deleteLoadTime(@PathVariable(value="ltId") Long ltId) throws  Exception{
         if(Objects.isNull(ltId)){
            throw new BusiException("删除主键不可为空") ;
         }

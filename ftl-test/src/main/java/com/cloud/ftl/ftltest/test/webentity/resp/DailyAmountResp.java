@@ -1,33 +1,16 @@
 package com.cloud.ftl.ftltest.test.webentity.resp;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.annotation.JSONType;
 import com.cloud.ftl.ftlbasic.utils.CommonUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 
 import java.util.Date;
 
-@JSONType(includes = {
-	DailyAmount.PROP_DA_ID,
-	DailyAmount.PROP_ENTITY_ID,
-	DailyAmount.PROP_DATE_TIME,
-	DailyAmount.PROP_SETT_PROFIT,
-	DailyAmount.PROP_EXPEND_PROFIT,
-	DailyAmount.PROP_INCOME_PROFIT,
-	DailyAmount.PROP_PROFIT_HOURS,
-	DailyAmount.PROP_DEFICIT_HOURS,
-	DailyAmount.PROP_MINUS_DEVIATION,
-	DailyAmount.PROP_POSITIVE_DEVIATION,
-	DailyAmount.PROP_STATUS,
-	DailyAmount.PROP_CE,
-	DailyAmount.PROP_SA,
-	DailyAmount.PROP_CREATE_TIME,
-	DailyAmount.PROP_STATUS_TIME
-})
-
 /**
- * DailyAmountReq 返回实体类
+ * DailyAmountResp 返回实体类
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DailyAmountResp extends DailyAmount{
 
 	public DailyAmountResp(DailyAmount dailyAmount){
@@ -36,19 +19,19 @@ public class DailyAmountResp extends DailyAmount{
 
 
 	@Override
-	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	public Date getDateTime() {
 		return super.getDateTime();
 	}
 
 	@Override
-	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	public Date getCreateTime() {
 		return super.getCreateTime();
 	}
 
 	@Override
-	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	public Date getStatusTime() {
 		return super.getStatusTime();
 	}

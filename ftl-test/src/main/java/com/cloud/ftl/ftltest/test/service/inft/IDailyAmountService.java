@@ -4,6 +4,7 @@ import java.util.List;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
+import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
 
 /**
  * IDailyAmountService service接口类
@@ -33,7 +34,7 @@ public interface IDailyAmountService {
      * @return
      * @throws Exception
      */
-    PageBean<DailyAmount> getDailyAmountPageList(DailyAmountQuery query) throws Exception;
+    PageBean<DailyAmountResp> getDailyAmountPageList(DailyAmountQuery query) throws Exception;
 
     /**
      * 查询列表
