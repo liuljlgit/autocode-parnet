@@ -1,69 +1,54 @@
 package com.cloud.ftl.ftlbasic.webEntity;
 
-import com.alibaba.fastjson.JSONObject;
-
-import java.util.Objects;
+import java.util.List;
 
 public class RespEntity {
 
 	/**
-	 * 无返回体的返回
+	 * 正确返回
 	 * @return
 	 */
-	public static String ok(){
-		JSONObject respObject = new JSONObject();
-		respObject.put("code",CodeEnum.EXEC_OK.getCode());
-		respObject.put("msg",CodeEnum.EXEC_OK.getMsg());
-		return respObject.toJSONString();
+	public static CommonResp<Object> ok(){
+		return new CommonResp<>();
 	}
 
 	/**
-	 * 有返回体的返回
-	 * @param result
+	 * 返回对象
+	 * @param data
 	 * @param <T>
 	 * @return
 	 */
-	public static <T> String ok(T result){
-		JSONObject respObject = new JSONObject();
-		respObject.put("code",CodeEnum.EXEC_OK.getCode());
-		respObject.put("msg",CodeEnum.EXEC_OK.getMsg());
-		respObject.put("result",result);
-		return respObject.toJSONString();
+	public static <T> CommonResp<T> ok(T data){
+		return new CommonResp<>(data);
 	}
 
 	/**
-	 * 有错误返回体的返回
+	 * 返回列表
+	 * @param list
+	 * @param <T>
+	 * @return
+	 */
+	public static <T> CommonResp<T> ok(List<T> list){
+		return new CommonResp<>(list);
+	}
+
+	/**
+	 * 错误返回
 	 * @param codeEnum
-	 * @param result
-	 * @param <T>
 	 * @return
 	 */
-	public static <T> String error(CodeEnum codeEnum,T result){
-		if(Objects.isNull(codeEnum)){
-			codeEnum = CodeEnum.EXEC_ERROR;
-		}
-		JSONObject respObject = new JSONObject();
-		respObject.put("code",codeEnum.getCode());
-		respObject.put("msg",codeEnum.getMsg());
-		respObject.put("result",result);
-		return respObject.toJSONString();
+	public static CommonResp<Object> error(CodeEnum codeEnum){
+		return new CommonResp<>(codeEnum);
 	}
 
 	/**
-	 * 有错误返回体的自定义返回
+	 * 错误返回
 	 * @param code
 	 * @param msg
-	 * @param result
-	 * @param <T>
 	 * @return
 	 */
-	public static <T> String error(Integer code,String msg,T result){
-		JSONObject respObject = new JSONObject();
-		respObject.put("code",code);
-		respObject.put("msg",msg);
-		respObject.put("result",result);
-		return respObject.toJSONString();
+	public static CommonResp<Object> error(Integer code,String msg){
+		return new CommonResp<>(code,msg);
 	}
-
 
 }
