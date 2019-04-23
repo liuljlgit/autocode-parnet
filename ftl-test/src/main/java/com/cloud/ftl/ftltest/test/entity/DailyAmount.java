@@ -1,10 +1,10 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import com.cloud.ftl.ftlbasic.webEntity.BasePage;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
+import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.cloud.ftl.ftlbasic.webEntity.BasePage;
+import java.io.Serializable;
 
 public class DailyAmount extends BasePage implements Serializable {
 
