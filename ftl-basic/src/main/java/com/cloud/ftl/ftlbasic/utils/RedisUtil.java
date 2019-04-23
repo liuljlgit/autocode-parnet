@@ -67,6 +67,7 @@ public class RedisUtil {
             if(totalKey){
                 key.append(":total");
             }else{
+                key.append(":list");
                 if(Objects.nonNull(page)){
                     key.append(":page:").append(page.toString());
                 }
@@ -76,19 +77,21 @@ public class RedisUtil {
             }
             //拼接条件
             JSONArray criteriasArr = JSON.parseArray(JSON.toJSONString(criterias));
-            for(int i=0;i<criteriasArr.size();i++){
-                JSONObject object1 = criteriasArr.getJSONObject(i);
-                object1.remove("valid");
-                JSONArray criterions = object1.getJSONArray("criterions");
-                for(int j=0;j<criterions.size();j++){
-                    JSONObject object2 = criterions.getJSONObject(j);
-                    object2.remove("listValue");
-                    object2.remove("noValue");
-                    object2.remove("secondValue");
-                    object2.remove("oneValue");
+            if(Objects.nonNull(criteriasArr)){
+                for(int i=0;i<criteriasArr.size();i++){
+                    JSONObject object1 = criteriasArr.getJSONObject(i);
+                    object1.remove("valid");
+                    JSONArray criterions = object1.getJSONArray("criterions");
+                    for(int j=0;j<criterions.size();j++){
+                        JSONObject object2 = criterions.getJSONObject(j);
+                        object2.remove("listValue");
+                        object2.remove("noValue");
+                        object2.remove("secondValue");
+                        object2.remove("oneValue");
+                    }
                 }
+                key.append(":condition:").append(criteriasArr.toJSONString());
             }
-            key.append(":condition:").append(criteriasArr.toJSONString());
             return SecureUtil.md5X16Str(key.toString(),"utf-8");
         } catch (Exception e){
             logger.error("error to parse object to redis key");
