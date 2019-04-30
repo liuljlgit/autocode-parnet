@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.ftl.ftltest.test.dao.IMediumContractDao">
+    <resultMap id="BaseResultMap" type="com.cloud.ftl.ftltest.test.entity.MediumContract">
+        <id column="mc_id" jdbcType="BIGINT" property="mcId" />
+        <result column="entity_id" jdbcType="INTEGER" property="entityId" />
+        <result column="contract_no" jdbcType="VARCHAR" property="contractNo" />
+        <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+        <result column="contract_type" jdbcType="TINYINT" property="contractType" />
+        <result column="contract_part" jdbcType="VARCHAR" property="contractPart" />
+        <result column="deal_type" jdbcType="TINYINT" property="dealType" />
+        <result column="contract_start_time" jdbcType="TIMESTAMP" property="contractStartTime" />
+        <result column="contract_end_time" jdbcType="TIMESTAMP" property="contractEndTime" />
+        <result column="deal_quan" jdbcType="DECIMAL" property="dealQuan" />
+        <result column="curve_type" jdbcType="TINYINT" property="curveType" />
+        <result column="check_status" jdbcType="TINYINT" property="checkStatus" />
+        <result column="trade_breed" jdbcType="TINYINT" property="tradeBreed" />
+        <result column="sign_type" jdbcType="TINYINT" property="signType" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="status_time" jdbcType="TIMESTAMP" property="statusTime" />
+        <result column="contract_price" jdbcType="DECIMAL" property="contractPrice" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        mc_id,entity_id,contract_no,contract_name,contract_type,contract_part,deal_type,contract_start_time,contract_end_time,deal_quan,curve_type,check_status,trade_breed,sign_type,status,create_time,status_time,contract_price
+    </sql>
+
+    <sql id="Base_Object_List">
+        #{mcId},#{entityId},#{contractNo},#{contractName},#{contractType},#{contractPart},#{dealType},#{contractStartTime},#{contractEndTime},#{dealQuan},#{curveType},#{checkStatus},#{tradeBreed},#{signType},#{status},#{createTime},#{statusTime},#{contractPrice}
+    </sql>
+
+    <sql id="Base_Item_List">
+        #{item.mcId},#{item.entityId},#{item.contractNo},#{item.contractName},#{item.contractType},#{item.contractPart},#{item.dealType},#{item.contractStartTime},#{item.contractEndTime},#{item.dealQuan},#{item.curveType},#{item.checkStatus},#{item.tradeBreed},#{item.signType},#{item.status},#{item.createTime},#{item.statusTime},#{item.contractPrice}
+    </sql>
+
+    <sql id="where_sql">
+        <if test="criterias != null">
+            <foreach collection="criterias" item="criteria" separator=" ">
+                <if test="criteria.valid">
+                    ${criteria.opt}
+                    <choose>
+                        <when test="criteria.criterions.size() > 1">
+                            <trim prefix="(" prefixOverrides="and|or" suffix=")">
+                                <foreach collection="criteria.criterions" item="criterion">
+                                    <choose>
+                                        <when test="criterion.noValue">
+                                            ${criterion.condition}
+                                        </when>
+                                        <when test="criterion.oneValue">
+                                            ${criterion.condition} #{criterion.value1}
+                                        </when>
+                                        <when test="criterion.secondValue">
+                                            ${criterion.condition} #{criterion.value1} and #{criterion.value2}
+                                        </when>
+                                        <when test="criterion.listValue">
+                                            ${criterion.condition}
+                                            <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
+                                                #{listItem}
+                                            </foreach>
+                                        </when>
+                                    </choose>
+                                </foreach>
+                            </trim>
+                        </when>
+                        <otherwise>
+                            <trim prefixOverrides="and|or">
+                                <foreach collection="criteria.criterions" item="criterion">
+                                    <choose>
+                                        <when test="criterion.noValue">
+                                            ${criterion.condition}
+                                        </when>
+                                        <when test="criterion.oneValue">
+                                            ${criterion.condition} #{criterion.value1}
+                                        </when>
+                                        <when test="criterion.secondValue">
+                                            ${criterion.condition} #{criterion.value1} and #{criterion.value2}
+                                        </when>
+                                        <when test="criterion.listValue">
+                                            ${criterion.condition}
+                                            <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
+                                                #{listItem}
+                                            </foreach>
+                                        </when>
+                                    </choose>
+                                </foreach>
+                            </trim>
+                        </otherwise>
+                    </choose>
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+    <!--获取最大的主键-->
+    <select id="selectMaxMediumContractId" resultType="java.lang.Long">
+        select IFNULL(max(mc_id), 0) from `medium_contract`
+    </select>
+
+    <!--根据主键获取对象-->
+    <select id="loadMediumContractByKey" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from medium_contract
+        <where>
+            AND mc_id = #{mcId}
+        </where>
+    </select>
+
+    <!--查询列表-->
+    <select id="findMediumContractList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from medium_contract
+        <where>
+            <include refid="where_sql" />
+        </where>
+        <if test="orderByClause!=null and orderByClause!=''">
+            order by ${orderByClause}
+        </if>
+        <if test="page != null and pageSize != null and page > 0" >
+            limit #{index},#{pageSize}
+        </if>
+    </select>
+
+    <!--查询列表总数-->
+    <select id="getTotalMediumContract" resultType="java.lang.Long">
+        select count(*) from medium_contract
+        <where>
+            <include refid="where_sql" />
+        </where>
+    </select>
+
+    <!--插入对象-->
+    <insert id="addMediumContract">
+        insert into medium_contract(<include refid="Base_Column_List" />)
+        values(<include refid="Base_Object_List" />)
+    </insert>
+
+    <!--批量插入对象-->
+    <insert id="batchAddMediumContract">
+        insert into medium_contract(<include refid="Base_Column_List" />)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (<include refid="Base_Item_List" />)
+        </foreach>
+    </insert>
+
+    <!--更新对象-->
+    <update id="updateMediumContract">
+        update medium_contract
+        <set>
+            <if test="mcId != null">
+                mc_id = #{mcId},
+            </if>
+            <if test="entityId != null">
+                entity_id = #{entityId},
+            </if>
+            <if test="contractNo != null">
+                contract_no = #{contractNo},
+            </if>
+            <if test="contractName != null">
+                contract_name = #{contractName},
+            </if>
+            <if test="contractType != null">
+                contract_type = #{contractType},
+            </if>
+            <if test="contractPart != null">
+                contract_part = #{contractPart},
+            </if>
+            <if test="dealType != null">
+                deal_type = #{dealType},
+            </if>
+            <if test="contractStartTime != null">
+                contract_start_time = #{contractStartTime},
+            </if>
+            <if test="contractEndTime != null">
+                contract_end_time = #{contractEndTime},
+            </if>
+            <if test="dealQuan != null">
+                deal_quan = #{dealQuan},
+            </if>
+            <if test="curveType != null">
+                curve_type = #{curveType},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus},
+            </if>
+            <if test="tradeBreed != null">
+                trade_breed = #{tradeBreed},
+            </if>
+            <if test="signType != null">
+                sign_type = #{signType},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="statusTime != null">
+                status_time = #{statusTime},
+            </if>
+            <if test="contractPrice != null">
+                contract_price = #{contractPrice}
+            </if>
+        </set>
+        <where>
+            AND mc_id = #{mcId}
+        </where>
+    </update>
+
+    <!--批量更新对象-->
+    <update id="batchUpdateMediumContract">
+        <foreach collection="list" separator=";" item="item">
+            update medium_contract
+            <set>
+                <if test="item.mcId != null">
+                    mc_id = #{item.mcId},
+                </if>
+                <if test="item.entityId != null">
+                    entity_id = #{item.entityId},
+                </if>
+                <if test="item.contractNo != null">
+                    contract_no = #{item.contractNo},
+                </if>
+                <if test="item.contractName != null">
+                    contract_name = #{item.contractName},
+                </if>
+                <if test="item.contractType != null">
+                    contract_type = #{item.contractType},
+                </if>
+                <if test="item.contractPart != null">
+                    contract_part = #{item.contractPart},
+                </if>
+                <if test="item.dealType != null">
+                    deal_type = #{item.dealType},
+                </if>
+                <if test="item.contractStartTime != null">
+                    contract_start_time = #{item.contractStartTime},
+                </if>
+                <if test="item.contractEndTime != null">
+                    contract_end_time = #{item.contractEndTime},
+                </if>
+                <if test="item.dealQuan != null">
+                    deal_quan = #{item.dealQuan},
+                </if>
+                <if test="item.curveType != null">
+                    curve_type = #{item.curveType},
+                </if>
+                <if test="item.checkStatus != null">
+                    check_status = #{item.checkStatus},
+                </if>
+                <if test="item.tradeBreed != null">
+                    trade_breed = #{item.tradeBreed},
+                </if>
+                <if test="item.signType != null">
+                    sign_type = #{item.signType},
+                </if>
+                <if test="item.status != null">
+                    status = #{item.status},
+                </if>
+                <if test="item.createTime != null">
+                    create_time = #{item.createTime},
+                </if>
+                <if test="item.statusTime != null">
+                    status_time = #{item.statusTime},
+                </if>
+                <if test="item.contractPrice != null">
+                    contract_price = #{item.contractPrice}
+                </if>
+            </set>
+            <where>
+                AND mc_id = #{item.mcId}
+            </where>
+        </foreach>
+    </update>
+
+    <!--更新对象(全更新)-->
+    <update id="fullUpdateMediumContract">
+        update medium_contract
+        <set>
+            mc_id = #{mcId},
+            entity_id = #{entityId},
+            contract_no = #{contractNo},
+            contract_name = #{contractName},
+            contract_type = #{contractType},
+            contract_part = #{contractPart},
+            deal_type = #{dealType},
+            contract_start_time = #{contractStartTime},
+            contract_end_time = #{contractEndTime},
+            deal_quan = #{dealQuan},
+            curve_type = #{curveType},
+            check_status = #{checkStatus},
+            trade_breed = #{tradeBreed},
+            sign_type = #{signType},
+            status = #{status},
+            create_time = #{createTime},
+            status_time = #{statusTime},
+            contract_price = #{contractPrice}
+        </set>
+        <where>
+            AND mc_id = #{mcId}
+        </where>
+    </update>
+
+    <!--批量更新对象(全更新)-->
+    <update id="batchFullUpdateMediumContract">
+        <foreach collection="list" separator=";" item="item">
+            update medium_contract
+            <set>
+                mc_id = #{item.mcId},
+                entity_id = #{item.entityId},
+                contract_no = #{item.contractNo},
+                contract_name = #{item.contractName},
+                contract_type = #{item.contractType},
+                contract_part = #{item.contractPart},
+                deal_type = #{item.dealType},
+                contract_start_time = #{item.contractStartTime},
+                contract_end_time = #{item.contractEndTime},
+                deal_quan = #{item.dealQuan},
+                curve_type = #{item.curveType},
+                check_status = #{item.checkStatus},
+                trade_breed = #{item.tradeBreed},
+                sign_type = #{item.signType},
+                status = #{item.status},
+                create_time = #{item.createTime},
+                status_time = #{item.statusTime},
+                contract_price = #{item.contractPrice}
+            </set>
+            <where>
+                AND mc_id = #{item.mcId}
+            </where>
+        </foreach>
+    </update>
+
+    <!--根据主键删除对象-->
+    <delete id="deleteMediumContract">
+        delete from medium_contract
+        <where>
+            AND mc_id = #{mcId}
+        </where>
+    </delete>
+
+    <!-- 批量删除对象 -->
+    <delete id="batchDeleteMediumContract">
+        delete from medium_contract
+        <where>
+            mc_id in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+                #{item}
+            </foreach>
+        </where>
+    </delete>
+
+    <!--根据ID列表获取记录列表-->
+    <select id="findMediumContractByIdList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from medium_contract
+        <where>
+            mc_id in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~ custom code begin ~~~~~~~~~~~~~~~~~~~~~~-->
+    
+    <!--~~~~~~~~~~~~~~~~~~~~~~ custom code end ~~~~~~~~~~~~~~~~~~~~~~-->
+
+</mapper>
