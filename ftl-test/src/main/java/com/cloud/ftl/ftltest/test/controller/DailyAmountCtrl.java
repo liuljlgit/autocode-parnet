@@ -47,6 +47,7 @@ public class DailyAmountCtrl{
     @PostMapping(value = "/dailyamount/list")
     public CommonResp<PageBean<DailyAmountResp>> getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
         DailyAmountQuery query = BeanUtil.createBean(dailyAmountReq, DailyAmountQuery.class);
+        query.setDaId(10000L);
         PageBean<DailyAmountResp> pageList = dailyAmountService.getDailyAmountPageList(query);
         return RespEntity.ok(pageList);
     }
