@@ -130,20 +130,26 @@ public class Criteria {
         }
         if(values.length == 0){
             if(!Opt.IS_NULL.equals(opt) && !Opt.IS_NOT_NULL.equals(opt)){
-                throw new Exception("when values lenth equal to 0,opt equals Opt.IS_NULL or opt equals Opt.IS_NOT_NULL");
+                throw new Exception("when values lenth equal to 0,opt is Opt.IS_NULL or opt is Opt.IS_NOT_NULL");
             }
             addCriterion("and "+field+" "+opt.getCode());
         }else if(values.length == 1){
             if(!Opt.EQUAL.equals(opt) && !Opt.NOT_EQUAL.equals(opt) && !Opt.LIKE.equals(opt) && !Opt.NOT_LIKE.equals(opt)
                     && !Opt.GREATER.equals(opt) && !Opt.GREATER_EQUAL.equals(opt) && !Opt.LESS.equals(opt) && !Opt.LESS_EQUAL.equals(opt)
-                    && !Opt.IN.equals(opt) && !Opt.NOT_IN.equals(opt)){
-                throw new Exception("opt enumes type is not correct");
+                    && !Opt.IN.equals(opt) && !Opt.NOT_IN.equals(opt) && !Opt.IS.equals(opt) && !Opt.IS_NOT.equals(opt)){
+                throw new Exception("opt enumes type not support!");
+            }
+            if(Opt.LIKE.equals(opt) || Opt.NOT_LIKE.equals(opt)){
+                values[0] = "%"+values[0]+"%";
+            }
+            if(Opt.IS.equals(opt) || Opt.IS_NOT.equals(opt)){
+                values[0] = null;
             }
             addCriterion("and "+field+" "+opt.getCode()+" ",values[0]);
         }else{
             //检查opt是否是between或者是not between
             if(!Opt.BETWEEN.equals(opt) && !Opt.NOT_BETWEEN.equals(opt)){
-                throw new Exception("when values lenth equal to 2,opt equals Opt.BETWEEN or opt equals Opt.NOT_BETWEEN");
+                throw new Exception("when values lenth equal to 2,opt is Opt.BETWEEN or opt is Opt.NOT_BETWEEN");
             }
             addCriterion("and "+field+" "+opt.getCode()+" ",values[0],values[1]);
         }
@@ -164,20 +170,26 @@ public class Criteria {
         }
         if(values.length == 0){
             if(!Opt.IS_NULL.equals(opt) && !Opt.IS_NOT_NULL.equals(opt)){
-                throw new Exception("when values lenth equal to 0,opt equals Opt.IS_NULL or opt equals Opt.IS_NOT_NULL");
+                throw new Exception("when values lenth equal to 0,opt is Opt.IS_NULL or opt is Opt.IS_NOT_NULL");
             }
             addCriterion("or "+field+" "+opt.getCode());
         }else if(values.length == 1){
             if(!Opt.EQUAL.equals(opt) && !Opt.NOT_EQUAL.equals(opt) && !Opt.LIKE.equals(opt) && !Opt.NOT_LIKE.equals(opt)
                     && !Opt.GREATER.equals(opt) && !Opt.GREATER_EQUAL.equals(opt) && !Opt.LESS.equals(opt) && !Opt.LESS_EQUAL.equals(opt)
-                    && !Opt.IN.equals(opt) && !Opt.NOT_IN.equals(opt)){
-                throw new Exception("opt enumes type is not correct");
+                    && !Opt.IN.equals(opt) && !Opt.NOT_IN.equals(opt) && !Opt.IS.equals(opt) && !Opt.IS_NOT.equals(opt)){
+                throw new Exception("opt enumes type not support!");
+            }
+            if(Opt.LIKE.equals(opt) || Opt.NOT_LIKE.equals(opt)){
+                values[0] = "%"+values[0]+"%";
+            }
+            if(Opt.IS.equals(opt) || Opt.IS_NOT.equals(opt)){
+                values[0] = null;
             }
             addCriterion("or "+field+" "+opt.getCode()+" ",values[0]);
         }else{
             //检查opt是否是between或者是not between
             if(!Opt.BETWEEN.equals(opt) && !Opt.NOT_BETWEEN.equals(opt)){
-                throw new Exception("when values lenth equal to 2,opt equals Opt.BETWEEN or opt equals Opt.NOT_BETWEEN");
+                throw new Exception("when values lenth equal to 2,opt is Opt.BETWEEN or opt is Opt.NOT_BETWEEN");
             }
             addCriterion("or "+field+" "+opt.getCode()+" ",values[0],values[1]);
         }

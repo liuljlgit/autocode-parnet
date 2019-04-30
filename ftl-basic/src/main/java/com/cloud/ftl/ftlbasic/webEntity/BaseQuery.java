@@ -35,7 +35,7 @@ public class BaseQuery extends BasePage {
      * and Criteria
      * @throws Exception
      */
-    public Criteria andCriteria() throws Exception {
+    public Criteria andCriteria() {
         Criteria criteria = new Criteria(Opt.AND.getCode());
         if(CollectionUtils.isEmpty(criterias)){
             criterias = new ArrayList<>();
@@ -48,7 +48,7 @@ public class BaseQuery extends BasePage {
      * or Criteria
      * @throws Exception
      */
-    public Criteria orCriteria() throws Exception {
+    public Criteria orCriteria() {
         Criteria criteria = new Criteria(Opt.OR.getCode());
         if(CollectionUtils.isEmpty(criterias)){
             criterias = new ArrayList<>();
@@ -76,7 +76,7 @@ public class BaseQuery extends BasePage {
      * 对对象进行set操作的时候调用
      * @throws Exception
      */
-    public void addCriteria(String field,Object value) throws Exception {
+    public void addCriteria(String field,Object value) {
         Criteria criteria = new Criteria(Opt.AND.getCode());
         if(CollectionUtils.isEmpty(criterias)){
             criterias = new ArrayList<>();
@@ -94,8 +94,25 @@ public class BaseQuery extends BasePage {
         if(CollectionUtils.isEmpty(criterias)){
             criterias = new ArrayList<>();
         }
-        criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value);
-        criterias.add(criteria);
+        if(Opt.AND.equals(opt) || Opt.OR.equals(opt) || Opt.ASC.equals(opt) || Opt.DESC.equals(opt)){
+            throw new Exception("opt enums type not support!");
+        }
+        if(Opt.LIKE.equals(opt) || Opt.NOT_LIKE.equals(opt)){
+            value = "%"+value+"%";
+        }
+        if(Opt.IS_NULL.equals(opt) || Opt.IS_NOT_NULL.equals(opt)){
+            value = "";
+        }
+        if(Opt.IS.equals(opt) || Opt.IS_NOT.equals(opt)){
+            value = null;
+        }
+        if(Opt.BETWEEN.equals(opt) || Opt.NOT_BETWEEN.equals(opt)){
+            criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value,value);
+            criterias.add(criteria);
+        }else{
+            criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value);
+            criterias.add(criteria);
+        }
     }
 
     /**
@@ -104,7 +121,7 @@ public class BaseQuery extends BasePage {
      * @param desc
      * @throws Exception
      */
-    public void addOrderBy(String field,Boolean desc) throws Exception {
+    public void addOrderBy(String field,Boolean desc) {
         String order;
         if(desc){
             order = Opt.DESC.getCode();
