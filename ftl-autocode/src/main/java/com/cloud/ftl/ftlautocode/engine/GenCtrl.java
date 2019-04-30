@@ -45,6 +45,41 @@ public class GenCtrl {
             FreemarkerUtil.projectBasePath = genReq.getProjectBasePath();
         }
         for (String tableName : genReq.getTableNames()) {
+            if(genReq.getUpdate()){
+                update(genReq, tableName);
+            }else{
+                create(genReq, tableName);
+            }
+        }
+        return "生成文件成功!";
+    }
+
+    /**
+     * 更新表结构生成代码
+     * @param genReq
+     * @param tableName
+     */
+    private void update(GenReq genReq, String tableName){
+        //0.读取数据库信息，存储到GenConst.tableColEntitys
+        genService.initMySql2JavaInfo(genReq,tableName);
+        //0.生成公共替换的Map<String,Object>,存储到GenConst.commonReplaceMap
+        genService.initCommonReplaceMap(genReq,tableName);
+        //1.生成entity文件
+        genService.genEntityFile(genReq);
+        //2.生成dao文件
+        genService.genDaoFile(genReq);
+        //3.生成xml文件
+        genService.genXmlFile(genReq);
+        //4.生成queryentity文件
+        genService.genQueryEntityFile(genReq);
+    }
+
+    /**
+     * 新表生成代码
+     * @param genReq
+     * @param tableName
+     */
+    private void create(GenReq genReq, String tableName) {
             //0.读取数据库信息，存储到GenConst.tableColEntitys
             genService.initMySql2JavaInfo(genReq,tableName);
             //0.生成公共替换的Map<String,Object>,存储到GenConst.commonReplaceMap
@@ -72,7 +107,4 @@ public class GenCtrl {
             //11.生成queryentity文件
             genService.genQueryEntityFile(genReq);
         }
-        //返回
-        return "生成文件成功!";
-    }
 }

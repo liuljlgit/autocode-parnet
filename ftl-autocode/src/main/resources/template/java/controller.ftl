@@ -77,8 +77,4 @@ public class ${className}Ctrl{
         return RespEntity.ok();
     }
 
-	//------------------------ custom code begin ------------------------//
-    ${customCode!""}
-	//======================== custom code end ========================//
-
 }

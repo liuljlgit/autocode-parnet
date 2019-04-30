@@ -66,9 +66,5 @@ public class ${className}RedisImpl extends BaseRedis<String, ${className}> imple
             return id;
         });
     }
-
-    //------------------------ custom code begin ------------------------//
-    ${customCode!""}
-    //======================== custom code end ========================//
         
 }

@@ -271,8 +271,4 @@ public class ${className}ServiceImpl implements I${className}Service {
         }
     }
 
-    //------------------------ custom code begin ------------------------//
-    ${customCode!""}
-    //======================== custom code end ========================//
-
 }

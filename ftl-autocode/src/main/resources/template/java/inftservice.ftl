@@ -113,8 +113,4 @@ public interface I${className}Service {
      */
      void save${className}List(List<${className}> list) throws Exception;
 
-    //------------------------ custom code begin ------------------------//
-    ${customCode!""}
-    //======================== custom code end ========================//
-
 }
