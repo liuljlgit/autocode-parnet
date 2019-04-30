@@ -1,9 +1,10 @@
 package com.cloud.ftl.ftltest.test.query;
 
-import java.util.Date;
-import java.math.BigDecimal;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 public class MediumContractQuery extends BaseQuery {
 
@@ -68,16 +69,6 @@ public class MediumContractQuery extends BaseQuery {
 	private Byte checkStatus;
 
     /**
-     * field comment:交易品种：1.双边协商交易  2.挂牌交易  3.典型合约集中交易（年度）  4..典型合约集中交易（月度）  5.典型合约集中交易（周度）
-     */
-	private Byte tradeBreed;
-
-    /**
-     * field comment:签约状态。0：未签约，1：已签约
-     */
-	private Byte signType;
-
-    /**
      * field comment:状态 (0) 弃用 （1）正常
      */
 	private Byte status;
@@ -121,10 +112,6 @@ public class MediumContractQuery extends BaseQuery {
     public static final transient String TABLE_CURVE_TYPE = "curve_type";
 
     public static final transient String TABLE_CHECK_STATUS = "check_status";
-
-    public static final transient String TABLE_TRADE_BREED = "trade_breed";
-
-    public static final transient String TABLE_SIGN_TYPE = "sign_type";
 
     public static final transient String TABLE_STATUS = "status";
 
@@ -301,34 +288,6 @@ public class MediumContractQuery extends BaseQuery {
     public void setCheckStatus(Opt opt,Byte checkStatus) throws Exception {
         addCriteria(MediumContractQuery.TABLE_CHECK_STATUS,checkStatus,opt);
         this.checkStatus = checkStatus;
-    }
-
-    public Byte getTradeBreed() {
-        return tradeBreed;
-    }
-
-    public void setTradeBreed(Byte tradeBreed) throws Exception {
-        addCriteria(MediumContractQuery.TABLE_TRADE_BREED,tradeBreed);
-        this.tradeBreed = tradeBreed;
-    }
-
-    public void setTradeBreed(Opt opt,Byte tradeBreed) throws Exception {
-        addCriteria(MediumContractQuery.TABLE_TRADE_BREED,tradeBreed,opt);
-        this.tradeBreed = tradeBreed;
-    }
-
-    public Byte getSignType() {
-        return signType;
-    }
-
-    public void setSignType(Byte signType) throws Exception {
-        addCriteria(MediumContractQuery.TABLE_SIGN_TYPE,signType);
-        this.signType = signType;
-    }
-
-    public void setSignType(Opt opt,Byte signType) throws Exception {
-        addCriteria(MediumContractQuery.TABLE_SIGN_TYPE,signType,opt);
-        this.signType = signType;
     }
 
     public Byte getStatus() {

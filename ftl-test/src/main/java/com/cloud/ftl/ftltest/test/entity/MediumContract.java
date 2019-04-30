@@ -1,10 +1,10 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.util.Date;
-import java.math.BigDecimal;
-import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.webEntity.BasePage;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 public class MediumContract extends BasePage implements Serializable {
 
@@ -69,16 +69,6 @@ public class MediumContract extends BasePage implements Serializable {
 	private Byte checkStatus;
 
     /**
-     * field comment:交易品种：1.双边协商交易  2.挂牌交易  3.典型合约集中交易（年度）  4..典型合约集中交易（月度）  5.典型合约集中交易（周度）
-     */
-	private Byte tradeBreed;
-
-    /**
-     * field comment:签约状态。0：未签约，1：已签约
-     */
-	private Byte signType;
-
-    /**
      * field comment:状态 (0) 弃用 （1）正常
      */
 	private Byte status;
@@ -122,10 +112,6 @@ public class MediumContract extends BasePage implements Serializable {
     public static final transient String PROP_CURVE_TYPE = "curveType";
 
     public static final transient String PROP_CHECK_STATUS = "checkStatus";
-
-    public static final transient String PROP_TRADE_BREED = "tradeBreed";
-
-    public static final transient String PROP_SIGN_TYPE = "signType";
 
     public static final transient String PROP_STATUS = "status";
 
@@ -230,22 +216,6 @@ public class MediumContract extends BasePage implements Serializable {
 
     public void setCheckStatus(Byte checkStatus) {
         this.checkStatus = checkStatus;
-    }
-
-    public Byte getTradeBreed() {
-        return tradeBreed;
-    }
-
-    public void setTradeBreed(Byte tradeBreed) {
-        this.tradeBreed = tradeBreed;
-    }
-
-    public Byte getSignType() {
-        return signType;
-    }
-
-    public void setSignType(Byte signType) {
-        this.signType = signType;
     }
 
     public Byte getStatus() {

@@ -14,8 +14,6 @@
         <result column="deal_quan" jdbcType="DECIMAL" property="dealQuan" />
         <result column="curve_type" jdbcType="TINYINT" property="curveType" />
         <result column="check_status" jdbcType="TINYINT" property="checkStatus" />
-        <result column="trade_breed" jdbcType="TINYINT" property="tradeBreed" />
-        <result column="sign_type" jdbcType="TINYINT" property="signType" />
         <result column="status" jdbcType="TINYINT" property="status" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="status_time" jdbcType="TIMESTAMP" property="statusTime" />
@@ -23,15 +21,15 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        mc_id,entity_id,contract_no,contract_name,contract_type,contract_part,deal_type,contract_start_time,contract_end_time,deal_quan,curve_type,check_status,trade_breed,sign_type,status,create_time,status_time,contract_price
+        mc_id,entity_id,contract_no,contract_name,contract_type,contract_part,deal_type,contract_start_time,contract_end_time,deal_quan,curve_type,check_status,status,create_time,status_time,contract_price
     </sql>
 
     <sql id="Base_Object_List">
-        #{mcId},#{entityId},#{contractNo},#{contractName},#{contractType},#{contractPart},#{dealType},#{contractStartTime},#{contractEndTime},#{dealQuan},#{curveType},#{checkStatus},#{tradeBreed},#{signType},#{status},#{createTime},#{statusTime},#{contractPrice}
+        #{mcId},#{entityId},#{contractNo},#{contractName},#{contractType},#{contractPart},#{dealType},#{contractStartTime},#{contractEndTime},#{dealQuan},#{curveType},#{checkStatus},#{status},#{createTime},#{statusTime},#{contractPrice}
     </sql>
 
     <sql id="Base_Item_List">
-        #{item.mcId},#{item.entityId},#{item.contractNo},#{item.contractName},#{item.contractType},#{item.contractPart},#{item.dealType},#{item.contractStartTime},#{item.contractEndTime},#{item.dealQuan},#{item.curveType},#{item.checkStatus},#{item.tradeBreed},#{item.signType},#{item.status},#{item.createTime},#{item.statusTime},#{item.contractPrice}
+        #{item.mcId},#{item.entityId},#{item.contractNo},#{item.contractName},#{item.contractType},#{item.contractPart},#{item.dealType},#{item.contractStartTime},#{item.contractEndTime},#{item.dealQuan},#{item.curveType},#{item.checkStatus},#{item.status},#{item.createTime},#{item.statusTime},#{item.contractPrice}
     </sql>
 
     <sql id="where_sql">
@@ -182,12 +180,6 @@
             <if test="checkStatus != null">
                 check_status = #{checkStatus},
             </if>
-            <if test="tradeBreed != null">
-                trade_breed = #{tradeBreed},
-            </if>
-            <if test="signType != null">
-                sign_type = #{signType},
-            </if>
             <if test="status != null">
                 status = #{status},
             </if>
@@ -247,12 +239,6 @@
                 <if test="item.checkStatus != null">
                     check_status = #{item.checkStatus},
                 </if>
-                <if test="item.tradeBreed != null">
-                    trade_breed = #{item.tradeBreed},
-                </if>
-                <if test="item.signType != null">
-                    sign_type = #{item.signType},
-                </if>
                 <if test="item.status != null">
                     status = #{item.status},
                 </if>
@@ -288,8 +274,6 @@
             deal_quan = #{dealQuan},
             curve_type = #{curveType},
             check_status = #{checkStatus},
-            trade_breed = #{tradeBreed},
-            sign_type = #{signType},
             status = #{status},
             create_time = #{createTime},
             status_time = #{statusTime},
@@ -317,8 +301,6 @@
                 deal_quan = #{item.dealQuan},
                 curve_type = #{item.curveType},
                 check_status = #{item.checkStatus},
-                trade_breed = #{item.tradeBreed},
-                sign_type = #{item.signType},
                 status = #{item.status},
                 create_time = #{item.createTime},
                 status_time = #{item.statusTime},
@@ -361,7 +343,7 @@
     </select>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~ custom code begin ~~~~~~~~~~~~~~~~~~~~~~-->
-    
+        
     <!--~~~~~~~~~~~~~~~~~~~~~~ custom code end ~~~~~~~~~~~~~~~~~~~~~~-->
 
 </mapper>

@@ -1,9 +1,10 @@
 package com.cloud.ftl.ftltest.test.dao;
 
-import org.springframework.stereotype.Repository;
-import java.util.List;
 import com.cloud.ftl.ftltest.test.entity.MediumContract;
 import com.cloud.ftl.ftltest.test.query.MediumContractQuery;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
   * 接口类 IMediumContractDao
@@ -99,7 +100,7 @@ public interface IMediumContractDao {
     List<MediumContract> findMediumContractByIdList(List<Long> list);
 
     //------------------------ custom code begin ------------------------//
-    
+        
     //======================== custom code end ========================//
 
 }
