@@ -18,8 +18,4 @@ public interface IDailyAmountRedis {
      */
     void initMaxDailyAmountId();
 
-    //------------------------ custom code begin ------------------------//
-    
-    //======================== custom code end ========================//
-
 }

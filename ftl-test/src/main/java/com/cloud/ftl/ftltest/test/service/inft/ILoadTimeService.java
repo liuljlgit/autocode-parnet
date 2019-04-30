@@ -113,8 +113,4 @@ public interface ILoadTimeService {
      */
      void saveLoadTimeList(List<LoadTime> list) throws Exception;
 
-    //------------------------ custom code begin ------------------------//
-    
-    //======================== custom code end ========================//
-
 }

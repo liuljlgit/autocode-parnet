@@ -18,8 +18,4 @@ public interface ILoadTimeRedis {
      */
     void initMaxLoadTimeId();
 
-    //------------------------ custom code begin ------------------------//
-    
-    //======================== custom code end ========================//
-
 }

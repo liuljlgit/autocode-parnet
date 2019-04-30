@@ -271,8 +271,4 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
         }
     }
 
-    //------------------------ custom code begin ------------------------//
-    
-    //======================== custom code end ========================//
-
 }

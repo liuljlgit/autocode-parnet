@@ -271,8 +271,4 @@ public class LoadTimeServiceImpl implements ILoadTimeService {
         }
     }
 
-    //------------------------ custom code begin ------------------------//
-    
-    //======================== custom code end ========================//
-
 }

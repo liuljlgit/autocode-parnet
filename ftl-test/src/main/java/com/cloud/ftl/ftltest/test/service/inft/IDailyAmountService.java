@@ -113,8 +113,4 @@ public interface IDailyAmountService {
      */
      void saveDailyAmountList(List<DailyAmount> list) throws Exception;
 
-    //------------------------ custom code begin ------------------------//
-    
-    //======================== custom code end ========================//
-
 }

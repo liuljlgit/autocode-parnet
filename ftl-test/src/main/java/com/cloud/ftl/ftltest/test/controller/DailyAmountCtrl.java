@@ -77,8 +77,4 @@ public class DailyAmountCtrl{
         return RespEntity.ok();
     }
 
-	//------------------------ custom code begin ------------------------//
-    
-	//======================== custom code end ========================//
-
 }

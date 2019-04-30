@@ -77,8 +77,4 @@ public class LoadTimeCtrl{
         return RespEntity.ok();
     }
 
-	//------------------------ custom code begin ------------------------//
-    
-	//======================== custom code end ========================//
-
 }
