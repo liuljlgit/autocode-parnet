@@ -89,12 +89,29 @@ public class BaseQuery extends BasePage {
      * 对对象进行set操作的时候调用
      * @throws Exception
      */
-    public void addCriteria(String field,Object value,Opt opt) throws Exception {
+    public void addCriteria(String field,Opt opt,Object value1,Object value2) throws Exception {
+        if(!Opt.BETWEEN.equals(opt) && !Opt.NOT_BETWEEN.equals(opt)){
+            throw new Exception("opt enums type not support!");
+        }
         Criteria criteria = new Criteria(Opt.AND.getCode());
         if(CollectionUtils.isEmpty(criterias)){
             criterias = new ArrayList<>();
         }
-        if(Opt.AND.equals(opt) || Opt.OR.equals(opt) || Opt.ASC.equals(opt) || Opt.DESC.equals(opt)){
+        criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value1,value2);
+        criterias.add(criteria);
+    }
+
+    /**
+     * 对对象进行set操作的时候调用
+     * @throws Exception
+     */
+    public void addCriteria(String field,Opt opt,Object value) throws Exception {
+        Criteria criteria = new Criteria(Opt.AND.getCode());
+        if(CollectionUtils.isEmpty(criterias)){
+            criterias = new ArrayList<>();
+        }
+        if(Opt.AND.equals(opt) || Opt.OR.equals(opt) || Opt.ASC.equals(opt)
+                || Opt.DESC.equals(opt) || Opt.BETWEEN.equals(opt) || Opt.NOT_BETWEEN.equals(opt)){
             throw new Exception("opt enums type not support!");
         }
         if(Opt.LIKE.equals(opt) || Opt.NOT_LIKE.equals(opt)){
@@ -106,13 +123,8 @@ public class BaseQuery extends BasePage {
         if(Opt.IS.equals(opt) || Opt.IS_NOT.equals(opt)){
             value = null;
         }
-        if(Opt.BETWEEN.equals(opt) || Opt.NOT_BETWEEN.equals(opt)){
-            criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value,value);
-            criterias.add(criteria);
-        }else{
-            criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value);
-            criterias.add(criteria);
-        }
+        criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value);
+        criterias.add(criteria);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.cloud.ftl.ftltest.test.controller;
 
+import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.utils.BeanUtil;
@@ -12,6 +13,8 @@ import com.cloud.ftl.ftltest.test.webentity.req.DailyAmountReq;
 import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -48,6 +51,7 @@ public class DailyAmountCtrl{
     public CommonResp<PageBean<DailyAmountResp>> getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
         DailyAmountQuery query = BeanUtil.createBean(dailyAmountReq, DailyAmountQuery.class);
         query.setDaId(10000L);
+        query.setDateTime(Opt.BETWEEN,new Date(),new Date());
         PageBean<DailyAmountResp> pageList = dailyAmountService.getDailyAmountPageList(query);
         return RespEntity.ok(pageList);
     }
