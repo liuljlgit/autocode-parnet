@@ -92,6 +92,12 @@ public interface I${className}Dao {
     void batchDelete${className}(List<Long> list);
 
    /**
+    * 批量删除对象
+    * @param query
+    */
+    void batchDelete${className}ByQuery(${className}Query query);
+
+   /**
     * 根据ID列表从数据库中查询列表
     * @param list
     * @return

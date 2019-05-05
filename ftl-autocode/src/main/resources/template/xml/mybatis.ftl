@@ -218,6 +218,14 @@
         </where>
     </delete>
 
+    <!-- 批量删除对象 -->
+    <delete id="batchDelete${className}ByQuery">
+        delete from ${tableName}
+        <where>
+            <include refid="where_sql" />
+        </where>
+    </delete>
+
     <!--根据ID列表获取记录列表-->
     <select id="find${className}ByIdList" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from ${tableName}

@@ -213,6 +213,20 @@ public class ${className}ServiceImpl implements I${className}Service {
         ${objectName}Dao.batchDelete${className}(list);
     }
 
+   /**
+    * 批量删除对象
+    * @param query
+    * @throws Exception
+    */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchDelete${className}ByQuery(${className}Query query) throws Exception {
+        if(Objects.isNull(query)){
+            throw new BusiException("查询对象参数不能为空");
+        }
+        ${objectName}Dao.batchDelete${className}ByQuery(query);
+    }
+
     /**
      * 根据ID列表从数据库中查询列表
      * @param list

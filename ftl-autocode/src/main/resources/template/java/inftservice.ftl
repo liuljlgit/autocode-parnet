@@ -91,6 +91,13 @@ public interface I${className}Service {
      */
     void batchDelete${className}(List<${IdColEntity.fieldJavaType}> list) throws Exception;
 
+   /**
+    * 批量删除对象
+    * @param query
+    * @throws Exception
+    */
+    void batchDelete${className}ByQuery(${className}Query query) throws Exception;
+
     /**
      * 根据ID列表从数据库中查询列表
      * @param list
