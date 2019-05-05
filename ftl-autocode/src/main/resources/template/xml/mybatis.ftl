@@ -31,6 +31,42 @@
 
     </sql>
 
+    <sql id="Update_Column_Set">
+        <set>
+        <#list tableColEntitys as col>
+            <if test="${col.fieldJavaName} != null">
+                ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+            </if>
+        </#list>
+        </set>
+    </sql>
+
+    <sql id="Update_Item_Set">
+        <set>
+        <#list tableColEntitys as col>
+            <if test="item.${col.fieldJavaName} != null">
+                ${col.field} = ${r'#{item.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+            </if>
+        </#list>
+        </set>
+    </sql>
+
+    <sql id="Full_Update_Column_Set">
+        <set>
+        <#list tableColEntitys as col>
+            ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+        </#list>
+        </set>
+    </sql>
+
+    <sql id="Full_Update_Item_Set">
+        <set>
+        <#list tableColEntitys as col>
+            ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+        </#list>
+        </set>
+    </sql>
+
     <sql id="where_sql">
         <if test="query.criterias != null">
             <foreach collection="query.criterias" item="criteria" separator=" ">
@@ -142,13 +178,9 @@
     <!--更新对象-->
     <update id="update${className}">
         update ${tableName}
-        <set>
-            <#list tableColEntitys as col>
-            <if test="${col.fieldJavaName} != null">
-                ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-            </if>
-            </#list>
-        </set>
+        <where>
+            <include refid="Update_Column_Set" />
+        </where>
         <where>
             AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
         </where>
@@ -158,13 +190,9 @@
     <update id="batchUpdate${className}">
         <foreach collection="list" separator=";" item="item">
             update ${tableName}
-            <set>
-                <#list tableColEntitys as col>
-                <if test="item.${col.fieldJavaName} != null">
-                    ${col.field} = ${r'#{item.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-                </if>
-                </#list>
-            </set>
+            <where>
+                <include refid="Update_Item_Set" />
+            </where>
             <where>
                 AND ${IdColEntity.field} = ${r'#{item.'}${IdColEntity.fieldJavaName}}
             </where>
@@ -187,11 +215,9 @@
     <!--更新对象(全更新)-->
     <update id="fullUpdate${className}">
         update ${tableName}
-        <set>
-            <#list tableColEntitys as col>
-            ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-            </#list>
-        </set>
+        <where>
+            <include refid="Full_Update_Column_Set" />
+        </where>
         <where>
             AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
         </where>
@@ -201,11 +227,9 @@
     <update id="batchFullUpdate${className}">
         <foreach collection="list" separator=";" item="item">
             update ${tableName}
-            <set>
-                <#list tableColEntitys as col>
-                ${col.field} = ${r'#{item.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-                </#list>
-            </set>
+            <where>
+                <include refid="Full_Update_Item_Set" />
+            </where>
             <where>
                 AND ${IdColEntity.field} = ${r'#{item.'}${IdColEntity.fieldJavaName}}
             </where>
