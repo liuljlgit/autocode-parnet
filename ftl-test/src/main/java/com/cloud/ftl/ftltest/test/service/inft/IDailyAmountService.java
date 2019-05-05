@@ -1,6 +1,7 @@
 package com.cloud.ftl.ftltest.test.service.inft;
 
 import java.util.List;
+import java.util.Map;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
@@ -76,6 +77,14 @@ public interface IDailyAmountService {
      */
     void batchUpdateDailyAmount(List<DailyAmount> list,Boolean fullUpdate) throws Exception;
 
+   /**
+    * 批量更新
+    * @param params
+    * @param query
+    * @throws Exception
+    */
+    void batchUpdateDailyAmountByQuery(Map<String, Object> params, DailyAmountQuery query) throws Exception;
+
     /**
      * 删除对象
      * @param daId
@@ -90,6 +99,13 @@ public interface IDailyAmountService {
      * @throws Exception
      */
     void batchDeleteDailyAmount(List<Long> list) throws Exception;
+
+   /**
+    * 批量删除对象
+    * @param query
+    * @throws Exception
+    */
+    void batchDeleteDailyAmountByQuery(DailyAmountQuery query) throws Exception;
 
     /**
      * 根据ID列表从数据库中查询列表

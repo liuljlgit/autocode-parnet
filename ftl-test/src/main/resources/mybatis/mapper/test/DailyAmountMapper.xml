@@ -32,8 +32,8 @@
     </sql>
 
     <sql id="where_sql">
-        <if test="criterias != null">
-            <foreach collection="criterias" item="criteria" separator=" ">
+        <if test="query.criterias != null">
+            <foreach collection="query.criterias" item="criteria" separator=" ">
                 <if test="criteria.valid">
                     ${criteria.opt}
                     <choose>
@@ -108,11 +108,11 @@
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="orderByClause!=null and orderByClause!=''">
-            order by ${orderByClause}
+        <if test="query.orderByClause!=null and query.orderByClause!=''">
+            order by ${query.orderByClause}
         </if>
-        <if test="page != null and pageSize != null and page > 0" >
-            limit #{index},#{pageSize}
+        <if test="query.page != null and query.pageSize != null and query.page > 0" >
+            limit #{query.index},#{query.pageSize}
         </if>
     </select>
 
@@ -251,6 +251,19 @@
         </foreach>
     </update>
 
+    <!--批量更新对象-->
+    <update id="batchUpdateDailyAmountByQuery">
+        update daily_amount
+        <set>
+            <foreach collection="params" index="key" item="value" separator=",">
+            ${key} = ${value}
+            </foreach>
+        </set>
+        <where>
+            <include refid="where_sql" />
+        </where>
+    </update>
+
     <!--更新对象(全更新)-->
     <update id="fullUpdateDailyAmount">
         update daily_amount
@@ -319,6 +332,14 @@
             <foreach collection="list" open="(" close=")" separator="," item="item">
                 #{item}
             </foreach>
+        </where>
+    </delete>
+
+    <!-- 批量删除对象 -->
+    <delete id="batchDeleteDailyAmountByQuery">
+        delete from daily_amount
+        <where>
+            <include refid="where_sql" />
         </where>
     </delete>
 

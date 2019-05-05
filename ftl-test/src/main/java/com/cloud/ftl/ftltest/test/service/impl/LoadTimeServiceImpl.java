@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
+import java.util.Map;
 import org.springframework.util.CollectionUtils;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import org.springframework.transaction.annotation.Transactional;
@@ -184,6 +185,24 @@ public class LoadTimeServiceImpl implements ILoadTimeService {
         }
     }
 
+   /**
+    * 批量更新
+    * @param params
+    * @param query
+    * @throws Exception
+    */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchUpdateLoadTimeByQuery(Map<String,Object> params,LoadTimeQuery query) throws Exception {
+        if(CollectionUtils.isEmpty(params)){
+            throw new BusiException("params不能为空");
+        }
+        if(Objects.isNull(query)){
+            throw new BusiException("query不能为空");
+        }
+        loadTimeDao.batchUpdateLoadTimeByQuery(params,query);
+    }
+
     /**
      * 删除对象
      * @param ltId
@@ -211,6 +230,20 @@ public class LoadTimeServiceImpl implements ILoadTimeService {
             return ;
         }
         loadTimeDao.batchDeleteLoadTime(list);
+    }
+
+   /**
+    * 批量删除对象
+    * @param query
+    * @throws Exception
+    */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchDeleteLoadTimeByQuery(LoadTimeQuery query) throws Exception {
+        if(Objects.isNull(query)){
+            throw new BusiException("查询对象参数不能为空");
+        }
+        loadTimeDao.batchDeleteLoadTimeByQuery(query);
     }
 
     /**

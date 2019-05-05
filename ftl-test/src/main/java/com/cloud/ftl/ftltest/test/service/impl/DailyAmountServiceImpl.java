@@ -1,23 +1,25 @@
 package com.cloud.ftl.ftltest.test.service.impl;
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.Objects;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftltest.test.cache.inft.IDailyAmountRedis;
+import com.cloud.ftl.ftltest.test.dao.IDailyAmountDao;
+import com.cloud.ftl.ftltest.test.entity.DailyAmount;
+import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
+import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import org.springframework.util.CollectionUtils;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
-import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
-import com.cloud.ftl.ftltest.test.dao.IDailyAmountDao;
-import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
-import com.cloud.ftl.ftltest.test.cache.inft.IDailyAmountRedis;
-import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
 
 /**
  * IDailyAmountService service实现类
@@ -184,6 +186,24 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
         }
     }
 
+   /**
+    * 批量更新
+    * @param params
+    * @param query
+    * @throws Exception
+    */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchUpdateDailyAmountByQuery(Map<String,Object> params,DailyAmountQuery query) throws Exception {
+        if(CollectionUtils.isEmpty(params)){
+            throw new BusiException("params不能为空");
+        }
+        if(Objects.isNull(query)){
+            throw new BusiException("query不能为空");
+        }
+        dailyAmountDao.batchUpdateDailyAmountByQuery(params,query);
+    }
+
     /**
      * 删除对象
      * @param daId
@@ -211,6 +231,20 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
             return ;
         }
         dailyAmountDao.batchDeleteDailyAmount(list);
+    }
+
+   /**
+    * 批量删除对象
+    * @param query
+    * @throws Exception
+    */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchDeleteDailyAmountByQuery(DailyAmountQuery query) throws Exception {
+        if(Objects.isNull(query)){
+            throw new BusiException("查询对象参数不能为空");
+        }
+        dailyAmountDao.batchDeleteDailyAmountByQuery(query);
     }
 
     /**

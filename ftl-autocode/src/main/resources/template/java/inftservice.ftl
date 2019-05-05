@@ -1,6 +1,7 @@
 package ${inftServicePackagePath};
 
 import java.util.List;
+import java.util.Map;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import ${entityPackagePath}.${className};
 import ${queryEntityPackagePath}.${className}Query;
@@ -75,6 +76,14 @@ public interface I${className}Service {
      * @throws Exception
      */
     void batchUpdate${className}(List<${className}> list,Boolean fullUpdate) throws Exception;
+
+   /**
+    * 批量更新
+    * @param params
+    * @param query
+    * @throws Exception
+    */
+    void batchUpdate${className}ByQuery(Map<String, Object> params, ${className}Query query) throws Exception;
 
     /**
      * 删除对象

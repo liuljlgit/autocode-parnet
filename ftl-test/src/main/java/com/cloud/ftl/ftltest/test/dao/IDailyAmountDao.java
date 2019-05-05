@@ -2,6 +2,8 @@ package com.cloud.ftl.ftltest.test.dao;
 
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Map;
+import org.apache.ibatis.annotations.Param;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
 
@@ -30,14 +32,14 @@ public interface IDailyAmountDao {
      * @param query
      * @return
      */
-    List<DailyAmount> findDailyAmountList(DailyAmountQuery query);
+    List<DailyAmount> findDailyAmountList(@Param("query") DailyAmountQuery query);
 
     /**
      * 获取查询总数
      * @param query
      * @return
      */
-    Long getTotalDailyAmount(DailyAmountQuery query);
+    Long getTotalDailyAmount(@Param("query") DailyAmountQuery query);
 
     /**
      * 新增对象
@@ -66,6 +68,13 @@ public interface IDailyAmountDao {
     void batchUpdateDailyAmount(List<DailyAmount> list);
 
     /**
+     * 批量更新对象
+     * @param params
+     * @param query
+     */
+    void batchUpdateDailyAmountByQuery(@Param("params") Map<String,Object> params,@Param("query") DailyAmountQuery query);
+
+    /**
      * 更新对象（全更新）
      * @param dailyAmount
      * @return
@@ -90,6 +99,12 @@ public interface IDailyAmountDao {
      * @param list
      */
     void batchDeleteDailyAmount(List<Long> list);
+
+   /**
+    * 批量删除对象
+    * @param query
+    */
+    void batchDeleteDailyAmountByQuery(@Param("query") DailyAmountQuery query);
 
    /**
     * 根据ID列表从数据库中查询列表

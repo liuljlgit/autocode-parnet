@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
+import java.util.Map;
 import org.springframework.util.CollectionUtils;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import org.springframework.transaction.annotation.Transactional;
@@ -182,6 +183,24 @@ public class ${className}ServiceImpl implements I${className}Service {
         } else {
             ${objectName}Dao.batchUpdate${className}(list);
         }
+    }
+
+   /**
+    * 批量更新
+    * @param params
+    * @param query
+    * @throws Exception
+    */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchUpdate${className}ByQuery(Map<String,Object> params,${className}Query query) throws Exception {
+        if(CollectionUtils.isEmpty(params)){
+            throw new BusiException("params不能为空");
+        }
+        if(Objects.isNull(query)){
+            throw new BusiException("query不能为空");
+        }
+        ${objectName}Dao.batchUpdate${className}ByQuery(params,query);
     }
 
     /**

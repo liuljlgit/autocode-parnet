@@ -2,6 +2,8 @@ package ${daoPackagePath};
 
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Map;
+import org.apache.ibatis.annotations.Param;
 import ${entityPackagePath}.${className};
 import ${queryEntityPackagePath}.${className}Query;
 
@@ -30,14 +32,14 @@ public interface I${className}Dao {
      * @param query
      * @return
      */
-    List<${className}> find${className}List(${className}Query query);
+    List<${className}> find${className}List(@Param("query") ${className}Query query);
 
     /**
      * 获取查询总数
      * @param query
      * @return
      */
-    Long getTotal${className}(${className}Query query);
+    Long getTotal${className}(@Param("query") ${className}Query query);
 
     /**
      * 新增对象
@@ -64,6 +66,13 @@ public interface I${className}Dao {
      * @param list
      */
     void batchUpdate${className}(List<${className}> list);
+
+    /**
+     * 批量更新对象
+     * @param params
+     * @param query
+     */
+    void batchUpdate${className}ByQuery(@Param("params") Map<String,Object> params,@Param("query") ${className}Query query);
 
     /**
      * 更新对象（全更新）
@@ -95,7 +104,7 @@ public interface I${className}Dao {
     * 批量删除对象
     * @param query
     */
-    void batchDelete${className}ByQuery(${className}Query query);
+    void batchDelete${className}ByQuery(@Param("query") ${className}Query query);
 
    /**
     * 根据ID列表从数据库中查询列表

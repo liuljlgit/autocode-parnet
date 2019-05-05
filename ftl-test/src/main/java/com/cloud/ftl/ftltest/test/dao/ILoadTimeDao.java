@@ -2,6 +2,8 @@ package com.cloud.ftl.ftltest.test.dao;
 
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Map;
+import org.apache.ibatis.annotations.Param;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 
@@ -30,14 +32,14 @@ public interface ILoadTimeDao {
      * @param query
      * @return
      */
-    List<LoadTime> findLoadTimeList(LoadTimeQuery query);
+    List<LoadTime> findLoadTimeList(@Param("query") LoadTimeQuery query);
 
     /**
      * 获取查询总数
      * @param query
      * @return
      */
-    Long getTotalLoadTime(LoadTimeQuery query);
+    Long getTotalLoadTime(@Param("query") LoadTimeQuery query);
 
     /**
      * 新增对象
@@ -66,6 +68,13 @@ public interface ILoadTimeDao {
     void batchUpdateLoadTime(List<LoadTime> list);
 
     /**
+     * 批量更新对象
+     * @param params
+     * @param query
+     */
+    void batchUpdateLoadTimeByQuery(@Param("params") Map<String,Object> params,@Param("query") LoadTimeQuery query);
+
+    /**
      * 更新对象（全更新）
      * @param loadTime
      * @return
@@ -90,6 +99,12 @@ public interface ILoadTimeDao {
      * @param list
      */
     void batchDeleteLoadTime(List<Long> list);
+
+   /**
+    * 批量删除对象
+    * @param query
+    */
+    void batchDeleteLoadTimeByQuery(@Param("query") LoadTimeQuery query);
 
    /**
     * 根据ID列表从数据库中查询列表

@@ -1,6 +1,7 @@
 package com.cloud.ftl.ftltest.test.service.inft;
 
 import java.util.List;
+import java.util.Map;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
@@ -76,6 +77,14 @@ public interface ILoadTimeService {
      */
     void batchUpdateLoadTime(List<LoadTime> list,Boolean fullUpdate) throws Exception;
 
+   /**
+    * 批量更新
+    * @param params
+    * @param query
+    * @throws Exception
+    */
+    void batchUpdateLoadTimeByQuery(Map<String, Object> params, LoadTimeQuery query) throws Exception;
+
     /**
      * 删除对象
      * @param ltId
@@ -90,6 +99,13 @@ public interface ILoadTimeService {
      * @throws Exception
      */
     void batchDeleteLoadTime(List<Long> list) throws Exception;
+
+   /**
+    * 批量删除对象
+    * @param query
+    * @throws Exception
+    */
+    void batchDeleteLoadTimeByQuery(LoadTimeQuery query) throws Exception;
 
     /**
      * 根据ID列表从数据库中查询列表

@@ -32,8 +32,8 @@
     </sql>
 
     <sql id="where_sql">
-        <if test="criterias != null">
-            <foreach collection="criterias" item="criteria" separator=" ">
+        <if test="query.criterias != null">
+            <foreach collection="query.criterias" item="criteria" separator=" ">
                 <if test="criteria.valid">
                     ${r'${'}criteria.opt}
                     <choose>
@@ -108,11 +108,11 @@
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="orderByClause!=null and orderByClause!=''">
-            order by ${r'${'}orderByClause}
+        <if test="query.orderByClause!=null and query.orderByClause!=''">
+            order by ${r'${'}query.orderByClause}
         </if>
-        <if test="page != null and pageSize != null and page > 0" >
-            limit ${r'#{'}index},${r'#{'}pageSize}
+        <if test="query.page != null and query.pageSize != null and query.page > 0" >
+            limit ${r'#{'}query.index},${r'#{'}query.pageSize}
         </if>
     </select>
 
@@ -169,6 +169,19 @@
                 AND ${IdColEntity.field} = ${r'#{item.'}${IdColEntity.fieldJavaName}}
             </where>
         </foreach>
+    </update>
+
+    <!--批量更新对象-->
+    <update id="batchUpdate${className}ByQuery">
+        update ${tableName}
+        <set>
+            <foreach collection="params" index="key" item="value" separator=",">
+            ${r'${'}key} = ${r'${'}value}
+            </foreach>
+        </set>
+        <where>
+            <include refid="where_sql" />
+        </where>
     </update>
 
     <!--更新对象(全更新)-->
