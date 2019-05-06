@@ -31,6 +31,146 @@
         #{item.daId},#{item.entityId},#{item.dateTime},#{item.settProfit},#{item.expendProfit},#{item.incomeProfit},#{item.profitHours},#{item.deficitHours},#{item.minusDeviation},#{item.positiveDeviation},#{item.status},#{item.ce},#{item.sa},#{item.createTime},#{item.statusTime}
     </sql>
 
+    <sql id="Update_Column_Set">
+        <set>
+            <if test="daId != null">
+                da_id = #{daId},
+            </if>
+            <if test="entityId != null">
+                entity_id = #{entityId},
+            </if>
+            <if test="dateTime != null">
+                date_time = #{dateTime},
+            </if>
+            <if test="settProfit != null">
+                sett_profit = #{settProfit},
+            </if>
+            <if test="expendProfit != null">
+                expend_profit = #{expendProfit},
+            </if>
+            <if test="incomeProfit != null">
+                income_profit = #{incomeProfit},
+            </if>
+            <if test="profitHours != null">
+                profit_hours = #{profitHours},
+            </if>
+            <if test="deficitHours != null">
+                deficit_hours = #{deficitHours},
+            </if>
+            <if test="minusDeviation != null">
+                minus_deviation = #{minusDeviation},
+            </if>
+            <if test="positiveDeviation != null">
+                positive_deviation = #{positiveDeviation},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="ce != null">
+                ce = #{ce},
+            </if>
+            <if test="sa != null">
+                sa = #{sa},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="statusTime != null">
+                status_time = #{statusTime}
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Update_Item_Set">
+        <set>
+            <if test="item.daId != null">
+                da_id = #{item.daId},
+            </if>
+            <if test="item.entityId != null">
+                entity_id = #{item.entityId},
+            </if>
+            <if test="item.dateTime != null">
+                date_time = #{item.dateTime},
+            </if>
+            <if test="item.settProfit != null">
+                sett_profit = #{item.settProfit},
+            </if>
+            <if test="item.expendProfit != null">
+                expend_profit = #{item.expendProfit},
+            </if>
+            <if test="item.incomeProfit != null">
+                income_profit = #{item.incomeProfit},
+            </if>
+            <if test="item.profitHours != null">
+                profit_hours = #{item.profitHours},
+            </if>
+            <if test="item.deficitHours != null">
+                deficit_hours = #{item.deficitHours},
+            </if>
+            <if test="item.minusDeviation != null">
+                minus_deviation = #{item.minusDeviation},
+            </if>
+            <if test="item.positiveDeviation != null">
+                positive_deviation = #{item.positiveDeviation},
+            </if>
+            <if test="item.status != null">
+                status = #{item.status},
+            </if>
+            <if test="item.ce != null">
+                ce = #{item.ce},
+            </if>
+            <if test="item.sa != null">
+                sa = #{item.sa},
+            </if>
+            <if test="item.createTime != null">
+                create_time = #{item.createTime},
+            </if>
+            <if test="item.statusTime != null">
+                status_time = #{item.statusTime}
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Full_Update_Column_Set">
+        <set>
+            da_id = #{daId},
+            entity_id = #{entityId},
+            date_time = #{dateTime},
+            sett_profit = #{settProfit},
+            expend_profit = #{expendProfit},
+            income_profit = #{incomeProfit},
+            profit_hours = #{profitHours},
+            deficit_hours = #{deficitHours},
+            minus_deviation = #{minusDeviation},
+            positive_deviation = #{positiveDeviation},
+            status = #{status},
+            ce = #{ce},
+            sa = #{sa},
+            create_time = #{createTime},
+            status_time = #{statusTime}
+        </set>
+    </sql>
+
+    <sql id="Full_Update_Item_Set">
+        <set>
+            da_id = #{daId},
+            entity_id = #{entityId},
+            date_time = #{dateTime},
+            sett_profit = #{settProfit},
+            expend_profit = #{expendProfit},
+            income_profit = #{incomeProfit},
+            profit_hours = #{profitHours},
+            deficit_hours = #{deficitHours},
+            minus_deviation = #{minusDeviation},
+            positive_deviation = #{positiveDeviation},
+            status = #{status},
+            ce = #{ce},
+            sa = #{sa},
+            create_time = #{createTime},
+            status_time = #{statusTime}
+        </set>
+    </sql>
+
     <sql id="where_sql">
         <if test="query.criterias != null">
             <foreach collection="query.criterias" item="criteria" separator=" ">
@@ -142,53 +282,9 @@
     <!--更新对象-->
     <update id="updateDailyAmount">
         update daily_amount
-        <set>
-            <if test="daId != null">
-                da_id = #{daId},
-            </if>
-            <if test="entityId != null">
-                entity_id = #{entityId},
-            </if>
-            <if test="dateTime != null">
-                date_time = #{dateTime},
-            </if>
-            <if test="settProfit != null">
-                sett_profit = #{settProfit},
-            </if>
-            <if test="expendProfit != null">
-                expend_profit = #{expendProfit},
-            </if>
-            <if test="incomeProfit != null">
-                income_profit = #{incomeProfit},
-            </if>
-            <if test="profitHours != null">
-                profit_hours = #{profitHours},
-            </if>
-            <if test="deficitHours != null">
-                deficit_hours = #{deficitHours},
-            </if>
-            <if test="minusDeviation != null">
-                minus_deviation = #{minusDeviation},
-            </if>
-            <if test="positiveDeviation != null">
-                positive_deviation = #{positiveDeviation},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-            <if test="ce != null">
-                ce = #{ce},
-            </if>
-            <if test="sa != null">
-                sa = #{sa},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="statusTime != null">
-                status_time = #{statusTime}
-            </if>
-        </set>
+        <where>
+            <include refid="Update_Column_Set" />
+        </where>
         <where>
             AND da_id = #{daId}
         </where>
@@ -198,53 +294,9 @@
     <update id="batchUpdateDailyAmount">
         <foreach collection="list" separator=";" item="item">
             update daily_amount
-            <set>
-                <if test="item.daId != null">
-                    da_id = #{item.daId},
-                </if>
-                <if test="item.entityId != null">
-                    entity_id = #{item.entityId},
-                </if>
-                <if test="item.dateTime != null">
-                    date_time = #{item.dateTime},
-                </if>
-                <if test="item.settProfit != null">
-                    sett_profit = #{item.settProfit},
-                </if>
-                <if test="item.expendProfit != null">
-                    expend_profit = #{item.expendProfit},
-                </if>
-                <if test="item.incomeProfit != null">
-                    income_profit = #{item.incomeProfit},
-                </if>
-                <if test="item.profitHours != null">
-                    profit_hours = #{item.profitHours},
-                </if>
-                <if test="item.deficitHours != null">
-                    deficit_hours = #{item.deficitHours},
-                </if>
-                <if test="item.minusDeviation != null">
-                    minus_deviation = #{item.minusDeviation},
-                </if>
-                <if test="item.positiveDeviation != null">
-                    positive_deviation = #{item.positiveDeviation},
-                </if>
-                <if test="item.status != null">
-                    status = #{item.status},
-                </if>
-                <if test="item.ce != null">
-                    ce = #{item.ce},
-                </if>
-                <if test="item.sa != null">
-                    sa = #{item.sa},
-                </if>
-                <if test="item.createTime != null">
-                    create_time = #{item.createTime},
-                </if>
-                <if test="item.statusTime != null">
-                    status_time = #{item.statusTime}
-                </if>
-            </set>
+            <where>
+                <include refid="Update_Item_Set" />
+            </where>
             <where>
                 AND da_id = #{item.daId}
             </where>
@@ -267,23 +319,9 @@
     <!--更新对象(全更新)-->
     <update id="fullUpdateDailyAmount">
         update daily_amount
-        <set>
-            da_id = #{daId},
-            entity_id = #{entityId},
-            date_time = #{dateTime},
-            sett_profit = #{settProfit},
-            expend_profit = #{expendProfit},
-            income_profit = #{incomeProfit},
-            profit_hours = #{profitHours},
-            deficit_hours = #{deficitHours},
-            minus_deviation = #{minusDeviation},
-            positive_deviation = #{positiveDeviation},
-            status = #{status},
-            ce = #{ce},
-            sa = #{sa},
-            create_time = #{createTime},
-            status_time = #{statusTime}
-        </set>
+        <where>
+            <include refid="Full_Update_Column_Set" />
+        </where>
         <where>
             AND da_id = #{daId}
         </where>
@@ -293,23 +331,9 @@
     <update id="batchFullUpdateDailyAmount">
         <foreach collection="list" separator=";" item="item">
             update daily_amount
-            <set>
-                da_id = #{item.daId},
-                entity_id = #{item.entityId},
-                date_time = #{item.dateTime},
-                sett_profit = #{item.settProfit},
-                expend_profit = #{item.expendProfit},
-                income_profit = #{item.incomeProfit},
-                profit_hours = #{item.profitHours},
-                deficit_hours = #{item.deficitHours},
-                minus_deviation = #{item.minusDeviation},
-                positive_deviation = #{item.positiveDeviation},
-                status = #{item.status},
-                ce = #{item.ce},
-                sa = #{item.sa},
-                create_time = #{item.createTime},
-                status_time = #{item.statusTime}
-            </set>
+            <where>
+                <include refid="Full_Update_Item_Set" />
+            </where>
             <where>
                 AND da_id = #{item.daId}
             </where>

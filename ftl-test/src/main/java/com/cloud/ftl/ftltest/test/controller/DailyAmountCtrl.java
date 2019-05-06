@@ -1,18 +1,17 @@
 package com.cloud.ftl.ftltest.test.controller;
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.utils.BeanUtil;
-import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
+import com.cloud.ftl.ftlbasic.utils.BeanUtil;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
-import com.cloud.ftl.ftltest.test.webentity.req.DailyAmountReq;
+import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
+import com.cloud.ftl.ftltest.test.webentity.req.DailyAmountReq;
+import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Objects;
 
 /**

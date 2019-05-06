@@ -23,6 +23,82 @@
         #{item.ltId},#{item.entityId},#{item.startTime},#{item.endTime},#{item.status},#{item.createTime},#{item.statusTime}
     </sql>
 
+    <sql id="Update_Column_Set">
+        <set>
+            <if test="ltId != null">
+                lt_id = #{ltId},
+            </if>
+            <if test="entityId != null">
+                entity_id = #{entityId},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="statusTime != null">
+                status_time = #{statusTime}
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Update_Item_Set">
+        <set>
+            <if test="item.ltId != null">
+                lt_id = #{item.ltId},
+            </if>
+            <if test="item.entityId != null">
+                entity_id = #{item.entityId},
+            </if>
+            <if test="item.startTime != null">
+                start_time = #{item.startTime},
+            </if>
+            <if test="item.endTime != null">
+                end_time = #{item.endTime},
+            </if>
+            <if test="item.status != null">
+                status = #{item.status},
+            </if>
+            <if test="item.createTime != null">
+                create_time = #{item.createTime},
+            </if>
+            <if test="item.statusTime != null">
+                status_time = #{item.statusTime}
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Full_Update_Column_Set">
+        <set>
+            lt_id = #{ltId},
+            entity_id = #{entityId},
+            start_time = #{startTime},
+            end_time = #{endTime},
+            status = #{status},
+            create_time = #{createTime},
+            status_time = #{statusTime}
+        </set>
+    </sql>
+
+    <sql id="Full_Update_Item_Set">
+        <set>
+            lt_id = #{ltId},
+            entity_id = #{entityId},
+            start_time = #{startTime},
+            end_time = #{endTime},
+            status = #{status},
+            create_time = #{createTime},
+            status_time = #{statusTime}
+        </set>
+    </sql>
+
     <sql id="where_sql">
         <if test="query.criterias != null">
             <foreach collection="query.criterias" item="criteria" separator=" ">
@@ -134,29 +210,9 @@
     <!--更新对象-->
     <update id="updateLoadTime">
         update load_time
-        <set>
-            <if test="ltId != null">
-                lt_id = #{ltId},
-            </if>
-            <if test="entityId != null">
-                entity_id = #{entityId},
-            </if>
-            <if test="startTime != null">
-                start_time = #{startTime},
-            </if>
-            <if test="endTime != null">
-                end_time = #{endTime},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="statusTime != null">
-                status_time = #{statusTime}
-            </if>
-        </set>
+        <where>
+            <include refid="Update_Column_Set" />
+        </where>
         <where>
             AND lt_id = #{ltId}
         </where>
@@ -166,29 +222,9 @@
     <update id="batchUpdateLoadTime">
         <foreach collection="list" separator=";" item="item">
             update load_time
-            <set>
-                <if test="item.ltId != null">
-                    lt_id = #{item.ltId},
-                </if>
-                <if test="item.entityId != null">
-                    entity_id = #{item.entityId},
-                </if>
-                <if test="item.startTime != null">
-                    start_time = #{item.startTime},
-                </if>
-                <if test="item.endTime != null">
-                    end_time = #{item.endTime},
-                </if>
-                <if test="item.status != null">
-                    status = #{item.status},
-                </if>
-                <if test="item.createTime != null">
-                    create_time = #{item.createTime},
-                </if>
-                <if test="item.statusTime != null">
-                    status_time = #{item.statusTime}
-                </if>
-            </set>
+            <where>
+                <include refid="Update_Item_Set" />
+            </where>
             <where>
                 AND lt_id = #{item.ltId}
             </where>
@@ -211,15 +247,9 @@
     <!--更新对象(全更新)-->
     <update id="fullUpdateLoadTime">
         update load_time
-        <set>
-            lt_id = #{ltId},
-            entity_id = #{entityId},
-            start_time = #{startTime},
-            end_time = #{endTime},
-            status = #{status},
-            create_time = #{createTime},
-            status_time = #{statusTime}
-        </set>
+        <where>
+            <include refid="Full_Update_Column_Set" />
+        </where>
         <where>
             AND lt_id = #{ltId}
         </where>
@@ -229,15 +259,9 @@
     <update id="batchFullUpdateLoadTime">
         <foreach collection="list" separator=";" item="item">
             update load_time
-            <set>
-                lt_id = #{item.ltId},
-                entity_id = #{item.entityId},
-                start_time = #{item.startTime},
-                end_time = #{item.endTime},
-                status = #{item.status},
-                create_time = #{item.createTime},
-                status_time = #{item.statusTime}
-            </set>
+            <where>
+                <include refid="Full_Update_Item_Set" />
+            </where>
             <where>
                 AND lt_id = #{item.ltId}
             </where>
