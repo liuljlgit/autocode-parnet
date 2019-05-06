@@ -1,13 +1,14 @@
 package com.cloud.ftl.ftlbasic.redis;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.connection.jedis.JedisConnection;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 public class RedisKeyspaceNotifier {
-	Logger log = Logger.getLogger(RedisKeyspaceNotifier.class);
+	Logger log = LoggerFactory.getLogger(RedisKeyspaceNotifier.class);
 	private JedisConnectionFactory connectionFactory;
 	private MessageListener listener;
 	private Thread subThread;

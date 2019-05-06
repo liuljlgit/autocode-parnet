@@ -1,6 +1,7 @@
 package com.cloud.ftl.ftlbasic.redis;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class KeyExpiredListener implements MessageListener {
-	Logger logger = Logger.getLogger(KeyExpiredListener.class);
+	Logger logger = LoggerFactory.getLogger(KeyExpiredListener.class);
 
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
