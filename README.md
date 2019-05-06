@@ -9,7 +9,7 @@ autocode是自动代码生成工具，只需一键就能生成包括controller,s
 三、使用流程
 ====
 
-a）克隆autocode-parnet仓库,并把里面的ftl-basic打成一个jar包
+a）克隆autocode-parnet仓库,并把里面的ftl-basic打成一个jar包<br>
 b）在你的项目中加入jar包<br>
 ```
   <dependency>
@@ -18,27 +18,27 @@ b）在你的项目中加入jar包<br>
     <version>${ftl.basic.version}</version>
   </dependency>
 ```
-d）启动ftl-autocode项目，使用postman请求接口生成代码<br>
+c）启动ftl-autocode项目，使用postman请求接口生成代码<br>
 ```
   {
-    "mySqlUrl":"jdbc:mysql://192.168.123.170:3306/test", 
-    "mySqlName":"root",
-    "mySqlPass":"root",
-    "mySqlDriver":"com.mysql.jdbc.Driver",
-    "projectBasePath":"E:\\myProject\\autocode-parnet\\ftl-test",
-    "ctrlPath":"com.cloud.ftl.ftltest.test.controller",
-    "inftServicePath":"com.cloud.ftl.ftltest.test.service.inft",
-    "implServicePath":"com.cloud.ftl.ftltest.test.service.impl",
-    "inftRedisPath":"com.cloud.ftl.ftltest.test.cache.inft",
-    "implRedisPath":"com.cloud.ftl.ftltest.test.cache.impl",
-    "daoPath":"com.cloud.ftl.ftltest.test.dao",
-    "entityPath":"com.cloud.ftl.ftltest.test.entity",
-    "queryEntityPath":"com.cloud.ftl.ftltest.test.query",
-    "respPath":"com.cloud.ftl.ftltest.test.webentity.resp",
-    "reqPath":"com.cloud.ftl.ftltest.test.webentity.req",
-    "xmlPath":"mybatis.mapper.test",
-    "update":false,
-    "tableNames":["daily_amount","load_time"]
+    "mySqlUrl":"jdbc:mysql://192.168.123.170:3306/test",            //mysql地址
+    "mySqlName":"root",                                             //mysql账号  
+    "mySqlPass":"root",                                             //mysql密码
+    "mySqlDriver":"com.mysql.jdbc.Driver",                          //mysql驱动类  
+    "projectBasePath":"E:\\myProject\\autocode-parnet\\ftl-test",   //项目存放本地目录
+    "ctrlPath":"com.cloud.ftl.ftltest.test.controller",             //controller包目录
+    "inftServicePath":"com.cloud.ftl.ftltest.test.service.inft",    //service接口包目录
+    "implServicePath":"com.cloud.ftl.ftltest.test.service.impl",    //service实现包目录
+    "inftRedisPath":"com.cloud.ftl.ftltest.test.cache.inft",        //redis接口包目录
+    "implRedisPath":"com.cloud.ftl.ftltest.test.cache.impl",        //redis实现包目录
+    "daoPath":"com.cloud.ftl.ftltest.test.dao",                     //dao层包目录    
+    "entityPath":"com.cloud.ftl.ftltest.test.entity",               //entity层包目录
+    "queryEntityPath":"com.cloud.ftl.ftltest.test.query",           //查询对象包目录
+    "respPath":"com.cloud.ftl.ftltest.test.webentity.resp",         //返回实体包目录
+    "reqPath":"com.cloud.ftl.ftltest.test.webentity.req",           //请求实体包目录
+    "xmlPath":"mybatis.mapper.test",                                //xml文件生成目录  
+    "update":false,                                                 //false:生成所有文件，true:用于数据库表接口更新，只更新部分文件
+    "tableNames":["daily_amount","load_time"]                       //需要生成的表，json数组，可生成多个
   }
 ```
 <br>
