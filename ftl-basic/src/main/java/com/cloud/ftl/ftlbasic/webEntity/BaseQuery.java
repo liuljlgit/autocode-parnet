@@ -47,6 +47,24 @@ public class BaseQuery extends BasePage {
     }
 
     /**
+     * and Criteria
+     * @throws Exception
+     */
+    public Criteria andCriteria(String field) {
+        if(StringUtils.isEmpty(field)){
+            return andCriteria();
+        }else{
+            Criteria criteria = new Criteria(Opt.AND.getCode());
+            if(CollectionUtils.isEmpty(criterias)){
+                criterias = new ArrayList<>();
+            }
+            criterias.add(criteria);
+            addCriteria2Map(field,criteria);
+            return criteria;
+        }
+    }
+
+    /**
      * or Criteria
      * @throws Exception
      */
@@ -58,6 +76,24 @@ public class BaseQuery extends BasePage {
         criterias.add(criteria);
         addCriteria2Map("custom",criteria);
         return criteria;
+    }
+
+    /**
+     * or Criteria
+     * @throws Exception
+     */
+    public Criteria orCriteria(String field) {
+        if(StringUtils.isEmpty(field)){
+            return orCriteria();
+        }else{
+            Criteria criteria = new Criteria(Opt.OR.getCode());
+            if(CollectionUtils.isEmpty(criterias)){
+                criterias = new ArrayList<>();
+            }
+            criterias.add(criteria);
+            addCriteria2Map(field,criteria);
+            return criteria;
+        }
     }
 
     /**
