@@ -3,22 +3,20 @@ package ${implServicePackagePath};
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.Map;
 import org.springframework.util.CollectionUtils;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Collections;
-import java.util.stream.Collectors;
 import ${entityPackagePath}.${className};
 import ${inftServicePackagePath}.I${className}Service;
 import ${daoPackagePath}.I${className}Dao;
 import ${queryEntityPackagePath}.${className}Query;
 import ${inftRedisPackagePath}.I${className}Redis;
 import ${respPackagePath}.${className}Resp;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * I${className}Service service实现类
@@ -290,13 +288,17 @@ public class ${className}ServiceImpl implements I${className}Service {
         if(CollectionUtils.isEmpty(list)){
             return ;
         }
-        List<${className}> addList = list.stream().filter(e -> Objects.isNull(e.get${IdColEntity.fieldJavaName?cap_first}())).collect(Collectors.toList());
-        List<${className}> updateList = list.stream().filter(e -> Objects.nonNull(e.get${IdColEntity.fieldJavaName?cap_first}())).collect(Collectors.toList());
+        List<${className}> addList = new ArrayList<>();
+        List<${className}> updateList = new ArrayList<>();
+        for (${className} item : list){
+            if(Objects.isNull(item.get${IdColEntity.fieldJavaName?cap_first}())){
+                item.set${IdColEntity.fieldJavaName?cap_first}(${objectName}Redis.get${className}Id());
+                addList.add(item);
+            }else{
+                updateList.add(item);
+            }
+        }
         if(!CollectionUtils.isEmpty(addList)){
-            addList = addList.stream().map(e->{
-                e.set${IdColEntity.fieldJavaName?cap_first}(${objectName}Redis.get${className}Id());
-                return e;
-            }).collect(Collectors.toList());
             batchAdd${className}(addList);
         }
         if(!CollectionUtils.isEmpty(updateList)){

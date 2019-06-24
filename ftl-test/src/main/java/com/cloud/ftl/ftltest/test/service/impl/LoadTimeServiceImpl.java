@@ -3,22 +3,20 @@ package com.cloud.ftl.ftltest.test.service.impl;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.Map;
 import org.springframework.util.CollectionUtils;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Collections;
-import java.util.stream.Collectors;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.dao.ILoadTimeDao;
 import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 import com.cloud.ftl.ftltest.test.cache.inft.ILoadTimeRedis;
 import com.cloud.ftl.ftltest.test.webentity.resp.LoadTimeResp;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * ILoadTimeService service实现类
@@ -290,13 +288,17 @@ public class LoadTimeServiceImpl implements ILoadTimeService {
         if(CollectionUtils.isEmpty(list)){
             return ;
         }
-        List<LoadTime> addList = list.stream().filter(e -> Objects.isNull(e.getLtId())).collect(Collectors.toList());
-        List<LoadTime> updateList = list.stream().filter(e -> Objects.nonNull(e.getLtId())).collect(Collectors.toList());
+        List<LoadTime> addList = new ArrayList<>();
+        List<LoadTime> updateList = new ArrayList<>();
+        for (LoadTime item : list){
+            if(Objects.isNull(item.getLtId())){
+                item.setLtId(loadTimeRedis.getLoadTimeId());
+                addList.add(item);
+            }else{
+                updateList.add(item);
+            }
+        }
         if(!CollectionUtils.isEmpty(addList)){
-            addList = addList.stream().map(e->{
-                e.setLtId(loadTimeRedis.getLoadTimeId());
-                return e;
-            }).collect(Collectors.toList());
             batchAddLoadTime(addList);
         }
         if(!CollectionUtils.isEmpty(updateList)){

@@ -1,20 +1,17 @@
 package com.cloud.ftl.ftltest.test.controller;
 
-import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.utils.BeanUtil;
-import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
+import com.cloud.ftl.ftlbasic.utils.BeanUtil;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
-import com.cloud.ftl.ftltest.test.webentity.req.DailyAmountReq;
+import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
+import com.cloud.ftl.ftltest.test.webentity.req.DailyAmountReq;
+import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -50,13 +47,6 @@ public class DailyAmountCtrl{
     @PostMapping(value = "/dailyamount/list")
     public CommonResp<PageBean<DailyAmountResp>> getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
         DailyAmountQuery query = BeanUtil.createBean(dailyAmountReq, DailyAmountQuery.class);
-        query.setDaId(Opt.EQUAL,1000L);
-        query.setDaId(Opt.LIKE,1000L);
-        query.cleanCriteria(DailyAmountQuery.TABLE_DA_ID);
-        query.setDateTime(Opt.EQUAL,new Date());
-        query.setEntityId(Opt.EQUAL,100000);
-        query.andCriteria("my").and(DailyAmountQuery.TABLE_CE,Opt.EQUAL,(byte)1);
-        query.cleanCriteria(DailyAmountQuery.TABLE_ENTITY_ID,"my");
         PageBean<DailyAmountResp> pageList = dailyAmountService.getDailyAmountPageList(query);
         return RespEntity.ok(pageList);
     }
