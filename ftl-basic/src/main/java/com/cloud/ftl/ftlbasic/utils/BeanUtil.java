@@ -21,10 +21,12 @@ public class BeanUtil {
      * @throws Exception
      */
     public static <T> T createBean(Object source,Class<T> clazz){
-        if(Objects.isNull(source)) return null;
         T t;
         try {
             t = clazz.newInstance();
+            if(Objects.isNull(source)) {
+                return t;
+            }
             copyOwnerAndSuperProperties(source, t);
         } catch (Exception e) {
             logger.error("实体 {} 转换为 {} 类型失败：{}",source,clazz,e);
