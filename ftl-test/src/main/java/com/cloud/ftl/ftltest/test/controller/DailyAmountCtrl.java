@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -48,12 +49,11 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/dailyamount/list")
-    public CommonResp<PageBean<DailyAmountResp>> getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
+    public CommonResp<Object> getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
         DailyAmountQuery query = BeanUtil.createBean(dailyAmountReq, DailyAmountQuery.class);
         query.setDaId(10000L);
-        query.setDateTime(Opt.BETWEEN,new Date(),new Date());
-        PageBean<DailyAmountResp> pageList = dailyAmountService.getDailyAmountPageList(query);
-        return RespEntity.ok(pageList);
+        List<DailyAmount> dailyAmountList = dailyAmountService.findDailyAmountList(query);
+        return RespEntity.ok();
     }
 
     /**

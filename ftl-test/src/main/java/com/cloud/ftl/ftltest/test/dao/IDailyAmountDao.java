@@ -1,5 +1,6 @@
 package com.cloud.ftl.ftltest.test.dao;
 
+import com.cloud.ftl.ftlbasic.aspect.PropInject;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
@@ -30,6 +31,7 @@ public interface IDailyAmountDao {
      * @param query
      * @return
      */
+    @PropInject
     List<DailyAmount> findDailyAmountList(DailyAmountQuery query);
 
     /**
