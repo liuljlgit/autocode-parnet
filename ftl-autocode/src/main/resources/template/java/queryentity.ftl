@@ -1,12 +1,16 @@
-package ${queryEntityPackagePath};
+package ${entityPackagePath};
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.math.BigDecimal;
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
+import ${tableConstPath}.${className}Table;
 
-public class ${className}Query extends BaseQuery {
+public class ${className} extends BaseQuery {
+
+    public static Map<String,String> map = ${className}Table.map;
 <#list tableColEntitys as col>
 
     /**
@@ -15,27 +19,30 @@ public class ${className}Query extends BaseQuery {
 	private ${col.fieldJavaType} ${col.fieldJavaName};
 </#list>
 
-<#list tableColEntitys as col>
+    public static Map<String, String> getMap() {
+        return map;
+    }
 
-    public static final transient String TABLE_${col.field?upper_case} = "${col.field}";
-</#list>
+    public static void setMap(Map<String, String> map) {
+        ${className}.map = map;
+    }
 
 <#list tableColEntitys as col>
 
     public void set${col.fieldJavaName?cap_first}(${col.fieldJavaType} ${col.fieldJavaName}) {
-        addCriteria(${className}Query.TABLE_${col.field?upper_case},${col.fieldJavaName});
+        addCriteria(${className}Table.${col.field?upper_case},${col.fieldJavaName});
     }
 
     public void set${col.fieldJavaName?cap_first}(Opt opt,${col.fieldJavaType} ${col.fieldJavaName}) throws Exception {
-        addCriteria(${className}Query.TABLE_${col.field?upper_case},opt,${col.fieldJavaName});
+        addCriteria(${className}Table.${col.field?upper_case},opt,${col.fieldJavaName});
     }
 
     public void set${col.fieldJavaName?cap_first}(Opt opt,List<${col.fieldJavaType}> ${col.fieldJavaName}List) throws Exception {
-        addCriteria(${className}Query.TABLE_${col.field?upper_case},opt,${col.fieldJavaName}List);
+        addCriteria(${className}Table.${col.field?upper_case},opt,${col.fieldJavaName}List);
     }
 
     public void set${col.fieldJavaName?cap_first}(Opt opt,${col.fieldJavaType} ${col.fieldJavaName}1,${col.fieldJavaType} ${col.fieldJavaName}2) throws Exception {
-        addCriteria(${className}Query.TABLE_${col.field?upper_case},opt,${col.fieldJavaName}1,${col.fieldJavaName}2);
+        addCriteria(${className}Table.${col.field?upper_case},opt,${col.fieldJavaName}1,${col.fieldJavaName}2);
     }
 </#list>
 

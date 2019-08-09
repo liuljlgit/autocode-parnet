@@ -7,6 +7,8 @@ import com.cloud.ftl.ftlbasic.webEntity.BasePage;
 import java.io.Serializable;
 
 public class ${className} extends BasePage implements Serializable {
+
+    public static Map<String,String> map = ${className}Table.map;
 <#list tableColEntitys as col>
 
     /**

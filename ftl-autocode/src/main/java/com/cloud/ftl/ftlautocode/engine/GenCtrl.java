@@ -105,6 +105,8 @@ public class GenCtrl {
             //10.生成req文件
             genService.genRespFile(genReq);
             //11.生成queryentity文件
-            genService.genQueryEntityFile(genReq);
+            //genService.genQueryEntityFile(genReq);
+            //12.生成TableConst类
+            genService.genTableConstFile(genReq);
         }
 }

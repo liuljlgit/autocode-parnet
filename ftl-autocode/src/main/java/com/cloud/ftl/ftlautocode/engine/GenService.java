@@ -64,6 +64,7 @@ public class GenService {
         GenConst.commonReplaceMap.put("queryEntityPackagePath",genReq.getQueryEntityPath());
         GenConst.commonReplaceMap.put("reqPackagePath",genReq.getReqPath());
         GenConst.commonReplaceMap.put("respPackagePath",genReq.getRespPath());
+        GenConst.commonReplaceMap.put("tableConstPath",genReq.getTableConstPath());
         GenConst.commonReplaceMap.put("tableColEntitys",GenConst.tableColEntitys);
         GenConst.commonReplaceMap.put("IdColEntity",GenConst.tableColEntitys.stream().filter(e->e.getKey().equals("PRI")).collect(Collectors.toList()).get(0));
     }
@@ -206,6 +207,19 @@ public class GenService {
         FreemarkerUtil.outputFile(genReq.getQueryEntityPath(),
                 GenConst.QUERY_ENTITY_PATH,
                 GenConst.commonReplaceMap.get("className").toString().concat("Query"),
+                true,
+                genReq.getUpdate(),
+                GenConst.commonReplaceMap);
+    }
+
+    /**
+     * 生成TableConst文件
+     * @param genReq
+     */
+    public void genTableConstFile(GenReq genReq) {
+        FreemarkerUtil.outputFile(genReq.getTableConstPath(),
+                GenConst.TABLE_CONST_PATH,
+                GenConst.commonReplaceMap.get("className").toString().concat("Table"),
                 true,
                 genReq.getUpdate(),
                 GenConst.commonReplaceMap);

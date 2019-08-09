@@ -1,6 +1,5 @@
 package com.cloud.ftl.ftltest.test.service.impl;
 
-import com.cloud.ftl.ftlbasic.aspect.PropInject;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,7 +91,6 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
      * @throws Exception
      */
     @Override
-    @PropInject
     public List<DailyAmount> findDailyAmountList(DailyAmountQuery query) throws Exception {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
