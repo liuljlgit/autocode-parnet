@@ -69,31 +69,6 @@ public class LoadTimeServiceImpl extends AbstractBaseService<LoadTime> implement
     }
 
     /**
-     * 更新对象
-     * @param loadTime
-     * @param fullUpdate
-     * @return
-     * @throws Exception
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Integer updateLoadTime(LoadTime loadTime,Boolean fullUpdate) throws Exception {
-        if(Objects.isNull(loadTime)){
-            return 0;
-        }
-        if(Objects.isNull(loadTime.getLtId())){
-            throw new BusiException("主键不能为空");
-        }
-        Integer result;
-        if(fullUpdate){
-            result = loadTimeDao.fullUpdateLoadTime(loadTime);
-        } else {
-            result = loadTimeDao.updateLoadTime(loadTime);
-        }
-        return result;
-    }
-
-    /**
      * 批量更新
      * @param list
      * @param fullUpdate
@@ -144,20 +119,6 @@ public class LoadTimeServiceImpl extends AbstractBaseService<LoadTime> implement
             return ;
         }
         loadTimeDao.batchDeleteLoadTime(list);
-    }
-
-    /**
-     * 根据ID列表从数据库中查询列表
-     * @param list
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public List<LoadTime> findLoadTimeByIdList(List<Long> list) throws Exception {
-        if(CollectionUtils.isEmpty(list)){
-            return Collections.EMPTY_LIST;
-        }
-        return loadTimeDao.findLoadTimeByIdList(list);
     }
 
     /**

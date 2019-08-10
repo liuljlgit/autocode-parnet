@@ -90,7 +90,5 @@ public class GenCtrl {
             genService.genDaoFile(genReq);
             //6.生成xml文件
             genService.genXmlFile(genReq);
-            //7.生成TableConst类
-            genService.genTableConstFile(genReq);
         }
 }

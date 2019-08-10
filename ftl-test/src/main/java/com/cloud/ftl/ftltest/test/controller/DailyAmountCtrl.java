@@ -9,8 +9,6 @@ import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -31,7 +29,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @GetMapping(value = "/obj")
-    public CommonResp<DailyAmount> selectById(@PathVariable(value="daId") Long daId) throws Exception {
+    public CommonResp<DailyAmount> selectById(Long daId) throws BusiException {
         if(Objects.isNull(daId)){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
@@ -48,7 +46,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/page")
-    public CommonResp<PageBean<DailyAmount>> selectPage(@RequestBody DailyAmount query) throws Exception {
+    public CommonResp<PageBean<DailyAmount>> selectPage(@RequestBody DailyAmount query) throws BusiException {
         return RespEntity.ok(dailyAmountService.selectPage(query));
     }
 
@@ -58,10 +56,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/obj")
-    public CommonResp<Object> save(@RequestBody DailyAmount dailyAmount) throws  Exception{
-        dailyAmount.setEntityId(1000);
-        dailyAmount.setDateTime(new Date());
-        dailyAmount.setStatus((byte)1);
+    public CommonResp<Object> save(@RequestBody DailyAmount dailyAmount) throws BusiException {
         dailyAmountService.saveDailyAmount(dailyAmount);
         return RespEntity.ok();
     }
@@ -72,7 +67,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/obj")
-    public CommonResp<Object> deleteById(@PathVariable(value="daId") Long daId) throws  Exception{
+    public CommonResp<Object> deleteById(@PathVariable(value="daId") Long daId) throws Exception {
         if(Objects.isNull(daId)){
            throw new BusiException("删除主键不可为空") ;
         }

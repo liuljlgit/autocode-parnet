@@ -22,7 +22,6 @@ public class GenConst {
     public static final String IMPL_SERVICE_FTL_PATH = "/java/implservice.ftl";
     public static final String DAO_FTL_PATH = "/java/dao.ftl";
     public static final String ENTITY_PATH = "/java/entity.ftl";
-    public static final String TABLE_CONST_PATH = "/java/tableconst.ftl";
     public static final String XML_FTL_PATH = "/xml/mybatis.ftl";
 
     //java的"/"和"."

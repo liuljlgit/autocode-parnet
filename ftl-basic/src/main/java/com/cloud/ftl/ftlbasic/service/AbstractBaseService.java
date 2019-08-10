@@ -1,18 +1,20 @@
 package com.cloud.ftl.ftlbasic.service;
 
 
+import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.mapper.IBaseMapper;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +35,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         this.redisTemplate = redisTemplate;
     }
 
+    @Override
     public Long selectMaxId() throws BusiException {
         ParameterizedType type = (ParameterizedType)this.getClass().getGenericSuperclass();
         Class tClass = (Class) type.getActualTypeArguments()[0];
@@ -50,6 +53,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         });
     }
 
+    @Override
     public T selectById(Serializable id) throws BusiException {
         if(Objects.isNull(id)){
             throw new BusiException("请输入要获取的数据的ID");
@@ -57,6 +61,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         return baseMapper.selectById(id);
     }
 
+    @Override
     public T selectOne(T query) throws BusiException {
         List<T> list = selectList(query);
         if(!CollectionUtils.isEmpty(list)){
@@ -65,6 +70,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         return null;
     }
 
+    @Override
     public List<T> selectList(T query) throws BusiException {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
@@ -72,8 +78,9 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         return baseMapper.selectList(query);
     }
 
+    @Override
     public PageBean<T> selectPage(T query) throws BusiException {
-        Class<?> aClass = query.getClass();
+        Class<?> aClass = query.getClass().getSuperclass().getSuperclass();
         try {
             Field pField = aClass.getDeclaredField("page");
             Field psField = aClass.getDeclaredField("pageSize");
@@ -91,8 +98,59 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         }
     }
 
+    @Override
     public Long selectCount(T query) throws BusiException {
         return  baseMapper.selectCount(query);
     }
+
+    @Override
+    public List<T> selectBatchIds(Collection<? extends Serializable> list) {
+        return baseMapper.selectBatchIds(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int updateNotNull(T entity) {
+        Field[] fields = entity.getClass().getDeclaredFields();
+        Field priField = null;
+        for (Field field : fields) {
+            PrimaryKey annotation = field.getAnnotation(PrimaryKey.class);
+            if(Objects.nonNull(annotation)){
+                priField = field;
+                break;
+            }
+        }
+        //没有找到主键
+        if(Objects.isNull(priField)){
+            throw new BusiException("更新失败，当前操作表没有主键");
+        }
+        priField.setAccessible(true);
+        try {
+            Object priKey = priField.get(entity);
+            if(Objects.isNull(priKey)){
+                throw new BusiException("更新失败，主键不能为空");
+            }
+            return baseMapper.updateNotNull(entity);
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+            throw new BusiException(e.getMessage());
+        }
+    }
+
+    @Override
+    public int updateWithNull(T entity) {
+        return 0;
+    }
+
+    @Override
+    public void updateBatchNotNull(List<T> list) {
+
+    }
+
+    @Override
+    public void updateBatchWithNull(List<T> list) {
+
+    }
+
 
 }

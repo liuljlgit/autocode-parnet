@@ -26,13 +26,6 @@ public interface ILoadTimeDao extends IBaseMapper<LoadTime>{
     void batchAddLoadTime(List<LoadTime> list);
 
     /**
-     * 更新对象
-     * @param loadTime
-     * @return
-     */
-    Integer updateLoadTime(LoadTime loadTime);
-
-    /**
      * 批量更新对象
      * @param list
      */
@@ -63,13 +56,6 @@ public interface ILoadTimeDao extends IBaseMapper<LoadTime>{
      * @param list
      */
     void batchDeleteLoadTime(List<Long> list);
-
-   /**
-    * 根据ID列表从数据库中查询列表
-    * @param list
-    * @return
-    */
-    List<LoadTime> findLoadTimeByIdList(List<Long> list);
 
     //------------------------ custom code begin ------------------------//
     

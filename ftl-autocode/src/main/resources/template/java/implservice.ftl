@@ -69,31 +69,6 @@ public class ${className}ServiceImpl extends AbstractBaseService<${className}> i
     }
 
     /**
-     * 更新对象
-     * @param ${objectName}
-     * @param fullUpdate
-     * @return
-     * @throws Exception
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Integer update${className}(${className} ${objectName},Boolean fullUpdate) throws Exception {
-        if(Objects.isNull(${objectName})){
-            return 0;
-        }
-        if(Objects.isNull(${objectName}.get${IdColEntity.fieldJavaName?cap_first}())){
-            throw new BusiException("主键不能为空");
-        }
-        Integer result;
-        if(fullUpdate){
-            result = ${objectName}Dao.fullUpdate${className}(${objectName});
-        } else {
-            result = ${objectName}Dao.update${className}(${objectName});
-        }
-        return result;
-    }
-
-    /**
      * 批量更新
      * @param list
      * @param fullUpdate
@@ -144,20 +119,6 @@ public class ${className}ServiceImpl extends AbstractBaseService<${className}> i
             return ;
         }
         ${objectName}Dao.batchDelete${className}(list);
-    }
-
-    /**
-     * 根据ID列表从数据库中查询列表
-     * @param list
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public List<${className}> find${className}ByIdList(List<${IdColEntity.fieldJavaType}> list) throws Exception {
-        if(CollectionUtils.isEmpty(list)){
-            return Collections.EMPTY_LIST;
-        }
-        return ${objectName}Dao.find${className}ByIdList(list);
     }
 
     /**

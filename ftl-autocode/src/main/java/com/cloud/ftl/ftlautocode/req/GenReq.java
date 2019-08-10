@@ -71,12 +71,6 @@ public class GenReq {
      * 生成xml文件的目录路径
      * "mybatis.mapper.test";
      */
-    private String tableConstPath;
-
-    /**
-     * 生成xml文件的目录路径
-     * "mybatis.mapper.test";
-     */
     private String xmlPath;
 
     /**
@@ -196,11 +190,4 @@ public class GenReq {
         this.tableNames = tableNames;
     }
 
-    public String getTableConstPath() {
-        return tableConstPath;
-    }
-
-    public void setTableConstPath(String tableConstPath) {
-        this.tableConstPath = tableConstPath;
-    }
 }

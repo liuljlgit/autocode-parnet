@@ -26,13 +26,6 @@ public interface IDailyAmountDao extends IBaseMapper<DailyAmount>{
     void batchAddDailyAmount(List<DailyAmount> list);
 
     /**
-     * 更新对象
-     * @param dailyAmount
-     * @return
-     */
-    Integer updateDailyAmount(DailyAmount dailyAmount);
-
-    /**
      * 批量更新对象
      * @param list
      */
@@ -63,13 +56,6 @@ public interface IDailyAmountDao extends IBaseMapper<DailyAmount>{
      * @param list
      */
     void batchDeleteDailyAmount(List<Long> list);
-
-   /**
-    * 根据ID列表从数据库中查询列表
-    * @param list
-    * @return
-    */
-    List<DailyAmount> findDailyAmountByIdList(List<Long> list);
 
     //------------------------ custom code begin ------------------------//
     

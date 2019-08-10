@@ -26,13 +26,6 @@ public interface I${className}Dao extends IBaseMapper<${className}>{
     void batchAdd${className}(List<${className}> list);
 
     /**
-     * 更新对象
-     * @param ${objectName}
-     * @return
-     */
-    Integer update${className}(${className} ${objectName});
-
-    /**
      * 批量更新对象
      * @param list
      */
@@ -63,13 +56,6 @@ public interface I${className}Dao extends IBaseMapper<${className}>{
      * @param list
      */
     void batchDelete${className}(List<Long> list);
-
-   /**
-    * 根据ID列表从数据库中查询列表
-    * @param list
-    * @return
-    */
-    List<${className}> find${className}ByIdList(List<${IdColEntity.fieldJavaType}> list);
 
     //------------------------ custom code begin ------------------------//
     ${customCode!""}

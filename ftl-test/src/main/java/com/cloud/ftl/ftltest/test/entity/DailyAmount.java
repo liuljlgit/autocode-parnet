@@ -7,267 +7,296 @@ import java.math.BigDecimal;
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import lombok.Data;
-import com.cloud.ftl.ftltest.test.constant.DailyAmountTable;
+import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
 
 @Data
 public class DailyAmount extends BaseQuery {
 
-    public static Map<String,String> map = DailyAmountTable.map;
-
     /**
      * field comment:日前报量管理ID
      */
-	private Long daId;
+    @PrimaryKey
+    private Long daId;
 
     /**
      * field comment:电企业ID：来源于cloud_sys.entity.entity_id
      */
-	private Integer entityId;
+    private Integer entityId;
 
     /**
      * field comment:用电时间
      */
-	private Date dateTime;
+    private Date dateTime;
 
     /**
      * field comment:结算盈利
      */
-	private BigDecimal settProfit;
+    private BigDecimal settProfit;
 
     /**
      * field comment:支出金额
      */
-	private BigDecimal expendProfit;
+    private BigDecimal expendProfit;
 
     /**
      * field comment:收入金额
      */
-	private BigDecimal incomeProfit;
+    private BigDecimal incomeProfit;
 
     /**
      * field comment:盈利小时数
      */
-	private Byte profitHours;
+    private Byte profitHours;
 
     /**
      * field comment:亏损小时数
      */
-	private Byte deficitHours;
+    private Byte deficitHours;
 
     /**
      * field comment:当天最大负偏差率(%)
      */
-	private BigDecimal minusDeviation;
+    private BigDecimal minusDeviation;
 
     /**
      * field comment:当天最大正偏差率(%)
      */
-	private BigDecimal positiveDeviation;
+    private BigDecimal positiveDeviation;
 
     /**
      * field comment:状态 (0) 弃用 （1）正常
      */
-	private Byte status;
+    private Byte status;
 
     /**
      * field comment:
      */
-	private Byte ce;
+    private Byte ce;
 
     /**
      * field comment:
      */
-	private Byte sa;
+    private Byte sa;
 
     /**
      * field comment:创建时间
      */
-	private Date createTime;
+    private Date createTime;
 
     /**
      * field comment:更新时间
      */
-	private Date statusTime;
+    private Date statusTime;
+
+    public static final transient String DA_ID = "da_id";
+
+    public static final transient String ENTITY_ID = "entity_id";
+
+    public static final transient String DATE_TIME = "date_time";
+
+    public static final transient String SETT_PROFIT = "sett_profit";
+
+    public static final transient String EXPEND_PROFIT = "expend_profit";
+
+    public static final transient String INCOME_PROFIT = "income_profit";
+
+    public static final transient String PROFIT_HOURS = "profit_hours";
+
+    public static final transient String DEFICIT_HOURS = "deficit_hours";
+
+    public static final transient String MINUS_DEVIATION = "minus_deviation";
+
+    public static final transient String POSITIVE_DEVIATION = "positive_deviation";
+
+    public static final transient String STATUS = "status";
+
+    public static final transient String CE = "ce";
+
+    public static final transient String SA = "sa";
+
+    public static final transient String CREATE_TIME = "create_time";
+
+    public static final transient String STATUS_TIME = "status_time";
 
 
     public void andDaId(Opt opt,Long daId) throws Exception {
-        addCriteria(DailyAmountTable.DA_ID,opt,daId);
+        addCriteria(DA_ID,opt,daId);
     }
 
     public void andDaId(Opt opt,List<Long> daIdList) throws Exception {
-        addCriteria(DailyAmountTable.DA_ID,opt,daIdList);
+        addCriteria(DA_ID,opt,daIdList);
     }
 
     public void andDaId(Opt opt,Long daId1,Long daId2) throws Exception {
-        addCriteria(DailyAmountTable.DA_ID,opt,daId1,daId2);
+        addCriteria(DA_ID,opt,daId1,daId2);
     }
 
     public void andEntityId(Opt opt,Integer entityId) throws Exception {
-        addCriteria(DailyAmountTable.ENTITY_ID,opt,entityId);
+        addCriteria(ENTITY_ID,opt,entityId);
     }
 
     public void andEntityId(Opt opt,List<Integer> entityIdList) throws Exception {
-        addCriteria(DailyAmountTable.ENTITY_ID,opt,entityIdList);
+        addCriteria(ENTITY_ID,opt,entityIdList);
     }
 
     public void andEntityId(Opt opt,Integer entityId1,Integer entityId2) throws Exception {
-        addCriteria(DailyAmountTable.ENTITY_ID,opt,entityId1,entityId2);
+        addCriteria(ENTITY_ID,opt,entityId1,entityId2);
     }
 
     public void andDateTime(Opt opt,Date dateTime) throws Exception {
-        addCriteria(DailyAmountTable.DATE_TIME,opt,dateTime);
+        addCriteria(DATE_TIME,opt,dateTime);
     }
 
     public void andDateTime(Opt opt,List<Date> dateTimeList) throws Exception {
-        addCriteria(DailyAmountTable.DATE_TIME,opt,dateTimeList);
+        addCriteria(DATE_TIME,opt,dateTimeList);
     }
 
     public void andDateTime(Opt opt,Date dateTime1,Date dateTime2) throws Exception {
-        addCriteria(DailyAmountTable.DATE_TIME,opt,dateTime1,dateTime2);
+        addCriteria(DATE_TIME,opt,dateTime1,dateTime2);
     }
 
     public void andSettProfit(Opt opt,BigDecimal settProfit) throws Exception {
-        addCriteria(DailyAmountTable.SETT_PROFIT,opt,settProfit);
+        addCriteria(SETT_PROFIT,opt,settProfit);
     }
 
     public void andSettProfit(Opt opt,List<BigDecimal> settProfitList) throws Exception {
-        addCriteria(DailyAmountTable.SETT_PROFIT,opt,settProfitList);
+        addCriteria(SETT_PROFIT,opt,settProfitList);
     }
 
     public void andSettProfit(Opt opt,BigDecimal settProfit1,BigDecimal settProfit2) throws Exception {
-        addCriteria(DailyAmountTable.SETT_PROFIT,opt,settProfit1,settProfit2);
+        addCriteria(SETT_PROFIT,opt,settProfit1,settProfit2);
     }
 
     public void andExpendProfit(Opt opt,BigDecimal expendProfit) throws Exception {
-        addCriteria(DailyAmountTable.EXPEND_PROFIT,opt,expendProfit);
+        addCriteria(EXPEND_PROFIT,opt,expendProfit);
     }
 
     public void andExpendProfit(Opt opt,List<BigDecimal> expendProfitList) throws Exception {
-        addCriteria(DailyAmountTable.EXPEND_PROFIT,opt,expendProfitList);
+        addCriteria(EXPEND_PROFIT,opt,expendProfitList);
     }
 
     public void andExpendProfit(Opt opt,BigDecimal expendProfit1,BigDecimal expendProfit2) throws Exception {
-        addCriteria(DailyAmountTable.EXPEND_PROFIT,opt,expendProfit1,expendProfit2);
+        addCriteria(EXPEND_PROFIT,opt,expendProfit1,expendProfit2);
     }
 
     public void andIncomeProfit(Opt opt,BigDecimal incomeProfit) throws Exception {
-        addCriteria(DailyAmountTable.INCOME_PROFIT,opt,incomeProfit);
+        addCriteria(INCOME_PROFIT,opt,incomeProfit);
     }
 
     public void andIncomeProfit(Opt opt,List<BigDecimal> incomeProfitList) throws Exception {
-        addCriteria(DailyAmountTable.INCOME_PROFIT,opt,incomeProfitList);
+        addCriteria(INCOME_PROFIT,opt,incomeProfitList);
     }
 
     public void andIncomeProfit(Opt opt,BigDecimal incomeProfit1,BigDecimal incomeProfit2) throws Exception {
-        addCriteria(DailyAmountTable.INCOME_PROFIT,opt,incomeProfit1,incomeProfit2);
+        addCriteria(INCOME_PROFIT,opt,incomeProfit1,incomeProfit2);
     }
 
     public void andProfitHours(Opt opt,Byte profitHours) throws Exception {
-        addCriteria(DailyAmountTable.PROFIT_HOURS,opt,profitHours);
+        addCriteria(PROFIT_HOURS,opt,profitHours);
     }
 
     public void andProfitHours(Opt opt,List<Byte> profitHoursList) throws Exception {
-        addCriteria(DailyAmountTable.PROFIT_HOURS,opt,profitHoursList);
+        addCriteria(PROFIT_HOURS,opt,profitHoursList);
     }
 
     public void andProfitHours(Opt opt,Byte profitHours1,Byte profitHours2) throws Exception {
-        addCriteria(DailyAmountTable.PROFIT_HOURS,opt,profitHours1,profitHours2);
+        addCriteria(PROFIT_HOURS,opt,profitHours1,profitHours2);
     }
 
     public void andDeficitHours(Opt opt,Byte deficitHours) throws Exception {
-        addCriteria(DailyAmountTable.DEFICIT_HOURS,opt,deficitHours);
+        addCriteria(DEFICIT_HOURS,opt,deficitHours);
     }
 
     public void andDeficitHours(Opt opt,List<Byte> deficitHoursList) throws Exception {
-        addCriteria(DailyAmountTable.DEFICIT_HOURS,opt,deficitHoursList);
+        addCriteria(DEFICIT_HOURS,opt,deficitHoursList);
     }
 
     public void andDeficitHours(Opt opt,Byte deficitHours1,Byte deficitHours2) throws Exception {
-        addCriteria(DailyAmountTable.DEFICIT_HOURS,opt,deficitHours1,deficitHours2);
+        addCriteria(DEFICIT_HOURS,opt,deficitHours1,deficitHours2);
     }
 
     public void andMinusDeviation(Opt opt,BigDecimal minusDeviation) throws Exception {
-        addCriteria(DailyAmountTable.MINUS_DEVIATION,opt,minusDeviation);
+        addCriteria(MINUS_DEVIATION,opt,minusDeviation);
     }
 
     public void andMinusDeviation(Opt opt,List<BigDecimal> minusDeviationList) throws Exception {
-        addCriteria(DailyAmountTable.MINUS_DEVIATION,opt,minusDeviationList);
+        addCriteria(MINUS_DEVIATION,opt,minusDeviationList);
     }
 
     public void andMinusDeviation(Opt opt,BigDecimal minusDeviation1,BigDecimal minusDeviation2) throws Exception {
-        addCriteria(DailyAmountTable.MINUS_DEVIATION,opt,minusDeviation1,minusDeviation2);
+        addCriteria(MINUS_DEVIATION,opt,minusDeviation1,minusDeviation2);
     }
 
     public void andPositiveDeviation(Opt opt,BigDecimal positiveDeviation) throws Exception {
-        addCriteria(DailyAmountTable.POSITIVE_DEVIATION,opt,positiveDeviation);
+        addCriteria(POSITIVE_DEVIATION,opt,positiveDeviation);
     }
 
     public void andPositiveDeviation(Opt opt,List<BigDecimal> positiveDeviationList) throws Exception {
-        addCriteria(DailyAmountTable.POSITIVE_DEVIATION,opt,positiveDeviationList);
+        addCriteria(POSITIVE_DEVIATION,opt,positiveDeviationList);
     }
 
     public void andPositiveDeviation(Opt opt,BigDecimal positiveDeviation1,BigDecimal positiveDeviation2) throws Exception {
-        addCriteria(DailyAmountTable.POSITIVE_DEVIATION,opt,positiveDeviation1,positiveDeviation2);
+        addCriteria(POSITIVE_DEVIATION,opt,positiveDeviation1,positiveDeviation2);
     }
 
     public void andStatus(Opt opt,Byte status) throws Exception {
-        addCriteria(DailyAmountTable.STATUS,opt,status);
+        addCriteria(STATUS,opt,status);
     }
 
     public void andStatus(Opt opt,List<Byte> statusList) throws Exception {
-        addCriteria(DailyAmountTable.STATUS,opt,statusList);
+        addCriteria(STATUS,opt,statusList);
     }
 
     public void andStatus(Opt opt,Byte status1,Byte status2) throws Exception {
-        addCriteria(DailyAmountTable.STATUS,opt,status1,status2);
+        addCriteria(STATUS,opt,status1,status2);
     }
 
     public void andCe(Opt opt,Byte ce) throws Exception {
-        addCriteria(DailyAmountTable.CE,opt,ce);
+        addCriteria(CE,opt,ce);
     }
 
     public void andCe(Opt opt,List<Byte> ceList) throws Exception {
-        addCriteria(DailyAmountTable.CE,opt,ceList);
+        addCriteria(CE,opt,ceList);
     }
 
     public void andCe(Opt opt,Byte ce1,Byte ce2) throws Exception {
-        addCriteria(DailyAmountTable.CE,opt,ce1,ce2);
+        addCriteria(CE,opt,ce1,ce2);
     }
 
     public void andSa(Opt opt,Byte sa) throws Exception {
-        addCriteria(DailyAmountTable.SA,opt,sa);
+        addCriteria(SA,opt,sa);
     }
 
     public void andSa(Opt opt,List<Byte> saList) throws Exception {
-        addCriteria(DailyAmountTable.SA,opt,saList);
+        addCriteria(SA,opt,saList);
     }
 
     public void andSa(Opt opt,Byte sa1,Byte sa2) throws Exception {
-        addCriteria(DailyAmountTable.SA,opt,sa1,sa2);
+        addCriteria(SA,opt,sa1,sa2);
     }
 
     public void andCreateTime(Opt opt,Date createTime) throws Exception {
-        addCriteria(DailyAmountTable.CREATE_TIME,opt,createTime);
+        addCriteria(CREATE_TIME,opt,createTime);
     }
 
     public void andCreateTime(Opt opt,List<Date> createTimeList) throws Exception {
-        addCriteria(DailyAmountTable.CREATE_TIME,opt,createTimeList);
+        addCriteria(CREATE_TIME,opt,createTimeList);
     }
 
     public void andCreateTime(Opt opt,Date createTime1,Date createTime2) throws Exception {
-        addCriteria(DailyAmountTable.CREATE_TIME,opt,createTime1,createTime2);
+        addCriteria(CREATE_TIME,opt,createTime1,createTime2);
     }
 
     public void andStatusTime(Opt opt,Date statusTime) throws Exception {
-        addCriteria(DailyAmountTable.STATUS_TIME,opt,statusTime);
+        addCriteria(STATUS_TIME,opt,statusTime);
     }
 
     public void andStatusTime(Opt opt,List<Date> statusTimeList) throws Exception {
-        addCriteria(DailyAmountTable.STATUS_TIME,opt,statusTimeList);
+        addCriteria(STATUS_TIME,opt,statusTimeList);
     }
 
     public void andStatusTime(Opt opt,Date statusTime1,Date statusTime2) throws Exception {
-        addCriteria(DailyAmountTable.STATUS_TIME,opt,statusTime1,statusTime2);
+        addCriteria(STATUS_TIME,opt,statusTime1,statusTime2);
     }
 
 }

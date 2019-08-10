@@ -16,6 +16,7 @@
 package com.cloud.ftl.ftlbasic.mapper;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -48,4 +49,16 @@ public interface IBaseMapper<T> extends IMapper<T> {
      */
     Long selectCount(T query);
 
+    /**
+     * 根据 id 列表，获取记录列表
+     * @param list id列表
+     */
+    List<T> selectBatchIds(Collection<? extends Serializable> list);
+
+    /**
+     * 更新不为空的属性
+     * @param entity
+     * @return
+     */
+    int updateNotNull(T entity);
 }

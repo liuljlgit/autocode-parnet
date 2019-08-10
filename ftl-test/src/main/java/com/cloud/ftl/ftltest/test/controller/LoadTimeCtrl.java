@@ -29,7 +29,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @GetMapping(value = "/obj")
-    public CommonResp<LoadTime> selectById(@PathVariable(value="ltId") Long ltId) throws Exception {
+    public CommonResp<LoadTime> selectById(Long ltId) throws BusiException {
         if(Objects.isNull(ltId)){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
@@ -46,7 +46,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/page")
-    public CommonResp<PageBean<LoadTime>> selectPage(@RequestBody LoadTime query) throws Exception {
+    public CommonResp<PageBean<LoadTime>> selectPage(@RequestBody LoadTime query) throws BusiException {
         return RespEntity.ok(loadTimeService.selectPage(query));
     }
 
@@ -56,7 +56,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/obj")
-    public CommonResp<Object> save(@RequestBody LoadTime loadTime) throws  Exception{
+    public CommonResp<Object> save(@RequestBody LoadTime loadTime) throws BusiException {
         loadTimeService.saveLoadTime(loadTime);
         return RespEntity.ok();
     }
@@ -67,7 +67,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/obj")
-    public CommonResp<Object> deleteById(@PathVariable(value="ltId") Long ltId) throws  Exception{
+    public CommonResp<Object> deleteById(@PathVariable(value="ltId") Long ltId) throws Exception {
         if(Objects.isNull(ltId)){
            throw new BusiException("删除主键不可为空") ;
         }

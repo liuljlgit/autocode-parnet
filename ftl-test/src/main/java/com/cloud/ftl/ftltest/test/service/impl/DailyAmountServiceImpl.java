@@ -69,31 +69,6 @@ public class DailyAmountServiceImpl extends AbstractBaseService<DailyAmount> imp
     }
 
     /**
-     * 更新对象
-     * @param dailyAmount
-     * @param fullUpdate
-     * @return
-     * @throws Exception
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Integer updateDailyAmount(DailyAmount dailyAmount,Boolean fullUpdate) throws Exception {
-        if(Objects.isNull(dailyAmount)){
-            return 0;
-        }
-        if(Objects.isNull(dailyAmount.getDaId())){
-            throw new BusiException("主键不能为空");
-        }
-        Integer result;
-        if(fullUpdate){
-            result = dailyAmountDao.fullUpdateDailyAmount(dailyAmount);
-        } else {
-            result = dailyAmountDao.updateDailyAmount(dailyAmount);
-        }
-        return result;
-    }
-
-    /**
      * 批量更新
      * @param list
      * @param fullUpdate
@@ -144,20 +119,6 @@ public class DailyAmountServiceImpl extends AbstractBaseService<DailyAmount> imp
             return ;
         }
         dailyAmountDao.batchDeleteDailyAmount(list);
-    }
-
-    /**
-     * 根据ID列表从数据库中查询列表
-     * @param list
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public List<DailyAmount> findDailyAmountByIdList(List<Long> list) throws Exception {
-        if(CollectionUtils.isEmpty(list)){
-            return Collections.EMPTY_LIST;
-        }
-        return dailyAmountDao.findDailyAmountByIdList(list);
     }
 
     /**

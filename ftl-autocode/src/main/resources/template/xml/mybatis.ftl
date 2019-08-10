@@ -32,6 +32,11 @@
     </sql>
 
     <sql id="where_sql">
+        <#list tableColEntitys as col>
+        <if test="${col.fieldJavaName} != null">
+            AND ${col.field} = ${r'#{'}${col.fieldJavaName}}
+        </if>
+        </#list>
         <if test="criterias != null">
             <foreach collection="criterias" item="criteria" separator=" ">
                 <if test="criteria.valid">
@@ -140,7 +145,7 @@
     </insert>
 
     <!--更新对象-->
-    <update id="update${className}">
+    <update id="updateNotNull">
         update ${tableName}
         <set>
             <#list tableColEntitys as col>
@@ -219,7 +224,7 @@
     </delete>
 
     <!--根据ID列表获取记录列表-->
-    <select id="find${className}ByIdList" resultMap="BaseResultMap">
+    <select id="selectBatchIds" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from ${tableName}
         <where>
             ${IdColEntity.field} in

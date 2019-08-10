@@ -24,6 +24,27 @@
     </sql>
 
     <sql id="where_sql">
+        <if test="ltId != null">
+            AND lt_id = #{ltId}
+        </if>
+        <if test="entityId != null">
+            AND entity_id = #{entityId}
+        </if>
+        <if test="startTime != null">
+            AND start_time = #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND end_time = #{endTime}
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        <if test="createTime != null">
+            AND create_time = #{createTime}
+        </if>
+        <if test="statusTime != null">
+            AND status_time = #{statusTime}
+        </if>
         <if test="criterias != null">
             <foreach collection="criterias" item="criteria" separator=" ">
                 <if test="criteria.valid">
@@ -132,7 +153,7 @@
     </insert>
 
     <!--更新对象-->
-    <update id="updateLoadTime">
+    <update id="updateNotNull">
         update load_time
         <set>
             <if test="ltId != null">
@@ -251,7 +272,7 @@
     </delete>
 
     <!--根据ID列表获取记录列表-->
-    <select id="findLoadTimeByIdList" resultMap="BaseResultMap">
+    <select id="selectBatchIds" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from load_time
         <where>
             lt_id in

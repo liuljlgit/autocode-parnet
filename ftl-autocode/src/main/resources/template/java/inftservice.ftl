@@ -27,15 +27,6 @@ public interface I${className}Service extends IBaseService<${className}>{
     void batchAdd${className}(List<${className}> list) throws Exception;
 
     /**
-     * 更新对象
-     * @param ${objectName}
-     * @param fullUpdate
-     * @return
-     * @throws Exception
-     */
-    Integer update${className}(${className} ${objectName},Boolean fullUpdate) throws Exception;
-
-    /**
      * 批量更新
      * @param list
      * @param fullUpdate
@@ -57,14 +48,6 @@ public interface I${className}Service extends IBaseService<${className}>{
      * @throws Exception
      */
     void batchDelete${className}(List<${IdColEntity.fieldJavaType}> list) throws Exception;
-
-    /**
-     * 根据ID列表从数据库中查询列表
-     * @param list
-     * @return
-     * @throws Exception
-     */
-    List<${className}> find${className}ByIdList(List<${IdColEntity.fieldJavaType}> list) throws Exception;
 
     /**
      * 保存记录

@@ -32,6 +32,51 @@
     </sql>
 
     <sql id="where_sql">
+        <if test="daId != null">
+            AND da_id = #{daId}
+        </if>
+        <if test="entityId != null">
+            AND entity_id = #{entityId}
+        </if>
+        <if test="dateTime != null">
+            AND date_time = #{dateTime}
+        </if>
+        <if test="settProfit != null">
+            AND sett_profit = #{settProfit}
+        </if>
+        <if test="expendProfit != null">
+            AND expend_profit = #{expendProfit}
+        </if>
+        <if test="incomeProfit != null">
+            AND income_profit = #{incomeProfit}
+        </if>
+        <if test="profitHours != null">
+            AND profit_hours = #{profitHours}
+        </if>
+        <if test="deficitHours != null">
+            AND deficit_hours = #{deficitHours}
+        </if>
+        <if test="minusDeviation != null">
+            AND minus_deviation = #{minusDeviation}
+        </if>
+        <if test="positiveDeviation != null">
+            AND positive_deviation = #{positiveDeviation}
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        <if test="ce != null">
+            AND ce = #{ce}
+        </if>
+        <if test="sa != null">
+            AND sa = #{sa}
+        </if>
+        <if test="createTime != null">
+            AND create_time = #{createTime}
+        </if>
+        <if test="statusTime != null">
+            AND status_time = #{statusTime}
+        </if>
         <if test="criterias != null">
             <foreach collection="criterias" item="criteria" separator=" ">
                 <if test="criteria.valid">
@@ -140,7 +185,7 @@
     </insert>
 
     <!--更新对象-->
-    <update id="updateDailyAmount">
+    <update id="updateNotNull">
         update daily_amount
         <set>
             <if test="daId != null">
@@ -323,7 +368,7 @@
     </delete>
 
     <!--根据ID列表获取记录列表-->
-    <select id="findDailyAmountByIdList" resultMap="BaseResultMap">
+    <select id="selectBatchIds" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from daily_amount
         <where>
             da_id in

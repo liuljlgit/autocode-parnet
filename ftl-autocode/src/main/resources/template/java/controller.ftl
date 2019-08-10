@@ -29,7 +29,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @GetMapping(value = "/obj")
-    public CommonResp<${className}> selectById(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
+    public CommonResp<${className}> selectById(${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws BusiException {
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
@@ -46,7 +46,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @PostMapping(value = "/page")
-    public CommonResp<PageBean<${className}>> selectPage(@RequestBody ${className} query) throws Exception {
+    public CommonResp<PageBean<${className}>> selectPage(@RequestBody ${className} query) throws BusiException {
         return RespEntity.ok(${objectName}Service.selectPage(query));
     }
 
@@ -56,7 +56,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @PostMapping(value = "/obj")
-    public CommonResp<Object> save(@RequestBody ${className} ${objectName}) throws  Exception{
+    public CommonResp<Object> save(@RequestBody ${className} ${objectName}) throws BusiException {
         ${objectName}Service.save${className}(${objectName});
         return RespEntity.ok();
     }
@@ -67,7 +67,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/obj")
-    public CommonResp<Object> deleteById(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws  Exception{
+    public CommonResp<Object> deleteById(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
            throw new BusiException("删除主键不可为空") ;
         }
