@@ -4,97 +4,32 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Objects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.List;
 import org.springframework.util.CollectionUtils;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.stream.Collectors;
+import com.cloud.ftl.ftlbasic.service.AbstractBaseService;
+import org.springframework.data.redis.core.RedisTemplate;
 import ${entityPackagePath}.${className};
 import ${inftServicePackagePath}.I${className}Service;
 import ${daoPackagePath}.I${className}Dao;
-import ${inftRedisPackagePath}.I${className}Redis;
 
 /**
  * I${className}Service service实现类
  * @author lijun
  */
 @Service("${objectName}Service")
-public class ${className}ServiceImpl implements I${className}Service {
+public class ${className}ServiceImpl extends AbstractBaseService<${className}> implements I${className}Service {
 
-    private static final Logger logger = LoggerFactory.getLogger(${className}ServiceImpl.class);
+    public ${className}ServiceImpl(I${className}Dao ${objectName}Dao,RedisTemplate<String,String> stringRedisTemplate){
+        super(${objectName}Dao,stringRedisTemplate);
+    }
 
+    @Autowired
+    private RedisTemplate<String,String> stringRedisTemplate;
     @Autowired
     private I${className}Dao ${objectName}Dao;
-    @Autowired
-    private I${className}Redis ${objectName}Redis;
-
-    /**
-     * 根据主键获取对象
-     * @param ${IdColEntity.fieldJavaName}
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public ${className} load${className}ByKey(${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
-        if(Objects.isNull(${IdColEntity.fieldJavaName})){
-            throw new BusiException("请输入要获取的数据的ID");
-        }
-        ${className} ${objectName} = ${objectName}Dao.load${className}ByKey(${IdColEntity.fieldJavaName});
-        if(Objects.isNull(${objectName})){
-            throw new BusiException("没有符合条件的记录！") ;
-        }
-        return ${objectName};
-    }
-
-    /**
-     * 普通查询获取单个结果
-     * @param query
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public ${className} selectOne${className}(${className} query) throws Exception {
-        List<${className}> list = find${className}List(query);
-        if(!CollectionUtils.isEmpty(list)){
-            return list.get(0);
-        }
-        return null;
-    }
-
-    /**
-     * 分页查询列表
-     * @param query
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public PageBean<${className}> get${className}PageList(${className} query) throws Exception {
-        if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
-            throw new BusiException("page and pageSize can not be null");
-        }
-        Long total = ${objectName}Dao.getTotal${className}(query);
-        Long totalPage = (long)Math.ceil((double)total / query.getPageSize());
-        List<${className}> ${objectName}List = find${className}List(query);
-        return new PageBean<>(totalPage,total,${objectName}List);
-    }
-
-
-    /**
-     * 查询列表
-     * @param query
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public List<${className}> find${className}List(${className} query) throws Exception {
-        if(Objects.isNull(query)){
-            throw new BusiException("查询参数不能为空");
-        }
-        return ${objectName}Dao.find${className}List(query);
-    }
 
     /**
      * 新增对象
@@ -109,7 +44,7 @@ public class ${className}ServiceImpl implements I${className}Service {
             return 0;
         }
         if(Objects.isNull(${objectName}.get${IdColEntity.fieldJavaName?cap_first}())){
-            ${objectName}.set${IdColEntity.fieldJavaName?cap_first}(${objectName}Redis.get${className}Id());
+            ${objectName}.set${IdColEntity.fieldJavaName?cap_first}(selectMaxId());
         }
         return ${objectName}Dao.add${className}(${objectName});
     }
@@ -127,7 +62,7 @@ public class ${className}ServiceImpl implements I${className}Service {
         }
         for (${className} ${objectName} : list) {
             if(Objects.isNull(${objectName}.get${IdColEntity.fieldJavaName?cap_first}())){
-                ${objectName}.set${IdColEntity.fieldJavaName?cap_first}(${objectName}Redis.get${className}Id());
+                ${objectName}.set${IdColEntity.fieldJavaName?cap_first}(selectMaxId());
             }
         }
         ${objectName}Dao.batchAdd${className}(list);
@@ -237,7 +172,7 @@ public class ${className}ServiceImpl implements I${className}Service {
            return ;
         }
         if(Objects.isNull(${objectName}.get${IdColEntity.fieldJavaName?cap_first}())){
-            ${objectName}.set${IdColEntity.fieldJavaName?cap_first}(${objectName}Redis.get${className}Id());
+            ${objectName}.set${IdColEntity.fieldJavaName?cap_first}(selectMaxId());
             add${className}(${objectName});
         }else{
             update${className}(${objectName},false);
@@ -259,7 +194,7 @@ public class ${className}ServiceImpl implements I${className}Service {
         List<${className}> updateList = list.stream().filter(e -> Objects.nonNull(e.get${IdColEntity.fieldJavaName?cap_first}())).collect(Collectors.toList());
         if(!CollectionUtils.isEmpty(addList)){
             addList = addList.stream().map(e->{
-                e.set${IdColEntity.fieldJavaName?cap_first}(${objectName}Redis.get${className}Id());
+                e.set${IdColEntity.fieldJavaName?cap_first}(selectMaxId());
                 return e;
             }).collect(Collectors.toList());
             batchAdd${className}(addList);

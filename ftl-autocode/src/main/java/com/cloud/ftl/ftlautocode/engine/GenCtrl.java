@@ -11,23 +11,19 @@ import java.util.Objects;
 
 /*  请求参数如下所示:
     {
-        "mySqlUrl":"jdbc:mysql://192.168.123.135:3306/test",
+        "mySqlUrl":"jdbc:mysql://localhost:3306/test",
         "mySqlName":"root",
         "mySqlPass":"root",
         "mySqlDriver":"com.mysql.jdbc.Driver",
-        "projectBasePath":"E:\\myProject\\autocode-parnet\\ftl-test",
+        "projectBasePath":"F:\\autocode-parnet\\ftl-test",
         "ctrlPath":"com.cloud.ftl.ftltest.test.controller",
         "inftServicePath":"com.cloud.ftl.ftltest.test.service.inft",
         "implServicePath":"com.cloud.ftl.ftltest.test.service.impl",
-        "inftRedisPath":"com.cloud.ftl.ftltest.test.cache.inft",
-        "implRedisPath":"com.cloud.ftl.ftltest.test.cache.impl",
         "daoPath":"com.cloud.ftl.ftltest.test.dao",
         "entityPath":"com.cloud.ftl.ftltest.test.entity",
-        "queryEntityPath":"com.cloud.ftl.ftltest.test.query",
-        "respPath":"com.cloud.ftl.ftltest.test.webentity.resp",
-        "reqPath":"com.cloud.ftl.ftltest.test.webentity.req",
+        "tableConstPath":"com.cloud.ftl.ftltest.test.constant",
         "xmlPath":"mybatis.mapper.test",
-        "update":true,
+        "update":false,
         "tableNames":["daily_amount","load_time"]
     }
 */
@@ -94,11 +90,7 @@ public class GenCtrl {
             genService.genDaoFile(genReq);
             //6.生成xml文件
             genService.genXmlFile(genReq);
-            //7.生成inft redis文件
-            genService.genInftRedisFile(genReq);
-            //8.生成impl redis文件
-            genService.genImplRedisFile(genReq);
-            //9.生成TableConst类
+            //7.生成TableConst类
             genService.genTableConstFile(genReq);
         }
 }

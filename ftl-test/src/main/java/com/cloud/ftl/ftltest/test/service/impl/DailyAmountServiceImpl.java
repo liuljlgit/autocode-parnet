@@ -4,97 +4,32 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Objects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.List;
 import org.springframework.util.CollectionUtils;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.stream.Collectors;
+import com.cloud.ftl.ftlbasic.service.AbstractBaseService;
+import org.springframework.data.redis.core.RedisTemplate;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.dao.IDailyAmountDao;
-import com.cloud.ftl.ftltest.test.cache.inft.IDailyAmountRedis;
 
 /**
  * IDailyAmountService service实现类
  * @author lijun
  */
 @Service("dailyAmountService")
-public class DailyAmountServiceImpl implements IDailyAmountService {
+public class DailyAmountServiceImpl extends AbstractBaseService<DailyAmount> implements IDailyAmountService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DailyAmountServiceImpl.class);
+    public DailyAmountServiceImpl(IDailyAmountDao dailyAmountDao,RedisTemplate<String,String> stringRedisTemplate){
+        super(dailyAmountDao,stringRedisTemplate);
+    }
 
+    @Autowired
+    private RedisTemplate<String,String> stringRedisTemplate;
     @Autowired
     private IDailyAmountDao dailyAmountDao;
-    @Autowired
-    private IDailyAmountRedis dailyAmountRedis;
-
-    /**
-     * 根据主键获取对象
-     * @param daId
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public DailyAmount loadDailyAmountByKey(Long daId) throws Exception {
-        if(Objects.isNull(daId)){
-            throw new BusiException("请输入要获取的数据的ID");
-        }
-        DailyAmount dailyAmount = dailyAmountDao.loadDailyAmountByKey(daId);
-        if(Objects.isNull(dailyAmount)){
-            throw new BusiException("没有符合条件的记录！") ;
-        }
-        return dailyAmount;
-    }
-
-    /**
-     * 普通查询获取单个结果
-     * @param query
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public DailyAmount selectOneDailyAmount(DailyAmount query) throws Exception {
-        List<DailyAmount> list = findDailyAmountList(query);
-        if(!CollectionUtils.isEmpty(list)){
-            return list.get(0);
-        }
-        return null;
-    }
-
-    /**
-     * 分页查询列表
-     * @param query
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public PageBean<DailyAmount> getDailyAmountPageList(DailyAmount query) throws Exception {
-        if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
-            throw new BusiException("page and pageSize can not be null");
-        }
-        Long total = dailyAmountDao.getTotalDailyAmount(query);
-        Long totalPage = (long)Math.ceil((double)total / query.getPageSize());
-        List<DailyAmount> dailyAmountList = findDailyAmountList(query);
-        return new PageBean<>(totalPage,total,dailyAmountList);
-    }
-
-
-    /**
-     * 查询列表
-     * @param query
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public List<DailyAmount> findDailyAmountList(DailyAmount query) throws Exception {
-        if(Objects.isNull(query)){
-            throw new BusiException("查询参数不能为空");
-        }
-        return dailyAmountDao.findDailyAmountList(query);
-    }
 
     /**
      * 新增对象
@@ -109,7 +44,7 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
             return 0;
         }
         if(Objects.isNull(dailyAmount.getDaId())){
-            dailyAmount.setDaId(dailyAmountRedis.getDailyAmountId());
+            dailyAmount.setDaId(selectMaxId());
         }
         return dailyAmountDao.addDailyAmount(dailyAmount);
     }
@@ -127,7 +62,7 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
         }
         for (DailyAmount dailyAmount : list) {
             if(Objects.isNull(dailyAmount.getDaId())){
-                dailyAmount.setDaId(dailyAmountRedis.getDailyAmountId());
+                dailyAmount.setDaId(selectMaxId());
             }
         }
         dailyAmountDao.batchAddDailyAmount(list);
@@ -237,7 +172,7 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
            return ;
         }
         if(Objects.isNull(dailyAmount.getDaId())){
-            dailyAmount.setDaId(dailyAmountRedis.getDailyAmountId());
+            dailyAmount.setDaId(selectMaxId());
             addDailyAmount(dailyAmount);
         }else{
             updateDailyAmount(dailyAmount,false);
@@ -259,7 +194,7 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
         List<DailyAmount> updateList = list.stream().filter(e -> Objects.nonNull(e.getDaId())).collect(Collectors.toList());
         if(!CollectionUtils.isEmpty(addList)){
             addList = addList.stream().map(e->{
-                e.setDaId(dailyAmountRedis.getDailyAmountId());
+                e.setDaId(selectMaxId());
                 return e;
             }).collect(Collectors.toList());
             batchAddDailyAmount(addList);

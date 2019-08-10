@@ -148,32 +148,6 @@ public class GenService {
     }
 
     /**
-     * 生成redis接口文件
-     * @param genReq
-     */
-    public void genInftRedisFile(GenReq genReq) {
-        FreemarkerUtil.outputFile(genReq.getInftRedisPath(),
-                GenConst.INFT_REDIS_FTL_PATH,
-                "I"+GenConst.commonReplaceMap.get("className").toString().concat("Redis"),
-                true,
-                genReq.getUpdate(),
-                GenConst.commonReplaceMap);
-    }
-
-    /**
-     * 生成redis实现文件
-     * @param genReq
-     */
-    public void genImplRedisFile(GenReq genReq) {
-        FreemarkerUtil.outputFile(genReq.getImplRedisPath(),
-                GenConst.IMPL_REDIS_FTL_PATH,
-                GenConst.commonReplaceMap.get("className").toString().concat("RedisImpl"),
-                true,
-                genReq.getUpdate(),
-                GenConst.commonReplaceMap);
-    }
-
-    /**
      * 生成TableConst文件
      * @param genReq
      */

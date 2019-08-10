@@ -90,12 +90,12 @@
     </sql>
 
     <!--获取最大的主键-->
-    <select id="selectMaxDailyAmountId" resultType="java.lang.Long">
+    <select id="selectMaxId" resultType="java.lang.Long">
         select IFNULL(max(da_id), 0) from `daily_amount`
     </select>
 
     <!--根据主键获取对象-->
-    <select id="loadDailyAmountByKey" resultMap="BaseResultMap">
+    <select id="selectById" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from daily_amount
         <where>
             AND da_id = #{daId}
@@ -103,7 +103,7 @@
     </select>
 
     <!--查询列表-->
-    <select id="findDailyAmountList" resultMap="BaseResultMap">
+    <select id="selectList" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from daily_amount
         <where>
             <include refid="where_sql" />
@@ -117,8 +117,8 @@
     </select>
 
     <!--查询列表总数-->
-    <select id="getTotalDailyAmount" resultType="java.lang.Long">
-        select count(*) from daily_amount
+    <select id="selectCount" resultType="java.lang.Long">
+        select count(1) from daily_amount
         <where>
             <include refid="where_sql" />
         </where>

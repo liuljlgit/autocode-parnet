@@ -2,45 +2,14 @@ package com.cloud.ftl.ftltest.test.service.inft;
 
 import java.util.List;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftlbasic.service.IBaseService;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 
 /**
  * ILoadTimeService service接口类
  * @author lijun
  */
-public interface ILoadTimeService {
-
-    /**
-     * 根据主键获取对象
-     * @param ltId
-     * @return
-     * @throws Exception
-     */
-    LoadTime loadLoadTimeByKey(Long ltId) throws Exception;
-
-    /**
-     * 普通查询获取单个结果
-     * @param query
-     * @return
-     * @throws Exception
-     */
-    LoadTime selectOneLoadTime(LoadTime query) throws Exception;
-
-    /**
-     * 分页查询列表
-     * @param query
-     * @return
-     * @throws Exception
-     */
-    PageBean<LoadTime> getLoadTimePageList(LoadTime query) throws Exception;
-
-    /**
-     * 查询列表
-     * @param query
-     * @return
-     * @throws Exception
-     */
-     List<LoadTime> findLoadTimeList(LoadTime query) throws Exception;
+public interface ILoadTimeService extends IBaseService<LoadTime>{
 
     /**
      * 新增对象

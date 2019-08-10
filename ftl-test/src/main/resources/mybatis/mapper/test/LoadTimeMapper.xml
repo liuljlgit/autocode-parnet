@@ -82,12 +82,12 @@
     </sql>
 
     <!--获取最大的主键-->
-    <select id="selectMaxLoadTimeId" resultType="java.lang.Long">
+    <select id="selectMaxId" resultType="java.lang.Long">
         select IFNULL(max(lt_id), 0) from `load_time`
     </select>
 
     <!--根据主键获取对象-->
-    <select id="loadLoadTimeByKey" resultMap="BaseResultMap">
+    <select id="selectById" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from load_time
         <where>
             AND lt_id = #{ltId}
@@ -95,7 +95,7 @@
     </select>
 
     <!--查询列表-->
-    <select id="findLoadTimeList" resultMap="BaseResultMap">
+    <select id="selectList" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from load_time
         <where>
             <include refid="where_sql" />
@@ -109,8 +109,8 @@
     </select>
 
     <!--查询列表总数-->
-    <select id="getTotalLoadTime" resultType="java.lang.Long">
-        select count(*) from load_time
+    <select id="selectCount" resultType="java.lang.Long">
+        select count(1) from load_time
         <where>
             <include refid="where_sql" />
         </where>

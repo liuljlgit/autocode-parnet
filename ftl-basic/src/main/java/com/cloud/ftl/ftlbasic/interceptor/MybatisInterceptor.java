@@ -32,31 +32,38 @@ public class MybatisInterceptor implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Exception {
         Object[] args = invocation.getArgs();
+        if(args.length <= 1){
+            return invocation.proceed();
+        }
         Object target = args[1];
+        if(Objects.isNull(target)){
+            return invocation.proceed();
+        }
         Class<?> tClass = target.getClass();
         Class<?> sClass = tClass.getSuperclass();
+        if(tClass.getSuperclass() == null || tClass.getSuperclass() != BaseQuery.class){
+            return invocation.proceed();
+        }
+
         Field constMapField = tClass.getDeclaredField("map");
         Method criteriasMapMethod = sClass.getDeclaredMethod("getCriteriasMap", null);
         Map<String,String> constMap = (Map<String,String>)constMapField.get(target);  //const map
         Map<String,Object> criteriasMap = (Map<String,Object>)criteriasMapMethod.invoke(target);  //criterias map
-        if(tClass.getSuperclass() != null && tClass.getSuperclass() == BaseQuery.class){
-            Method acMethod = sClass.getDeclaredMethod("addCriteria", String.class,Object.class);
-            Field[] tFields = tClass.getDeclaredFields();
-            for (Field tField : tFields) {
-                String tName = tField.getName();
-                if("map".equals(tName)){
-                    continue;
-                }
-                if(criteriasMap.containsKey(constMap.get(tName))){
-                    continue;
-                }
-                tField.setAccessible(true);
-                Object obj = tField.get(target);
-                if(Objects.nonNull(obj)){
-                   acMethod.invoke(target, constMap.get(tName),obj);
-                }
+        Method acMethod = sClass.getDeclaredMethod("addCriteria", String.class,Object.class);
+        Field[] tFields = tClass.getDeclaredFields();
+        for (Field tField : tFields) {
+            String tName = tField.getName();
+            if("map".equals(tName)){
+                continue;
             }
-
+            if(criteriasMap.containsKey(constMap.get(tName))){
+                continue;
+            }
+            tField.setAccessible(true);
+            Object obj = tField.get(target);
+            if(Objects.nonNull(obj)){
+                acMethod.invoke(target, constMap.get(tName),obj);
+            }
         }
         return invocation.proceed();
     }

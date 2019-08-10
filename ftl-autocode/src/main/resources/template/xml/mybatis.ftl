@@ -90,12 +90,12 @@
     </sql>
 
     <!--获取最大的主键-->
-    <select id="selectMax${className}Id" resultType="java.lang.Long">
+    <select id="selectMaxId" resultType="java.lang.Long">
         select IFNULL(max(${IdColEntity.field}), 0) from `${tableName}`
     </select>
 
     <!--根据主键获取对象-->
-    <select id="load${className}ByKey" resultMap="BaseResultMap">
+    <select id="selectById" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from ${tableName}
         <where>
             AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
@@ -103,7 +103,7 @@
     </select>
 
     <!--查询列表-->
-    <select id="find${className}List" resultMap="BaseResultMap">
+    <select id="selectList" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from ${tableName}
         <where>
             <include refid="where_sql" />
@@ -117,8 +117,8 @@
     </select>
 
     <!--查询列表总数-->
-    <select id="getTotal${className}" resultType="java.lang.Long">
-        select count(*) from ${tableName}
+    <select id="selectCount" resultType="java.lang.Long">
+        select count(1) from ${tableName}
         <where>
             <include refid="where_sql" />
         </where>

@@ -19,9 +19,7 @@ public class GenConst {
     //模板文件路径
     public static final String CTRL_FTL_PATH = "/java/controller.ftl";
     public static final String INFT_SERVICE_FTL_PATH = "/java/inftservice.ftl";
-    public static final String INFT_REDIS_FTL_PATH = "/java/inftredis.ftl";
     public static final String IMPL_SERVICE_FTL_PATH = "/java/implservice.ftl";
-    public static final String IMPL_REDIS_FTL_PATH = "/java/implredis.ftl";
     public static final String DAO_FTL_PATH = "/java/dao.ftl";
     public static final String ENTITY_PATH = "/java/entity.ftl";
     public static final String TABLE_CONST_PATH = "/java/tableconst.ftl";

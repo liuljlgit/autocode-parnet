@@ -2,9 +2,9 @@ package ${ctrlPackagePath};
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftlbasic.utils.BeanUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
+import lombok.extern.slf4j.Slf4j;
 import ${inftServicePackagePath}.I${className}Service;
 import ${entityPackagePath}.${className};
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,24 +15,28 @@ import java.util.Objects;
  * ${className}Ctrl 控制层方法
  * @author lijun
  */
+@Slf4j
 @RestController
+@RequestMapping("/${className?lower_case}")
 public class ${className}Ctrl{
 
-  @Autowired
-  private I${className}Service ${objectName}Service;
-
+    @Autowired
+    private I${className}Service ${objectName}Service;
 
     /**
     * ${className} 根据主键获取单个数据
     * @return
     * @throws Exception
     */
-    @GetMapping(value = "/${className?lower_case}/{${IdColEntity.fieldJavaName}}")
-    public CommonResp<${className}> load${className}ByKey(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
+    @GetMapping(value = "/obj")
+    public CommonResp<${className}> selectById(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
-         throw new BusiException("请输入要获取的数据的ID") ;
+            throw new BusiException("请输入要获取的数据的ID") ;
         }
-        ${className} ${objectName} = ${objectName}Service.load${className}ByKey(${IdColEntity.fieldJavaName});
+        ${className} ${objectName} = ${objectName}Service.selectById(${IdColEntity.fieldJavaName});
+        if(Objects.isNull(${objectName})){
+            throw new BusiException("没有符合条件的记录！") ;
+        }
         return RespEntity.ok(${objectName});
     }
 
@@ -41,10 +45,9 @@ public class ${className}Ctrl{
     * @return
     * @throws Exception
     */
-    @PostMapping(value = "/${className?lower_case}/list")
-    public CommonResp<PageBean<${className}>> get${className}PageList(@RequestBody ${className} query) throws Exception {
-        PageBean<${className}> pageList = ${objectName}Service.get${className}PageList(query);
-        return RespEntity.ok(pageList);
+    @PostMapping(value = "/page")
+    public CommonResp<PageBean<${className}>> selectPage(@RequestBody ${className} query) throws Exception {
+        return RespEntity.ok(${objectName}Service.selectPage(query));
     }
 
     /**
@@ -52,8 +55,8 @@ public class ${className}Ctrl{
     * @return
     * @throws Exception
     */
-    @PostMapping(value = "/${className?lower_case}")
-    public CommonResp<Object> save${className}(@RequestBody ${className} ${objectName}) throws  Exception{
+    @PostMapping(value = "/obj")
+    public CommonResp<Object> save(@RequestBody ${className} ${objectName}) throws  Exception{
         ${objectName}Service.save${className}(${objectName});
         return RespEntity.ok();
     }
@@ -63,8 +66,8 @@ public class ${className}Ctrl{
     * @return
     * @throws Exception
     */
-    @DeleteMapping(value = "/${className?lower_case}/{${IdColEntity.fieldJavaName}}")
-    public CommonResp<Object> delete${className}(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws  Exception{
+    @DeleteMapping(value = "/obj")
+    public CommonResp<Object> deleteById(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws  Exception{
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
            throw new BusiException("删除主键不可为空") ;
         }
