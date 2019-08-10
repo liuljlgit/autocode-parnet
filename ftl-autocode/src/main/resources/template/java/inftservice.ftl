@@ -3,7 +3,6 @@ package ${inftServicePackagePath};
 import java.util.List;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import ${entityPackagePath}.${className};
-import ${respPackagePath}.${className}Resp;
 
 /**
  * I${className}Service service接口类
@@ -33,7 +32,7 @@ public interface I${className}Service {
      * @return
      * @throws Exception
      */
-    PageBean<${className}Resp> get${className}PageList(${className} query) throws Exception;
+    PageBean<${className}> get${className}PageList(${className} query) throws Exception;
 
     /**
      * 查询列表

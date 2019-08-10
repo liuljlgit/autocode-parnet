@@ -30,14 +30,16 @@ import java.util.Properties;
 public class MybatisInterceptor implements Interceptor {
 
     @Override
-    public Object intercept(Invocation invocation) throws Throwable {
+    public Object intercept(Invocation invocation) throws Exception {
         Object[] args = invocation.getArgs();
         Object target = args[1];
         Class<?> tClass = target.getClass();
-        Field mapField = tClass.getDeclaredField("map");
-        Map<String,String> map = (Map<String,String>)mapField.get(target);
+        Class<?> sClass = tClass.getSuperclass();
+        Field constMapField = tClass.getDeclaredField("map");
+        Method criteriasMapMethod = sClass.getDeclaredMethod("getCriteriasMap", null);
+        Map<String,String> constMap = (Map<String,String>)constMapField.get(target);  //const map
+        Map<String,Object> criteriasMap = (Map<String,Object>)criteriasMapMethod.invoke(target);  //criterias map
         if(tClass.getSuperclass() != null && tClass.getSuperclass() == BaseQuery.class){
-            Class<?> sClass = tClass.getSuperclass();
             Method acMethod = sClass.getDeclaredMethod("addCriteria", String.class,Object.class);
             Field[] tFields = tClass.getDeclaredFields();
             for (Field tField : tFields) {
@@ -45,10 +47,13 @@ public class MybatisInterceptor implements Interceptor {
                 if("map".equals(tName)){
                     continue;
                 }
+                if(criteriasMap.containsKey(constMap.get(tName))){
+                    continue;
+                }
                 tField.setAccessible(true);
                 Object obj = tField.get(target);
                 if(Objects.nonNull(obj)){
-                   acMethod.invoke(target, map.get(tName),obj);
+                   acMethod.invoke(target, constMap.get(tName),obj);
                 }
             }
 

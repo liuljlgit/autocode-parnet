@@ -70,8 +70,6 @@ public class GenCtrl {
         genService.genDaoFile(genReq);
         //3.生成xml文件
         genService.genXmlFile(genReq);
-        //4.生成queryentity文件
-        genService.genQueryEntityFile(genReq);
     }
 
     /**
@@ -100,13 +98,7 @@ public class GenCtrl {
             genService.genInftRedisFile(genReq);
             //8.生成impl redis文件
             genService.genImplRedisFile(genReq);
-            //9.生成resp文件
-            genService.genReqFile(genReq);
-            //10.生成req文件
-            genService.genRespFile(genReq);
-            //11.生成queryentity文件
-            //genService.genQueryEntityFile(genReq);
-            //12.生成TableConst类
+            //9.生成TableConst类
             genService.genTableConstFile(genReq);
         }
 }

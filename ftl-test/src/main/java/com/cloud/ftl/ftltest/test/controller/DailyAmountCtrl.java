@@ -1,6 +1,5 @@
 package com.cloud.ftl.ftltest.test.controller;
 
-import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.utils.BeanUtil;
@@ -8,12 +7,8 @@ import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
-import com.cloud.ftl.ftltest.test.webentity.req.DailyAmountReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -33,12 +28,12 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @GetMapping(value = "/dailyamount/{daId}")
-    public CommonResp<DailyAmountResp> loadDailyAmountByKey(@PathVariable(value="daId") Long daId) throws Exception {
+    public CommonResp<DailyAmount> loadDailyAmountByKey(@PathVariable(value="daId") Long daId) throws Exception {
         if(Objects.isNull(daId)){
          throw new BusiException("请输入要获取的数据的ID") ;
         }
         DailyAmount dailyAmount = dailyAmountService.loadDailyAmountByKey(daId);
-        return RespEntity.ok(new DailyAmountResp(dailyAmount));
+        return RespEntity.ok(dailyAmount);
     }
 
    /**
@@ -47,10 +42,8 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/dailyamount/list")
-    public CommonResp<PageBean<DailyAmountResp>> getDailyAmountPageList(@RequestBody DailyAmount query) throws Exception {
-        query.setDaId(11000L);
-        query.andDateTime(Opt.EQUAL,new Date());
-        PageBean<DailyAmountResp> pageList = dailyAmountService.getDailyAmountPageList(query);
+    public CommonResp<PageBean<DailyAmount>> getDailyAmountPageList(@RequestBody DailyAmount query) throws Exception {
+        PageBean<DailyAmount> pageList = dailyAmountService.getDailyAmountPageList(query);
         return RespEntity.ok(pageList);
     }
 

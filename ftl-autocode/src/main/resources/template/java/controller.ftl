@@ -7,8 +7,6 @@ import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import ${inftServicePackagePath}.I${className}Service;
 import ${entityPackagePath}.${className};
-import ${respPackagePath}.${className}Resp;
-import ${reqPackagePath}.${className}Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
@@ -30,12 +28,12 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @GetMapping(value = "/${className?lower_case}/{${IdColEntity.fieldJavaName}}")
-    public CommonResp<${className}Resp> load${className}ByKey(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
+    public CommonResp<${className}> load${className}ByKey(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
          throw new BusiException("请输入要获取的数据的ID") ;
         }
         ${className} ${objectName} = ${objectName}Service.load${className}ByKey(${IdColEntity.fieldJavaName});
-        return RespEntity.ok(new ${className}Resp(${objectName}));
+        return RespEntity.ok(${objectName});
     }
 
    /**
@@ -44,9 +42,8 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @PostMapping(value = "/${className?lower_case}/list")
-    public CommonResp<PageBean<${className}Resp>> get${className}PageList(@RequestBody ${className}Req ${objectName}Req) throws Exception {
-        ${className} query = BeanUtil.createBean(${objectName}Req, ${className}.class);
-        PageBean<${className}Resp> pageList = ${objectName}Service.get${className}PageList(query);
+    public CommonResp<PageBean<${className}>> get${className}PageList(@RequestBody ${className} query) throws Exception {
+        PageBean<${className}> pageList = ${objectName}Service.get${className}PageList(query);
         return RespEntity.ok(pageList);
     }
 
@@ -56,8 +53,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @PostMapping(value = "/${className?lower_case}")
-    public CommonResp<Object> save${className}(@RequestBody ${className}Req ${objectName}Req) throws  Exception{
-        ${className} ${objectName} = BeanUtil.createBean(${objectName}Req, ${className}.class);
+    public CommonResp<Object> save${className}(@RequestBody ${className} ${objectName}) throws  Exception{
         ${objectName}Service.save${className}(${objectName});
         return RespEntity.ok();
     }

@@ -7,8 +7,6 @@ import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
-import com.cloud.ftl.ftltest.test.webentity.resp.LoadTimeResp;
-import com.cloud.ftl.ftltest.test.webentity.req.LoadTimeReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
@@ -30,12 +28,12 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @GetMapping(value = "/loadtime/{ltId}")
-    public CommonResp<LoadTimeResp> loadLoadTimeByKey(@PathVariable(value="ltId") Long ltId) throws Exception {
+    public CommonResp<LoadTime> loadLoadTimeByKey(@PathVariable(value="ltId") Long ltId) throws Exception {
         if(Objects.isNull(ltId)){
          throw new BusiException("请输入要获取的数据的ID") ;
         }
         LoadTime loadTime = loadTimeService.loadLoadTimeByKey(ltId);
-        return RespEntity.ok(new LoadTimeResp(loadTime));
+        return RespEntity.ok(loadTime);
     }
 
    /**
@@ -44,9 +42,8 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/loadtime/list")
-    public CommonResp<PageBean<LoadTimeResp>> getLoadTimePageList(@RequestBody LoadTimeReq loadTimeReq) throws Exception {
-        LoadTime query = BeanUtil.createBean(loadTimeReq, LoadTime.class);
-        PageBean<LoadTimeResp> pageList = loadTimeService.getLoadTimePageList(query);
+    public CommonResp<PageBean<LoadTime>> getLoadTimePageList(@RequestBody LoadTime query) throws Exception {
+        PageBean<LoadTime> pageList = loadTimeService.getLoadTimePageList(query);
         return RespEntity.ok(pageList);
     }
 
@@ -56,8 +53,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/loadtime")
-    public CommonResp<Object> saveLoadTime(@RequestBody LoadTimeReq loadTimeReq) throws  Exception{
-        LoadTime loadTime = BeanUtil.createBean(loadTimeReq, LoadTime.class);
+    public CommonResp<Object> saveLoadTime(@RequestBody LoadTime loadTime) throws  Exception{
         loadTimeService.saveLoadTime(loadTime);
         return RespEntity.ok();
     }

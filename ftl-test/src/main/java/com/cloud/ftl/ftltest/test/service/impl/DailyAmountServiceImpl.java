@@ -16,7 +16,6 @@ import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.dao.IDailyAmountDao;
 import com.cloud.ftl.ftltest.test.cache.inft.IDailyAmountRedis;
-import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
 
 /**
  * IDailyAmountService service实现类
@@ -72,13 +71,13 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
      * @throws Exception
      */
     @Override
-    public PageBean<DailyAmountResp> getDailyAmountPageList(DailyAmount query) throws Exception {
+    public PageBean<DailyAmount> getDailyAmountPageList(DailyAmount query) throws Exception {
         if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
             throw new BusiException("page and pageSize can not be null");
         }
         Long total = dailyAmountDao.getTotalDailyAmount(query);
         Long totalPage = (long)Math.ceil((double)total / query.getPageSize());
-        List<DailyAmountResp> dailyAmountList = findDailyAmountList(query).stream().map(DailyAmountResp::new).collect(Collectors.toList());
+        List<DailyAmount> dailyAmountList = findDailyAmountList(query);
         return new PageBean<>(totalPage,total,dailyAmountList);
     }
 

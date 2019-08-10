@@ -174,45 +174,6 @@ public class GenService {
     }
 
     /**
-     * 生成req文件
-     * @param genReq
-     */
-    public void genReqFile(GenReq genReq) {
-        FreemarkerUtil.outputFile(genReq.getReqPath(),
-                GenConst.REQ_PATH,
-                GenConst.commonReplaceMap.get("className").toString().concat("Req"),
-                true,
-                genReq.getUpdate(),
-                GenConst.commonReplaceMap);
-    }
-
-    /**
-     * 生成resp文件
-     * @param genReq
-     */
-    public void genRespFile(GenReq genReq) {
-        FreemarkerUtil.outputFile(genReq.getRespPath(),
-                GenConst.RESP_PATH,
-                GenConst.commonReplaceMap.get("className").toString().concat("Resp"),
-                true,
-                genReq.getUpdate(),
-                GenConst.commonReplaceMap);
-    }
-
-    /**
-     * 生成queryentity文件
-     * @param genReq
-     */
-    public void genQueryEntityFile(GenReq genReq) {
-        FreemarkerUtil.outputFile(genReq.getQueryEntityPath(),
-                GenConst.QUERY_ENTITY_PATH,
-                GenConst.commonReplaceMap.get("className").toString().concat("Query"),
-                true,
-                genReq.getUpdate(),
-                GenConst.commonReplaceMap);
-    }
-
-    /**
      * 生成TableConst文件
      * @param genReq
      */
