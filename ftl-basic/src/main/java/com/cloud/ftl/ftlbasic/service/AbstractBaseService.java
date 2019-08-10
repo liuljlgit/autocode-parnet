@@ -143,6 +143,17 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         }
     }
 
+    @Override
+    public int updateByObj(T uEntity, T oEntity) {
+        if(Objects.isNull(uEntity)){
+            throw new BusiException("更新失败，对象为空");
+        }
+        if(Objects.isNull(oEntity)){
+            throw new BusiException("更新失败，更新条件为空");
+        }
+        return baseMapper.updateByObj(uEntity,oEntity);
+    }
+
     private <T> Field getPriKeyField(T entity) {
         Field[] fields = entity.getClass().getDeclaredFields();
         Field priField = null;

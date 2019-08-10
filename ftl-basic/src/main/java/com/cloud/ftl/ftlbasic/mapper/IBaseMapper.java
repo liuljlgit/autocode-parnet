@@ -41,15 +41,15 @@ public interface IBaseMapper<T> extends IMapper<T> {
 
     /**
      * 根据 entity 条件，查询全部记录
-     * @param et 查询实体
+     * @param entity 查询实体
      */
-    List<T> selectList(@Param("et") T entity);
+    List<T> selectList(@Param("st") T entity);
 
     /**
      * 根据 entity 条件，获取记录总数
-     * @param et 查询实体
+     * @param entity 查询实体
      */
-    Long selectCount(@Param("et") T entity);
+    Long selectCount(@Param("st") T entity);
 
     /**
      * 根据 id 列表，获取记录列表
@@ -62,14 +62,14 @@ public interface IBaseMapper<T> extends IMapper<T> {
      * @param entity
      * @return
      */
-    int updateNotNull(@Param("qt") T entity);
+    int updateNotNull(@Param("ut") T entity);
 
     /**
      * 全更新，字段置空也更新
      * @param entity
      * @return
      */
-    int updateWithNull(@Param("qt") T entity);
+    int updateWithNull(@Param("ut") T entity);
 
     /**
      * 批量更新，更新不为空的属性
@@ -82,4 +82,11 @@ public interface IBaseMapper<T> extends IMapper<T> {
      * @param list
      */
     void updateBatchWithNull(List<T> list);
+
+    /**
+     * 批全量更新，根据查询条件更新
+     * @param uEntity 更新属性实体
+     * @param oEntity 查询条件实体
+     */
+    int updateByObj(@Param("ut") T uEntity, @Param("st") T oEntity);
 }

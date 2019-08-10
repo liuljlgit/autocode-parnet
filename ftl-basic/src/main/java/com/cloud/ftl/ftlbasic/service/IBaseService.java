@@ -30,6 +30,8 @@ public interface IBaseService<T> extends IService<T>{
 
     int update(T entity,Update... args);
 
+    int updateByObj(T uEntity,T oEntity);
+
     void updateBatch(List<T> list,Update... args);
 
 

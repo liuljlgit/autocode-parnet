@@ -27,8 +27,8 @@
     <sql id="Set_Not_Null_List">
         <set>
         <#list tableColEntitys as col>
-            <if test="qt.${col.fieldJavaName} != null">
-                ${col.field} = ${r'#{qt.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+            <if test="ut.${col.fieldJavaName} != null">
+                ${col.field} = ${r'#{ut.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
             </if>
         </#list>
         </set>
@@ -37,19 +37,19 @@
     <sql id="Set_With_Null_List">
         <set>
         <#list tableColEntitys as col>
-            ${col.field} = ${r'#{qt.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+            ${col.field} = ${r'#{ut.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
         </#list>
         </set>
     </sql>
 
     <sql id="where_sql">
         <#list tableColEntitys as col>
-        <if test="et.${col.fieldJavaName} != null">
-            AND ${col.field} = ${r'#{et.'}${col.fieldJavaName}}
+        <if test="st.${col.fieldJavaName} != null">
+            AND ${col.field} = ${r'#{st.'}${col.fieldJavaName}}
         </if>
         </#list>
-        <if test="et.criterias != null">
-            <foreach collection="et.criterias" item="criteria" separator=" ">
+        <if test="st.criterias != null">
+            <foreach collection="st.criterias" item="criteria" separator=" ">
                 <if test="criteria.valid">
                     ${r'${'}criteria.opt}
                     <choose>
@@ -124,11 +124,11 @@
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="et.orderByClause!=null and et.orderByClause!=''">
-            order by ${r'${et.'}orderByClause}
+        <if test="st.orderByClause!=null and st.orderByClause!=''">
+            order by ${r'${st.'}orderByClause}
         </if>
-        <if test="et.page != null and et.pageSize != null and et.page > 0" >
-            limit ${r'#{et.'}index},${r'#{et.'}pageSize}
+        <if test="st.page != null and st.pageSize != null and st.page > 0" >
+            limit ${r'#{st.'}index},${r'#{st.'}pageSize}
         </if>
     </select>
 
@@ -160,17 +160,17 @@
         update ${tableName}
         <include refid="Set_Not_Null_List" />
         <where>
-            AND ${IdColEntity.field} = ${r'#{qt.'}${IdColEntity.fieldJavaName}}
+            AND ${IdColEntity.field} = ${r'#{ut.'}${IdColEntity.fieldJavaName}}
         </where>
     </update>
 
     <!--批量更新对象-->
     <update id="updateBatchNotNull">
-        <foreach collection="list" separator=";" item="qt">
+        <foreach collection="list" separator=";" item="ut">
             update ${tableName}
             <include refid="Set_Not_Null_List" />
             <where>
-                AND ${IdColEntity.field} = ${r'#{qt.'}${IdColEntity.fieldJavaName}}
+                AND ${IdColEntity.field} = ${r'#{ut.'}${IdColEntity.fieldJavaName}}
             </where>
         </foreach>
     </update>
@@ -180,19 +180,28 @@
         update ${tableName}
         <include refid="Set_With_Null_List" />
         <where>
-            AND ${IdColEntity.field} = ${r'#{qt.'}${IdColEntity.fieldJavaName}}
+            AND ${IdColEntity.field} = ${r'#{ut.'}${IdColEntity.fieldJavaName}}
         </where>
     </update>
 
     <!--批量更新对象(全更新)-->
     <update id="updateBatchWithNull">
-        <foreach collection="list" separator=";" item="qt">
+        <foreach collection="list" separator=";" item="ut">
             update ${tableName}
             <include refid="Set_With_Null_List" />
             <where>
-                AND ${IdColEntity.field} = ${r'#{qt.'}${IdColEntity.fieldJavaName}}
+                AND ${IdColEntity.field} = ${r'#{ut.'}${IdColEntity.fieldJavaName}}
             </where>
         </foreach>
+    </update>
+
+    <!--更新对象,根据查询条件更新-->
+    <update id="updateByObj">
+        update ${tableName}
+        <include refid="Set_Not_Null_List" />
+        <where>
+            <include refid="where_sql" />
+        </where>
     </update>
 
     <!--根据主键删除对象-->

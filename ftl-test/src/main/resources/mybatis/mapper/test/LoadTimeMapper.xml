@@ -21,66 +21,66 @@
 
     <sql id="Set_Not_Null_List">
         <set>
-            <if test="qt.ltId != null">
-                lt_id = #{qt.ltId},
+            <if test="ut.ltId != null">
+                lt_id = #{ut.ltId},
             </if>
-            <if test="qt.entityId != null">
-                entity_id = #{qt.entityId},
+            <if test="ut.entityId != null">
+                entity_id = #{ut.entityId},
             </if>
-            <if test="qt.startTime != null">
-                start_time = #{qt.startTime},
+            <if test="ut.startTime != null">
+                start_time = #{ut.startTime},
             </if>
-            <if test="qt.endTime != null">
-                end_time = #{qt.endTime},
+            <if test="ut.endTime != null">
+                end_time = #{ut.endTime},
             </if>
-            <if test="qt.status != null">
-                status = #{qt.status},
+            <if test="ut.status != null">
+                status = #{ut.status},
             </if>
-            <if test="qt.createTime != null">
-                create_time = #{qt.createTime},
+            <if test="ut.createTime != null">
+                create_time = #{ut.createTime},
             </if>
-            <if test="qt.statusTime != null">
-                status_time = #{qt.statusTime}
+            <if test="ut.statusTime != null">
+                status_time = #{ut.statusTime}
             </if>
         </set>
     </sql>
 
     <sql id="Set_With_Null_List">
         <set>
-            lt_id = #{qt.ltId},
-            entity_id = #{qt.entityId},
-            start_time = #{qt.startTime},
-            end_time = #{qt.endTime},
-            status = #{qt.status},
-            create_time = #{qt.createTime},
-            status_time = #{qt.statusTime}
+            lt_id = #{ut.ltId},
+            entity_id = #{ut.entityId},
+            start_time = #{ut.startTime},
+            end_time = #{ut.endTime},
+            status = #{ut.status},
+            create_time = #{ut.createTime},
+            status_time = #{ut.statusTime}
         </set>
     </sql>
 
     <sql id="where_sql">
-        <if test="et.ltId != null">
-            AND lt_id = #{et.ltId}
+        <if test="st.ltId != null">
+            AND lt_id = #{st.ltId}
         </if>
-        <if test="et.entityId != null">
-            AND entity_id = #{et.entityId}
+        <if test="st.entityId != null">
+            AND entity_id = #{st.entityId}
         </if>
-        <if test="et.startTime != null">
-            AND start_time = #{et.startTime}
+        <if test="st.startTime != null">
+            AND start_time = #{st.startTime}
         </if>
-        <if test="et.endTime != null">
-            AND end_time = #{et.endTime}
+        <if test="st.endTime != null">
+            AND end_time = #{st.endTime}
         </if>
-        <if test="et.status != null">
-            AND status = #{et.status}
+        <if test="st.status != null">
+            AND status = #{st.status}
         </if>
-        <if test="et.createTime != null">
-            AND create_time = #{et.createTime}
+        <if test="st.createTime != null">
+            AND create_time = #{st.createTime}
         </if>
-        <if test="et.statusTime != null">
-            AND status_time = #{et.statusTime}
+        <if test="st.statusTime != null">
+            AND status_time = #{st.statusTime}
         </if>
-        <if test="et.criterias != null">
-            <foreach collection="et.criterias" item="criteria" separator=" ">
+        <if test="st.criterias != null">
+            <foreach collection="st.criterias" item="criteria" separator=" ">
                 <if test="criteria.valid">
                     ${criteria.opt}
                     <choose>
@@ -155,11 +155,11 @@
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="et.orderByClause!=null and et.orderByClause!=''">
-            order by ${et.orderByClause}
+        <if test="st.orderByClause!=null and st.orderByClause!=''">
+            order by ${st.orderByClause}
         </if>
-        <if test="et.page != null and et.pageSize != null and et.page > 0" >
-            limit #{et.index},#{et.pageSize}
+        <if test="st.page != null and st.pageSize != null and st.page > 0" >
+            limit #{st.index},#{st.pageSize}
         </if>
     </select>
 
@@ -191,17 +191,17 @@
         update load_time
         <include refid="Set_Not_Null_List" />
         <where>
-            AND lt_id = #{qt.ltId}
+            AND lt_id = #{ut.ltId}
         </where>
     </update>
 
     <!--批量更新对象-->
     <update id="updateBatchNotNull">
-        <foreach collection="list" separator=";" item="qt">
+        <foreach collection="list" separator=";" item="ut">
             update load_time
             <include refid="Set_Not_Null_List" />
             <where>
-                AND lt_id = #{qt.ltId}
+                AND lt_id = #{ut.ltId}
             </where>
         </foreach>
     </update>
@@ -211,19 +211,28 @@
         update load_time
         <include refid="Set_With_Null_List" />
         <where>
-            AND lt_id = #{qt.ltId}
+            AND lt_id = #{ut.ltId}
         </where>
     </update>
 
     <!--批量更新对象(全更新)-->
     <update id="updateBatchWithNull">
-        <foreach collection="list" separator=";" item="qt">
+        <foreach collection="list" separator=";" item="ut">
             update load_time
             <include refid="Set_With_Null_List" />
             <where>
-                AND lt_id = #{qt.ltId}
+                AND lt_id = #{ut.ltId}
             </where>
         </foreach>
+    </update>
+
+    <!--更新对象,根据查询条件更新-->
+    <update id="updateByObj">
+        update load_time
+        <include refid="Set_Not_Null_List" />
+        <where>
+            <include refid="where_sql" />
+        </where>
     </update>
 
     <!--根据主键删除对象-->

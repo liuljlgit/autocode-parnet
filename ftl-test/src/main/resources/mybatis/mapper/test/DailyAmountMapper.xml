@@ -29,122 +29,122 @@
 
     <sql id="Set_Not_Null_List">
         <set>
-            <if test="qt.daId != null">
-                da_id = #{qt.daId},
+            <if test="ut.daId != null">
+                da_id = #{ut.daId},
             </if>
-            <if test="qt.entityId != null">
-                entity_id = #{qt.entityId},
+            <if test="ut.entityId != null">
+                entity_id = #{ut.entityId},
             </if>
-            <if test="qt.dateTime != null">
-                date_time = #{qt.dateTime},
+            <if test="ut.dateTime != null">
+                date_time = #{ut.dateTime},
             </if>
-            <if test="qt.settProfit != null">
-                sett_profit = #{qt.settProfit},
+            <if test="ut.settProfit != null">
+                sett_profit = #{ut.settProfit},
             </if>
-            <if test="qt.expendProfit != null">
-                expend_profit = #{qt.expendProfit},
+            <if test="ut.expendProfit != null">
+                expend_profit = #{ut.expendProfit},
             </if>
-            <if test="qt.incomeProfit != null">
-                income_profit = #{qt.incomeProfit},
+            <if test="ut.incomeProfit != null">
+                income_profit = #{ut.incomeProfit},
             </if>
-            <if test="qt.profitHours != null">
-                profit_hours = #{qt.profitHours},
+            <if test="ut.profitHours != null">
+                profit_hours = #{ut.profitHours},
             </if>
-            <if test="qt.deficitHours != null">
-                deficit_hours = #{qt.deficitHours},
+            <if test="ut.deficitHours != null">
+                deficit_hours = #{ut.deficitHours},
             </if>
-            <if test="qt.minusDeviation != null">
-                minus_deviation = #{qt.minusDeviation},
+            <if test="ut.minusDeviation != null">
+                minus_deviation = #{ut.minusDeviation},
             </if>
-            <if test="qt.positiveDeviation != null">
-                positive_deviation = #{qt.positiveDeviation},
+            <if test="ut.positiveDeviation != null">
+                positive_deviation = #{ut.positiveDeviation},
             </if>
-            <if test="qt.status != null">
-                status = #{qt.status},
+            <if test="ut.status != null">
+                status = #{ut.status},
             </if>
-            <if test="qt.ce != null">
-                ce = #{qt.ce},
+            <if test="ut.ce != null">
+                ce = #{ut.ce},
             </if>
-            <if test="qt.sa != null">
-                sa = #{qt.sa},
+            <if test="ut.sa != null">
+                sa = #{ut.sa},
             </if>
-            <if test="qt.createTime != null">
-                create_time = #{qt.createTime},
+            <if test="ut.createTime != null">
+                create_time = #{ut.createTime},
             </if>
-            <if test="qt.statusTime != null">
-                status_time = #{qt.statusTime}
+            <if test="ut.statusTime != null">
+                status_time = #{ut.statusTime}
             </if>
         </set>
     </sql>
 
     <sql id="Set_With_Null_List">
         <set>
-            da_id = #{qt.daId},
-            entity_id = #{qt.entityId},
-            date_time = #{qt.dateTime},
-            sett_profit = #{qt.settProfit},
-            expend_profit = #{qt.expendProfit},
-            income_profit = #{qt.incomeProfit},
-            profit_hours = #{qt.profitHours},
-            deficit_hours = #{qt.deficitHours},
-            minus_deviation = #{qt.minusDeviation},
-            positive_deviation = #{qt.positiveDeviation},
-            status = #{qt.status},
-            ce = #{qt.ce},
-            sa = #{qt.sa},
-            create_time = #{qt.createTime},
-            status_time = #{qt.statusTime}
+            da_id = #{ut.daId},
+            entity_id = #{ut.entityId},
+            date_time = #{ut.dateTime},
+            sett_profit = #{ut.settProfit},
+            expend_profit = #{ut.expendProfit},
+            income_profit = #{ut.incomeProfit},
+            profit_hours = #{ut.profitHours},
+            deficit_hours = #{ut.deficitHours},
+            minus_deviation = #{ut.minusDeviation},
+            positive_deviation = #{ut.positiveDeviation},
+            status = #{ut.status},
+            ce = #{ut.ce},
+            sa = #{ut.sa},
+            create_time = #{ut.createTime},
+            status_time = #{ut.statusTime}
         </set>
     </sql>
 
     <sql id="where_sql">
-        <if test="et.daId != null">
-            AND da_id = #{et.daId}
+        <if test="st.daId != null">
+            AND da_id = #{st.daId}
         </if>
-        <if test="et.entityId != null">
-            AND entity_id = #{et.entityId}
+        <if test="st.entityId != null">
+            AND entity_id = #{st.entityId}
         </if>
-        <if test="et.dateTime != null">
-            AND date_time = #{et.dateTime}
+        <if test="st.dateTime != null">
+            AND date_time = #{st.dateTime}
         </if>
-        <if test="et.settProfit != null">
-            AND sett_profit = #{et.settProfit}
+        <if test="st.settProfit != null">
+            AND sett_profit = #{st.settProfit}
         </if>
-        <if test="et.expendProfit != null">
-            AND expend_profit = #{et.expendProfit}
+        <if test="st.expendProfit != null">
+            AND expend_profit = #{st.expendProfit}
         </if>
-        <if test="et.incomeProfit != null">
-            AND income_profit = #{et.incomeProfit}
+        <if test="st.incomeProfit != null">
+            AND income_profit = #{st.incomeProfit}
         </if>
-        <if test="et.profitHours != null">
-            AND profit_hours = #{et.profitHours}
+        <if test="st.profitHours != null">
+            AND profit_hours = #{st.profitHours}
         </if>
-        <if test="et.deficitHours != null">
-            AND deficit_hours = #{et.deficitHours}
+        <if test="st.deficitHours != null">
+            AND deficit_hours = #{st.deficitHours}
         </if>
-        <if test="et.minusDeviation != null">
-            AND minus_deviation = #{et.minusDeviation}
+        <if test="st.minusDeviation != null">
+            AND minus_deviation = #{st.minusDeviation}
         </if>
-        <if test="et.positiveDeviation != null">
-            AND positive_deviation = #{et.positiveDeviation}
+        <if test="st.positiveDeviation != null">
+            AND positive_deviation = #{st.positiveDeviation}
         </if>
-        <if test="et.status != null">
-            AND status = #{et.status}
+        <if test="st.status != null">
+            AND status = #{st.status}
         </if>
-        <if test="et.ce != null">
-            AND ce = #{et.ce}
+        <if test="st.ce != null">
+            AND ce = #{st.ce}
         </if>
-        <if test="et.sa != null">
-            AND sa = #{et.sa}
+        <if test="st.sa != null">
+            AND sa = #{st.sa}
         </if>
-        <if test="et.createTime != null">
-            AND create_time = #{et.createTime}
+        <if test="st.createTime != null">
+            AND create_time = #{st.createTime}
         </if>
-        <if test="et.statusTime != null">
-            AND status_time = #{et.statusTime}
+        <if test="st.statusTime != null">
+            AND status_time = #{st.statusTime}
         </if>
-        <if test="et.criterias != null">
-            <foreach collection="et.criterias" item="criteria" separator=" ">
+        <if test="st.criterias != null">
+            <foreach collection="st.criterias" item="criteria" separator=" ">
                 <if test="criteria.valid">
                     ${criteria.opt}
                     <choose>
@@ -219,11 +219,11 @@
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="et.orderByClause!=null and et.orderByClause!=''">
-            order by ${et.orderByClause}
+        <if test="st.orderByClause!=null and st.orderByClause!=''">
+            order by ${st.orderByClause}
         </if>
-        <if test="et.page != null and et.pageSize != null and et.page > 0" >
-            limit #{et.index},#{et.pageSize}
+        <if test="st.page != null and st.pageSize != null and st.page > 0" >
+            limit #{st.index},#{st.pageSize}
         </if>
     </select>
 
@@ -255,17 +255,17 @@
         update daily_amount
         <include refid="Set_Not_Null_List" />
         <where>
-            AND da_id = #{qt.daId}
+            AND da_id = #{ut.daId}
         </where>
     </update>
 
     <!--批量更新对象-->
     <update id="updateBatchNotNull">
-        <foreach collection="list" separator=";" item="qt">
+        <foreach collection="list" separator=";" item="ut">
             update daily_amount
             <include refid="Set_Not_Null_List" />
             <where>
-                AND da_id = #{qt.daId}
+                AND da_id = #{ut.daId}
             </where>
         </foreach>
     </update>
@@ -275,19 +275,28 @@
         update daily_amount
         <include refid="Set_With_Null_List" />
         <where>
-            AND da_id = #{qt.daId}
+            AND da_id = #{ut.daId}
         </where>
     </update>
 
     <!--批量更新对象(全更新)-->
     <update id="updateBatchWithNull">
-        <foreach collection="list" separator=";" item="qt">
+        <foreach collection="list" separator=";" item="ut">
             update daily_amount
             <include refid="Set_With_Null_List" />
             <where>
-                AND da_id = #{qt.daId}
+                AND da_id = #{ut.daId}
             </where>
         </foreach>
+    </update>
+
+    <!--更新对象,根据查询条件更新-->
+    <update id="updateByObj">
+        update daily_amount
+        <include refid="Set_Not_Null_List" />
+        <where>
+            <include refid="where_sql" />
+        </where>
     </update>
 
     <!--根据主键删除对象-->
