@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.dao.IDailyAmountDao;
-import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
 import com.cloud.ftl.ftltest.test.cache.inft.IDailyAmountRedis;
 import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
 
@@ -58,7 +57,7 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
      * @throws Exception
      */
     @Override
-    public DailyAmount selectOneDailyAmount(DailyAmountQuery query) throws Exception {
+    public DailyAmount selectOneDailyAmount(DailyAmount query) throws Exception {
         List<DailyAmount> list = findDailyAmountList(query);
         if(!CollectionUtils.isEmpty(list)){
             return list.get(0);
@@ -73,7 +72,7 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
      * @throws Exception
      */
     @Override
-    public PageBean<DailyAmountResp> getDailyAmountPageList(DailyAmountQuery query) throws Exception {
+    public PageBean<DailyAmountResp> getDailyAmountPageList(DailyAmount query) throws Exception {
         if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
             throw new BusiException("page and pageSize can not be null");
         }
@@ -91,7 +90,7 @@ public class DailyAmountServiceImpl implements IDailyAmountService {
      * @throws Exception
      */
     @Override
-    public List<DailyAmount> findDailyAmountList(DailyAmountQuery query) throws Exception {
+    public List<DailyAmount> findDailyAmountList(DailyAmount query) throws Exception {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
         }

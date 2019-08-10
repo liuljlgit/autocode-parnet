@@ -3,7 +3,6 @@ package com.cloud.ftl.ftltest.test.dao;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
-import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 
 /**
   * 接口类 ILoadTimeDao
@@ -30,14 +29,14 @@ public interface ILoadTimeDao {
      * @param query
      * @return
      */
-    List<LoadTime> findLoadTimeList(LoadTimeQuery query);
+    List<LoadTime> findLoadTimeList(LoadTime query);
 
     /**
      * 获取查询总数
      * @param query
      * @return
      */
-    Long getTotalLoadTime(LoadTimeQuery query);
+    Long getTotalLoadTime(LoadTime query);
 
     /**
      * 新增对象

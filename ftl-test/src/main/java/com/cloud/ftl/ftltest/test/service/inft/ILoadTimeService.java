@@ -3,7 +3,6 @@ package com.cloud.ftl.ftltest.test.service.inft;
 import java.util.List;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
-import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 import com.cloud.ftl.ftltest.test.webentity.resp.LoadTimeResp;
 
 /**
@@ -26,7 +25,7 @@ public interface ILoadTimeService {
      * @return
      * @throws Exception
      */
-    LoadTime selectOneLoadTime(LoadTimeQuery query) throws Exception;
+    LoadTime selectOneLoadTime(LoadTime query) throws Exception;
 
     /**
      * 分页查询列表
@@ -34,7 +33,7 @@ public interface ILoadTimeService {
      * @return
      * @throws Exception
      */
-    PageBean<LoadTimeResp> getLoadTimePageList(LoadTimeQuery query) throws Exception;
+    PageBean<LoadTimeResp> getLoadTimePageList(LoadTime query) throws Exception;
 
     /**
      * 查询列表
@@ -42,7 +41,7 @@ public interface ILoadTimeService {
      * @return
      * @throws Exception
      */
-     List<LoadTime> findLoadTimeList(LoadTimeQuery query) throws Exception;
+     List<LoadTime> findLoadTimeList(LoadTime query) throws Exception;
 
     /**
      * 新增对象

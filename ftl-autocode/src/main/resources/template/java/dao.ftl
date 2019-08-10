@@ -3,7 +3,6 @@ package ${daoPackagePath};
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import ${entityPackagePath}.${className};
-import ${queryEntityPackagePath}.${className}Query;
 
 /**
   * 接口类 I${className}Dao
@@ -30,14 +29,14 @@ public interface I${className}Dao {
      * @param query
      * @return
      */
-    List<${className}> find${className}List(${className}Query query);
+    List<${className}> find${className}List(${className} query);
 
     /**
      * 获取查询总数
      * @param query
      * @return
      */
-    Long getTotal${className}(${className}Query query);
+    Long getTotal${className}(${className} query);
 
     /**
      * 新增对象

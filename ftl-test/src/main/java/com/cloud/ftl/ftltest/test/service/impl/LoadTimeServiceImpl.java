@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.dao.ILoadTimeDao;
-import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 import com.cloud.ftl.ftltest.test.cache.inft.ILoadTimeRedis;
 import com.cloud.ftl.ftltest.test.webentity.resp.LoadTimeResp;
 
@@ -58,7 +57,7 @@ public class LoadTimeServiceImpl implements ILoadTimeService {
      * @throws Exception
      */
     @Override
-    public LoadTime selectOneLoadTime(LoadTimeQuery query) throws Exception {
+    public LoadTime selectOneLoadTime(LoadTime query) throws Exception {
         List<LoadTime> list = findLoadTimeList(query);
         if(!CollectionUtils.isEmpty(list)){
             return list.get(0);
@@ -73,7 +72,7 @@ public class LoadTimeServiceImpl implements ILoadTimeService {
      * @throws Exception
      */
     @Override
-    public PageBean<LoadTimeResp> getLoadTimePageList(LoadTimeQuery query) throws Exception {
+    public PageBean<LoadTimeResp> getLoadTimePageList(LoadTime query) throws Exception {
         if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
             throw new BusiException("page and pageSize can not be null");
         }
@@ -91,7 +90,7 @@ public class LoadTimeServiceImpl implements ILoadTimeService {
      * @throws Exception
      */
     @Override
-    public List<LoadTime> findLoadTimeList(LoadTimeQuery query) throws Exception {
+    public List<LoadTime> findLoadTimeList(LoadTime query) throws Exception {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
         }

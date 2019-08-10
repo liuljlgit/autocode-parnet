@@ -3,7 +3,6 @@ package com.cloud.ftl.ftltest.test.dao;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
 
 /**
   * 接口类 IDailyAmountDao
@@ -30,14 +29,14 @@ public interface IDailyAmountDao {
      * @param query
      * @return
      */
-    List<DailyAmount> findDailyAmountList(DailyAmountQuery query);
+    List<DailyAmount> findDailyAmountList(DailyAmount query);
 
     /**
      * 获取查询总数
      * @param query
      * @return
      */
-    Long getTotalDailyAmount(DailyAmountQuery query);
+    Long getTotalDailyAmount(DailyAmount query);
 
     /**
      * 新增对象

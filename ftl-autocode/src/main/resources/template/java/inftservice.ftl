@@ -3,7 +3,6 @@ package ${inftServicePackagePath};
 import java.util.List;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import ${entityPackagePath}.${className};
-import ${queryEntityPackagePath}.${className}Query;
 import ${respPackagePath}.${className}Resp;
 
 /**
@@ -26,7 +25,7 @@ public interface I${className}Service {
      * @return
      * @throws Exception
      */
-    ${className} selectOne${className}(${className}Query query) throws Exception;
+    ${className} selectOne${className}(${className} query) throws Exception;
 
     /**
      * 分页查询列表
@@ -34,7 +33,7 @@ public interface I${className}Service {
      * @return
      * @throws Exception
      */
-    PageBean<${className}Resp> get${className}PageList(${className}Query query) throws Exception;
+    PageBean<${className}Resp> get${className}PageList(${className} query) throws Exception;
 
     /**
      * 查询列表
@@ -42,7 +41,7 @@ public interface I${className}Service {
      * @return
      * @throws Exception
      */
-     List<${className}> find${className}List(${className}Query query) throws Exception;
+     List<${className}> find${className}List(${className} query) throws Exception;
 
     /**
      * 新增对象

@@ -9,7 +9,6 @@ import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.webentity.resp.LoadTimeResp;
 import com.cloud.ftl.ftltest.test.webentity.req.LoadTimeReq;
-import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
@@ -46,7 +45,7 @@ public class LoadTimeCtrl{
     */
     @PostMapping(value = "/loadtime/list")
     public CommonResp<PageBean<LoadTimeResp>> getLoadTimePageList(@RequestBody LoadTimeReq loadTimeReq) throws Exception {
-        LoadTimeQuery query = BeanUtil.createBean(loadTimeReq, LoadTimeQuery.class);
+        LoadTime query = BeanUtil.createBean(loadTimeReq, LoadTime.class);
         PageBean<LoadTimeResp> pageList = loadTimeService.getLoadTimePageList(query);
         return RespEntity.ok(pageList);
     }

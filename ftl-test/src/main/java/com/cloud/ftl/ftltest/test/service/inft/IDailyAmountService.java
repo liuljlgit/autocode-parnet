@@ -3,7 +3,6 @@ package com.cloud.ftl.ftltest.test.service.inft;
 import java.util.List;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
 import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
 
 /**
@@ -26,7 +25,7 @@ public interface IDailyAmountService {
      * @return
      * @throws Exception
      */
-    DailyAmount selectOneDailyAmount(DailyAmountQuery query) throws Exception;
+    DailyAmount selectOneDailyAmount(DailyAmount query) throws Exception;
 
     /**
      * 分页查询列表
@@ -34,7 +33,7 @@ public interface IDailyAmountService {
      * @return
      * @throws Exception
      */
-    PageBean<DailyAmountResp> getDailyAmountPageList(DailyAmountQuery query) throws Exception;
+    PageBean<DailyAmountResp> getDailyAmountPageList(DailyAmount query) throws Exception;
 
     /**
      * 查询列表
@@ -42,7 +41,7 @@ public interface IDailyAmountService {
      * @return
      * @throws Exception
      */
-     List<DailyAmount> findDailyAmountList(DailyAmountQuery query) throws Exception;
+     List<DailyAmount> findDailyAmountList(DailyAmount query) throws Exception;
 
     /**
      * 新增对象

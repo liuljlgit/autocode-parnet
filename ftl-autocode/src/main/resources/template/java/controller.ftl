@@ -9,7 +9,6 @@ import ${inftServicePackagePath}.I${className}Service;
 import ${entityPackagePath}.${className};
 import ${respPackagePath}.${className}Resp;
 import ${reqPackagePath}.${className}Req;
-import ${queryEntityPackagePath}.${className}Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
@@ -46,7 +45,7 @@ public class ${className}Ctrl{
     */
     @PostMapping(value = "/${className?lower_case}/list")
     public CommonResp<PageBean<${className}Resp>> get${className}PageList(@RequestBody ${className}Req ${objectName}Req) throws Exception {
-        ${className}Query query = BeanUtil.createBean(${objectName}Req, ${className}Query.class);
+        ${className} query = BeanUtil.createBean(${objectName}Req, ${className}.class);
         PageBean<${className}Resp> pageList = ${objectName}Service.get${className}PageList(query);
         return RespEntity.ok(pageList);
     }

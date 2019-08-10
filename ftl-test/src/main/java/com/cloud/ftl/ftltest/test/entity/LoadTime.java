@@ -6,8 +6,10 @@ import java.util.Map;
 import java.math.BigDecimal;
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
+import lombok.Data;
 import com.cloud.ftl.ftltest.test.constant.LoadTimeTable;
 
+@Data
 public class LoadTime extends BaseQuery {
 
     public static Map<String,String> map = LoadTimeTable.map;
@@ -47,124 +49,88 @@ public class LoadTime extends BaseQuery {
      */
 	private Date statusTime;
 
-    public static Map<String, String> getMap() {
-        return map;
-    }
 
-    public static void setMap(Map<String, String> map) {
-        LoadTime.map = map;
-    }
-
-
-    public void setLtId(Long ltId) {
-        addCriteria(LoadTimeTable.LT_ID,ltId);
-    }
-
-    public void setLtId(Opt opt,Long ltId) throws Exception {
+    public void andLtId(Opt opt,Long ltId) throws Exception {
         addCriteria(LoadTimeTable.LT_ID,opt,ltId);
     }
 
-    public void setLtId(Opt opt,List<Long> ltIdList) throws Exception {
+    public void andLtId(Opt opt,List<Long> ltIdList) throws Exception {
         addCriteria(LoadTimeTable.LT_ID,opt,ltIdList);
     }
 
-    public void setLtId(Opt opt,Long ltId1,Long ltId2) throws Exception {
+    public void andLtId(Opt opt,Long ltId1,Long ltId2) throws Exception {
         addCriteria(LoadTimeTable.LT_ID,opt,ltId1,ltId2);
     }
 
-    public void setEntityId(Integer entityId) {
-        addCriteria(LoadTimeTable.ENTITY_ID,entityId);
-    }
-
-    public void setEntityId(Opt opt,Integer entityId) throws Exception {
+    public void andEntityId(Opt opt,Integer entityId) throws Exception {
         addCriteria(LoadTimeTable.ENTITY_ID,opt,entityId);
     }
 
-    public void setEntityId(Opt opt,List<Integer> entityIdList) throws Exception {
+    public void andEntityId(Opt opt,List<Integer> entityIdList) throws Exception {
         addCriteria(LoadTimeTable.ENTITY_ID,opt,entityIdList);
     }
 
-    public void setEntityId(Opt opt,Integer entityId1,Integer entityId2) throws Exception {
+    public void andEntityId(Opt opt,Integer entityId1,Integer entityId2) throws Exception {
         addCriteria(LoadTimeTable.ENTITY_ID,opt,entityId1,entityId2);
     }
 
-    public void setStartTime(Date startTime) {
-        addCriteria(LoadTimeTable.START_TIME,startTime);
-    }
-
-    public void setStartTime(Opt opt,Date startTime) throws Exception {
+    public void andStartTime(Opt opt,Date startTime) throws Exception {
         addCriteria(LoadTimeTable.START_TIME,opt,startTime);
     }
 
-    public void setStartTime(Opt opt,List<Date> startTimeList) throws Exception {
+    public void andStartTime(Opt opt,List<Date> startTimeList) throws Exception {
         addCriteria(LoadTimeTable.START_TIME,opt,startTimeList);
     }
 
-    public void setStartTime(Opt opt,Date startTime1,Date startTime2) throws Exception {
+    public void andStartTime(Opt opt,Date startTime1,Date startTime2) throws Exception {
         addCriteria(LoadTimeTable.START_TIME,opt,startTime1,startTime2);
     }
 
-    public void setEndTime(Date endTime) {
-        addCriteria(LoadTimeTable.END_TIME,endTime);
-    }
-
-    public void setEndTime(Opt opt,Date endTime) throws Exception {
+    public void andEndTime(Opt opt,Date endTime) throws Exception {
         addCriteria(LoadTimeTable.END_TIME,opt,endTime);
     }
 
-    public void setEndTime(Opt opt,List<Date> endTimeList) throws Exception {
+    public void andEndTime(Opt opt,List<Date> endTimeList) throws Exception {
         addCriteria(LoadTimeTable.END_TIME,opt,endTimeList);
     }
 
-    public void setEndTime(Opt opt,Date endTime1,Date endTime2) throws Exception {
+    public void andEndTime(Opt opt,Date endTime1,Date endTime2) throws Exception {
         addCriteria(LoadTimeTable.END_TIME,opt,endTime1,endTime2);
     }
 
-    public void setStatus(Byte status) {
-        addCriteria(LoadTimeTable.STATUS,status);
-    }
-
-    public void setStatus(Opt opt,Byte status) throws Exception {
+    public void andStatus(Opt opt,Byte status) throws Exception {
         addCriteria(LoadTimeTable.STATUS,opt,status);
     }
 
-    public void setStatus(Opt opt,List<Byte> statusList) throws Exception {
+    public void andStatus(Opt opt,List<Byte> statusList) throws Exception {
         addCriteria(LoadTimeTable.STATUS,opt,statusList);
     }
 
-    public void setStatus(Opt opt,Byte status1,Byte status2) throws Exception {
+    public void andStatus(Opt opt,Byte status1,Byte status2) throws Exception {
         addCriteria(LoadTimeTable.STATUS,opt,status1,status2);
     }
 
-    public void setCreateTime(Date createTime) {
-        addCriteria(LoadTimeTable.CREATE_TIME,createTime);
-    }
-
-    public void setCreateTime(Opt opt,Date createTime) throws Exception {
+    public void andCreateTime(Opt opt,Date createTime) throws Exception {
         addCriteria(LoadTimeTable.CREATE_TIME,opt,createTime);
     }
 
-    public void setCreateTime(Opt opt,List<Date> createTimeList) throws Exception {
+    public void andCreateTime(Opt opt,List<Date> createTimeList) throws Exception {
         addCriteria(LoadTimeTable.CREATE_TIME,opt,createTimeList);
     }
 
-    public void setCreateTime(Opt opt,Date createTime1,Date createTime2) throws Exception {
+    public void andCreateTime(Opt opt,Date createTime1,Date createTime2) throws Exception {
         addCriteria(LoadTimeTable.CREATE_TIME,opt,createTime1,createTime2);
     }
 
-    public void setStatusTime(Date statusTime) {
-        addCriteria(LoadTimeTable.STATUS_TIME,statusTime);
-    }
-
-    public void setStatusTime(Opt opt,Date statusTime) throws Exception {
+    public void andStatusTime(Opt opt,Date statusTime) throws Exception {
         addCriteria(LoadTimeTable.STATUS_TIME,opt,statusTime);
     }
 
-    public void setStatusTime(Opt opt,List<Date> statusTimeList) throws Exception {
+    public void andStatusTime(Opt opt,List<Date> statusTimeList) throws Exception {
         addCriteria(LoadTimeTable.STATUS_TIME,opt,statusTimeList);
     }
 
-    public void setStatusTime(Opt opt,Date statusTime1,Date statusTime2) throws Exception {
+    public void andStatusTime(Opt opt,Date statusTime1,Date statusTime2) throws Exception {
         addCriteria(LoadTimeTable.STATUS_TIME,opt,statusTime1,statusTime2);
     }
 

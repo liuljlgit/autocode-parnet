@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import ${entityPackagePath}.${className};
 import ${inftServicePackagePath}.I${className}Service;
 import ${daoPackagePath}.I${className}Dao;
-import ${queryEntityPackagePath}.${className}Query;
 import ${inftRedisPackagePath}.I${className}Redis;
 import ${respPackagePath}.${className}Resp;
 
@@ -58,7 +57,7 @@ public class ${className}ServiceImpl implements I${className}Service {
      * @throws Exception
      */
     @Override
-    public ${className} selectOne${className}(${className}Query query) throws Exception {
+    public ${className} selectOne${className}(${className} query) throws Exception {
         List<${className}> list = find${className}List(query);
         if(!CollectionUtils.isEmpty(list)){
             return list.get(0);
@@ -73,7 +72,7 @@ public class ${className}ServiceImpl implements I${className}Service {
      * @throws Exception
      */
     @Override
-    public PageBean<${className}Resp> get${className}PageList(${className}Query query) throws Exception {
+    public PageBean<${className}Resp> get${className}PageList(${className} query) throws Exception {
         if(Objects.isNull(query.getPage()) || Objects.isNull(query.getPageSize())){
             throw new BusiException("page and pageSize can not be null");
         }
@@ -91,7 +90,7 @@ public class ${className}ServiceImpl implements I${className}Service {
      * @throws Exception
      */
     @Override
-    public List<${className}> find${className}List(${className}Query query) throws Exception {
+    public List<${className}> find${className}List(${className} query) throws Exception {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
         }

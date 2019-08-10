@@ -19,7 +19,12 @@ public class DailyAmountTable {
         for (Field field : fields) {
             String fieldName = field.getName();
             if(!"map".equals(fieldName)){
-                map.put(fieldName,HumpUtil.convertToJava(fieldName));
+                try {
+                    String tableProp = field.get(tClass).toString();
+                    map.put(HumpUtil.convertToJava(tableProp),tableProp);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
