@@ -69,30 +69,6 @@ public class LoadTimeServiceImpl extends AbstractBaseService<LoadTime> implement
     }
 
     /**
-     * 批量更新
-     * @param list
-     * @param fullUpdate
-     * @throws Exception
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void batchUpdateLoadTime(List<LoadTime> list,Boolean fullUpdate) throws Exception {
-        if(CollectionUtils.isEmpty(list)){
-            return ;
-        }
-        for (LoadTime loadTime : list) {
-            if(Objects.isNull(loadTime.getLtId())){
-                throw new BusiException("主键不能为空");
-            }
-        }
-        if(fullUpdate){
-            loadTimeDao.batchFullUpdateLoadTime(list);
-        } else {
-            loadTimeDao.batchUpdateLoadTime(list);
-        }
-    }
-
-    /**
      * 删除对象
      * @param ltId
      * @return

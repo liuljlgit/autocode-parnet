@@ -27,14 +27,6 @@ public interface IDailyAmountService extends IBaseService<DailyAmount>{
     void batchAddDailyAmount(List<DailyAmount> list) throws Exception;
 
     /**
-     * 批量更新
-     * @param list
-     * @param fullUpdate
-     * @throws Exception
-     */
-    void batchUpdateDailyAmount(List<DailyAmount> list,Boolean fullUpdate) throws Exception;
-
-    /**
      * 删除对象
      * @param daId
      * @return

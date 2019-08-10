@@ -69,30 +69,6 @@ public class ${className}ServiceImpl extends AbstractBaseService<${className}> i
     }
 
     /**
-     * 批量更新
-     * @param list
-     * @param fullUpdate
-     * @throws Exception
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void batchUpdate${className}(List<${className}> list,Boolean fullUpdate) throws Exception {
-        if(CollectionUtils.isEmpty(list)){
-            return ;
-        }
-        for (${className} ${objectName} : list) {
-            if(Objects.isNull(${objectName}.get${IdColEntity.fieldJavaName?cap_first}())){
-                throw new BusiException("主键不能为空");
-            }
-        }
-        if(fullUpdate){
-            ${objectName}Dao.batchFullUpdate${className}(list);
-        } else {
-            ${objectName}Dao.batchUpdate${className}(list);
-        }
-    }
-
-    /**
      * 删除对象
      * @param ${IdColEntity.fieldJavaName}
      * @return

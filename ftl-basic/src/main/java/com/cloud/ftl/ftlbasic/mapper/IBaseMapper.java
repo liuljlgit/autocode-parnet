@@ -15,6 +15,8 @@
  */
 package com.cloud.ftl.ftlbasic.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -39,15 +41,15 @@ public interface IBaseMapper<T> extends IMapper<T> {
 
     /**
      * 根据 entity 条件，查询全部记录
-     * @param query 查询实体
+     * @param et 查询实体
      */
-    List<T> selectList(T query);
+    List<T> selectList(@Param("et") T entity);
 
     /**
      * 根据 entity 条件，获取记录总数
-     * @param query 查询实体
+     * @param et 查询实体
      */
-    Long selectCount(T query);
+    Long selectCount(@Param("et") T entity);
 
     /**
      * 根据 id 列表，获取记录列表
@@ -60,5 +62,24 @@ public interface IBaseMapper<T> extends IMapper<T> {
      * @param entity
      * @return
      */
-    int updateNotNull(T entity);
+    int updateNotNull(@Param("qt") T entity);
+
+    /**
+     * 全更新，字段置空也更新
+     * @param entity
+     * @return
+     */
+    int updateWithNull(@Param("qt") T entity);
+
+    /**
+     * 批量更新，更新不为空的属性
+     * @param list
+     */
+    void updateBatchNotNull(List<T> list);
+
+    /**
+     * 批全量更新，字段置空也更新
+     * @param list
+     */
+    void updateBatchWithNull(List<T> list);
 }

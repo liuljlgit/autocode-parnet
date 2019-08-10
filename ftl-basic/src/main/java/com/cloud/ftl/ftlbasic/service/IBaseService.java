@@ -1,5 +1,6 @@
 package com.cloud.ftl.ftlbasic.service;
 
+import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 
@@ -27,12 +28,9 @@ public interface IBaseService<T> extends IService<T>{
 
     List<T> selectBatchIds(Collection<? extends Serializable> list);
 
-    int updateNotNull(T entity);
+    int update(T entity,Update... args);
 
-    int updateWithNull(T entity);
+    void updateBatch(List<T> list,Update... args);
 
-    void updateBatchNotNull(List<T> list);
-
-    void updateBatchWithNull(List<T> list);
 
 }

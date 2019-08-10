@@ -3,6 +3,7 @@ package com.cloud.ftl.ftltest.test.dao;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import com.cloud.ftl.ftlbasic.mapper.IBaseMapper;
+import org.apache.ibatis.annotations.Param;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 
 /**
@@ -14,35 +15,16 @@ public interface IDailyAmountDao extends IBaseMapper<DailyAmount>{
 
     /**
      * 新增对象
-     * @param dailyAmount
+     * @param entity
      * @return
      */
-    Integer addDailyAmount(DailyAmount dailyAmount);
+    Integer addDailyAmount(@Param("at") DailyAmount entity);
 
     /**
      * 批量新增对象
      * @param list
      */
     void batchAddDailyAmount(List<DailyAmount> list);
-
-    /**
-     * 批量更新对象
-     * @param list
-     */
-    void batchUpdateDailyAmount(List<DailyAmount> list);
-
-    /**
-     * 更新对象（全更新）
-     * @param dailyAmount
-     * @return
-     */
-    Integer fullUpdateDailyAmount(DailyAmount dailyAmount);
-
-    /**
-     * 批量更新对象（全更新）
-     * @param list
-     */
-    void batchFullUpdateDailyAmount(List<DailyAmount> list);
 
     /**
      * 删除对象

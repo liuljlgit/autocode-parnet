@@ -19,26 +19,37 @@
 
     <sql id="Base_Object_List">
     <#list tableColEntitys as col>
-<#if col_index == 0>        ${r'#{'}${col.fieldJavaName}}<#else>${r'#{'}${col.fieldJavaName}}</#if><#if col_index < (tableColEntitys?size - 1)>,</#if><#rt>
+<#if col_index == 0>        ${r'#{at.'}${col.fieldJavaName}}<#else>${r'#{at.'}${col.fieldJavaName}}</#if><#if col_index < (tableColEntitys?size - 1)>,</#if><#rt>
     </#list>
 
     </sql>
 
-    <sql id="Base_Item_List">
-    <#list tableColEntitys as col>
-<#if col_index == 0>        ${r'#{item.'}${col.fieldJavaName}}<#else>${r'#{item.'}${col.fieldJavaName}}</#if><#if col_index < (tableColEntitys?size - 1)>,</#if><#rt>
-    </#list>
+    <sql id="Set_Not_Null_List">
+        <set>
+        <#list tableColEntitys as col>
+            <if test="qt.${col.fieldJavaName} != null">
+                ${col.field} = ${r'#{qt.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+            </if>
+        </#list>
+        </set>
+    </sql>
 
+    <sql id="Set_With_Null_List">
+        <set>
+        <#list tableColEntitys as col>
+            ${col.field} = ${r'#{qt.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+        </#list>
+        </set>
     </sql>
 
     <sql id="where_sql">
         <#list tableColEntitys as col>
-        <if test="${col.fieldJavaName} != null">
-            AND ${col.field} = ${r'#{'}${col.fieldJavaName}}
+        <if test="et.${col.fieldJavaName} != null">
+            AND ${col.field} = ${r'#{et.'}${col.fieldJavaName}}
         </if>
         </#list>
-        <if test="criterias != null">
-            <foreach collection="criterias" item="criteria" separator=" ">
+        <if test="et.criterias != null">
+            <foreach collection="et.criterias" item="criteria" separator=" ">
                 <if test="criteria.valid">
                     ${r'${'}criteria.opt}
                     <choose>
@@ -113,11 +124,11 @@
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="orderByClause!=null and orderByClause!=''">
-            order by ${r'${'}orderByClause}
+        <if test="et.orderByClause!=null and et.orderByClause!=''">
+            order by ${r'${et.'}orderByClause}
         </if>
-        <if test="page != null and pageSize != null and page > 0" >
-            limit ${r'#{'}index},${r'#{'}pageSize}
+        <if test="et.page != null and et.pageSize != null and et.page > 0" >
+            limit ${r'#{et.'}index},${r'#{et.'}pageSize}
         </if>
     </select>
 
@@ -139,67 +150,47 @@
     <insert id="batchAdd${className}">
         insert into ${tableName}(<include refid="Base_Column_List" />)
         values
-        <foreach collection="list" index="index" item="item" separator=",">
-            (<include refid="Base_Item_List" />)
+        <foreach collection="list" index="index" item="at" separator=",">
+            (<include refid="Base_Object_List" />)
         </foreach>
     </insert>
 
     <!--更新对象-->
     <update id="updateNotNull">
         update ${tableName}
-        <set>
-            <#list tableColEntitys as col>
-            <if test="${col.fieldJavaName} != null">
-                ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-            </if>
-            </#list>
-        </set>
+        <include refid="Set_Not_Null_List" />
         <where>
-            AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
+            AND ${IdColEntity.field} = ${r'#{qt.'}${IdColEntity.fieldJavaName}}
         </where>
     </update>
 
     <!--批量更新对象-->
-    <update id="batchUpdate${className}">
-        <foreach collection="list" separator=";" item="item">
+    <update id="updateBatchNotNull">
+        <foreach collection="list" separator=";" item="qt">
             update ${tableName}
-            <set>
-                <#list tableColEntitys as col>
-                <if test="item.${col.fieldJavaName} != null">
-                    ${col.field} = ${r'#{item.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-                </if>
-                </#list>
-            </set>
+            <include refid="Set_Not_Null_List" />
             <where>
-                AND ${IdColEntity.field} = ${r'#{item.'}${IdColEntity.fieldJavaName}}
+                AND ${IdColEntity.field} = ${r'#{qt.'}${IdColEntity.fieldJavaName}}
             </where>
         </foreach>
     </update>
 
     <!--更新对象(全更新)-->
-    <update id="fullUpdate${className}">
+    <update id="updateWithNull">
         update ${tableName}
-        <set>
-            <#list tableColEntitys as col>
-            ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-            </#list>
-        </set>
+        <include refid="Set_With_Null_List" />
         <where>
-            AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
+            AND ${IdColEntity.field} = ${r'#{qt.'}${IdColEntity.fieldJavaName}}
         </where>
     </update>
 
     <!--批量更新对象(全更新)-->
-    <update id="batchFullUpdate${className}">
-        <foreach collection="list" separator=";" item="item">
+    <update id="updateBatchWithNull">
+        <foreach collection="list" separator=";" item="qt">
             update ${tableName}
-            <set>
-                <#list tableColEntitys as col>
-                ${col.field} = ${r'#{item.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-                </#list>
-            </set>
+            <include refid="Set_With_Null_List" />
             <where>
-                AND ${IdColEntity.field} = ${r'#{item.'}${IdColEntity.fieldJavaName}}
+                AND ${IdColEntity.field} = ${r'#{qt.'}${IdColEntity.fieldJavaName}}
             </where>
         </foreach>
     </update>

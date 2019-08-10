@@ -27,14 +27,6 @@ public interface I${className}Service extends IBaseService<${className}>{
     void batchAdd${className}(List<${className}> list) throws Exception;
 
     /**
-     * 批量更新
-     * @param list
-     * @param fullUpdate
-     * @throws Exception
-     */
-    void batchUpdate${className}(List<${className}> list,Boolean fullUpdate) throws Exception;
-
-    /**
      * 删除对象
      * @param ${IdColEntity.fieldJavaName}
      * @return

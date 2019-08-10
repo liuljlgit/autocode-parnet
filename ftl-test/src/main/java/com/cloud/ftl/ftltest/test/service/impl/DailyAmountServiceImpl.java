@@ -69,30 +69,6 @@ public class DailyAmountServiceImpl extends AbstractBaseService<DailyAmount> imp
     }
 
     /**
-     * 批量更新
-     * @param list
-     * @param fullUpdate
-     * @throws Exception
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void batchUpdateDailyAmount(List<DailyAmount> list,Boolean fullUpdate) throws Exception {
-        if(CollectionUtils.isEmpty(list)){
-            return ;
-        }
-        for (DailyAmount dailyAmount : list) {
-            if(Objects.isNull(dailyAmount.getDaId())){
-                throw new BusiException("主键不能为空");
-            }
-        }
-        if(fullUpdate){
-            dailyAmountDao.batchFullUpdateDailyAmount(list);
-        } else {
-            dailyAmountDao.batchUpdateDailyAmount(list);
-        }
-    }
-
-    /**
      * 删除对象
      * @param daId
      * @return

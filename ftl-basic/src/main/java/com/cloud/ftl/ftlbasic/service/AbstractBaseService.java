@@ -2,6 +2,7 @@ package com.cloud.ftl.ftlbasic.service;
 
 
 import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
+import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.mapper.IBaseMapper;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
@@ -110,16 +111,14 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int updateNotNull(T entity) {
-        Field[] fields = entity.getClass().getDeclaredFields();
-        Field priField = null;
-        for (Field field : fields) {
-            PrimaryKey annotation = field.getAnnotation(PrimaryKey.class);
-            if(Objects.nonNull(annotation)){
-                priField = field;
-                break;
-            }
+    public int update(T entity,Update... args) {
+        if(Objects.isNull(entity)){
+            throw new BusiException("更新对象不能为空");
         }
+        if(args.length > 1){
+            throw new BusiException("更新操作类型入参个数不正确");
+        }
+        Field priField = getPriKeyField(entity);
         //没有找到主键
         if(Objects.isNull(priField)){
             throw new BusiException("更新失败，当前操作表没有主键");
@@ -130,26 +129,70 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
             if(Objects.isNull(priKey)){
                 throw new BusiException("更新失败，主键不能为空");
             }
-            return baseMapper.updateNotNull(entity);
+            //更新不为空的操作
+            if(args.length == 0 || args[0].equals(Update.NOT_NULL)){
+                return baseMapper.updateNotNull(entity);
+            }
+            if(args[0].equals(Update.WITH_NULL)){
+                return baseMapper.updateWithNull(entity);
+            }
+            return 0;
         } catch (Exception e) {
             log.error(e.getMessage(),e);
             throw new BusiException(e.getMessage());
         }
     }
 
-    @Override
-    public int updateWithNull(T entity) {
-        return 0;
+    private <T> Field getPriKeyField(T entity) {
+        Field[] fields = entity.getClass().getDeclaredFields();
+        Field priField = null;
+        for (Field field : fields) {
+            PrimaryKey annotation = field.getAnnotation(PrimaryKey.class);
+            if(Objects.nonNull(annotation)){
+                priField = field;
+                break;
+            }
+        }
+        return priField;
     }
 
-    @Override
-    public void updateBatchNotNull(List<T> list) {
-
-    }
 
     @Override
-    public void updateBatchWithNull(List<T> list) {
-
+    public void updateBatch(List<T> list,Update... args) {
+        if(CollectionUtils.isEmpty(list)){
+            return ;
+        }
+        if(args.length > 1){
+            throw new BusiException("更新操作类型入参个数不正确");
+        }
+        Field priField = getPriKeyField(list.get(0));
+        //没有找到主键
+        if(Objects.isNull(priField)){
+            throw new BusiException("更新失败，当前操作表没有主键");
+        }
+        priField.setAccessible(true);
+        String priKeyName = priField.getName();
+        try {
+            //检查主键是否为空
+            for (T t : list) {
+                Field keyField = t.getClass().getDeclaredField(priKeyName);
+                keyField.setAccessible(true);
+                Object key = keyField.get(t);
+                if(Objects.isNull(key)){
+                    throw new BusiException("更新失败，主键不能为空");
+                }
+            }
+            //更新不为空的操作
+            if(args.length == 0 || args[0].equals(Update.NOT_NULL)){
+                baseMapper.updateBatchNotNull(list);
+            }
+            if(args[0].equals(Update.WITH_NULL)){
+                baseMapper.updateBatchWithNull(list);
+            }
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+            throw new BusiException(e.getMessage());
+        }
     }
 
 

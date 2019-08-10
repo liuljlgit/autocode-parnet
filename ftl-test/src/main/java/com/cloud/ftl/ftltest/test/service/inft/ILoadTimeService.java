@@ -27,14 +27,6 @@ public interface ILoadTimeService extends IBaseService<LoadTime>{
     void batchAddLoadTime(List<LoadTime> list) throws Exception;
 
     /**
-     * 批量更新
-     * @param list
-     * @param fullUpdate
-     * @throws Exception
-     */
-    void batchUpdateLoadTime(List<LoadTime> list,Boolean fullUpdate) throws Exception;
-
-    /**
      * 删除对象
      * @param ltId
      * @return

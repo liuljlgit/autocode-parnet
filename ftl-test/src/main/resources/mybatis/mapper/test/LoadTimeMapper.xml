@@ -16,37 +16,71 @@
     </sql>
 
     <sql id="Base_Object_List">
-        #{ltId},#{entityId},#{startTime},#{endTime},#{status},#{createTime},#{statusTime}
+        #{at.ltId},#{at.entityId},#{at.startTime},#{at.endTime},#{at.status},#{at.createTime},#{at.statusTime}
     </sql>
 
-    <sql id="Base_Item_List">
-        #{item.ltId},#{item.entityId},#{item.startTime},#{item.endTime},#{item.status},#{item.createTime},#{item.statusTime}
+    <sql id="Set_Not_Null_List">
+        <set>
+            <if test="qt.ltId != null">
+                lt_id = #{qt.ltId},
+            </if>
+            <if test="qt.entityId != null">
+                entity_id = #{qt.entityId},
+            </if>
+            <if test="qt.startTime != null">
+                start_time = #{qt.startTime},
+            </if>
+            <if test="qt.endTime != null">
+                end_time = #{qt.endTime},
+            </if>
+            <if test="qt.status != null">
+                status = #{qt.status},
+            </if>
+            <if test="qt.createTime != null">
+                create_time = #{qt.createTime},
+            </if>
+            <if test="qt.statusTime != null">
+                status_time = #{qt.statusTime}
+            </if>
+        </set>
+    </sql>
+
+    <sql id="Set_With_Null_List">
+        <set>
+            lt_id = #{qt.ltId},
+            entity_id = #{qt.entityId},
+            start_time = #{qt.startTime},
+            end_time = #{qt.endTime},
+            status = #{qt.status},
+            create_time = #{qt.createTime},
+            status_time = #{qt.statusTime}
+        </set>
     </sql>
 
     <sql id="where_sql">
-        <if test="ltId != null">
-            AND lt_id = #{ltId}
+        <if test="et.ltId != null">
+            AND lt_id = #{et.ltId}
         </if>
-        <if test="entityId != null">
-            AND entity_id = #{entityId}
+        <if test="et.entityId != null">
+            AND entity_id = #{et.entityId}
         </if>
-        <if test="startTime != null">
-            AND start_time = #{startTime}
+        <if test="et.startTime != null">
+            AND start_time = #{et.startTime}
         </if>
-        <if test="endTime != null">
-            AND end_time = #{endTime}
+        <if test="et.endTime != null">
+            AND end_time = #{et.endTime}
         </if>
-        <if test="status != null">
-            AND status = #{status}
+        <if test="et.status != null">
+            AND status = #{et.status}
         </if>
-        <if test="createTime != null">
-            AND create_time = #{createTime}
+        <if test="et.createTime != null">
+            AND create_time = #{et.createTime}
         </if>
-        <if test="statusTime != null">
-            AND status_time = #{statusTime}
+        <if test="et.statusTime != null">
+            AND status_time = #{et.statusTime}
         </if>
-        <if test="criterias != null">
-            <foreach collection="criterias" item="criteria" separator=" ">
+        <if test="et.criterias != null">
+            <foreach collection="et.criterias" item="criteria" separator=" ">
                 <if test="criteria.valid">
                     ${criteria.opt}
                     <choose>
@@ -121,11 +155,11 @@
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="orderByClause!=null and orderByClause!=''">
-            order by ${orderByClause}
+        <if test="et.orderByClause!=null and et.orderByClause!=''">
+            order by ${et.orderByClause}
         </if>
-        <if test="page != null and pageSize != null and page > 0" >
-            limit #{index},#{pageSize}
+        <if test="et.page != null and et.pageSize != null and et.page > 0" >
+            limit #{et.index},#{et.pageSize}
         </if>
     </select>
 
@@ -147,107 +181,47 @@
     <insert id="batchAddLoadTime">
         insert into load_time(<include refid="Base_Column_List" />)
         values
-        <foreach collection="list" index="index" item="item" separator=",">
-            (<include refid="Base_Item_List" />)
+        <foreach collection="list" index="index" item="at" separator=",">
+            (<include refid="Base_Object_List" />)
         </foreach>
     </insert>
 
     <!--更新对象-->
     <update id="updateNotNull">
         update load_time
-        <set>
-            <if test="ltId != null">
-                lt_id = #{ltId},
-            </if>
-            <if test="entityId != null">
-                entity_id = #{entityId},
-            </if>
-            <if test="startTime != null">
-                start_time = #{startTime},
-            </if>
-            <if test="endTime != null">
-                end_time = #{endTime},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="statusTime != null">
-                status_time = #{statusTime}
-            </if>
-        </set>
+        <include refid="Set_Not_Null_List" />
         <where>
-            AND lt_id = #{ltId}
+            AND lt_id = #{qt.ltId}
         </where>
     </update>
 
     <!--批量更新对象-->
-    <update id="batchUpdateLoadTime">
-        <foreach collection="list" separator=";" item="item">
+    <update id="updateBatchNotNull">
+        <foreach collection="list" separator=";" item="qt">
             update load_time
-            <set>
-                <if test="item.ltId != null">
-                    lt_id = #{item.ltId},
-                </if>
-                <if test="item.entityId != null">
-                    entity_id = #{item.entityId},
-                </if>
-                <if test="item.startTime != null">
-                    start_time = #{item.startTime},
-                </if>
-                <if test="item.endTime != null">
-                    end_time = #{item.endTime},
-                </if>
-                <if test="item.status != null">
-                    status = #{item.status},
-                </if>
-                <if test="item.createTime != null">
-                    create_time = #{item.createTime},
-                </if>
-                <if test="item.statusTime != null">
-                    status_time = #{item.statusTime}
-                </if>
-            </set>
+            <include refid="Set_Not_Null_List" />
             <where>
-                AND lt_id = #{item.ltId}
+                AND lt_id = #{qt.ltId}
             </where>
         </foreach>
     </update>
 
     <!--更新对象(全更新)-->
-    <update id="fullUpdateLoadTime">
+    <update id="updateWithNull">
         update load_time
-        <set>
-            lt_id = #{ltId},
-            entity_id = #{entityId},
-            start_time = #{startTime},
-            end_time = #{endTime},
-            status = #{status},
-            create_time = #{createTime},
-            status_time = #{statusTime}
-        </set>
+        <include refid="Set_With_Null_List" />
         <where>
-            AND lt_id = #{ltId}
+            AND lt_id = #{qt.ltId}
         </where>
     </update>
 
     <!--批量更新对象(全更新)-->
-    <update id="batchFullUpdateLoadTime">
-        <foreach collection="list" separator=";" item="item">
+    <update id="updateBatchWithNull">
+        <foreach collection="list" separator=";" item="qt">
             update load_time
-            <set>
-                lt_id = #{item.ltId},
-                entity_id = #{item.entityId},
-                start_time = #{item.startTime},
-                end_time = #{item.endTime},
-                status = #{item.status},
-                create_time = #{item.createTime},
-                status_time = #{item.statusTime}
-            </set>
+            <include refid="Set_With_Null_List" />
             <where>
-                AND lt_id = #{item.ltId}
+                AND lt_id = #{qt.ltId}
             </where>
         </foreach>
     </update>
