@@ -7,6 +7,7 @@ import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 顶层service类
@@ -30,7 +31,7 @@ public interface IBaseService<T> extends IService<T>{
 
     int update(T entity,Update... args);
 
-    int updateByObj(T uEntity,T oEntity);
+    int updateByMap(Map<String,Object> uMap, T oEntity);
 
     void updateBatch(List<T> list,Update... args);
 

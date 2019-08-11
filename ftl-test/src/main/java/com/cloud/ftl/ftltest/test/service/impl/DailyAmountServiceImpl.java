@@ -112,7 +112,7 @@ public class DailyAmountServiceImpl extends AbstractBaseService<DailyAmount> imp
             dailyAmount.setDaId(selectMaxId());
             addDailyAmount(dailyAmount);
         }else{
-            updateDailyAmount(dailyAmount,false);
+            //updateDailyAmount(dailyAmount,false);
         }
     }
 
@@ -137,7 +137,7 @@ public class DailyAmountServiceImpl extends AbstractBaseService<DailyAmount> imp
             batchAddDailyAmount(addList);
         }
         if(!CollectionUtils.isEmpty(updateList)){
-            batchUpdateDailyAmount(updateList,false);
+            //batchUpdateDailyAmount(updateList,false);
         }
     }
 

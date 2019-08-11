@@ -57,7 +57,7 @@ public class LoadTimeCtrl{
     */
     @PostMapping(value = "/obj")
     public CommonResp<Object> save(@RequestBody LoadTime loadTime) throws BusiException {
-        loadTimeService.saveLoadTime(loadTime);
+        //loadTimeService.saveLoadTime(loadTime);
         return RespEntity.ok();
     }
 

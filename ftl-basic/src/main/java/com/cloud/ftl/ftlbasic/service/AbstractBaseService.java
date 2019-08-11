@@ -17,6 +17,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Slf4j
@@ -144,14 +145,14 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public int updateByObj(T uEntity, T oEntity) {
-        if(Objects.isNull(uEntity)){
+    public int updateByMap(Map<String,Object> uMap, T oEntity) {
+        if(CollectionUtils.isEmpty(uMap)){
             throw new BusiException("更新失败，对象为空");
         }
         if(Objects.isNull(oEntity)){
             throw new BusiException("更新失败，更新条件为空");
         }
-        return baseMapper.updateByObj(uEntity,oEntity);
+        return baseMapper.updateByMap(uMap,oEntity);
     }
 
     private <T> Field getPriKeyField(T entity) {

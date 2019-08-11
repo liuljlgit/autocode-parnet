@@ -112,7 +112,7 @@ public class LoadTimeServiceImpl extends AbstractBaseService<LoadTime> implement
             loadTime.setLtId(selectMaxId());
             addLoadTime(loadTime);
         }else{
-            updateLoadTime(loadTime,false);
+            //updateLoadTime(loadTime,false);
         }
     }
 
@@ -137,7 +137,7 @@ public class LoadTimeServiceImpl extends AbstractBaseService<LoadTime> implement
             batchAddLoadTime(addList);
         }
         if(!CollectionUtils.isEmpty(updateList)){
-            batchUpdateLoadTime(updateList,false);
+            //batchUpdateLoadTime(updateList,false);
         }
     }
 

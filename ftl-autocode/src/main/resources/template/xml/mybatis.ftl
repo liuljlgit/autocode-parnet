@@ -196,9 +196,13 @@
     </update>
 
     <!--更新对象,根据查询条件更新-->
-    <update id="updateByObj">
+    <update id="updateByMap">
         update ${tableName}
-        <include refid="Set_Not_Null_List" />
+        <set>
+            <foreach collection="um" index="key" item="value" separator=",">
+                ${r'${'}key} = ${r'#{'}value}
+            </foreach>
+        </set>
         <where>
             <include refid="where_sql" />
         </where>

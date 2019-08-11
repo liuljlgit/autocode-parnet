@@ -20,6 +20,7 @@ import org.apache.ibatis.annotations.Param;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 顶层mapper类
@@ -85,8 +86,8 @@ public interface IBaseMapper<T> extends IMapper<T> {
 
     /**
      * 批全量更新，根据查询条件更新
-     * @param uEntity 更新属性实体
+     * @param uMap 需更新属性的map
      * @param oEntity 查询条件实体
      */
-    int updateByObj(@Param("ut") T uEntity, @Param("st") T oEntity);
+    int updateByMap(@Param("um") Map<String,Object> uMap, @Param("st") T oEntity);
 }

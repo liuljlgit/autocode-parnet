@@ -9,6 +9,9 @@ import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -57,7 +60,10 @@ public class DailyAmountCtrl{
     */
     @PostMapping(value = "/obj")
     public CommonResp<Object> save(@RequestBody DailyAmount dailyAmount) throws BusiException {
-        dailyAmountService.saveDailyAmount(dailyAmount);
+        Map<String,Object> uMap = new HashMap<>();
+        uMap.put(DailyAmount.CE,1);
+        uMap.put(DailyAmount.SETT_PROFIT,null);
+        dailyAmountService.updateByMap(uMap,dailyAmount);
         return RespEntity.ok();
     }
 
