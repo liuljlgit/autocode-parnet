@@ -1,6 +1,8 @@
 package ${entityPackagePath};
 
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.math.BigDecimal;
@@ -33,6 +35,29 @@ public class ${className} extends BaseQuery {
 
     public static final transient String ${col.field?upper_case} = "${col.field}";
 </#list>
+
+    public static Map<String,Integer> map;
+
+    static {
+        map = new HashMap<>();
+        Class<${className}> aClass = ${className}.class;
+        Field[] fields = aClass.getDeclaredFields();
+        Integer index = 0;
+        for (Field field : fields) {
+            int modifiers = field.getModifiers();
+            //过滤调不是只有私有属性修饰符的 1+8+16+128
+            if(modifiers != 153){
+                continue;
+            }
+            field.setAccessible(true);
+            try {
+                String fieldVal = (String)field.get(aClass);
+                map.putIfAbsent(fieldVal,index++);
+            } catch (IllegalAccessException e) {
+
+            }
+        }
+    }
 
 <#list tableColEntitys as col>
 

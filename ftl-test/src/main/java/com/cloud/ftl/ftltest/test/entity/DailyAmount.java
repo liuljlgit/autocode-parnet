@@ -1,6 +1,8 @@
 package com.cloud.ftl.ftltest.test.entity;
 
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.math.BigDecimal;
@@ -123,6 +125,29 @@ public class DailyAmount extends BaseQuery {
     public static final transient String CREATE_TIME = "create_time";
 
     public static final transient String STATUS_TIME = "status_time";
+
+    public static Map<String,Integer> map;
+
+    static {
+        map = new HashMap<>();
+        Class<DailyAmount> aClass = DailyAmount.class;
+        Field[] fields = aClass.getDeclaredFields();
+        Integer index = 0;
+        for (Field field : fields) {
+            int modifiers = field.getModifiers();
+            //过滤调不是只有私有属性修饰符的 1+8+16+128
+            if(modifiers != 153){
+                continue;
+            }
+            field.setAccessible(true);
+            try {
+                String fieldVal = (String)field.get(aClass);
+                map.putIfAbsent(fieldVal,index++);
+            } catch (IllegalAccessException e) {
+
+            }
+        }
+    }
 
 
     public void andDaId(Opt opt,Long daId) throws Exception {
