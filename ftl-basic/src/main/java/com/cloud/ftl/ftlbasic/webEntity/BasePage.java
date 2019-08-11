@@ -9,19 +9,16 @@ public class BasePage {
     /**
      * field comment:当前页
      */
-    @JsonIgnore
     public transient Integer page;
 
     /**
      * field comment:分页大小
      */
-    @JsonIgnore
     public transient Integer pageSize;
 
     /**
      * field comment:limit index,pageSize
      */
-    @JsonIgnore
     public transient Integer index;
 
     public Integer getPage() {

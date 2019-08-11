@@ -3,9 +3,6 @@ package com.cloud.ftl.ftlbasic.webEntity;
 import com.cloud.ftl.ftlbasic.constant.BasicConst;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.query.Criteria;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -14,14 +11,11 @@ import java.util.stream.Collectors;
 
 public class BaseQuery extends BasePage {
 
-    @JsonIgnore
     private List<Criteria> criterias;
 
-    @JsonIgnore
     private String orderByClause;
 
-    @JsonIgnore
-    private Map<String,List<Criteria>> criteriasMap = new HashMap<>();
+    private Map<String,Integer> criteriasMap;
 
     public List<Criteria> getCriterias() {
         return criterias;
@@ -31,11 +25,11 @@ public class BaseQuery extends BasePage {
         this.criterias = criterias;
     }
 
-    public Map<String, List<Criteria>> getCriteriasMap() {
+    public Map<String, Integer> getCriteriasMap() {
         return criteriasMap;
     }
 
-    public void setCriteriasMap(Map<String, List<Criteria>> criteriasMap) {
+    public void setCriteriasMap(Map<String, Integer> criteriasMap) {
         this.criteriasMap = criteriasMap;
     }
 
@@ -195,9 +189,10 @@ public class BaseQuery extends BasePage {
      * @param criteria
      */
     private void addCriteria2Map(String field,Criteria criteria){
-        List<Criteria> criteriaList = criteriasMap.getOrDefault(field, new ArrayList<>());
-        criteriaList.add(criteria);
-        criteriasMap.put(field,criteriaList);
+        if(CollectionUtils.isEmpty(criteriasMap)){
+            criteriasMap = new HashMap<>();
+        }
+        criteriasMap.put(field,criteria.hashCode());
     }
 
     /**
@@ -205,15 +200,16 @@ public class BaseQuery extends BasePage {
      * @param fields
      */
     public void cleanCriteria(String... fields){
+        Set<Integer> hashCodeSet = new HashSet<>();
         for (String field : fields) {
-            List<Criteria> list = criteriasMap.getOrDefault(field, null);
-            if(!StringUtils.isEmpty(list)){
-                Set<Integer> hashCodeSet = list.stream().map(Object::hashCode).collect(Collectors.toSet());
-                criterias = criterias.stream()
-                        .filter(e -> !hashCodeSet.contains(e.hashCode()))
-                        .collect(Collectors.toList());
+            Integer hashcode = criteriasMap.getOrDefault(field, null);
+            if(Objects.nonNull(hashcode)){
+                hashCodeSet.add(hashcode);
                 criteriasMap.remove(field);
             }
         }
+        criterias = criterias.stream()
+                .filter(e -> !hashCodeSet.contains(e.hashCode()))
+                .collect(Collectors.toList());
     }
 }

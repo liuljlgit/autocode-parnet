@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
@@ -93,15 +94,13 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     public PageBean<T> selectPage(T query) throws BusiException {
         Class<?> aClass = query.getClass().getSuperclass().getSuperclass();
         try {
-            Field pField = aClass.getDeclaredField("page");
-            Field psField = aClass.getDeclaredField("pageSize");
-            pField.setAccessible(true);
-            psField.setAccessible(true);
-            if(Objects.isNull(pField.get(query)) || Objects.isNull(psField.get(query))){
+            Method pMethod = aClass.getDeclaredMethod("getPage");
+            Method psMethod = aClass.getDeclaredMethod("getPageSize");
+            if(Objects.isNull(pMethod.invoke(query)) || Objects.isNull(psMethod.invoke(query))){
                 throw new BusiException("page and pageSize can not be null");
             }
             Long total = selectCount(query);
-            Long totalPage = (long)Math.ceil((double)total / (Integer)psField.get(query));
+            Long totalPage = (long)Math.ceil((double)total / (Integer)psMethod.invoke(query));
             return new PageBean<>(totalPage,total,selectList(query));
         } catch (Exception e) {
             log.error(e.getMessage(),e);
