@@ -36,10 +36,11 @@ public class Criteria {
      * 这个字段主要是方便转换成redis key而存在的
      * 一个Quartet对应的是一个Criterion
      * 一个Criteria生成的redis key值是：opt + quartets
-     * 元组信息：记录三个内容分别是
-     * 1.对象的属性字段（对象的表字段）
-     * 2.操作类型
-     * 3.操作值 使用fastJson转换成字符串
+     * 元组信息：记录四个内容分别是
+     * 1.链接信息 and 还是 or
+     * 2.对象的属性字段（对象的表字段）
+     * 3.操作类型
+     * 4.操作值 使用fastJson转换成字符串
      */
     List<Quartet<Opt,String, Opt, String>> quartets = new ArrayList<>();
 
