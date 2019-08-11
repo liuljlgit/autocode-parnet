@@ -41,13 +41,23 @@ public class ${className}Ctrl{
     }
 
    /**
-    * ${className} 根据实体对象查询列表
+    * ${className} 根据实体对象查询所有列表
+    * @return
+    * @throws Exception
+    */
+    @PostMapping(value = "/list")
+    public CommonResp<${className}> selectList(@RequestBody ${className} entity) throws BusiException {
+        return RespEntity.ok(${objectName}Service.selectList(entity));
+    }
+
+   /**
+    * ${className} 根据实体对象查询分页列表
     * @return
     * @throws Exception
     */
     @PostMapping(value = "/page")
-    public CommonResp<PageBean<${className}>> selectPage(@RequestBody ${className} query) throws BusiException {
-        return RespEntity.ok(${objectName}Service.selectPage(query));
+    public CommonResp<PageBean<${className}>> selectPage(@RequestBody ${className} entity) throws BusiException {
+        return RespEntity.ok(${objectName}Service.selectPage(entity));
     }
 
     /**
@@ -57,7 +67,7 @@ public class ${className}Ctrl{
     */
     @PostMapping(value = "/obj")
     public CommonResp<Object> save(@RequestBody ${className} ${objectName}) throws BusiException {
-        ${objectName}Service.save${className}(${objectName});
+        ${objectName}Service.save(${objectName});
         return RespEntity.ok();
     }
 
@@ -67,11 +77,11 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/obj")
-    public CommonResp<Object> deleteById(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws Exception {
+    public CommonResp<Object> deleteById(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws BusiException {
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
            throw new BusiException("删除主键不可为空") ;
         }
-        ${objectName}Service.delete${className}(${IdColEntity.fieldJavaName});
+        ${objectName}Service.deleteById(${IdColEntity.fieldJavaName});
         return RespEntity.ok();
     }
 

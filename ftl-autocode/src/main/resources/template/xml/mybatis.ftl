@@ -140,14 +140,25 @@
         </where>
     </select>
 
+    <!--根据ID列表获取记录列表-->
+    <select id="selectBatchIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from ${tableName}
+        <where>
+        ${IdColEntity.field} in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+            ${r'#{'}item}
+            </foreach>
+        </where>
+    </select>
+
     <!--插入对象-->
-    <insert id="add${className}">
+    <insert id="add">
         insert into ${tableName}(<include refid="Base_Column_List" />)
         values(<include refid="Base_Object_List" />)
     </insert>
 
     <!--批量插入对象-->
-    <insert id="batchAdd${className}">
+    <insert id="addBatch">
         insert into ${tableName}(<include refid="Base_Column_List" />)
         values
         <foreach collection="list" index="index" item="at" separator=",">
@@ -208,8 +219,16 @@
         </where>
     </update>
 
+    <!--根据查询条件删除记录-->
+    <delete id="delete">
+        delete from ${tableName}
+        <where>
+            <include refid="where_sql" />
+        </where>
+    </delete>
+
     <!--根据主键删除对象-->
-    <delete id="delete${className}">
+    <delete id="deleteById">
         delete from ${tableName}
         <where>
             AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
@@ -217,7 +236,7 @@
     </delete>
 
     <!-- 批量删除对象 -->
-    <delete id="batchDelete${className}">
+    <delete id="deleteBatchIds">
         delete from ${tableName}
         <where>
             ${IdColEntity.field} in
@@ -227,16 +246,6 @@
         </where>
     </delete>
 
-    <!--根据ID列表获取记录列表-->
-    <select id="selectBatchIds" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from ${tableName}
-        <where>
-            ${IdColEntity.field} in
-            <foreach collection="list" open="(" close=")" separator="," item="item">
-                ${r'#{'}item}
-            </foreach>
-        </where>
-    </select>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~ custom code begin ~~~~~~~~~~~~~~~~~~~~~~-->
     ${customCode!""}

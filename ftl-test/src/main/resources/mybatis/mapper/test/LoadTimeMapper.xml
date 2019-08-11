@@ -171,14 +171,25 @@
         </where>
     </select>
 
+    <!--根据ID列表获取记录列表-->
+    <select id="selectBatchIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from load_time
+        <where>
+        lt_id in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+            </foreach>
+        </where>
+    </select>
+
     <!--插入对象-->
-    <insert id="addLoadTime">
+    <insert id="add">
         insert into load_time(<include refid="Base_Column_List" />)
         values(<include refid="Base_Object_List" />)
     </insert>
 
     <!--批量插入对象-->
-    <insert id="batchAddLoadTime">
+    <insert id="addBatch">
         insert into load_time(<include refid="Base_Column_List" />)
         values
         <foreach collection="list" index="index" item="at" separator=",">
@@ -239,8 +250,16 @@
         </where>
     </update>
 
+    <!--根据查询条件删除记录-->
+    <delete id="delete">
+        delete from load_time
+        <where>
+            <include refid="where_sql" />
+        </where>
+    </delete>
+
     <!--根据主键删除对象-->
-    <delete id="deleteLoadTime">
+    <delete id="deleteById">
         delete from load_time
         <where>
             AND lt_id = #{ltId}
@@ -248,7 +267,7 @@
     </delete>
 
     <!-- 批量删除对象 -->
-    <delete id="batchDeleteLoadTime">
+    <delete id="deleteBatchIds">
         delete from load_time
         <where>
             lt_id in
@@ -258,16 +277,6 @@
         </where>
     </delete>
 
-    <!--根据ID列表获取记录列表-->
-    <select id="selectBatchIds" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from load_time
-        <where>
-            lt_id in
-            <foreach collection="list" open="(" close=")" separator="," item="item">
-                #{item}
-            </foreach>
-        </where>
-    </select>
 
     <!--~~~~~~~~~~~~~~~~~~~~~~ custom code begin ~~~~~~~~~~~~~~~~~~~~~~-->
     

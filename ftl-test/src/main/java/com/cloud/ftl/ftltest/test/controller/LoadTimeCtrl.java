@@ -41,13 +41,23 @@ public class LoadTimeCtrl{
     }
 
    /**
-    * LoadTime 根据实体对象查询列表
+    * LoadTime 根据实体对象查询所有列表
+    * @return
+    * @throws Exception
+    */
+    @PostMapping(value = "/list")
+    public CommonResp<LoadTime> selectList(@RequestBody LoadTime entity) throws BusiException {
+        return RespEntity.ok(loadTimeService.selectList(entity));
+    }
+
+   /**
+    * LoadTime 根据实体对象查询分页列表
     * @return
     * @throws Exception
     */
     @PostMapping(value = "/page")
-    public CommonResp<PageBean<LoadTime>> selectPage(@RequestBody LoadTime query) throws BusiException {
-        return RespEntity.ok(loadTimeService.selectPage(query));
+    public CommonResp<PageBean<LoadTime>> selectPage(@RequestBody LoadTime entity) throws BusiException {
+        return RespEntity.ok(loadTimeService.selectPage(entity));
     }
 
     /**
@@ -57,7 +67,7 @@ public class LoadTimeCtrl{
     */
     @PostMapping(value = "/obj")
     public CommonResp<Object> save(@RequestBody LoadTime loadTime) throws BusiException {
-        //loadTimeService.saveLoadTime(loadTime);
+        loadTimeService.save(loadTime);
         return RespEntity.ok();
     }
 
@@ -67,11 +77,11 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/obj")
-    public CommonResp<Object> deleteById(@PathVariable(value="ltId") Long ltId) throws Exception {
+    public CommonResp<Object> deleteById(@PathVariable(value="ltId") Long ltId) throws BusiException {
         if(Objects.isNull(ltId)){
            throw new BusiException("删除主键不可为空") ;
         }
-        loadTimeService.deleteLoadTime(ltId);
+        loadTimeService.deleteById(ltId);
         return RespEntity.ok();
     }
 

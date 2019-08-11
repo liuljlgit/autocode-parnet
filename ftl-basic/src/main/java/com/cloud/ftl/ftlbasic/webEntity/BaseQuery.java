@@ -3,7 +3,9 @@ package com.cloud.ftl.ftlbasic.webEntity;
 import com.cloud.ftl.ftlbasic.constant.BasicConst;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.query.Criteria;
-import org.apache.commons.lang3.tuple.Pair;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -12,10 +14,13 @@ import java.util.stream.Collectors;
 
 public class BaseQuery extends BasePage {
 
+    @JsonIgnore
     private List<Criteria> criterias;
 
+    @JsonIgnore
     private String orderByClause;
 
+    @JsonIgnore
     private Map<String,List<Criteria>> criteriasMap = new HashMap<>();
 
     public List<Criteria> getCriterias() {

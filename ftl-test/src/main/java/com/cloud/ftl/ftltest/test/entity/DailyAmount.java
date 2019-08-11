@@ -7,9 +7,12 @@ import java.math.BigDecimal;
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DailyAmount extends BaseQuery {
 
     /**
@@ -26,6 +29,7 @@ public class DailyAmount extends BaseQuery {
     /**
      * field comment:用电时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date dateTime;
 
     /**
@@ -81,11 +85,13 @@ public class DailyAmount extends BaseQuery {
     /**
      * field comment:创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
     /**
      * field comment:更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date statusTime;
 
     public static final transient String DA_ID = "da_id";

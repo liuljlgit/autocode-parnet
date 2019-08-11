@@ -3,6 +3,7 @@ package com.cloud.ftl.ftlbasic.service;
 import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -35,5 +36,15 @@ public interface IBaseService<T> extends IService<T>{
 
     void updateBatch(List<T> list,Update... args);
 
+    int add(T entity);
 
+    void addBatch(List<T> list);
+
+    void delete(T entity);
+
+    int deleteById(Serializable id);
+
+    void deleteBatchIds(Collection<? extends Serializable> list);
+
+    void save(T t, Update... args);
 }

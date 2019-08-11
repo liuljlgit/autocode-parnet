@@ -15,10 +15,7 @@ import org.springframework.util.CollectionUtils;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 public abstract class AbstractBaseService<T> implements IBaseService<T> {
@@ -65,11 +62,23 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
 
     @Override
     public T selectOne(T query) throws BusiException {
-        List<T> list = selectList(query);
-        if(!CollectionUtils.isEmpty(list)){
-            return list.get(0);
+        try{
+            Class<?> aClass = query.getClass().getSuperclass().getSuperclass();
+            Field pField = aClass.getDeclaredField("page");
+            Field psField = aClass.getDeclaredField("pageSize");
+            pField.setAccessible(true);
+            psField.setAccessible(true);
+            pField.set(query,1);
+            psField.set(query,1);
+            List<T> list = selectList(query);
+            if(!CollectionUtils.isEmpty(list)){
+                return list.get(0);
+            }
+            return null;
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+            throw new BusiException(e.getMessage());
         }
-        return null;
     }
 
     @Override
@@ -145,6 +154,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateByMap(Map<String,Object> uMap, T oEntity) {
         if(CollectionUtils.isEmpty(uMap)){
             throw new BusiException("更新失败，对象为空");
@@ -170,6 +180,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateBatch(List<T> list,Update... args) {
         if(CollectionUtils.isEmpty(list)){
             return ;
@@ -200,6 +211,146 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
             }
             if(args[0].equals(Update.WITH_NULL)){
                 baseMapper.updateBatchWithNull(list);
+            }
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+            throw new BusiException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int add(T entity) {
+        if(Objects.isNull(entity)){
+            return 0;
+        }
+        Field priField = getPriKeyField(entity);
+        //没有找到主键
+        if(Objects.isNull(priField)){
+            throw new BusiException("新增失败，当前操作表没有主键");
+        }
+        priField.setAccessible(true);
+        try {
+            Object priKey = priField.get(entity);
+            if(Objects.isNull(priKey)){
+                priField.set(entity,selectMaxId());
+            }
+            return baseMapper.add(entity);
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+            throw new BusiException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addBatch(List<T> list) {
+        if(CollectionUtils.isEmpty(list)){
+            return ;
+        }
+        Field priField = getPriKeyField(list.get(0));
+        //没有找到主键
+        if(Objects.isNull(priField)){
+            throw new BusiException("新增失败，当前操作表没有主键");
+        }
+        String priKeyName = priField.getName();
+        try{
+            for (T t : list) {
+                Field keyField = t.getClass().getDeclaredField(priKeyName);
+                keyField.setAccessible(true);
+                Object key = keyField.get(t);
+                if(Objects.isNull(key)){
+                    keyField.set(t,selectMaxId());
+                }
+            }
+            baseMapper.addBatch(list);
+        }catch (Exception e){
+            log.error(e.getMessage(),e);
+            throw new BusiException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(T entity) {
+        if(Objects.isNull(entity)){
+            return;
+        }
+        baseMapper.delete(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteById(Serializable id) {
+        if(Objects.isNull(id)){
+            return 0;
+        }
+        return baseMapper.deleteById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteBatchIds(Collection<? extends Serializable> list) {
+        if(CollectionUtils.isEmpty(list)){
+            return ;
+        }
+        baseMapper.deleteBatchIds(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void save(T t, Update... args){
+        if(Objects.isNull(t)){
+            return ;
+        }
+        Field priField = getPriKeyField(t);
+        //没有找到主键
+        if(Objects.isNull(priField)){
+            throw new BusiException("保存失败，当前操作表没有主键");
+        }
+        priField.setAccessible(true);
+        try {
+            Object priKey = priField.get(t);
+            if(Objects.isNull(priKey)){
+                add(t);
+            }else{
+                update(t,args);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+            throw new BusiException(e.getMessage());
+        }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void saveBatch(List<T> list,Update... args){
+        if(CollectionUtils.isEmpty(list)){
+            return;
+        }
+        Field priField = getPriKeyField(list.get(0));
+        //没有找到主键
+        if(Objects.isNull(priField)){
+            throw new BusiException("保存失败，当前操作表没有主键");
+        }
+        String priKeyName = priField.getName();
+        try{
+            List<T> addList = new ArrayList<>();
+            List<T> updateList = new ArrayList<>();
+            for (T t : list) {
+                Field keyField = t.getClass().getDeclaredField(priKeyName);
+                keyField.setAccessible(true);
+                Object key = keyField.get(t);
+                if(Objects.isNull(key)){
+                    addList.add(t);
+                }else{
+                    updateList.add(t);
+                }
+            }
+            if(!CollectionUtils.isEmpty(addList)){
+                addBatch(addList);
+            }
+            if(!CollectionUtils.isEmpty(updateList)){
+                updateBatch(updateList,args);
             }
         }catch (Exception e){
             log.error(e.getMessage(),e);

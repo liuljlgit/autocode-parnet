@@ -90,4 +90,36 @@ public interface IBaseMapper<T> extends IMapper<T> {
      * @param oEntity 查询条件实体
      */
     int updateByMap(@Param("um") Map<String,Object> uMap, @Param("st") T oEntity);
+
+    /**
+     * 新增记录
+     * @param entity 新增对象
+     * @return 新增个数
+     */
+    int add(@Param("at") T entity);
+
+    /**
+     * 批量新增对象
+     * @param list 新增对象列表
+     */
+    void addBatch(List<T> list);
+
+    /**
+     * 根据查询条件删除对象
+     * @param entity 查询条件
+     */
+    void delete(@Param("st") T entity);
+
+    /**
+     * 根据主键删除一条记录
+     * @param id
+     * @return
+     */
+    int deleteById(Serializable id);
+
+    /**
+     * 根据批量主键批量删除记录
+     * @param list
+     */
+    void deleteBatchIds(Collection<? extends Serializable> list);
 }

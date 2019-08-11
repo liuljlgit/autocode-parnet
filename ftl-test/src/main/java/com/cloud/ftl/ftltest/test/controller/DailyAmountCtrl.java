@@ -9,9 +9,6 @@ import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -44,13 +41,23 @@ public class DailyAmountCtrl{
     }
 
    /**
-    * DailyAmount 根据实体对象查询列表
+    * DailyAmount 根据实体对象查询所有列表
+    * @return
+    * @throws Exception
+    */
+    @PostMapping(value = "/list")
+    public CommonResp<DailyAmount> selectList(@RequestBody DailyAmount entity) throws BusiException {
+        return RespEntity.ok(dailyAmountService.selectList(entity));
+    }
+
+   /**
+    * DailyAmount 根据实体对象查询分页列表
     * @return
     * @throws Exception
     */
     @PostMapping(value = "/page")
-    public CommonResp<PageBean<DailyAmount>> selectPage(@RequestBody DailyAmount query) throws BusiException {
-        return RespEntity.ok(dailyAmountService.selectPage(query));
+    public CommonResp<PageBean<DailyAmount>> selectPage(@RequestBody DailyAmount entity) throws BusiException {
+        return RespEntity.ok(dailyAmountService.selectPage(entity));
     }
 
     /**
@@ -60,10 +67,7 @@ public class DailyAmountCtrl{
     */
     @PostMapping(value = "/obj")
     public CommonResp<Object> save(@RequestBody DailyAmount dailyAmount) throws BusiException {
-        Map<String,Object> uMap = new HashMap<>();
-        uMap.put(DailyAmount.CE,1);
-        uMap.put(DailyAmount.SETT_PROFIT,null);
-        dailyAmountService.updateByMap(uMap,dailyAmount);
+        dailyAmountService.save(dailyAmount);
         return RespEntity.ok();
     }
 
@@ -73,11 +77,11 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/obj")
-    public CommonResp<Object> deleteById(@PathVariable(value="daId") Long daId) throws Exception {
+    public CommonResp<Object> deleteById(@PathVariable(value="daId") Long daId) throws BusiException {
         if(Objects.isNull(daId)){
            throw new BusiException("删除主键不可为空") ;
         }
-        dailyAmountService.deleteDailyAmount(daId);
+        dailyAmountService.deleteById(daId);
         return RespEntity.ok();
     }
 
