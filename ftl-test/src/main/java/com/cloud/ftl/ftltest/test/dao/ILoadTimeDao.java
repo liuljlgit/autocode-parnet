@@ -13,32 +13,6 @@ import com.cloud.ftl.ftltest.test.entity.LoadTime;
 @Repository
 public interface ILoadTimeDao extends IBaseMapper<LoadTime>{
 
-    /**
-     * 新增对象
-     * @param entity
-     * @return
-     */
-    Integer addLoadTime(@Param("at") LoadTime entity);
-
-    /**
-     * 批量新增对象
-     * @param list
-     */
-    void batchAddLoadTime(List<LoadTime> list);
-
-    /**
-     * 删除对象
-     * @param ltId
-     * @return
-     */
-    Integer deleteLoadTime(Long ltId);
-
-    /**
-     * 批量删除对象
-     * @param list
-     */
-    void batchDeleteLoadTime(List<Long> list);
-
     //------------------------ custom code begin ------------------------//
     
     //======================== custom code end ========================//
