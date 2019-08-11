@@ -1,5 +1,6 @@
 package com.cloud.ftl.ftltest.test.controller;
 
+import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
@@ -9,6 +10,9 @@ import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -29,10 +33,16 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @GetMapping(value = "/obj")
-    public CommonResp<DailyAmount> selectById(Long daId) throws BusiException {
+    public CommonResp<DailyAmount> selectById(Long daId) throws Exception {
         if(Objects.isNull(daId)){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
+        DailyAmount check = new DailyAmount();
+        check.andDateTime(Opt.EQUAL,new Date());
+        check.andCriteria().and(DailyAmount.DA_ID,Opt.IN,new ArrayList<Long>(){{
+            add(1000L);
+            add(100052L);
+        }}).or(DailyAmount.CE,Opt.IS_NOT_NULL);
         DailyAmount dailyAmount = dailyAmountService.selectById(daId);
         if(Objects.isNull(dailyAmount)){
             throw new BusiException("没有符合条件的记录！") ;

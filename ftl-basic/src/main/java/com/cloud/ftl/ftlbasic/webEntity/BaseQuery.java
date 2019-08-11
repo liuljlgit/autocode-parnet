@@ -115,6 +115,7 @@ public class BaseQuery extends BasePage {
             criterias = new ArrayList<>();
         }
         criteria.addCriterion("and "+field+" "+Opt.EQUAL.getCode()+" ",value);
+        criteria.addQuartets(Opt.AND,field,Opt.EQUAL,value); //增加元组信息
         criterias.add(criteria);
         addCriteria2Map(field,criteria);
     }
@@ -132,6 +133,7 @@ public class BaseQuery extends BasePage {
             criterias = new ArrayList<>();
         }
         criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value1,value2);
+        criteria.addQuartets(Opt.AND,field,opt,value1,value2);   //增加元组信息
         criterias.add(criteria);
         addCriteria2Map(field,criteria);
     }
@@ -159,6 +161,7 @@ public class BaseQuery extends BasePage {
             value = null;
         }
         criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value);
+        criteria.addQuartets(Opt.AND,field,opt,value);   //增加元组信息
         criterias.add(criteria);
         addCriteria2Map(field,criteria);
     }

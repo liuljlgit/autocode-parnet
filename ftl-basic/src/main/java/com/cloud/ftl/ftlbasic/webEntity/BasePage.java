@@ -1,7 +1,4 @@
 package com.cloud.ftl.ftlbasic.webEntity;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Objects;
 
 public class BasePage {

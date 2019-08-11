@@ -1,6 +1,9 @@
 package com.cloud.ftl.ftlbasic.query;
 
+import com.alibaba.fastjson.JSON;
 import com.cloud.ftl.ftlbasic.enums.Opt;
+import org.javatuples.Quartet;
+import org.javatuples.Triplet;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -29,9 +32,18 @@ public class Criteria {
      */
     private String opt = Opt.AND.getCode();
 
-    public Criteria() {
+    /**
+     * 这个字段主要是方便转换成redis key而存在的
+     * 一个Quartet对应的是一个Criterion
+     * 一个Criteria生成的redis key值是：opt + quartets
+     * 元组信息：记录三个内容分别是
+     * 1.对象的属性字段（对象的表字段）
+     * 2.操作类型
+     * 3.操作值 使用fastJson转换成字符串
+     */
+    List<Quartet<Opt,String, Opt, String>> quartets = new ArrayList<>();
 
-    }
+    public Criteria() {}
 
     public Criteria(String opt) {
         this.opt = opt;
@@ -51,6 +63,14 @@ public class Criteria {
 
     public void setOpt(String opt) {
         this.opt = opt;
+    }
+
+    public List<Quartet<Opt, String, Opt, String>> getQuartets() {
+        return quartets;
+    }
+
+    public void setQuartets(List<Quartet<Opt, String, Opt, String>> quartets) {
+        this.quartets = quartets;
     }
 
     /**
@@ -125,6 +145,7 @@ public class Criteria {
      * @throws Exception
      */
     public Criteria and(String field,Opt opt,Object... values) throws Exception {
+        addQuartets(Opt.AND,field,opt,values);
         if(values.length>2){
             throw new Exception("values length can not bigger than 2");
         }
@@ -165,6 +186,7 @@ public class Criteria {
      * @throws Exception
      */
     public Criteria or(String field,Opt opt,Object... values) throws Exception {
+        addQuartets(Opt.OR,field,opt,values);
         if(values.length>2){
             throw new Exception("values length can not bigger than 2");
         }
@@ -194,6 +216,23 @@ public class Criteria {
             addCriterion("or "+field+" "+opt.getCode()+" ",values[0],values[1]);
         }
         return this;
+    }
+
+
+    /**
+     * 主要是用来生成Quartet值
+     * @param conOpt
+     * @param field
+     * @param dbOpt
+     * @param values
+     * 例子: and da_id = 1000
+     */
+    public void addQuartets(Opt conOpt,String field,Opt dbOpt,Object... values){
+        if(values.length == 0){
+            quartets.add(new Quartet<>(conOpt,field,dbOpt,"null"));
+        }else{
+            quartets.add(new Quartet<>(conOpt,field,dbOpt, JSON.toJSONString(values)));
+        }
     }
 
 }
