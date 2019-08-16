@@ -25,7 +25,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
 
     private IBaseMapper<T> baseMapper;
 
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     public AbstractBaseService() {
     }
@@ -40,7 +40,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         ParameterizedType type = (ParameterizedType)this.getClass().getGenericSuperclass();
         Class tClass = (Class) type.getActualTypeArguments()[0];
         redisTemplate.setEnableTransactionSupport(false);
-        return redisTemplate.execute((RedisCallback<Long>) connection->{
+        return (Long) redisTemplate.execute((RedisCallback<Long>) connection->{
             String tableIdKey = "SEQ:".concat(tClass.getSimpleName());
             if ( !connection.exists(tableIdKey.getBytes())){
                 Long id = baseMapper.selectMaxId();
