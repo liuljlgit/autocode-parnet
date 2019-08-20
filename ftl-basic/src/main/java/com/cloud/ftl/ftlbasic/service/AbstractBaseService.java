@@ -54,15 +54,19 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public T selectById(Serializable id) throws BusiException {
+    public T selectById(Serializable id,String... nullErrMsg) throws BusiException {
         if(Objects.isNull(id)){
             throw new BusiException("请输入要获取的数据的ID");
         }
-        return baseMapper.selectById(id);
+        T t = baseMapper.selectById(id);
+        if(Objects.isNull(t) && nullErrMsg.length > 0){
+            throw new BusiException(nullErrMsg[0]);
+        }
+        return t;
     }
 
     @Override
-    public T selectOne(T query) throws BusiException {
+    public T selectOne(T query,String... nullErrMsg) throws BusiException {
         try{
             Class<?> aClass = query.getClass().getSuperclass().getSuperclass();
             Field pField = aClass.getDeclaredField("page");
@@ -75,7 +79,11 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
             if(!CollectionUtils.isEmpty(list)){
                 return list.get(0);
             }
-            return null;
+            if(nullErrMsg.length > 0){
+                throw new BusiException(nullErrMsg[0]);
+            } else {
+                return null;
+            }
         }catch (Exception e){
             log.error(e.getMessage(),e);
             throw new BusiException(e.getMessage());
@@ -83,11 +91,24 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public List<T> selectList(T query) throws BusiException {
+    public List<T> selectList(T query,String... emptyErrMsg) throws BusiException {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
         }
-        return baseMapper.selectList(query);
+        List<T> ts = baseMapper.selectList(query);
+        if(CollectionUtils.isEmpty(ts) && emptyErrMsg.length > 0){
+            throw new BusiException(emptyErrMsg[0]);
+        }
+        return ts;
+    }
+
+    @Override
+    public List<T> selectBatchIds(Collection<? extends Serializable> list,String... emptyErrMsg) throws BusiException {
+        List<T> ts = baseMapper.selectBatchIds(list);
+        if(CollectionUtils.isEmpty(ts) && emptyErrMsg.length > 0){
+            throw new BusiException(emptyErrMsg[0]);
+        }
+        return ts;
     }
 
     @Override
@@ -111,11 +132,6 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     @Override
     public Long selectCount(T query) throws BusiException {
         return  baseMapper.selectCount(query);
-    }
-
-    @Override
-    public List<T> selectBatchIds(Collection<? extends Serializable> list) {
-        return baseMapper.selectBatchIds(list);
     }
 
     @Override

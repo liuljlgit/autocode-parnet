@@ -18,17 +18,17 @@ public interface IBaseService<T> extends IService<T>{
 
     Long selectMaxId() throws BusiException;
 
-    T selectById(Serializable id) throws BusiException;
+    T selectById(Serializable id,String... nullErrMsg) throws BusiException;
 
-    T selectOne(T query) throws BusiException;
+    T selectOne(T query,String... nullErrMsg) throws BusiException;
+
+    List<T> selectList(T query,String... emptyErrMsg) throws BusiException;
+
+    List<T> selectBatchIds(Collection<? extends Serializable> list,String... emptyErrMsg) throws BusiException ;
 
     PageBean<T> selectPage(T query) throws BusiException;
 
-    List<T> selectList(T query) throws BusiException;
-
     Long selectCount(T query) throws BusiException;
-
-    List<T> selectBatchIds(Collection<? extends Serializable> list);
 
     int update(T entity,Update... args);
 

@@ -33,11 +33,7 @@ public class DailyAmountCtrl{
         if(Objects.isNull(daId)){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
-        DailyAmount dailyAmount = dailyAmountService.selectById(daId);
-        if(Objects.isNull(dailyAmount)){
-            throw new BusiException("没有符合条件的记录！") ;
-        }
-        return RespEntity.ok(dailyAmount);
+        return RespEntity.ok(dailyAmountService.selectById(daId,"没有符合条件的记录！"));
     }
 
    /**
