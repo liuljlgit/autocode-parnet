@@ -29,7 +29,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @GetMapping(value = "/obj")
-    public CommonResp<${className}> selectById(${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws BusiException {
+    public CommonResp<${className}> selectById(${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) {
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
@@ -46,7 +46,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @PostMapping(value = "/list")
-    public CommonResp<${className}> selectList(@RequestBody ${className} entity) throws BusiException {
+    public CommonResp<${className}> selectList(@RequestBody ${className} entity){
         return RespEntity.ok(${objectName}Service.selectList(entity));
     }
 
@@ -56,7 +56,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @PostMapping(value = "/page")
-    public CommonResp<PageBean<${className}>> selectPage(@RequestBody ${className} entity) throws BusiException {
+    public CommonResp<PageBean<${className}>> selectPage(@RequestBody ${className} entity) {
         return RespEntity.ok(${objectName}Service.selectPage(entity));
     }
 
@@ -66,7 +66,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @PostMapping(value = "/obj")
-    public CommonResp<Object> save(@RequestBody ${className} ${objectName}) throws BusiException {
+    public CommonResp<Object> save(@RequestBody ${className} ${objectName}) {
         ${objectName}Service.save(${objectName});
         return RespEntity.ok();
     }
@@ -77,7 +77,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/obj")
-    public CommonResp<Object> deleteById(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) throws BusiException {
+    public CommonResp<Object> deleteById(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) {
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
            throw new BusiException("删除主键不可为空") ;
         }

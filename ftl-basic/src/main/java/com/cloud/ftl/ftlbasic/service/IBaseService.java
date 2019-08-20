@@ -16,19 +16,19 @@ import java.util.Map;
  */
 public interface IBaseService<T> extends IService<T>{
 
-    Long selectMaxId() throws BusiException;
+    Long selectMaxId() ;
 
-    T selectById(Serializable id,String... nullErrMsg) throws BusiException;
+    T selectById(Serializable id,String... nullErrMsg) ;
 
-    T selectOne(T query,String... nullErrMsg) throws BusiException;
+    T selectOne(T query,String... nullErrMsg) ;
 
-    List<T> selectList(T query,String... emptyErrMsg) throws BusiException;
+    List<T> selectList(T query,String... emptyErrMsg) ;
 
-    List<T> selectBatchIds(Collection<? extends Serializable> list,String... emptyErrMsg) throws BusiException ;
+    List<T> selectBatchIds(Collection<? extends Serializable> list,String... emptyErrMsg) ;
 
-    PageBean<T> selectPage(T query) throws BusiException;
+    PageBean<T> selectPage(T query) ;
 
-    Long selectCount(T query) throws BusiException;
+    Long selectCount(T query) ;
 
     int update(T entity,Update... args);
 

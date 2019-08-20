@@ -36,7 +36,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public Long selectMaxId() throws BusiException {
+    public Long selectMaxId() {
         ParameterizedType type = (ParameterizedType)this.getClass().getGenericSuperclass();
         Class tClass = (Class) type.getActualTypeArguments()[0];
         redisTemplate.setEnableTransactionSupport(false);
@@ -54,7 +54,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public T selectById(Serializable id,String... nullErrMsg) throws BusiException {
+    public T selectById(Serializable id,String... nullErrMsg) {
         if(Objects.isNull(id)){
             throw new BusiException("请输入要获取的数据的ID");
         }
@@ -66,7 +66,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public T selectOne(T query,String... nullErrMsg) throws BusiException {
+    public T selectOne(T query,String... nullErrMsg) {
         try{
             Class<?> aClass = query.getClass().getSuperclass().getSuperclass();
             Field pField = aClass.getDeclaredField("page");
@@ -91,7 +91,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public List<T> selectList(T query,String... emptyErrMsg) throws BusiException {
+    public List<T> selectList(T query,String... emptyErrMsg)  {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
         }
@@ -103,7 +103,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public List<T> selectBatchIds(Collection<? extends Serializable> list,String... emptyErrMsg) throws BusiException {
+    public List<T> selectBatchIds(Collection<? extends Serializable> list,String... emptyErrMsg) {
         List<T> ts = baseMapper.selectBatchIds(list);
         if(CollectionUtils.isEmpty(ts) && emptyErrMsg.length > 0){
             throw new BusiException(emptyErrMsg[0]);
@@ -112,7 +112,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public PageBean<T> selectPage(T query) throws BusiException {
+    public PageBean<T> selectPage(T query) {
         Class<?> aClass = query.getClass().getSuperclass().getSuperclass();
         try {
             Method pMethod = aClass.getDeclaredMethod("getPage");
@@ -130,7 +130,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public Long selectCount(T query) throws BusiException {
+    public Long selectCount(T query) {
         return  baseMapper.selectCount(query);
     }
 
