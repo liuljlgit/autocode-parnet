@@ -1,13 +1,13 @@
 package com.cloud.ftl.ftlbasic.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
+@Slf4j
 public class SerializableUtil {
-
-    private static final Logger logger = LoggerFactory.getLogger(SerializableUtil.class);
 
     /**
      * 对象转数组
@@ -23,7 +23,7 @@ public class SerializableUtil {
             oos.writeObject(input);
             return baos.toByteArray();
         } catch (IOException e) {
-            logger.debug("序列化失败", e);
+            log.debug("序列化失败", e);
             return null;
         } finally {
             closeOutputStream(oos);
@@ -56,7 +56,7 @@ public class SerializableUtil {
         } catch (NullPointerException ne) {
         } catch (Exception e) {
             e.printStackTrace();
-            logger.debug("反序列化失败", e);
+            log.debug("反序列化失败", e);
         } finally {
             closeInpputStream(bis);
             closeInpputStream(ois);

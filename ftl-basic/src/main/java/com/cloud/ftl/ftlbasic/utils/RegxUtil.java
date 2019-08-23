@@ -1,11 +1,14 @@
 package com.cloud.ftl.ftlbasic.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.Field;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 public class RegxUtil {
 
     /**

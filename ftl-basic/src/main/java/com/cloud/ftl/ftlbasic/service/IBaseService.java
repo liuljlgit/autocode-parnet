@@ -40,6 +40,8 @@ public interface IBaseService<T> extends IService<T>{
 
     void addBatch(List<T> list);
 
+    void addBatch(List<T> list, int batchSize);
+
     void delete(T entity);
 
     int deleteById(Serializable id);

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -15,9 +16,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class RedisUtil {
-
-    private static final Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 
     /**
      * 生成redis的key值
@@ -94,7 +94,7 @@ public class RedisUtil {
             }
             return SecureUtil.md5X16Str(key.toString(),"utf-8");
         } catch (Exception e){
-            logger.error("error to parse object to redis key");
+            log.error("error to parse object to redis key");
             throw e;
         }
     }

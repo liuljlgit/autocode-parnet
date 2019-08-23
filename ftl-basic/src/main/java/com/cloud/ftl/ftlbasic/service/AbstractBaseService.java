@@ -5,6 +5,8 @@ import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
 import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.mapper.IBaseMapper;
+import com.cloud.ftl.ftlbasic.utils.FieldCacheUtil;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisCallback;
@@ -68,13 +70,8 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     @Override
     public T selectOne(T query,String... nullErrMsg) {
         try{
-            Class<?> aClass = query.getClass().getSuperclass().getSuperclass();
-            Field pField = aClass.getDeclaredField("page");
-            Field psField = aClass.getDeclaredField("pageSize");
-            pField.setAccessible(true);
-            psField.setAccessible(true);
-            pField.set(query,1);
-            psField.set(query,1);
+            FieldCacheUtil.setPMet.invoke(query,1);
+            FieldCacheUtil.setPSMet.invoke(query,1);
             List<T> list = selectList(query);
             if(!CollectionUtils.isEmpty(list)){
                 return list.get(0);
@@ -113,15 +110,19 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
 
     @Override
     public PageBean<T> selectPage(T query) {
-        Class<?> aClass = query.getClass().getSuperclass().getSuperclass();
         try {
-            Method pMethod = aClass.getDeclaredMethod("getPage");
-            Method psMethod = aClass.getDeclaredMethod("getPageSize");
-            if(Objects.isNull(pMethod.invoke(query)) || Objects.isNull(psMethod.invoke(query))){
-                throw new BusiException("page and pageSize can not be null");
+            Object page = FieldCacheUtil.getPMet.invoke(query);
+            Object pageSize = FieldCacheUtil.getPSMet.invoke(query);
+            if(Objects.isNull(page)){
+                FieldCacheUtil.setPMet.invoke(query,1);
+                log.warn("due to page field is null,set default page = 1");
+            }
+            if(Objects.isNull(pageSize)){
+                FieldCacheUtil.setPSMet.invoke(query,1000);
+                log.warn("due to pageSize field is null,set default pageSize = 1000");
             }
             Long total = selectCount(query);
-            Long totalPage = (long)Math.ceil((double)total / (Integer)psMethod.invoke(query));
+            Long totalPage = (long)Math.ceil((double)total / (Integer)FieldCacheUtil.getPSMet.invoke(query));
             return new PageBean<>(totalPage,total,selectList(query));
         } catch (Exception e) {
             log.error(e.getMessage(),e);
@@ -138,17 +139,16 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     @Transactional(rollbackFor = Exception.class)
     public int update(T entity,Update... args) {
         if(Objects.isNull(entity)){
-            throw new BusiException("更新对象不能为空");
+            return 0;
         }
         if(args.length > 1){
-            throw new BusiException("更新操作类型入参个数不正确");
+            throw new BusiException("更新失败，Update入参异常");
         }
         Field priField = getPriKeyField(entity);
         //没有找到主键
         if(Objects.isNull(priField)){
             throw new BusiException("更新失败，当前操作表没有主键");
         }
-        priField.setAccessible(true);
         try {
             Object priKey = priField.get(entity);
             if(Objects.isNull(priKey)){
@@ -171,26 +171,28 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateByMap(Map<String,Object> uMap, T oEntity) {
-        if(CollectionUtils.isEmpty(uMap)){
-            throw new BusiException("更新失败，对象为空");
-        }
-        if(Objects.isNull(oEntity)){
-            throw new BusiException("更新失败，更新条件为空");
+        if(CollectionUtils.isEmpty(uMap) || Objects.isNull(oEntity)){
+            return 0;
         }
         return baseMapper.updateByMap(uMap,oEntity);
     }
 
     private <T> Field getPriKeyField(T entity) {
-        Field[] fields = entity.getClass().getDeclaredFields();
-        Field priField = null;
+        Class<?> tClass = entity.getClass();
+        Field priField = FieldCacheUtil.priKeyCache.getOrDefault(tClass, null);
+        if(Objects.nonNull(priField)){
+            return priField;
+        }
+        Field[] fields = tClass.getDeclaredFields();
         for (Field field : fields) {
             PrimaryKey annotation = field.getAnnotation(PrimaryKey.class);
             if(Objects.nonNull(annotation)){
-                priField = field;
-                break;
+                field.setAccessible(true);
+                FieldCacheUtil.priKeyCache.put(tClass,field);
+                return field;
             }
         }
-        return priField;
+        return null;
     }
 
 
@@ -201,23 +203,19 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
             return ;
         }
         if(args.length > 1){
-            throw new BusiException("更新操作类型入参个数不正确");
+            throw new BusiException("批量更新失败，Update入参异常");
         }
         Field priField = getPriKeyField(list.get(0));
         //没有找到主键
         if(Objects.isNull(priField)){
-            throw new BusiException("更新失败，当前操作表没有主键");
+            throw new BusiException("批量更新失败，当前操作表没有主键");
         }
-        priField.setAccessible(true);
-        String priKeyName = priField.getName();
         try {
             //检查主键是否为空
             for (T t : list) {
-                Field keyField = t.getClass().getDeclaredField(priKeyName);
-                keyField.setAccessible(true);
-                Object key = keyField.get(t);
+                Object key = priField.get(t);
                 if(Objects.isNull(key)){
-                    throw new BusiException("更新失败，主键不能为空");
+                    throw new BusiException("批量更新失败，主键不能为空");
                 }
             }
             //更新不为空的操作
@@ -244,7 +242,6 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         if(Objects.isNull(priField)){
             throw new BusiException("新增失败，当前操作表没有主键");
         }
-        priField.setAccessible(true);
         try {
             Object priKey = priField.get(entity);
             if(Objects.isNull(priKey)){
@@ -266,22 +263,37 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         Field priField = getPriKeyField(list.get(0));
         //没有找到主键
         if(Objects.isNull(priField)){
-            throw new BusiException("新增失败，当前操作表没有主键");
+            throw new BusiException("批量新增失败，当前操作表没有主键");
         }
-        String priKeyName = priField.getName();
         try{
             for (T t : list) {
-                Field keyField = t.getClass().getDeclaredField(priKeyName);
-                keyField.setAccessible(true);
-                Object key = keyField.get(t);
+                Object key = priField.get(t);
                 if(Objects.isNull(key)){
-                    keyField.set(t,selectMaxId());
+                    priField.set(t,selectMaxId());
                 }
             }
             baseMapper.addBatch(list);
         }catch (Exception e){
             log.error(e.getMessage(),e);
             throw new BusiException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addBatch(List<T> list, int batchSize) {
+        if (CollectionUtils.isEmpty(list)){
+            return;
+        }
+        if(batchSize != 0) {
+            int size = list.size();
+            int times = (size % batchSize == 0) ? (size / batchSize) : (size / batchSize + 1);
+            for(int i = 0; i < times; i++) {
+                int start = i * batchSize;
+                int end = (start + batchSize) <= size ? (start + batchSize) : size;
+                List<T> subList = list.subList(start, end);
+                this.addBatch(subList);
+            }
         }
     }
 
@@ -323,7 +335,6 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         if(Objects.isNull(priField)){
             throw new BusiException("保存失败，当前操作表没有主键");
         }
-        priField.setAccessible(true);
         try {
             Object priKey = priField.get(t);
             if(Objects.isNull(priKey)){
@@ -347,14 +358,11 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         if(Objects.isNull(priField)){
             throw new BusiException("保存失败，当前操作表没有主键");
         }
-        String priKeyName = priField.getName();
         try{
             List<T> addList = new ArrayList<>();
             List<T> updateList = new ArrayList<>();
             for (T t : list) {
-                Field keyField = t.getClass().getDeclaredField(priKeyName);
-                keyField.setAccessible(true);
-                Object key = keyField.get(t);
+                Object key = priField.get(t);
                 if(Objects.isNull(key)){
                     addList.add(t);
                 }else{

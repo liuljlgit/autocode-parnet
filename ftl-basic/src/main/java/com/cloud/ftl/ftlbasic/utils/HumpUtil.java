@@ -1,9 +1,12 @@
 package com.cloud.ftl.ftlbasic.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 把字符串转换成驼峰式命名法
  * @author lijun
  */
+@Slf4j
 public class HumpUtil {
 
     /**
