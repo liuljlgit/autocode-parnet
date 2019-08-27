@@ -6,7 +6,6 @@ import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.mapper.IBaseMapper;
 import com.cloud.ftl.ftlbasic.utils.FieldCacheUtil;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisCallback;
@@ -16,7 +15,6 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
@@ -111,8 +109,8 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     @Override
     public PageBean<T> selectPage(T query) {
         try {
-            Object page = FieldCacheUtil.getPMet.invoke(query);
-            Object pageSize = FieldCacheUtil.getPSMet.invoke(query);
+            Integer page = (Integer)FieldCacheUtil.getPMet.invoke(query);
+            Integer pageSize = (Integer)FieldCacheUtil.getPSMet.invoke(query);
             if(Objects.isNull(page)){
                 FieldCacheUtil.setPMet.invoke(query,1);
                 log.warn("due to page field is null,set default page = 1");
@@ -121,6 +119,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
                 FieldCacheUtil.setPSMet.invoke(query,1000);
                 log.warn("due to pageSize field is null,set default pageSize = 1000");
             }
+            FieldCacheUtil.setIndexMet.invoke(query,(page-1)*pageSize);
             Long total = selectCount(query);
             Long totalPage = (long)Math.ceil((double)total / (Integer)FieldCacheUtil.getPSMet.invoke(query));
             return new PageBean<>(totalPage,total,selectList(query));

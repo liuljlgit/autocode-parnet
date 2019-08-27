@@ -1,7 +1,6 @@
 package com.cloud.ftl.ftlbasic.utils;
 
 import com.cloud.ftl.ftlbasic.webEntity.BasePage;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +23,8 @@ public class FieldCacheUtil {
 
     public static Method setPSMet;
 
+    public static Method setIndexMet;
+
     public static Map<Class<?>,Field> priKeyCache;
 
     static {
@@ -33,6 +34,7 @@ public class FieldCacheUtil {
             getPSMet = bClass.getDeclaredMethod("getPageSize");
             setPMet = bClass.getDeclaredMethod("setPage",Integer.class);
             setPSMet = bClass.getDeclaredMethod("setPageSize",Integer.class);
+            setIndexMet = bClass.getDeclaredMethod("setIndex", Integer.class);
             priKeyCache = Maps.newConcurrentMap();
         } catch (Exception e) {
             log.error(e.getMessage(),e);

@@ -1,47 +1,13 @@
 package com.cloud.ftl.ftlbasic.webEntity;
-import java.util.Objects;
 
+import lombok.Data;
+
+@Data
 public class BasePage {
 
-    /**
-     * field comment:当前页
-     */
-    public transient Integer page;
+    private transient Integer page;
 
-    /**
-     * field comment:分页大小
-     */
-    public transient Integer pageSize;
+    private transient Integer pageSize;
 
-    /**
-     * field comment:limit index,pageSize
-     */
-    public transient Integer index;
-
-    public Integer getPage() {
-        return page;
-    }
-
-    public void setPage(Integer page) {
-        this.page = page;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public Integer getIndex() {
-        if(Objects.isNull(page) || Objects.isNull(pageSize)){
-            return null;
-        }
-        return (page-1)*pageSize;
-    }
-
-    public void setIndex(Integer index) {
-        this.index = index;
-    }
+    private transient Integer index;
 }

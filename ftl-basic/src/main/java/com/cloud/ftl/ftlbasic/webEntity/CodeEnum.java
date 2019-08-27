@@ -28,9 +28,6 @@ public enum CodeEnum {
     private static Map<Integer, CodeEnum> map = new HashMap<>();
 
     static {
-        if (map == null) {
-            map = new HashMap<>();
-        }
         Arrays.stream(CodeEnum.values()).forEach(e -> map.put(e.getCode(), e));
     }
 

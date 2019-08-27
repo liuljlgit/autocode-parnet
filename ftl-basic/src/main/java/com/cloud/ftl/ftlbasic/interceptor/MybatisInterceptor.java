@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
-import org.springframework.stereotype.Component;
+
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Properties;
@@ -21,7 +21,7 @@ import java.util.Properties;
                 args = {MappedStatement.class, Object.class}
         )
 })
-@Component
+//@Component
 @Slf4j
 public class MybatisInterceptor implements Interceptor {
 

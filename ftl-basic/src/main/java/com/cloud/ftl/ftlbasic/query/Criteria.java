@@ -2,8 +2,8 @@ package com.cloud.ftl.ftlbasic.query;
 
 import com.alibaba.fastjson.JSON;
 import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.google.common.collect.Lists;
 import org.javatuples.Quartet;
-import org.javatuples.Triplet;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class Criteria {
      * 3.操作类型
      * 4.操作值 使用fastJson转换成字符串
      */
-    List<Quartet<Opt,String, Opt, String>> quartets = new ArrayList<>();
+    private List<Quartet<Opt,String, Opt, String>> quartets = Lists.newArrayList();
 
     public Criteria() {}
 

@@ -155,8 +155,11 @@
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="st.orderByClause!=null and st.orderByClause!=''">
-            order by ${st.orderByClause}
+        <if test="st.orderByList!=null and st.orderByList.size() > 0">
+            order by
+            <foreach collection="st.orderByList" item="order" separator=",">
+                ${order.field} ${order.mode}
+            </foreach>
         </if>
         <if test="st.page != null and st.pageSize != null and st.page > 0" >
             limit #{st.index},#{st.pageSize}

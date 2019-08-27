@@ -3,43 +3,23 @@ package com.cloud.ftl.ftlbasic.webEntity;
 import com.cloud.ftl.ftlbasic.constant.BasicConst;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.query.Criteria;
+import com.cloud.ftl.ftlbasic.query.OrderBy;
+import com.google.common.collect.Lists;
+import lombok.Data;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Data
 public class BaseQuery extends BasePage {
 
     private List<Criteria> criterias;
 
-    private String orderByClause;
+    private List<OrderBy> orderByList;
 
     private Map<String,Integer> criteriasMap;
-
-    public List<Criteria> getCriterias() {
-        return criterias;
-    }
-
-    public void setCriterias(List<Criteria> criterias) {
-        this.criterias = criterias;
-    }
-
-    public Map<String, Integer> getCriteriasMap() {
-        return criteriasMap;
-    }
-
-    public void setCriteriasMap(Map<String, Integer> criteriasMap) {
-        this.criteriasMap = criteriasMap;
-    }
-
-    public String getOrderByClause() {
-        return orderByClause;
-    }
-
-    public void setOrderByClause(String orderByClause) {
-        this.orderByClause = orderByClause;
-    }
 
     /**
      * and Criteria
@@ -166,24 +146,20 @@ public class BaseQuery extends BasePage {
         addCriteria2Map(field,criteria);
     }
 
+
     /**
      * 增加排序操作
      * @param field
-     * @param desc
-     * @throws Exception
+     * @param mode
      */
-    public void addOrderBy(String field,Boolean desc) {
-        String order;
-        if(desc){
-            order = Opt.DESC.getCode();
-        }else{
-            order = Opt.ASC.getCode();
+    public void addOrderBy(String field,Opt mode) {
+        if(!Opt.ASC.equals(mode) && !Opt.DESC.equals(mode)){
+            throw new RuntimeException("排序类型不正确");
         }
-        if(StringUtils.isEmpty(orderByClause)){
-            orderByClause = field + " "+order;
-        }else{
-            orderByClause = orderByClause + "," +field + " "+order;
+        if(Objects.isNull(orderByList)){
+            orderByList = Lists.newArrayList();
         }
+        orderByList.add(new OrderBy(field,mode.getCode()));
     }
 
     /**

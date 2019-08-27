@@ -41,9 +41,6 @@ public enum DbTypeEnum {
 
 	private static Map<String, DbTypeEnum> map = new HashMap<>();
 	static {
-		if (map == null) {
-			map = new HashMap<>();
-		}
 		Arrays.stream(DbTypeEnum.values()).forEach(e -> map.put(e.getDbTypeName(), e));
 	}
 	public static DbTypeEnum getDbTypeEnum(String dbTypeName){
