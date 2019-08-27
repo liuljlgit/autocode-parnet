@@ -1,15 +1,18 @@
 package com.cloud.ftl.ftltest.test.controller;
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
-import com.google.common.collect.Lists;
-import lombok.extern.slf4j.Slf4j;
-import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
+import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -64,7 +67,11 @@ public class DailyAmountCtrl{
     */
     @PostMapping(value = "/obj")
     public CommonResp<Object> save(@RequestBody DailyAmount dailyAmount) {
-        dailyAmountService.save(dailyAmount);
+        dailyAmountService.updateByMap(dailyAmount,()->{
+            HashMap<String, Object> updateFieldMap = Maps.newHashMap();
+            updateFieldMap.put(DailyAmount.CREATE_TIME,null);
+            return updateFieldMap;
+        });
         return RespEntity.ok();
     }
 

@@ -4,6 +4,7 @@ package com.cloud.ftl.ftlbasic.service;
 import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
 import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
+import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.mapper.IBaseMapper;
 import com.cloud.ftl.ftlbasic.utils.FieldCacheUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
@@ -192,11 +193,15 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int updateByMap(Map<String,Object> uMap, T oEntity) {
-        if(CollectionUtils.isEmpty(uMap) || Objects.isNull(oEntity)){
+    public int updateByMap(T oEntity, FuncMap funcMap) {
+        if(Objects.isNull(oEntity)){
             return 0;
         }
-        return baseMapper.updateByMap(uMap,oEntity);
+        Map<String, Object> updateField = funcMap.call();
+        if(Objects.isNull(updateField) || updateField.size() == 0){
+            return 0;
+        }
+        return baseMapper.updateByMap(updateField,oEntity);
     }
 
     private <T> Field getPriKeyField(T entity) {
