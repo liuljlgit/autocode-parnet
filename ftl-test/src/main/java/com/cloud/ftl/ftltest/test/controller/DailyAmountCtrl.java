@@ -1,19 +1,14 @@
 package com.cloud.ftl.ftltest.test.controller;
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.utils.BeanUtil;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
-import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -34,7 +29,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @GetMapping(value = "/obj")
-    public CommonResp<DailyAmount> selectById(Long daId) throws BusiException {
+    public CommonResp<DailyAmount> selectById(Long daId) {
         if(Objects.isNull(daId)){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
@@ -47,7 +42,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/list")
-    public CommonResp<DailyAmount> selectList(@RequestBody DailyAmount entity) throws BusiException {
+    public CommonResp<DailyAmount> selectList(@RequestBody DailyAmount entity){
         return RespEntity.ok(dailyAmountService.selectList(entity));
     }
 
@@ -57,7 +52,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/page")
-    public CommonResp<PageBean<DailyAmount>> selectPage(@RequestBody DailyAmount entity) throws BusiException {
+    public CommonResp<PageBean<DailyAmount>> selectPage(@RequestBody DailyAmount entity) {
         return RespEntity.ok(dailyAmountService.selectPage(entity));
     }
 
@@ -67,19 +62,8 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/obj")
-    public CommonResp<Object> save(@RequestBody DailyAmount dailyAmount) throws BusiException {
-        DailyAmount da1 = new DailyAmount();
-        da1.setDateTime(new Date());
-        da1.setStatus((byte)1);
-        da1.setEntityId(1000);
-        DailyAmount da2 = new DailyAmount();
-        da2.setDateTime(new Date());
-        da2.setStatus((byte)1);
-        da2.setEntityId(1000);
-        ArrayList<DailyAmount> list = Lists.newArrayList();
-        list.add(da1);
-        list.add(da2);
-        dailyAmountService.addBatch(list);
+    public CommonResp<Object> save(@RequestBody DailyAmount dailyAmount) {
+        dailyAmountService.save(dailyAmount);
         return RespEntity.ok();
     }
 
@@ -89,7 +73,7 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/obj")
-    public CommonResp<Object> deleteById(@PathVariable(value="daId") Long daId) throws BusiException {
+    public CommonResp<Object> deleteById(@RequestParam(value="daId") Long daId) {
         if(Objects.isNull(daId)){
            throw new BusiException("删除主键不可为空") ;
         }

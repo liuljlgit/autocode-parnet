@@ -29,15 +29,11 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @GetMapping(value = "/obj")
-    public CommonResp<LoadTime> selectById(Long ltId) throws BusiException {
+    public CommonResp<LoadTime> selectById(Long ltId) {
         if(Objects.isNull(ltId)){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
-        LoadTime loadTime = loadTimeService.selectById(ltId);
-        if(Objects.isNull(loadTime)){
-            throw new BusiException("没有符合条件的记录！") ;
-        }
-        return RespEntity.ok(loadTime);
+        return RespEntity.ok(loadTimeService.selectById(ltId,"没有符合条件的记录！"));
     }
 
    /**
@@ -46,7 +42,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/list")
-    public CommonResp<LoadTime> selectList(@RequestBody LoadTime entity) throws BusiException {
+    public CommonResp<LoadTime> selectList(@RequestBody LoadTime entity){
         return RespEntity.ok(loadTimeService.selectList(entity));
     }
 
@@ -56,7 +52,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/page")
-    public CommonResp<PageBean<LoadTime>> selectPage(@RequestBody LoadTime entity) throws BusiException {
+    public CommonResp<PageBean<LoadTime>> selectPage(@RequestBody LoadTime entity) {
         return RespEntity.ok(loadTimeService.selectPage(entity));
     }
 
@@ -66,7 +62,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/obj")
-    public CommonResp<Object> save(@RequestBody LoadTime loadTime) throws BusiException {
+    public CommonResp<Object> save(@RequestBody LoadTime loadTime) {
         loadTimeService.save(loadTime);
         return RespEntity.ok();
     }
@@ -77,7 +73,7 @@ public class LoadTimeCtrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/obj")
-    public CommonResp<Object> deleteById(@PathVariable(value="ltId") Long ltId) throws BusiException {
+    public CommonResp<Object> deleteById(@RequestParam(value="ltId") Long ltId) {
         if(Objects.isNull(ltId)){
            throw new BusiException("删除主键不可为空") ;
         }
