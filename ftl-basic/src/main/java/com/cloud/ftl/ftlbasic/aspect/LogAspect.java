@@ -1,7 +1,5 @@
 package com.cloud.ftl.ftlbasic.aspect;
 
-import com.cloud.ftl.ftlbasic.utils.RegxUtil;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

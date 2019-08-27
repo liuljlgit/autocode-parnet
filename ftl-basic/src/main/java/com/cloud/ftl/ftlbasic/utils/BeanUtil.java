@@ -77,25 +77,12 @@ public class BeanUtil {
 
                     Object voValue = voFiled.get(source);
                     if (voValue != null){
-                        Method method = target.getClass().getMethod("set"+toUpperCaseFirstOne(modelField.getName()),voFiled.getType());
+                        Method method = target.getClass().getMethod("set"+HumpUtil.toUpperCaseFirstOne(modelField.getName()),voFiled.getType());
                         method.invoke(target,voValue);
                     }
                     break;
                 }
             }
-        }
-    }
-
-    /**
-     * 首字母转大写
-     * @param s
-     * @return
-     */
-    public static String toUpperCaseFirstOne(String s){
-        if(Character.isUpperCase(s.charAt(0))){
-            return s;
-        }else{
-            return (new StringBuilder()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
         }
     }
 
