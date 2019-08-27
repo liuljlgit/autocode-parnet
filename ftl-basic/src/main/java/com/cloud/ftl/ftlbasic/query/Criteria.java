@@ -1,18 +1,22 @@
 package com.cloud.ftl.ftlbasic.query;
 
 import com.alibaba.fastjson.JSON;
+import com.cloud.ftl.ftlbasic.constant.SqlConst;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.google.common.collect.Lists;
+import lombok.Data;
 import org.javatuples.Quartet;
-import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 这个类相当于是一个"()"
+ * @author lijun
  */
+@Data
 public class Criteria {
 
     /**
@@ -25,10 +29,10 @@ public class Criteria {
     /**
      * field comment:每一个Criterion就是一个条件
      */
-    private List<Criterion> criterions;
+    private List<Criterion> criterions = Lists.newArrayList();
 
     /**
-     * field comment:()前的操作。and或者or
+     * field comment:()前的操作,AND 或者 OR.
      */
     private String opt = Opt.AND.getCode();
 
@@ -50,58 +54,17 @@ public class Criteria {
         this.opt = opt;
     }
 
-    public List<Criterion> getCriterions() {
-        return criterions;
-    }
-
-    public void setCriterions(List<Criterion> criterions) {
-        this.criterions = criterions;
-    }
-
-    public String getOpt() {
-        return opt;
-    }
-
-    public void setOpt(String opt) {
-        this.opt = opt;
-    }
-
-    public List<Quartet<Opt, String, Opt, String>> getQuartets() {
-        return quartets;
-    }
-
-    public void setQuartets(List<Quartet<Opt, String, Opt, String>> quartets) {
-        this.quartets = quartets;
-    }
-
     /**
-     * IsNull、IsNotNull
-     * @param condition
-     */
-    public void addCriterion(String condition) {
-        if (condition == null) {
-            throw new RuntimeException("Value for condition cannot be null");
-        }
-        if(CollectionUtils.isEmpty(criterions)){
-            criterions = new ArrayList<>();
-        }
-        Criterion criterion = new Criterion();
-        criterion.setCondition(condition);
-        criterion.setNoValue(true);
-        criterions.add(criterion);
-    }
-
-    /**
-     * EqualTo、NotEqualTo、GreaterThan、GreaterThanOrEqualTo、LessThan、LessThanOrEqualTo、Like、NotLike、In、NotIn
+     * 单值或者list操作
      * @param condition
      * @param value
      */
     public void addCriterion(String condition, Object value) {
-        if (value == null) {
-            throw new RuntimeException("value cannot be null");
+        if (StringUtils.isEmpty(condition)) {
+            throw new RuntimeException("condition表达式不能为空");
         }
-        if(CollectionUtils.isEmpty(criterions)){
-            criterions = new ArrayList<>();
+        if (Objects.isNull(value)) {
+            throw new RuntimeException("操作值不能为空");
         }
         Criterion criterion = new Criterion();
         criterion.setCondition(condition);
@@ -116,17 +79,33 @@ public class Criteria {
     }
 
     /**
-     * Between、NotBetween
+     * IsNull和IsNotNull操作
+     *
+     * @param condition
+     */
+    public void addCriterion(String condition) {
+        if (StringUtils.isEmpty(condition)) {
+            throw new RuntimeException("condition表达式不能为空");
+        }
+        Criterion criterion = new Criterion();
+        criterion.setCondition(condition);
+        criterion.setNoValue(true);
+        criterions.add(criterion);
+    }
+
+    /**
+     * Between和NotBetween操作
+     *
      * @param condition
      * @param value1
      * @param value2
      */
     public void addCriterion(String condition, Object value1, Object value2) {
-        if (value1 == null || value2 == null) {
-            throw new RuntimeException("value1 and value2 cannot be null");
+        if (StringUtils.isEmpty(condition)) {
+            throw new RuntimeException("condition表达式不能为空");
         }
-        if(CollectionUtils.isEmpty(criterions)){
-            criterions = new ArrayList<>();
+        if (Objects.isNull(value1) || Objects.isNull(value2)) {
+            throw new RuntimeException("‘between’或者‘not between’操作值不能为空");
         }
         Criterion criterion = new Criterion();
         criterion.setCondition(condition);
@@ -136,92 +115,80 @@ public class Criteria {
         criterions.add(criterion);
     }
 
-
     /**
-     * and操作
+     * AND操作
+     *
      * @param opt
      * @param field
      * @param values
      * @return
      * @throws Exception
      */
-    public Criteria and(String field,Opt opt,Object... values) throws Exception {
+    public Criteria and(String field,Opt opt,Object... values) {
         addQuartets(Opt.AND,field,opt,values);
-        if(values.length>2){
-            throw new Exception("values length can not bigger than 2");
+        if(values.length == 0 || values.length > 2){
+            throw new RuntimeException("参数个数不正确");
         }
-        if(values.length == 0){
-            if(!Opt.IS_NULL.equals(opt) && !Opt.IS_NOT_NULL.equals(opt)){
-                throw new Exception("when values lenth equal to 0,opt is Opt.IS_NULL or opt is Opt.IS_NOT_NULL");
-            }
-            addCriterion("and "+field+" "+opt.getCode());
-        }else if(values.length == 1){
-            if(!Opt.EQUAL.equals(opt) && !Opt.NOT_EQUAL.equals(opt) && !Opt.LIKE.equals(opt) && !Opt.NOT_LIKE.equals(opt)
-                    && !Opt.GREATER.equals(opt) && !Opt.GREATER_EQUAL.equals(opt) && !Opt.LESS.equals(opt) && !Opt.LESS_EQUAL.equals(opt)
-                    && !Opt.IN.equals(opt) && !Opt.NOT_IN.equals(opt) && !Opt.IS.equals(opt) && !Opt.IS_NOT.equals(opt)){
-                throw new Exception("opt enumes type not support!");
+        if(values.length == 1){
+            if(!opt.getOneValueOptSet().contains(opt)){
+                throw new RuntimeException("操作类型不合法");
             }
             if(Opt.LIKE.equals(opt) || Opt.NOT_LIKE.equals(opt)){
-                values[0] = "%"+values[0]+"%";
+                values[0] = SqlConst.PERCENT + values[0] + SqlConst.PERCENT;
             }
             if(Opt.IS.equals(opt) || Opt.IS_NOT.equals(opt)){
-                values[0] = null;
+                addCriterion(SqlConst.AND_SPACE + field + opt.getCode() + SqlConst.NULL);
+            } else {
+                addCriterion(SqlConst.AND_SPACE + field + opt.getCode() , values[0]);
             }
-            addCriterion("and "+field+" "+opt.getCode()+" ",values[0]);
         }else{
-            //检查opt是否是between或者是not between
-            if(!Opt.BETWEEN.equals(opt) && !Opt.NOT_BETWEEN.equals(opt)){
-                throw new Exception("when values lenth equal to 2,opt is Opt.BETWEEN or opt is Opt.NOT_BETWEEN");
+            if(!opt.getTwoValueOptSet().contains(opt)){
+                throw new RuntimeException("操作类型不合法");
             }
-            addCriterion("and "+field+" "+opt.getCode()+" ",values[0],values[1]);
+            addCriterion(SqlConst.AND_SPACE + field + opt.getCode() , values[0] , values[1]);
         }
         return this;
     }
 
     /**
-     * or操作
+     * OR操作
+     *
      * @param opt
      * @param field
      * @param values
      * @return
      * @throws Exception
      */
-    public Criteria or(String field,Opt opt,Object... values) throws Exception {
-        addQuartets(Opt.OR,field,opt,values);
-        if(values.length>2){
-            throw new Exception("values length can not bigger than 2");
+    public Criteria or(String field,Opt opt,Object... values) {
+        if(values.length == 0 || values.length > 2){
+            throw new RuntimeException("参数个数不正确");
         }
-        if(values.length == 0){
-            if(!Opt.IS_NULL.equals(opt) && !Opt.IS_NOT_NULL.equals(opt)){
-                throw new Exception("when values lenth equal to 0,opt is Opt.IS_NULL or opt is Opt.IS_NOT_NULL");
-            }
-            addCriterion("or "+field+" "+opt.getCode());
-        }else if(values.length == 1){
-            if(!Opt.EQUAL.equals(opt) && !Opt.NOT_EQUAL.equals(opt) && !Opt.LIKE.equals(opt) && !Opt.NOT_LIKE.equals(opt)
-                    && !Opt.GREATER.equals(opt) && !Opt.GREATER_EQUAL.equals(opt) && !Opt.LESS.equals(opt) && !Opt.LESS_EQUAL.equals(opt)
-                    && !Opt.IN.equals(opt) && !Opt.NOT_IN.equals(opt) && !Opt.IS.equals(opt) && !Opt.IS_NOT.equals(opt)){
-                throw new Exception("opt enumes type not support!");
+        addQuartets(Opt.OR,field,opt,values);
+        if(values.length == 1){
+            if(!opt.getOneValueOptSet().contains(opt)){
+                throw new RuntimeException("操作类型不合法");
             }
             if(Opt.LIKE.equals(opt) || Opt.NOT_LIKE.equals(opt)){
-                values[0] = "%"+values[0]+"%";
+                values[0] = SqlConst.PERCENT + values[0] + SqlConst.PERCENT;
             }
             if(Opt.IS.equals(opt) || Opt.IS_NOT.equals(opt)){
-                values[0] = null;
+                addCriterion(SqlConst.OR_SPACE + field + opt.getCode() + SqlConst.NULL);
+            } else {
+                addCriterion(SqlConst.OR_SPACE + field + opt.getCode() , values[0]);
             }
-            addCriterion("or "+field+" "+opt.getCode()+" ",values[0]);
         }else{
-            //检查opt是否是between或者是not between
-            if(!Opt.BETWEEN.equals(opt) && !Opt.NOT_BETWEEN.equals(opt)){
-                throw new Exception("when values lenth equal to 2,opt is Opt.BETWEEN or opt is Opt.NOT_BETWEEN");
+            if(!opt.getTwoValueOptSet().contains(opt)){
+                throw new RuntimeException("操作类型不合法");
             }
-            addCriterion("or "+field+" "+opt.getCode()+" ",values[0],values[1]);
+            addCriterion(SqlConst.OR_SPACE + field + opt.getCode() , values[0] , values[1]);
         }
         return this;
     }
 
 
     /**
-     * 主要是用来生成Quartet值
+     * 保存sql信息到元组中
+     *
      * @param conOpt
      * @param field
      * @param dbOpt
@@ -229,11 +196,7 @@ public class Criteria {
      * 例子: and da_id = 1000
      */
     public void addQuartets(Opt conOpt,String field,Opt dbOpt,Object... values){
-        if(values.length == 0){
-            quartets.add(new Quartet<>(conOpt,field,dbOpt,"null"));
-        }else{
-            quartets.add(new Quartet<>(conOpt,field,dbOpt, JSON.toJSONString(values)));
-        }
+        quartets.add(new Quartet<>(conOpt,field,dbOpt, JSON.toJSONString(values)));
     }
 
 }

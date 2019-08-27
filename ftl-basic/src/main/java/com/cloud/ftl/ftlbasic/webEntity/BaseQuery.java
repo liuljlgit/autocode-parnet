@@ -1,6 +1,6 @@
 package com.cloud.ftl.ftlbasic.webEntity;
 
-import com.cloud.ftl.ftlbasic.constant.BasicConst;
+import com.cloud.ftl.ftlbasic.constant.SqlConst;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.query.Criteria;
 import com.cloud.ftl.ftlbasic.query.OrderBy;
@@ -21,129 +21,78 @@ public class BaseQuery extends BasePage {
 
     private Map<String,Integer> criteriasMap;
 
-    /**
-     * and Criteria
-     * @throws Exception
-     */
-    public Criteria andCriteria() {
-        Criteria criteria = new Criteria(Opt.AND.getCode());
+    private Criteria createCriteria(Opt opt,String... field){
+        Criteria criteria = new Criteria(opt.getCode());
         if(CollectionUtils.isEmpty(criterias)){
             criterias = new ArrayList<>();
         }
         criterias.add(criteria);
-        addCriteria2Map(BasicConst.DEFAULT,criteria);
+        if(field.length != 0 && !StringUtils.isEmpty(field[0])){
+            saveCriteriaHashCode(field[0],criteria);
+        } else {
+            saveCriteriaHashCode(SqlConst.DEFAULT_FIELD,criteria);
+        }
         return criteria;
     }
 
     /**
-     * and Criteria
-     * @throws Exception
+     * and (...)
+     * @throws
      */
-    public Criteria andCriteria(String field) {
-        if(StringUtils.isEmpty(field)){
-            return andCriteria();
-        }else{
-            Criteria criteria = new Criteria(Opt.AND.getCode());
-            if(CollectionUtils.isEmpty(criterias)){
-                criterias = new ArrayList<>();
-            }
-            criterias.add(criteria);
-            addCriteria2Map(field,criteria);
-            return criteria;
-        }
+    public Criteria andCriteria(String... field) {
+        return  createCriteria(Opt.AND,field);
     }
 
     /**
-     * or Criteria
-     * @throws Exception
+     * or (...)
+     * @throws
      */
-    public Criteria orCriteria() {
-        Criteria criteria = new Criteria(Opt.OR.getCode());
-        if(CollectionUtils.isEmpty(criterias)){
-            criterias = new ArrayList<>();
-        }
-        criterias.add(criteria);
-        addCriteria2Map(BasicConst.DEFAULT,criteria);
-        return criteria;
+    public Criteria orCriteria(String... field) {
+        return createCriteria(Opt.OR);
     }
 
     /**
-     * or Criteria
-     * @throws Exception
-     */
-    public Criteria orCriteria(String field) {
-        if(StringUtils.isEmpty(field)){
-            return orCriteria();
-        }else{
-            Criteria criteria = new Criteria(Opt.OR.getCode());
-            if(CollectionUtils.isEmpty(criterias)){
-                criterias = new ArrayList<>();
-            }
-            criterias.add(criteria);
-            addCriteria2Map(field,criteria);
-            return criteria;
-        }
-    }
-
-    /**
-     * 对对象进行set操作的时候调用
-     * @throws Exception
+     * EQUAL操作
+     * @throws
      */
     public void addCriteria(String field,Object value) {
-        Criteria criteria = new Criteria(Opt.AND.getCode());
-        if(CollectionUtils.isEmpty(criterias)){
-            criterias = new ArrayList<>();
-        }
-        criteria.addCriterion("and "+field+" "+Opt.EQUAL.getCode()+" ",value);
-        criteria.addQuartets(Opt.AND,field,Opt.EQUAL,value); //增加元组信息
-        criterias.add(criteria);
-        addCriteria2Map(field,criteria);
+        Criteria criteria = createCriteria(Opt.AND, field);
+        criteria.addCriterion(SqlConst.AND_SPACE + field + Opt.EQUAL.getCode(),value);
+        criteria.addQuartets(Opt.AND,field,Opt.EQUAL,value);
     }
 
     /**
-     * 对对象进行set操作的时候调用
-     * @throws Exception
+     * BETWEEN操作
+     * @throws
      */
-    public void addCriteria(String field,Opt opt,Object value1,Object value2) throws Exception {
+    public void addCriteria(String field,Opt opt,Object value1,Object value2) {
         if(!Opt.BETWEEN.equals(opt) && !Opt.NOT_BETWEEN.equals(opt)){
-            throw new Exception("opt enums type not support!");
+            throw new RuntimeException("操作域‘"+field+"’的操作类型不合法,此处只能为‘BETWEEN’或者‘NOT BETWEEN’");
         }
-        Criteria criteria = new Criteria(Opt.AND.getCode());
-        if(CollectionUtils.isEmpty(criterias)){
-            criterias = new ArrayList<>();
-        }
-        criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value1,value2);
-        criteria.addQuartets(Opt.AND,field,opt,value1,value2);   //增加元组信息
-        criterias.add(criteria);
-        addCriteria2Map(field,criteria);
+        Criteria criteria = createCriteria(Opt.AND, field);
+        criteria.addCriterion(SqlConst.AND_SPACE + field + opt.getCode(),value1,value2);
+        criteria.addQuartets(Opt.AND,field,opt,value1,value2);
     }
 
     /**
-     * 对对象进行set操作的时候调用
-     * @throws Exception
+     * 单值或者list操作
+     * @throws
      */
-    public void addCriteria(String field,Opt opt,Object value) throws Exception {
-        Criteria criteria = new Criteria(Opt.AND.getCode());
-        if(CollectionUtils.isEmpty(criterias)){
-            criterias = new ArrayList<>();
-        }
+    public void addCriteria(String field,Opt opt,Object value) {
+        Criteria criteria = createCriteria(Opt.AND, field);
         if(Opt.AND.equals(opt) || Opt.OR.equals(opt) || Opt.ASC.equals(opt)
                 || Opt.DESC.equals(opt) || Opt.BETWEEN.equals(opt) || Opt.NOT_BETWEEN.equals(opt)){
-            throw new Exception("opt enums type not support!");
+            throw new RuntimeException("操作域‘"+field+"’的操作类型不合法，此处不能为‘AND’、‘OR’、‘ASC’、‘DESC’、‘BETWEEN’和‘NOT BETWEEN’");
         }
         if(Opt.LIKE.equals(opt) || Opt.NOT_LIKE.equals(opt)){
-            value = "%"+value+"%";
-        }
-        if(Opt.IS_NULL.equals(opt) || Opt.IS_NOT_NULL.equals(opt)){
-            value = "";
+            value = SqlConst.PERCENT + value + SqlConst.PERCENT;
         }
         if(Opt.IS.equals(opt) || Opt.IS_NOT.equals(opt)){
-            value = null;
+            criteria.addCriterion(SqlConst.AND_SPACE + field + opt.getCode() + SqlConst.NULL);
+        } else {
+            criteria.addCriterion(SqlConst.AND_SPACE + field + opt.getCode(),value);
         }
-        criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value);
-        criteria.addQuartets(Opt.AND,field,opt,value);   //增加元组信息
-        criterias.add(criteria);
-        addCriteria2Map(field,criteria);
+        criteria.addQuartets(Opt.AND,field,opt,value);
     }
 
 
@@ -163,11 +112,11 @@ public class BaseQuery extends BasePage {
     }
 
     /**
-     * 增加criteria的hashcode到map中
+     * 存储criteria的地址
      * @param field
      * @param criteria
      */
-    private void addCriteria2Map(String field,Criteria criteria){
+    private void saveCriteriaHashCode(String field,Criteria criteria){
         if(CollectionUtils.isEmpty(criteriasMap)){
             criteriasMap = new HashMap<>();
         }
@@ -175,7 +124,7 @@ public class BaseQuery extends BasePage {
     }
 
     /**
-     * 清除某个field下的查询条件
+     * 清除条件组
      * @param fields
      */
     public void cleanCriteria(String... fields){
