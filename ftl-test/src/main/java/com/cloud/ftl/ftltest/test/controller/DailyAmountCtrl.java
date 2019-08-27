@@ -1,17 +1,15 @@
 package com.cloud.ftl.ftltest.test.controller;
 
-import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Objects;
 
 /**
@@ -46,10 +44,7 @@ public class DailyAmountCtrl{
     */
     @PostMapping(value = "/list")
     public CommonResp<DailyAmount> selectList(@RequestBody DailyAmount entity){
-        entity.andCriteria().and(DailyAmount.SETT_PROFIT, Opt.IS, (Object) null)
-                .or(DailyAmount.DATE_TIME,Opt.IS_NOT, (Object) null);
-        entity.orCriteria().and(DailyAmount.DA_ID,Opt.IN, Lists.newArrayList(1000019L,1000020L));
-        return RespEntity.ok(dailyAmountService.selectList(entity));
+        return RespEntity.ok(dailyAmountService.selectList(entity, Lists.newArrayList(DailyAmount.DA_ID,DailyAmount.DATE_TIME)));
     }
 
    /**

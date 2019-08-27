@@ -135,6 +135,27 @@
         </if>
     </select>
 
+    <!--查询列表-->
+    <select id="selectFieldList" resultMap="BaseResultMap">
+        select
+        <foreach collection="fl" item="field" separator=",">
+            ${r'${'}field}
+        </foreach>
+        from ${tableName}
+        <where>
+            <include refid="where_sql" />
+        </where>
+        <if test="st.orderByList!=null and st.orderByList.size() > 0">
+            order by
+            <foreach collection="st.orderByList" item="order" separator=",">
+            ${r'${'}order.field} ${r'${'}order.mode}
+            </foreach>
+        </if>
+        <if test="st.page != null and st.pageSize != null and st.page > 0" >
+            limit ${r'#{st.'}index},${r'#{st.'}pageSize}
+        </if>
+    </select>
+
     <!--查询列表总数-->
     <select id="selectCount" resultType="java.lang.Long">
         select count(1) from ${tableName}

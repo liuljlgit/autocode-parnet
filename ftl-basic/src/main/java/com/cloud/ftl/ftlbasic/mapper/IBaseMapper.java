@@ -47,6 +47,13 @@ public interface IBaseMapper<T> extends IMapper<T> {
     List<T> selectList(@Param("st") T entity);
 
     /**
+     * 根据 entity 条件，查询指定域的记录
+     * @param entity 查询实体
+     * @param fieldList
+     */
+    List<T> selectFieldList(@Param("st") T entity, @Param("fl") List<String> fieldList);
+
+    /**
      * 根据 entity 条件，获取记录总数
      * @param entity 查询实体
      */
@@ -122,4 +129,6 @@ public interface IBaseMapper<T> extends IMapper<T> {
      * @param list
      */
     void deleteBatchIds(Collection<? extends Serializable> list);
+
+
 }

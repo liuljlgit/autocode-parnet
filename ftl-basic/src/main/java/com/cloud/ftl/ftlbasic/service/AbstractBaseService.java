@@ -90,14 +90,30 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
         }
+        setPage2Null(query);
+        List<T> ts = baseMapper.selectList(query);
+        if(CollectionUtils.isEmpty(ts) && emptyErrMsg.length > 0){
+            throw new BusiException(emptyErrMsg[0]);
+        }
+        return ts;
+    }
+
+    private void setPage2Null(T query) {
         try {
             FieldCacheUtil.setPMet.invoke(query, (Object) null);
-            FieldCacheUtil.setPSMet.invoke(query, (Object) null);
         } catch (Exception e) {
             log.error(e.getMessage(),e);
             throw new BusiException(e.getMessage());
         }
-        List<T> ts = baseMapper.selectList(query);
+    }
+
+    @Override
+    public List<T> selectList(T query, List<String> fieldList, String... emptyErrMsg)  {
+        if(Objects.isNull(query)){
+            throw new BusiException("查询参数不能为空");
+        }
+        setPage2Null(query);
+        List<T> ts = baseMapper.selectFieldList(query,fieldList);
         if(CollectionUtils.isEmpty(ts) && emptyErrMsg.length > 0){
             throw new BusiException(emptyErrMsg[0]);
         }
