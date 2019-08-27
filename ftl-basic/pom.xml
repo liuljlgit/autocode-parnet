@@ -7,7 +7,6 @@
 		<groupId>com.cloud.ftl</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.cloud.ftl</groupId>
 	<artifactId>ftl-basic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ftl-basic</name>
@@ -30,20 +29,6 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>RELEASE</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<!--lombok-->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.2</version>
-			<scope>provided</scope>
-		</dependency>
 
 		<!--元组工具包-->
 		<dependency>

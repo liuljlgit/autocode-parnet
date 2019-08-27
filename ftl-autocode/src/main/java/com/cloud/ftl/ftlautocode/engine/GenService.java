@@ -28,7 +28,7 @@ public class GenService {
             while (rs.next()) {
                 String field = rs.getString("Field");
                 String type = rs.getString("Type");
-                if(type.indexOf("(") != -1){
+                if(type.contains("(")){
                     type = type.substring(0,type.indexOf("("));
                 }
                 type = type.toUpperCase();
@@ -51,8 +51,8 @@ public class GenService {
      * @param genReq
      */
     public void initCommonReplaceMap(GenReq genReq,String tableName) {
-        GenConst.commonReplaceMap.put("className", HumpUtil.toUpperCaseFirstOne(HumpUtil.convertToJava(tableName)));
-        GenConst.commonReplaceMap.put("objectName", HumpUtil.toLowerCaseFirstOne(HumpUtil.convertToJava(tableName)));
+        GenConst.commonReplaceMap.put("className", HumpUtil.convertToJavaClass(tableName));
+        GenConst.commonReplaceMap.put("objectName", HumpUtil.convertToJava(tableName));
         GenConst.commonReplaceMap.put("tableName", tableName);
         GenConst.commonReplaceMap.put("ctrlPackagePath",genReq.getCtrlPath());
         GenConst.commonReplaceMap.put("inftServicePackagePath",genReq.getInftServicePath());

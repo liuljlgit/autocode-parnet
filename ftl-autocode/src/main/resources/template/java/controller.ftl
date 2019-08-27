@@ -33,11 +33,7 @@ public class ${className}Ctrl{
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
-        ${className} ${objectName} = ${objectName}Service.selectById(${IdColEntity.fieldJavaName});
-        if(Objects.isNull(${objectName})){
-            throw new BusiException("没有符合条件的记录！") ;
-        }
-        return RespEntity.ok(${objectName});
+        return RespEntity.ok(${objectName}Service.selectById(${IdColEntity.fieldJavaName},"没有符合条件的记录！"));
     }
 
    /**
@@ -77,7 +73,7 @@ public class ${className}Ctrl{
     * @throws Exception
     */
     @DeleteMapping(value = "/obj")
-    public CommonResp<Object> deleteById(@PathVariable(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) {
+    public CommonResp<Object> deleteById(@RequestParam(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) {
         if(Objects.isNull(${IdColEntity.fieldJavaName})){
            throw new BusiException("删除主键不可为空") ;
         }
