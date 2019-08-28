@@ -134,7 +134,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
             }
             FieldCacheUtil.setIndexMet.invoke(query,(page-1)*pageSize);
             Long total = selectCount(query);
-            Long totalPage = (long)Math.ceil((double)total / (Integer)FieldCacheUtil.getPSMet.invoke(query));
+            Long totalPage = (long)Math.ceil((double)total / pageSize);
             return new PageBean<>(totalPage,total,selectList(query));
         } catch (Exception e) {
             log.error(e.getMessage(),e);
@@ -157,7 +157,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
             }
             FieldCacheUtil.setIndexMet.invoke(query,(page-1)*pageSize);
             Long total = selectCount(query);
-            Long totalPage = (long)Math.ceil((double)total / (Integer)FieldCacheUtil.getPSMet.invoke(query));
+            Long totalPage = (long)Math.ceil((double)total / pageSize);
             return new PageBean<>(totalPage,total,selectList(query,fieldList));
         } catch (Exception e) {
             log.error(e.getMessage(),e);
