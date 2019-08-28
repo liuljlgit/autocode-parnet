@@ -26,7 +26,9 @@ public interface IBaseService<T> extends IService<T>{
 
     List<T> selectBatchIds(Collection<? extends Serializable> list, String... emptyErrMsg) ;
 
-    PageBean<T> selectPage(T query) ;
+    PageBean<T> selectPage(T query);
+
+    PageBean<T> selectPage(T query, List<String> fieldList);
 
     Long selectCount(T query) ;
 

@@ -1,18 +1,14 @@
 package com.cloud.ftl.ftltest.test.controller;
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import lombok.extern.slf4j.Slf4j;
+import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -47,7 +43,7 @@ public class DailyAmountCtrl{
     */
     @PostMapping(value = "/list")
     public CommonResp<DailyAmount> selectList(@RequestBody DailyAmount entity){
-        return RespEntity.ok(dailyAmountService.selectList(entity, Lists.newArrayList(DailyAmount.DA_ID,DailyAmount.DATE_TIME)));
+        return RespEntity.ok(dailyAmountService.selectList(entity));
     }
 
    /**
@@ -67,11 +63,7 @@ public class DailyAmountCtrl{
     */
     @PostMapping(value = "/obj")
     public CommonResp<Object> save(@RequestBody DailyAmount dailyAmount) {
-        dailyAmountService.updateByMap(dailyAmount,()->{
-            HashMap<String, Object> updateFieldMap = Maps.newHashMap();
-            updateFieldMap.put(DailyAmount.CREATE_TIME,null);
-            return updateFieldMap;
-        });
+        dailyAmountService.save(dailyAmount);
         return RespEntity.ok();
     }
 

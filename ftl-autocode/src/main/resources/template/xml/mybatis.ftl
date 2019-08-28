@@ -130,7 +130,7 @@
                 ${r'${'}order.field} ${r'${'}order.mode}
             </foreach>
         </if>
-        <if test="st.page != null and st.pageSize != null and st.page > 0" >
+        <if test="st.index != null and st.pageSize != null and st.pageSize > 0" >
             limit ${r'#{st.'}index},${r'#{st.'}pageSize}
         </if>
     </select>
@@ -151,7 +151,7 @@
             ${r'${'}order.field} ${r'${'}order.mode}
             </foreach>
         </if>
-        <if test="st.page != null and st.pageSize != null and st.page > 0" >
+        <if test="st.index != null and st.pageSize != null and st.pageSize > 0" >
             limit ${r'#{st.'}index},${r'#{st.'}pageSize}
         </if>
     </select>

@@ -91,7 +91,6 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
         }
-        setPage2Null(query);
         List<T> ts = baseMapper.selectList(query);
         if(CollectionUtils.isEmpty(ts) && emptyErrMsg.length > 0){
             throw new BusiException(emptyErrMsg[0]);
@@ -99,21 +98,11 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
         return ts;
     }
 
-    private void setPage2Null(T query) {
-        try {
-            FieldCacheUtil.setPMet.invoke(query, (Object) null);
-        } catch (Exception e) {
-            log.error(e.getMessage(),e);
-            throw new BusiException(e.getMessage());
-        }
-    }
-
     @Override
     public List<T> selectList(T query, List<String> fieldList, String... emptyErrMsg)  {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
         }
-        setPage2Null(query);
         List<T> ts = baseMapper.selectFieldList(query,fieldList);
         if(CollectionUtils.isEmpty(ts) && emptyErrMsg.length > 0){
             throw new BusiException(emptyErrMsg[0]);
@@ -131,7 +120,7 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public PageBean<T> selectPage(T query) {
+    public final PageBean<T> selectPage(T query) {
         try {
             Integer page = (Integer)FieldCacheUtil.getPMet.invoke(query);
             Integer pageSize = (Integer)FieldCacheUtil.getPSMet.invoke(query);
@@ -147,6 +136,29 @@ public abstract class AbstractBaseService<T> implements IBaseService<T> {
             Long total = selectCount(query);
             Long totalPage = (long)Math.ceil((double)total / (Integer)FieldCacheUtil.getPSMet.invoke(query));
             return new PageBean<>(totalPage,total,selectList(query));
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+            throw new BusiException(e.getMessage());
+        }
+    }
+
+    @Override
+    public final PageBean<T> selectPage(T query, List<String> fieldList) {
+        try {
+            Integer page = (Integer)FieldCacheUtil.getPMet.invoke(query);
+            Integer pageSize = (Integer)FieldCacheUtil.getPSMet.invoke(query);
+            if(Objects.isNull(page)){
+                FieldCacheUtil.setPMet.invoke(query,1);
+                log.warn("due to page field is null,set default page = 1");
+            }
+            if(Objects.isNull(pageSize)){
+                FieldCacheUtil.setPSMet.invoke(query,1000);
+                log.warn("due to pageSize field is null,set default pageSize = 1000");
+            }
+            FieldCacheUtil.setIndexMet.invoke(query,(page-1)*pageSize);
+            Long total = selectCount(query);
+            Long totalPage = (long)Math.ceil((double)total / (Integer)FieldCacheUtil.getPSMet.invoke(query));
+            return new PageBean<>(totalPage,total,selectList(query,fieldList));
         } catch (Exception e) {
             log.error(e.getMessage(),e);
             throw new BusiException(e.getMessage());
