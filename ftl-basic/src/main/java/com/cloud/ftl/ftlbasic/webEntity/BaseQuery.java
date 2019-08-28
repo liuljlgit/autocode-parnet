@@ -2,9 +2,11 @@ package com.cloud.ftl.ftlbasic.webEntity;
 
 import com.cloud.ftl.ftlbasic.constant.SqlConst;
 import com.cloud.ftl.ftlbasic.enums.Opt;
-import com.cloud.ftl.ftlbasic.query.Criteria;
+import com.cloud.ftl.ftlbasic.query.ConditGroup;
 import com.cloud.ftl.ftlbasic.query.OrderBy;
+import com.cloud.ftl.ftlbasic.utils.MapUtil;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import lombok.Data;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -15,84 +17,87 @@ import java.util.stream.Collectors;
 @Data
 public class BaseQuery extends BasePage {
 
-    private List<Criteria> criterias;
+    private List<ConditGroup> conditGroups;
 
     private List<OrderBy> orderByList;
 
-    private Map<String,Integer> criteriasMap;
+    private Map<String,List<Integer>> conditGroupsMap;
 
-    private Criteria createCriteria(Opt opt,String... field){
-        Criteria criteria = new Criteria(opt.getCode());
-        if(CollectionUtils.isEmpty(criterias)){
-            criterias = new ArrayList<>();
+    private ConditGroup newConditGroup(Opt opt, String... groupNames){
+        ConditGroup conditGroup = new ConditGroup(opt.getCode());
+        if(CollectionUtils.isEmpty(conditGroups)){
+            conditGroups = Lists.newArrayList();
         }
-        criterias.add(criteria);
-        if(field.length != 0 && !StringUtils.isEmpty(field[0])){
-            saveCriteriaHashCode(field[0],criteria);
+        conditGroups.add(conditGroup);
+        if(groupNames.length != 0 && !StringUtils.isEmpty(groupNames[0])){
+            addConditGroupHashCode(groupNames[0],conditGroup);
         } else {
-            saveCriteriaHashCode(SqlConst.DEFAULT_FIELD,criteria);
+            addConditGroupHashCode(SqlConst.DEFAULT_FIELD,conditGroup);
         }
-        return criteria;
+        return conditGroup;
     }
 
     /**
-     * and (...)
+     * AND ConditGroup
      * @throws
      */
-    public Criteria andCriteria(String... field) {
-        return  createCriteria(Opt.AND,field);
+    public ConditGroup andConditGroup(String... groupName) {
+        return  newConditGroup(Opt.AND,groupName);
     }
 
     /**
-     * or (...)
+     * OR ConditGroup
      * @throws
      */
-    public Criteria orCriteria(String... field) {
-        return createCriteria(Opt.OR);
+    public ConditGroup orConditGroup(String... groupName) {
+        return newConditGroup(Opt.OR,groupName);
     }
 
     /**
-     * EQUAL操作
+     * IS NULL或者IS NOT NULL操作
      * @throws
      */
-    public void addCriteria(String field,Object value) {
-        Criteria criteria = createCriteria(Opt.AND, field);
-        criteria.addCriterion(SqlConst.AND_SPACE + field + Opt.EQUAL.getCode(),value);
-        criteria.addQuartets(Opt.AND,field,Opt.EQUAL,value);
+    protected void addConditGroup(String field, Opt opt) {
+        if(!Opt.IS_NULL.equals(opt) && !Opt.IS_NOT_NULL.equals(opt)){
+            throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处只能为‘IS NULL’或者‘IS NOT NULL’");
+        }
+        ConditGroup conditGroup = newConditGroup(Opt.AND, field);
+        conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode());
+        conditGroup.addQuartets(Opt.AND,field,opt);
     }
 
     /**
      * BETWEEN操作
      * @throws
      */
-    public void addCriteria(String field,Opt opt,Object value1,Object value2) {
+    protected void addConditGroup(String field, Opt opt, Object firstParam, Object secondParam) {
         if(!Opt.BETWEEN.equals(opt) && !Opt.NOT_BETWEEN.equals(opt)){
-            throw new RuntimeException("操作域‘"+field+"’的操作类型不合法,此处只能为‘BETWEEN’或者‘NOT BETWEEN’");
+            throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处只能为‘BETWEEN’或者‘NOT BETWEEN’");
         }
-        Criteria criteria = createCriteria(Opt.AND, field);
-        criteria.addCriterion(SqlConst.AND_SPACE + field + opt.getCode(),value1,value2);
-        criteria.addQuartets(Opt.AND,field,opt,value1,value2);
+        ConditGroup conditGroup = newConditGroup(Opt.AND, field);
+        conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode(),firstParam,secondParam);
+        conditGroup.addQuartets(Opt.AND,field,opt,firstParam,secondParam);
     }
 
     /**
      * 单值或者list操作
      * @throws
      */
-    public void addCriteria(String field,Opt opt,Object value) {
-        Criteria criteria = createCriteria(Opt.AND, field);
+    protected void addConditGroup(String field, Opt opt, Object value) {
+        ConditGroup conditGroup = newConditGroup(Opt.AND, field);
         if(Opt.AND.equals(opt) || Opt.OR.equals(opt) || Opt.ASC.equals(opt)
-                || Opt.DESC.equals(opt) || Opt.BETWEEN.equals(opt) || Opt.NOT_BETWEEN.equals(opt)){
-            throw new RuntimeException("操作域‘"+field+"’的操作类型不合法，此处不能为‘AND’、‘OR’、‘ASC’、‘DESC’、‘BETWEEN’和‘NOT BETWEEN’");
+                || Opt.DESC.equals(opt) || Opt.BETWEEN.equals(opt) || Opt.NOT_BETWEEN.equals(opt)
+                || Opt.IS_NULL.equals(opt) || Opt.IS_NOT_NULL.equals(opt)){
+            throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处不可以为：" + opt.getCode());
+        }
+        if(value instanceof Collection && !Opt.IN.equals(opt)){
+            throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处只能为‘IN’");
         }
         if(Opt.LIKE.equals(opt) || Opt.NOT_LIKE.equals(opt)){
             value = SqlConst.PERCENT + value + SqlConst.PERCENT;
         }
-        if(Opt.IS.equals(opt) || Opt.IS_NOT.equals(opt)){
-            criteria.addCriterion(SqlConst.AND_SPACE + field + opt.getCode() + SqlConst.NULL);
-        } else {
-            criteria.addCriterion(SqlConst.AND_SPACE + field + opt.getCode(),value);
-        }
-        criteria.addQuartets(Opt.AND,field,opt,value);
+        conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode(),value);
+        conditGroup.addQuartets(Opt.AND,field,opt,value);
     }
 
 
@@ -112,31 +117,36 @@ public class BaseQuery extends BasePage {
     }
 
     /**
-     * 存储criteria的地址
-     * @param field
-     * @param criteria
+     * 存储conditGroup的HashCode地址
+     *
+     * @param groupName
+     * @param conditGroup
      */
-    private void saveCriteriaHashCode(String field,Criteria criteria){
-        if(CollectionUtils.isEmpty(criteriasMap)){
-            criteriasMap = new HashMap<>();
+    private void addConditGroupHashCode(String groupName,ConditGroup conditGroup){
+        if(CollectionUtils.isEmpty(conditGroupsMap)){
+            conditGroupsMap = Maps.newHashMap();
         }
-        criteriasMap.put(field,criteria.hashCode());
+        MapUtil.getHandleSetVal(conditGroupsMap,groupName,ArrayList::new,(list)->{
+            list.add(conditGroup.hashCode());
+            return list;
+        });
     }
 
     /**
      * 清除条件组
-     * @param fields
+     *
+     * @param groupNames
      */
-    public void cleanCriteria(String... fields){
+    public void clearConditGroup(String... groupNames){
         Set<Integer> hashCodeSet = new HashSet<>();
-        for (String field : fields) {
-            Integer hashcode = criteriasMap.getOrDefault(field, null);
-            if(Objects.nonNull(hashcode)){
-                hashCodeSet.add(hashcode);
-                criteriasMap.remove(field);
+        for (String groupName : groupNames) {
+            List<Integer> hashcodeList = conditGroupsMap.getOrDefault(groupName, Lists.newArrayList());
+            if(!CollectionUtils.isEmpty(hashcodeList)){
+                hashCodeSet.addAll(hashcodeList);
+                conditGroupsMap.remove(groupName);
             }
         }
-        criterias = criterias.stream()
+        conditGroups = conditGroups.stream()
                 .filter(e -> !hashCodeSet.contains(e.hashCode()))
                 .collect(Collectors.toList());
     }

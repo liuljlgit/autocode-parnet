@@ -1,17 +1,15 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.math.BigDecimal;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
-import com.cloud.ftl.ftlbasic.enums.Opt;
-import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
+import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+
+import java.util.Date;
+import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -57,126 +55,138 @@ public class LoadTime extends BaseQuery {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date statusTime;
 
+    @JsonIgnore
     public static final transient String LT_ID = "lt_id";
 
+    @JsonIgnore
     public static final transient String ENTITY_ID = "entity_id";
 
+    @JsonIgnore
     public static final transient String START_TIME = "start_time";
 
+    @JsonIgnore
     public static final transient String END_TIME = "end_time";
 
+    @JsonIgnore
     public static final transient String STATUS = "status";
 
+    @JsonIgnore
     public static final transient String CREATE_TIME = "create_time";
 
+    @JsonIgnore
     public static final transient String STATUS_TIME = "status_time";
 
-    public static Map<String,Integer> map;
 
-    static {
-        map = new HashMap<>();
-        Class<LoadTime> aClass = LoadTime.class;
-        Field[] fields = aClass.getDeclaredFields();
-        Integer index = 0;
-        for (Field field : fields) {
-            int modifiers = field.getModifiers();
-            //过滤调不是只有私有属性修饰符的 1+8+16+128
-            if(modifiers != 153){
-                continue;
-            }
-            field.setAccessible(true);
-            try {
-                String fieldVal = (String)field.get(aClass);
-                map.putIfAbsent(fieldVal,index++);
-            } catch (IllegalAccessException e) {
-
-            }
-        }
+    public void andLtId(Opt opt) {
+        addConditGroup(LT_ID,opt);
     }
 
-
-    public void andLtId(Opt opt,Long ltId) throws Exception {
-        addCriteria(LT_ID,opt,ltId);
+    public void andLtId(Opt opt,Long ltId) {
+        addConditGroup(LT_ID,opt,ltId);
     }
 
-    public void andLtId(Opt opt,List<Long> ltIdList) throws Exception {
-        addCriteria(LT_ID,opt,ltIdList);
+    public void andLtId(Opt opt,List<Long> list) {
+        addConditGroup(LT_ID,opt,list);
     }
 
-    public void andLtId(Opt opt,Long ltId1,Long ltId2) throws Exception {
-        addCriteria(LT_ID,opt,ltId1,ltId2);
+    public void andLtId(Opt opt,Long firstParam,Long secondParam) {
+        addConditGroup(LT_ID,opt,firstParam,secondParam);
     }
 
-    public void andEntityId(Opt opt,Integer entityId) throws Exception {
-        addCriteria(ENTITY_ID,opt,entityId);
+    public void andEntityId(Opt opt) {
+        addConditGroup(ENTITY_ID,opt);
     }
 
-    public void andEntityId(Opt opt,List<Integer> entityIdList) throws Exception {
-        addCriteria(ENTITY_ID,opt,entityIdList);
+    public void andEntityId(Opt opt,Integer entityId) {
+        addConditGroup(ENTITY_ID,opt,entityId);
     }
 
-    public void andEntityId(Opt opt,Integer entityId1,Integer entityId2) throws Exception {
-        addCriteria(ENTITY_ID,opt,entityId1,entityId2);
+    public void andEntityId(Opt opt,List<Integer> list) {
+        addConditGroup(ENTITY_ID,opt,list);
     }
 
-    public void andStartTime(Opt opt,Date startTime) throws Exception {
-        addCriteria(START_TIME,opt,startTime);
+    public void andEntityId(Opt opt,Integer firstParam,Integer secondParam) {
+        addConditGroup(ENTITY_ID,opt,firstParam,secondParam);
     }
 
-    public void andStartTime(Opt opt,List<Date> startTimeList) throws Exception {
-        addCriteria(START_TIME,opt,startTimeList);
+    public void andStartTime(Opt opt) {
+        addConditGroup(START_TIME,opt);
     }
 
-    public void andStartTime(Opt opt,Date startTime1,Date startTime2) throws Exception {
-        addCriteria(START_TIME,opt,startTime1,startTime2);
+    public void andStartTime(Opt opt,Date startTime) {
+        addConditGroup(START_TIME,opt,startTime);
     }
 
-    public void andEndTime(Opt opt,Date endTime) throws Exception {
-        addCriteria(END_TIME,opt,endTime);
+    public void andStartTime(Opt opt,List<Date> list) {
+        addConditGroup(START_TIME,opt,list);
     }
 
-    public void andEndTime(Opt opt,List<Date> endTimeList) throws Exception {
-        addCriteria(END_TIME,opt,endTimeList);
+    public void andStartTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(START_TIME,opt,firstParam,secondParam);
     }
 
-    public void andEndTime(Opt opt,Date endTime1,Date endTime2) throws Exception {
-        addCriteria(END_TIME,opt,endTime1,endTime2);
+    public void andEndTime(Opt opt) {
+        addConditGroup(END_TIME,opt);
     }
 
-    public void andStatus(Opt opt,Byte status) throws Exception {
-        addCriteria(STATUS,opt,status);
+    public void andEndTime(Opt opt,Date endTime) {
+        addConditGroup(END_TIME,opt,endTime);
     }
 
-    public void andStatus(Opt opt,List<Byte> statusList) throws Exception {
-        addCriteria(STATUS,opt,statusList);
+    public void andEndTime(Opt opt,List<Date> list) {
+        addConditGroup(END_TIME,opt,list);
     }
 
-    public void andStatus(Opt opt,Byte status1,Byte status2) throws Exception {
-        addCriteria(STATUS,opt,status1,status2);
+    public void andEndTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(END_TIME,opt,firstParam,secondParam);
     }
 
-    public void andCreateTime(Opt opt,Date createTime) throws Exception {
-        addCriteria(CREATE_TIME,opt,createTime);
+    public void andStatus(Opt opt) {
+        addConditGroup(STATUS,opt);
     }
 
-    public void andCreateTime(Opt opt,List<Date> createTimeList) throws Exception {
-        addCriteria(CREATE_TIME,opt,createTimeList);
+    public void andStatus(Opt opt,Byte status) {
+        addConditGroup(STATUS,opt,status);
     }
 
-    public void andCreateTime(Opt opt,Date createTime1,Date createTime2) throws Exception {
-        addCriteria(CREATE_TIME,opt,createTime1,createTime2);
+    public void andStatus(Opt opt,List<Byte> list) {
+        addConditGroup(STATUS,opt,list);
     }
 
-    public void andStatusTime(Opt opt,Date statusTime) throws Exception {
-        addCriteria(STATUS_TIME,opt,statusTime);
+    public void andStatus(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(STATUS,opt,firstParam,secondParam);
     }
 
-    public void andStatusTime(Opt opt,List<Date> statusTimeList) throws Exception {
-        addCriteria(STATUS_TIME,opt,statusTimeList);
+    public void andCreateTime(Opt opt) {
+        addConditGroup(CREATE_TIME,opt);
     }
 
-    public void andStatusTime(Opt opt,Date statusTime1,Date statusTime2) throws Exception {
-        addCriteria(STATUS_TIME,opt,statusTime1,statusTime2);
+    public void andCreateTime(Opt opt,Date createTime) {
+        addConditGroup(CREATE_TIME,opt,createTime);
+    }
+
+    public void andCreateTime(Opt opt,List<Date> list) {
+        addConditGroup(CREATE_TIME,opt,list);
+    }
+
+    public void andCreateTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(CREATE_TIME,opt,firstParam,secondParam);
+    }
+
+    public void andStatusTime(Opt opt) {
+        addConditGroup(STATUS_TIME,opt);
+    }
+
+    public void andStatusTime(Opt opt,Date statusTime) {
+        addConditGroup(STATUS_TIME,opt,statusTime);
+    }
+
+    public void andStatusTime(Opt opt,List<Date> list) {
+        addConditGroup(STATUS_TIME,opt,list);
+    }
+
+    public void andStatusTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(STATUS_TIME,opt,firstParam,secondParam);
     }
 
 }

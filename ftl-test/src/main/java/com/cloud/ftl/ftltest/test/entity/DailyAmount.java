@@ -1,17 +1,16 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.math.BigDecimal;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
-import com.cloud.ftl.ftlbasic.enums.Opt;
-import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
+import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -96,238 +95,290 @@ public class DailyAmount extends BaseQuery {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date statusTime;
 
+    @JsonIgnore
     public static final transient String DA_ID = "da_id";
 
+    @JsonIgnore
     public static final transient String ENTITY_ID = "entity_id";
 
+    @JsonIgnore
     public static final transient String DATE_TIME = "date_time";
 
+    @JsonIgnore
     public static final transient String SETT_PROFIT = "sett_profit";
 
+    @JsonIgnore
     public static final transient String EXPEND_PROFIT = "expend_profit";
 
+    @JsonIgnore
     public static final transient String INCOME_PROFIT = "income_profit";
 
+    @JsonIgnore
     public static final transient String PROFIT_HOURS = "profit_hours";
 
+    @JsonIgnore
     public static final transient String DEFICIT_HOURS = "deficit_hours";
 
+    @JsonIgnore
     public static final transient String MINUS_DEVIATION = "minus_deviation";
 
+    @JsonIgnore
     public static final transient String POSITIVE_DEVIATION = "positive_deviation";
 
+    @JsonIgnore
     public static final transient String STATUS = "status";
 
+    @JsonIgnore
     public static final transient String CE = "ce";
 
+    @JsonIgnore
     public static final transient String SA = "sa";
 
+    @JsonIgnore
     public static final transient String CREATE_TIME = "create_time";
 
+    @JsonIgnore
     public static final transient String STATUS_TIME = "status_time";
 
-    public static Map<String,Integer> map;
 
-    static {
-        map = new HashMap<>();
-        Class<DailyAmount> aClass = DailyAmount.class;
-        Field[] fields = aClass.getDeclaredFields();
-        Integer index = 0;
-        for (Field field : fields) {
-            int modifiers = field.getModifiers();
-            //过滤调不是只有私有属性修饰符的 1+8+16+128
-            if(modifiers != 153){
-                continue;
-            }
-            field.setAccessible(true);
-            try {
-                String fieldVal = (String)field.get(aClass);
-                map.putIfAbsent(fieldVal,index++);
-            } catch (IllegalAccessException e) {
-
-            }
-        }
+    public void andDaId(Opt opt) {
+        addConditGroup(DA_ID,opt);
     }
 
-
-    public void andDaId(Opt opt,Long daId) throws Exception {
-        addCriteria(DA_ID,opt,daId);
+    public void andDaId(Opt opt,Long daId) {
+        addConditGroup(DA_ID,opt,daId);
     }
 
-    public void andDaId(Opt opt,List<Long> daIdList) throws Exception {
-        addCriteria(DA_ID,opt,daIdList);
+    public void andDaId(Opt opt,List<Long> list) {
+        addConditGroup(DA_ID,opt,list);
     }
 
-    public void andDaId(Opt opt,Long daId1,Long daId2) throws Exception {
-        addCriteria(DA_ID,opt,daId1,daId2);
+    public void andDaId(Opt opt,Long firstParam,Long secondParam) {
+        addConditGroup(DA_ID,opt,firstParam,secondParam);
     }
 
-    public void andEntityId(Opt opt,Integer entityId) throws Exception {
-        addCriteria(ENTITY_ID,opt,entityId);
+    public void andEntityId(Opt opt) {
+        addConditGroup(ENTITY_ID,opt);
     }
 
-    public void andEntityId(Opt opt,List<Integer> entityIdList) throws Exception {
-        addCriteria(ENTITY_ID,opt,entityIdList);
+    public void andEntityId(Opt opt,Integer entityId) {
+        addConditGroup(ENTITY_ID,opt,entityId);
     }
 
-    public void andEntityId(Opt opt,Integer entityId1,Integer entityId2) throws Exception {
-        addCriteria(ENTITY_ID,opt,entityId1,entityId2);
+    public void andEntityId(Opt opt,List<Integer> list) {
+        addConditGroup(ENTITY_ID,opt,list);
     }
 
-    public void andDateTime(Opt opt,Date dateTime) throws Exception {
-        addCriteria(DATE_TIME,opt,dateTime);
+    public void andEntityId(Opt opt,Integer firstParam,Integer secondParam) {
+        addConditGroup(ENTITY_ID,opt,firstParam,secondParam);
     }
 
-    public void andDateTime(Opt opt,List<Date> dateTimeList) throws Exception {
-        addCriteria(DATE_TIME,opt,dateTimeList);
+    public void andDateTime(Opt opt) {
+        addConditGroup(DATE_TIME,opt);
     }
 
-    public void andDateTime(Opt opt,Date dateTime1,Date dateTime2) throws Exception {
-        addCriteria(DATE_TIME,opt,dateTime1,dateTime2);
+    public void andDateTime(Opt opt,Date dateTime) {
+        addConditGroup(DATE_TIME,opt,dateTime);
     }
 
-    public void andSettProfit(Opt opt,BigDecimal settProfit) throws Exception {
-        addCriteria(SETT_PROFIT,opt,settProfit);
+    public void andDateTime(Opt opt,List<Date> list) {
+        addConditGroup(DATE_TIME,opt,list);
     }
 
-    public void andSettProfit(Opt opt,List<BigDecimal> settProfitList) throws Exception {
-        addCriteria(SETT_PROFIT,opt,settProfitList);
+    public void andDateTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(DATE_TIME,opt,firstParam,secondParam);
     }
 
-    public void andSettProfit(Opt opt,BigDecimal settProfit1,BigDecimal settProfit2) throws Exception {
-        addCriteria(SETT_PROFIT,opt,settProfit1,settProfit2);
+    public void andSettProfit(Opt opt) {
+        addConditGroup(SETT_PROFIT,opt);
     }
 
-    public void andExpendProfit(Opt opt,BigDecimal expendProfit) throws Exception {
-        addCriteria(EXPEND_PROFIT,opt,expendProfit);
+    public void andSettProfit(Opt opt,BigDecimal settProfit) {
+        addConditGroup(SETT_PROFIT,opt,settProfit);
     }
 
-    public void andExpendProfit(Opt opt,List<BigDecimal> expendProfitList) throws Exception {
-        addCriteria(EXPEND_PROFIT,opt,expendProfitList);
+    public void andSettProfit(Opt opt,List<BigDecimal> list) {
+        addConditGroup(SETT_PROFIT,opt,list);
     }
 
-    public void andExpendProfit(Opt opt,BigDecimal expendProfit1,BigDecimal expendProfit2) throws Exception {
-        addCriteria(EXPEND_PROFIT,opt,expendProfit1,expendProfit2);
+    public void andSettProfit(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
+        addConditGroup(SETT_PROFIT,opt,firstParam,secondParam);
     }
 
-    public void andIncomeProfit(Opt opt,BigDecimal incomeProfit) throws Exception {
-        addCriteria(INCOME_PROFIT,opt,incomeProfit);
+    public void andExpendProfit(Opt opt) {
+        addConditGroup(EXPEND_PROFIT,opt);
     }
 
-    public void andIncomeProfit(Opt opt,List<BigDecimal> incomeProfitList) throws Exception {
-        addCriteria(INCOME_PROFIT,opt,incomeProfitList);
+    public void andExpendProfit(Opt opt,BigDecimal expendProfit) {
+        addConditGroup(EXPEND_PROFIT,opt,expendProfit);
     }
 
-    public void andIncomeProfit(Opt opt,BigDecimal incomeProfit1,BigDecimal incomeProfit2) throws Exception {
-        addCriteria(INCOME_PROFIT,opt,incomeProfit1,incomeProfit2);
+    public void andExpendProfit(Opt opt,List<BigDecimal> list) {
+        addConditGroup(EXPEND_PROFIT,opt,list);
     }
 
-    public void andProfitHours(Opt opt,Byte profitHours) throws Exception {
-        addCriteria(PROFIT_HOURS,opt,profitHours);
+    public void andExpendProfit(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
+        addConditGroup(EXPEND_PROFIT,opt,firstParam,secondParam);
     }
 
-    public void andProfitHours(Opt opt,List<Byte> profitHoursList) throws Exception {
-        addCriteria(PROFIT_HOURS,opt,profitHoursList);
+    public void andIncomeProfit(Opt opt) {
+        addConditGroup(INCOME_PROFIT,opt);
     }
 
-    public void andProfitHours(Opt opt,Byte profitHours1,Byte profitHours2) throws Exception {
-        addCriteria(PROFIT_HOURS,opt,profitHours1,profitHours2);
+    public void andIncomeProfit(Opt opt,BigDecimal incomeProfit) {
+        addConditGroup(INCOME_PROFIT,opt,incomeProfit);
     }
 
-    public void andDeficitHours(Opt opt,Byte deficitHours) throws Exception {
-        addCriteria(DEFICIT_HOURS,opt,deficitHours);
+    public void andIncomeProfit(Opt opt,List<BigDecimal> list) {
+        addConditGroup(INCOME_PROFIT,opt,list);
     }
 
-    public void andDeficitHours(Opt opt,List<Byte> deficitHoursList) throws Exception {
-        addCriteria(DEFICIT_HOURS,opt,deficitHoursList);
+    public void andIncomeProfit(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
+        addConditGroup(INCOME_PROFIT,opt,firstParam,secondParam);
     }
 
-    public void andDeficitHours(Opt opt,Byte deficitHours1,Byte deficitHours2) throws Exception {
-        addCriteria(DEFICIT_HOURS,opt,deficitHours1,deficitHours2);
+    public void andProfitHours(Opt opt) {
+        addConditGroup(PROFIT_HOURS,opt);
     }
 
-    public void andMinusDeviation(Opt opt,BigDecimal minusDeviation) throws Exception {
-        addCriteria(MINUS_DEVIATION,opt,minusDeviation);
+    public void andProfitHours(Opt opt,Byte profitHours) {
+        addConditGroup(PROFIT_HOURS,opt,profitHours);
     }
 
-    public void andMinusDeviation(Opt opt,List<BigDecimal> minusDeviationList) throws Exception {
-        addCriteria(MINUS_DEVIATION,opt,minusDeviationList);
+    public void andProfitHours(Opt opt,List<Byte> list) {
+        addConditGroup(PROFIT_HOURS,opt,list);
     }
 
-    public void andMinusDeviation(Opt opt,BigDecimal minusDeviation1,BigDecimal minusDeviation2) throws Exception {
-        addCriteria(MINUS_DEVIATION,opt,minusDeviation1,minusDeviation2);
+    public void andProfitHours(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(PROFIT_HOURS,opt,firstParam,secondParam);
     }
 
-    public void andPositiveDeviation(Opt opt,BigDecimal positiveDeviation) throws Exception {
-        addCriteria(POSITIVE_DEVIATION,opt,positiveDeviation);
+    public void andDeficitHours(Opt opt) {
+        addConditGroup(DEFICIT_HOURS,opt);
     }
 
-    public void andPositiveDeviation(Opt opt,List<BigDecimal> positiveDeviationList) throws Exception {
-        addCriteria(POSITIVE_DEVIATION,opt,positiveDeviationList);
+    public void andDeficitHours(Opt opt,Byte deficitHours) {
+        addConditGroup(DEFICIT_HOURS,opt,deficitHours);
     }
 
-    public void andPositiveDeviation(Opt opt,BigDecimal positiveDeviation1,BigDecimal positiveDeviation2) throws Exception {
-        addCriteria(POSITIVE_DEVIATION,opt,positiveDeviation1,positiveDeviation2);
+    public void andDeficitHours(Opt opt,List<Byte> list) {
+        addConditGroup(DEFICIT_HOURS,opt,list);
     }
 
-    public void andStatus(Opt opt,Byte status) throws Exception {
-        addCriteria(STATUS,opt,status);
+    public void andDeficitHours(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(DEFICIT_HOURS,opt,firstParam,secondParam);
     }
 
-    public void andStatus(Opt opt,List<Byte> statusList) throws Exception {
-        addCriteria(STATUS,opt,statusList);
+    public void andMinusDeviation(Opt opt) {
+        addConditGroup(MINUS_DEVIATION,opt);
     }
 
-    public void andStatus(Opt opt,Byte status1,Byte status2) throws Exception {
-        addCriteria(STATUS,opt,status1,status2);
+    public void andMinusDeviation(Opt opt,BigDecimal minusDeviation) {
+        addConditGroup(MINUS_DEVIATION,opt,minusDeviation);
     }
 
-    public void andCe(Opt opt,Byte ce) throws Exception {
-        addCriteria(CE,opt,ce);
+    public void andMinusDeviation(Opt opt,List<BigDecimal> list) {
+        addConditGroup(MINUS_DEVIATION,opt,list);
     }
 
-    public void andCe(Opt opt,List<Byte> ceList) throws Exception {
-        addCriteria(CE,opt,ceList);
+    public void andMinusDeviation(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
+        addConditGroup(MINUS_DEVIATION,opt,firstParam,secondParam);
     }
 
-    public void andCe(Opt opt,Byte ce1,Byte ce2) throws Exception {
-        addCriteria(CE,opt,ce1,ce2);
+    public void andPositiveDeviation(Opt opt) {
+        addConditGroup(POSITIVE_DEVIATION,opt);
     }
 
-    public void andSa(Opt opt,Byte sa) throws Exception {
-        addCriteria(SA,opt,sa);
+    public void andPositiveDeviation(Opt opt,BigDecimal positiveDeviation) {
+        addConditGroup(POSITIVE_DEVIATION,opt,positiveDeviation);
     }
 
-    public void andSa(Opt opt,List<Byte> saList) throws Exception {
-        addCriteria(SA,opt,saList);
+    public void andPositiveDeviation(Opt opt,List<BigDecimal> list) {
+        addConditGroup(POSITIVE_DEVIATION,opt,list);
     }
 
-    public void andSa(Opt opt,Byte sa1,Byte sa2) throws Exception {
-        addCriteria(SA,opt,sa1,sa2);
+    public void andPositiveDeviation(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
+        addConditGroup(POSITIVE_DEVIATION,opt,firstParam,secondParam);
     }
 
-    public void andCreateTime(Opt opt,Date createTime) throws Exception {
-        addCriteria(CREATE_TIME,opt,createTime);
+    public void andStatus(Opt opt) {
+        addConditGroup(STATUS,opt);
     }
 
-    public void andCreateTime(Opt opt,List<Date> createTimeList) throws Exception {
-        addCriteria(CREATE_TIME,opt,createTimeList);
+    public void andStatus(Opt opt,Byte status) {
+        addConditGroup(STATUS,opt,status);
     }
 
-    public void andCreateTime(Opt opt,Date createTime1,Date createTime2) throws Exception {
-        addCriteria(CREATE_TIME,opt,createTime1,createTime2);
+    public void andStatus(Opt opt,List<Byte> list) {
+        addConditGroup(STATUS,opt,list);
     }
 
-    public void andStatusTime(Opt opt,Date statusTime) throws Exception {
-        addCriteria(STATUS_TIME,opt,statusTime);
+    public void andStatus(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(STATUS,opt,firstParam,secondParam);
     }
 
-    public void andStatusTime(Opt opt,List<Date> statusTimeList) throws Exception {
-        addCriteria(STATUS_TIME,opt,statusTimeList);
+    public void andCe(Opt opt) {
+        addConditGroup(CE,opt);
     }
 
-    public void andStatusTime(Opt opt,Date statusTime1,Date statusTime2) throws Exception {
-        addCriteria(STATUS_TIME,opt,statusTime1,statusTime2);
+    public void andCe(Opt opt,Byte ce) {
+        addConditGroup(CE,opt,ce);
+    }
+
+    public void andCe(Opt opt,List<Byte> list) {
+        addConditGroup(CE,opt,list);
+    }
+
+    public void andCe(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(CE,opt,firstParam,secondParam);
+    }
+
+    public void andSa(Opt opt) {
+        addConditGroup(SA,opt);
+    }
+
+    public void andSa(Opt opt,Byte sa) {
+        addConditGroup(SA,opt,sa);
+    }
+
+    public void andSa(Opt opt,List<Byte> list) {
+        addConditGroup(SA,opt,list);
+    }
+
+    public void andSa(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(SA,opt,firstParam,secondParam);
+    }
+
+    public void andCreateTime(Opt opt) {
+        addConditGroup(CREATE_TIME,opt);
+    }
+
+    public void andCreateTime(Opt opt,Date createTime) {
+        addConditGroup(CREATE_TIME,opt,createTime);
+    }
+
+    public void andCreateTime(Opt opt,List<Date> list) {
+        addConditGroup(CREATE_TIME,opt,list);
+    }
+
+    public void andCreateTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(CREATE_TIME,opt,firstParam,secondParam);
+    }
+
+    public void andStatusTime(Opt opt) {
+        addConditGroup(STATUS_TIME,opt);
+    }
+
+    public void andStatusTime(Opt opt,Date statusTime) {
+        addConditGroup(STATUS_TIME,opt,statusTime);
+    }
+
+    public void andStatusTime(Opt opt,List<Date> list) {
+        addConditGroup(STATUS_TIME,opt,list);
+    }
+
+    public void andStatusTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(STATUS_TIME,opt,firstParam,secondParam);
     }
 
 }

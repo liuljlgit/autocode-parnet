@@ -8,17 +8,17 @@ public interface SqlConst {
 
     String DEFAULT_FIELD = "DEFAULT";
 
-    String AND = "AND";
+    String AND = "and";
 
-    String OR = "OR";
+    String OR = "or";
 
     String SPACE = " ";
 
-    String AND_SPACE = "AND ";
+    String AND_SPACE = "and ";
 
-    String OR_SPACE = "OR ";
+    String OR_SPACE = "or ";
 
     String PERCENT = "%";
 
-    String NULL = "NULL";
+    String NULL = "null";
 }

@@ -3,7 +3,7 @@ package com.cloud.ftl.ftlbasic.query;
 /**
  * 这个类相当于一个具体的查询条件
  */
-public class Criterion {
+public class Condition {
     private String condition;
     private Object value1;
     private Object value2;

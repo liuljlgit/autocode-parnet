@@ -57,6 +57,28 @@
         </set>
     </sql>
 
+    <sql id="For_Each_Condition">
+        <foreach collection="conditGroup.conditions" item="condit">
+            <choose>
+                <when test="condit.noValue">
+                ${condit.condition}
+                </when>
+                <when test="condit.oneValue">
+                ${condit.condition} #{condit.value1}
+                </when>
+                <when test="condit.secondValue">
+                ${condit.condition} #{condit.value1} and #{condit.value2}
+                </when>
+                <when test="condit.listValue">
+                ${condit.condition}
+                    <foreach collection="condit.list" item="listItem" open="(" close=")" separator=",">
+                    #{listItem}
+                    </foreach>
+                </when>
+            </choose>
+        </foreach>
+    </sql>
+
     <sql id="where_sql">
         <if test="st.ltId != null">
             AND lt_id = #{st.ltId}
@@ -79,55 +101,19 @@
         <if test="st.statusTime != null">
             AND status_time = #{st.statusTime}
         </if>
-        <if test="st.criterias != null">
-            <foreach collection="st.criterias" item="criteria" separator=" ">
-                <if test="criteria.valid">
-                    ${criteria.opt}
+        <if test="st.conditGroups != null">
+            <foreach collection="st.conditGroups" item="conditGroup" separator=" ">
+                <if test="conditGroup.valid">
+                    ${conditGroup.opt}
                     <choose>
-                        <when test="criteria.criterions.size() > 1">
+                        <when test="conditGroup.conditions.size() > 1">
                             <trim prefix="(" prefixOverrides="and|or" suffix=")">
-                                <foreach collection="criteria.criterions" item="criterion">
-                                    <choose>
-                                        <when test="criterion.noValue">
-                                            ${criterion.condition}
-                                        </when>
-                                        <when test="criterion.oneValue">
-                                            ${criterion.condition} #{criterion.value1}
-                                        </when>
-                                        <when test="criterion.secondValue">
-                                            ${criterion.condition} #{criterion.value1} and #{criterion.value2}
-                                        </when>
-                                        <when test="criterion.listValue">
-                                            ${criterion.condition}
-                                            <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
-                                                #{listItem}
-                                            </foreach>
-                                        </when>
-                                    </choose>
-                                </foreach>
+                                <include refid="For_Each_Condition" />
                             </trim>
                         </when>
                         <otherwise>
                             <trim prefixOverrides="and|or">
-                                <foreach collection="criteria.criterions" item="criterion">
-                                    <choose>
-                                        <when test="criterion.noValue">
-                                            ${criterion.condition}
-                                        </when>
-                                        <when test="criterion.oneValue">
-                                            ${criterion.condition} #{criterion.value1}
-                                        </when>
-                                        <when test="criterion.secondValue">
-                                            ${criterion.condition} #{criterion.value1} and #{criterion.value2}
-                                        </when>
-                                        <when test="criterion.listValue">
-                                            ${criterion.condition}
-                                            <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
-                                                #{listItem}
-                                            </foreach>
-                                        </when>
-                                    </choose>
-                                </foreach>
+                                <include refid="For_Each_Condition" />
                             </trim>
                         </otherwise>
                     </choose>
