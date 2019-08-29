@@ -15,7 +15,7 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @RequestMapping("/${className?lower_case}")
-@Api(tags = "${className}")
+@Api(tags = "<#if tableComment == ''>${className}<#else>${tableComment}</#if>")
 public class ${className}Ctrl{
 
     @Autowired

@@ -15,7 +15,7 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @RequestMapping("/dailyamount")
-@Api(tags = "DailyAmount")
+@Api(tags = "【日前】1、日前报量管理")
 public class DailyAmountCtrl{
 
     @Autowired

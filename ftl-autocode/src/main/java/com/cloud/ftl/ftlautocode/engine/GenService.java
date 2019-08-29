@@ -25,6 +25,10 @@ public class GenService {
             GenConst.tableColEntitys.clear();
             Connection con = DriverManager.getConnection(genReq.getMySqlUrl(),genReq.getMySqlName(),genReq.getMySqlPass());
             ResultSet rs = con.createStatement().executeQuery("show full columns from " + tableName);
+            //获取表注释
+            String tableSchema = genReq.getMySqlUrl().substring(genReq.getMySqlUrl().lastIndexOf("/")+1,genReq.getMySqlUrl().length());
+            ResultSet commentRs = con.createStatement()
+                    .executeQuery("select TABLE_COMMENT from INFORMATION_SCHEMA.Tables where table_schema = '" + tableSchema + "' and TABLE_NAME = '" + tableName + "'");
             while (rs.next()) {
                 String field = rs.getString("Field");
                 String type = rs.getString("Type");
@@ -41,6 +45,10 @@ public class GenService {
                 TableColEntity tableColEntity = new TableColEntity(field,type,key,comment,fieldJavaType,fieldJavaName,fieldDbType,fieldMybatisType);
                 GenConst.tableColEntitys.add(tableColEntity);
             }
+            //获取表的注释
+            commentRs.next();
+            GenConst.tableComment = commentRs.getString("TABLE_COMMENT");
+            System.out.println("aa");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,6 +67,7 @@ public class GenService {
         GenConst.commonReplaceMap.put("implServicePackagePath",genReq.getImplServicePath());
         GenConst.commonReplaceMap.put("daoPackagePath",genReq.getDaoPath());
         GenConst.commonReplaceMap.put("entityPackagePath",genReq.getEntityPath());
+        GenConst.commonReplaceMap.put("tableComment",GenConst.tableComment);
         GenConst.commonReplaceMap.put("tableColEntitys",GenConst.tableColEntitys);
         GenConst.commonReplaceMap.put("IdColEntity",GenConst.tableColEntitys.stream().filter(e->e.getKey().equals("PRI")).collect(Collectors.toList()).get(0));
     }

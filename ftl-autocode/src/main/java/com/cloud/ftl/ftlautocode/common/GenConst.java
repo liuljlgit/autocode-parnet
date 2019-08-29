@@ -2,8 +2,9 @@ package com.cloud.ftl.ftlautocode.common;
 
 
 import com.cloud.ftl.ftlautocode.entity.TableColEntity;
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import java.util.List;
 import java.util.Map;
 
@@ -39,8 +40,12 @@ public class GenConst {
     public static final String XML_CUSTOM_END_CODE = "<!--~~~~~~~~~~~~~~~~~~~~~~ custom code end ~~~~~~~~~~~~~~~~~~~~~~-->";
 
     //数据库中的列值转换成list
-    public static final List<TableColEntity> tableColEntitys = new ArrayList<>();
+    public static final List<TableColEntity> tableColEntitys = Lists.newArrayList();
+
+    //表的注释
+    public static String tableComment = "";
 
     //公共替换的map
-    public static final Map<String,Object> commonReplaceMap = new HashMap<>();
+    public static final Map<String,Object> commonReplaceMap = Maps.newHashMap();
+
 }

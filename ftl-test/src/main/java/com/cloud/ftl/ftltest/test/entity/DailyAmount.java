@@ -1,27 +1,28 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.math.BigDecimal;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
+import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
 import com.cloud.ftl.ftlbasic.enums.Opt;
-import lombok.*;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel("DailyAmount")
+@ApiModel("【日前】1、日前报量管理")
 public class DailyAmount extends BaseQuery {
 
 	@ApiModelProperty("日前报量管理ID")
