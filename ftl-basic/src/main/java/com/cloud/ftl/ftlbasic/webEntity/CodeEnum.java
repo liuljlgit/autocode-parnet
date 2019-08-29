@@ -6,13 +6,16 @@ import java.util.Map;
 
 /**
  * 代码枚举类
+ * @author lijun
  */
 public enum CodeEnum {
+
     EXEC_OK(1000,"正确执行"),
     EXEC_ERROR(9999, "系统繁忙，请稍后再试！"),
-    EXEC_BUSI_ERROR(0000, "业务异常，请稍后再试！"),
+    EXEC_BUSI_ERROR(-1000, "业务异常，请稍后再试！"),
     EXEC_401(401,"权限确认失败"),
-    EXEC_403(403,"无权限访问");
+    EXEC_403(403,"无权限访问")
+    ;
 
     private Integer code;
     private String msg;

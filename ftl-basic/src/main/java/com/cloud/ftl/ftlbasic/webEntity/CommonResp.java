@@ -2,28 +2,34 @@ package com.cloud.ftl.ftlbasic.webEntity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
-
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel("bb")
+@ApiModel("通用返回实体")
 public class CommonResp<T> {
 
+    @ApiModelProperty("返回代码")
     private Integer code;
 
+    @ApiModelProperty("返回信息")
     private String msg;
 
+    @ApiModelProperty("返回实体列表")
     private List<T> listObject;
 
+    @ApiModelProperty("返回单个实体")
     private T object;
 
     {
         code = CodeEnum.EXEC_OK.getCode();
         msg = CodeEnum.EXEC_OK.getMsg();
-    }
-
-    public CommonResp() {
-
     }
 
     public CommonResp(Integer code, String msg) {
@@ -41,38 +47,6 @@ public class CommonResp<T> {
     }
 
     public CommonResp(T object) {
-        this.object = object;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public List<T> getListObject() {
-        return listObject;
-    }
-
-    public void setListObject(List<T> listObject) {
-        this.listObject = listObject;
-    }
-
-    public T getObject() {
-        return object;
-    }
-
-    public void setObject(T object) {
         this.object = object;
     }
 }

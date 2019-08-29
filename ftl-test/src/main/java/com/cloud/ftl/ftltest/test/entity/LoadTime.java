@@ -1,79 +1,81 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
-import com.cloud.ftl.ftlbasic.enums.Opt;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
+import com.cloud.ftl.ftlbasic.enums.Opt;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel("LoadTime")
 public class LoadTime extends BaseQuery {
 
-    /**
-     * field comment:实际负荷导入数据记录ID
-     */
+	@ApiModelProperty("实际负荷导入数据记录ID")
     @PrimaryKey
     private Long ltId;
 
-    /**
-     * field comment:电企业ID：来源于cloud_sys.entity.entity_id
-     */
+	@ApiModelProperty("电企业ID：来源于cloud_sys.entity.entity_id")
     private Integer entityId;
 
-    /**
-     * field comment:导入开始时间
-     */
+	@ApiModelProperty("导入开始时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date startTime;
 
-    /**
-     * field comment:导入结束时间
-     */
+	@ApiModelProperty("导入结束时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
 
-    /**
-     * field comment:状态 (0) 未处理 （1）已处理
-     */
+	@ApiModelProperty("状态 (0) 未处理 （1）已处理")
     private Byte status;
 
-    /**
-     * field comment:创建时间
-     */
+	@ApiModelProperty("创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
-    /**
-     * field comment:更新时间
-     */
+	@ApiModelProperty("更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date statusTime;
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String LT_ID = "lt_id";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String ENTITY_ID = "entity_id";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String START_TIME = "start_time";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String END_TIME = "end_time";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String STATUS = "status";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String CREATE_TIME = "create_time";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String STATUS_TIME = "status_time";
 
 

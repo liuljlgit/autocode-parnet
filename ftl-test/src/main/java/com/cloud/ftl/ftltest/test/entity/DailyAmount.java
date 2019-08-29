@@ -1,143 +1,136 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
-import com.cloud.ftl.ftlbasic.enums.Opt;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-
-import java.math.BigDecimal;
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
+import com.cloud.ftl.ftlbasic.enums.Opt;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel("DailyAmount")
 public class DailyAmount extends BaseQuery {
 
-    /**
-     * field comment:日前报量管理ID
-     */
+	@ApiModelProperty("日前报量管理ID")
     @PrimaryKey
     private Long daId;
 
-    /**
-     * field comment:电企业ID：来源于cloud_sys.entity.entity_id
-     */
+	@ApiModelProperty("电企业ID：来源于cloud_sys.entity.entity_id")
     private Integer entityId;
 
-    /**
-     * field comment:用电时间
-     */
+	@ApiModelProperty("用电时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date dateTime;
 
-    /**
-     * field comment:结算盈利
-     */
+	@ApiModelProperty("结算盈利")
     private BigDecimal settProfit;
 
-    /**
-     * field comment:支出金额
-     */
+	@ApiModelProperty("支出金额")
     private BigDecimal expendProfit;
 
-    /**
-     * field comment:收入金额
-     */
+	@ApiModelProperty("收入金额")
     private BigDecimal incomeProfit;
 
-    /**
-     * field comment:盈利小时数
-     */
+	@ApiModelProperty("盈利小时数")
     private Byte profitHours;
 
-    /**
-     * field comment:亏损小时数
-     */
+	@ApiModelProperty("亏损小时数")
     private Byte deficitHours;
 
-    /**
-     * field comment:当天最大负偏差率(%)
-     */
+	@ApiModelProperty("当天最大负偏差率(%)")
     private BigDecimal minusDeviation;
 
-    /**
-     * field comment:当天最大正偏差率(%)
-     */
+	@ApiModelProperty("当天最大正偏差率(%)")
     private BigDecimal positiveDeviation;
 
-    /**
-     * field comment:状态 (0) 弃用 （1）正常
-     */
+	@ApiModelProperty("状态 (0) 弃用 （1）正常")
     private Byte status;
 
-    /**
-     * field comment:
-     */
+	@ApiModelProperty("")
     private Byte ce;
 
-    /**
-     * field comment:
-     */
+	@ApiModelProperty("")
     private Byte sa;
 
-    /**
-     * field comment:创建时间
-     */
+	@ApiModelProperty("创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
-    /**
-     * field comment:更新时间
-     */
+	@ApiModelProperty("更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date statusTime;
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String DA_ID = "da_id";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String ENTITY_ID = "entity_id";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String DATE_TIME = "date_time";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String SETT_PROFIT = "sett_profit";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String EXPEND_PROFIT = "expend_profit";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String INCOME_PROFIT = "income_profit";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String PROFIT_HOURS = "profit_hours";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String DEFICIT_HOURS = "deficit_hours";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String MINUS_DEVIATION = "minus_deviation";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String POSITIVE_DEVIATION = "positive_deviation";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String STATUS = "status";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String CE = "ce";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String SA = "sa";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String CREATE_TIME = "create_time";
 
     @JsonIgnore
+    @ApiModelProperty(hidden = true)
     public static final transient String STATUS_TIME = "status_time";
 
 

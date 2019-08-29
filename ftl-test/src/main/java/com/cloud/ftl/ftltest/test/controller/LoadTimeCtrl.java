@@ -5,74 +5,55 @@ import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import lombok.extern.slf4j.Slf4j;
+import io.swagger.annotations.*;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
-/**
- * LoadTimeCtrl 控制层方法
- * @author lijun
- */
 @Slf4j
 @RestController
 @RequestMapping("/loadtime")
+@Api(tags = "LoadTime")
 public class LoadTimeCtrl{
 
     @Autowired
     private ILoadTimeService loadTimeService;
 
-    /**
-    * LoadTime 根据主键获取单个数据
-    * @return
-    * @throws Exception
-    */
     @GetMapping(value = "/obj")
-    public CommonResp<LoadTime> selectById(Long ltId) {
+    @ApiOperation(value = "根据主键查询" , notes = "author: llj")
+    @ApiImplicitParam(name="ltId", value="主键",required = true)
+    public CommonResp<LoadTime> selectById(@RequestParam("ltId") Long ltId) {
         if(Objects.isNull(ltId)){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
         return RespEntity.ok(loadTimeService.selectById(ltId,"没有符合条件的记录！"));
     }
 
-   /**
-    * LoadTime 根据实体对象查询所有列表
-    * @return
-    * @throws Exception
-    */
     @PostMapping(value = "/list")
-    public CommonResp<LoadTime> selectList(@RequestBody LoadTime entity){
-        return RespEntity.ok(loadTimeService.selectList(entity));
+    @ApiOperation(value = "查询所有列表" , notes = "author: llj")
+    public CommonResp<LoadTime> selectList(@RequestBody LoadTime loadTime){
+        return RespEntity.ok(loadTimeService.selectList(loadTime));
     }
 
-   /**
-    * LoadTime 根据实体对象查询分页列表
-    * @return
-    * @throws Exception
-    */
     @PostMapping(value = "/page")
-    public CommonResp<PageBean<LoadTime>> selectPage(@RequestBody LoadTime entity) {
-        return RespEntity.ok(loadTimeService.selectPage(entity));
+    @ApiOperation(value = "分页查询" , notes = "author: llj")
+    public CommonResp<PageBean<LoadTime>> selectPage(@RequestBody LoadTime loadTime) {
+        return RespEntity.ok(loadTimeService.selectPage(loadTime));
     }
 
-    /**
-    * LoadTime 新增或者修改记录，根据主键判断，主键为空则新增，否则修改。
-    * @return
-    * @throws Exception
-    */
+
     @PostMapping(value = "/obj")
+    @ApiOperation(value = "更新或者新增", notes = "author: llj")
     public CommonResp<Object> save(@RequestBody LoadTime loadTime) {
         loadTimeService.save(loadTime);
         return RespEntity.ok();
     }
 
-    /**
-    * LoadTime 根据主键删除数据
-    * @return
-    * @throws Exception
-    */
     @DeleteMapping(value = "/obj")
+    @ApiOperation(value = "根据主键删除",notes = "author: llj")
+    @ApiImplicitParam(name="ltId", value="主键",required = true)
     public CommonResp<Object> deleteById(@RequestParam(value="ltId") Long ltId) {
         if(Objects.isNull(ltId)){
            throw new BusiException("删除主键不可为空") ;

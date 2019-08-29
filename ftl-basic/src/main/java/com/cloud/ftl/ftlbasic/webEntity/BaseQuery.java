@@ -5,22 +5,31 @@ import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.query.ConditGroup;
 import com.cloud.ftl.ftlbasic.query.OrderBy;
 import com.cloud.ftl.ftlbasic.utils.MapUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
-public class BaseQuery extends BasePage {
+public class BaseQuery extends BasePage implements Serializable {
 
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private List<ConditGroup> conditGroups;
 
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private List<OrderBy> orderByList;
 
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private Map<String,List<Integer>> conditGroupsMap;
 
     private ConditGroup newConditGroup(Opt opt, String... groupNames){
