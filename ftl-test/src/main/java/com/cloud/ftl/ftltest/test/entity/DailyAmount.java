@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel("【日前】1、日前报量管理")
+@ApiModel("DailyAmount")
 public class DailyAmount extends BaseQuery {
 
 	@ApiModelProperty("日前报量管理ID")

@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel("通用返回实体")
+@ApiModel("CommonResp")
 public class CommonResp<T> {
 
     @ApiModelProperty("返回代码")

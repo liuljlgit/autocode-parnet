@@ -21,7 +21,7 @@ import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel("<#if tableComment == ''>${className}<#else>${tableComment}</#if>")
+@ApiModel("${className}")
 public class ${className} extends BaseQuery {
 <#list tableColEntitys as col>
 
