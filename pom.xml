@@ -112,6 +112,12 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+    
+        <!-- commons-lang3工具包 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
     </dependencies>
     
     <dependencyManagement>
@@ -151,6 +157,24 @@
                 <groupId>com.cloud.ftl</groupId>
                 <artifactId>ftl-test</artifactId>
                 <version>${ftl.test.version}</version>
+            </dependency>
+    
+            <!--swagger文档相关的依赖-->
+            <dependency>
+                <groupId>com.github.huanshare</groupId>
+                <artifactId>swagger-ui-layer</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.huanshare</groupId>
+                <artifactId>huan-swagger-core</artifactId>
+                <version>1.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>RELEASE</version>
+                <scope>compile</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

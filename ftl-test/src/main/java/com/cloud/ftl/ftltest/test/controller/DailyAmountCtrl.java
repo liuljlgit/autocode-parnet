@@ -6,6 +6,9 @@ import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,7 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @RequestMapping("/dailyamount")
+@Api(tags = "查询个人信息", description = "查询个人汇总")
 public class DailyAmountCtrl{
 
     @Autowired
@@ -43,9 +47,10 @@ public class DailyAmountCtrl{
     * @throws Exception
     */
     @PostMapping(value = "/list")
-    public CommonResp<DailyAmount> selectList(@RequestBody DailyAmount entity){
-
-        return RespEntity.ok(dailyAmountService.selectList(entity));
+    @ApiOperation("根据实体对象查询所有列表")
+    @ApiImplicitParam(name="dailyAmount", value="DailyAmount")
+    public CommonResp<DailyAmount> selectList(@RequestBody DailyAmount dailyAmount){
+        return RespEntity.ok(dailyAmountService.selectList(dailyAmount));
     }
 
    /**
