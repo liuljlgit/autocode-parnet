@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("分页实体")
+@ApiModel("PageBean")
 public class PageBean<T> {
 
     @ApiModelProperty("总页数")
