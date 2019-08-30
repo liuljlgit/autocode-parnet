@@ -40,19 +40,19 @@ public class MapUtil {
      * 设置默认值，设置操作，返回新值
      * @param map 需要操作的map
      * @param key 需要操作的key
-     * @param supplier1 设置操作回调方法
+     * @param supplier 设置操作回调方法
      * @param <K> key的类型
      * @param <V> value的类型
      * @return 操作之后返回的新值
      */
-    public static <K,V> V getHandleSetVal(Map<K,V> map,K key, Func1<V> supplier1){
+    public static <K,V> V getHandleSetVal(Map<K,V> map,K key, Func1<V> supplier){
         try {
             V oldVal;
             oldVal = map.getOrDefault(key,null);
             if(Objects.isNull(oldVal)){
                 return null;
             }
-            V call = supplier1.call(oldVal);
+            V call = supplier.call(oldVal);
             map.put(key,call);
             return oldVal;
         } catch (Exception e) {
