@@ -9,7 +9,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.stream.Collectors;
-import com.cloud.ftl.ftlbasic.service.AbstractBaseService;
+import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
 import org.springframework.data.redis.core.RedisTemplate;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
@@ -20,18 +20,8 @@ import com.cloud.ftl.ftltest.test.dao.IDailyAmountDao;
  * @author lijun
  */
 @Service("dailyAmountService")
-public class DailyAmountServiceImpl extends AbstractBaseService<DailyAmount> implements IDailyAmountService {
+public class DailyAmountServiceImpl extends BaseServiceImpl<DailyAmount> implements IDailyAmountService {
 
-    public DailyAmountServiceImpl(IDailyAmountDao dailyAmountDao,RedisTemplate<String,String> stringRedisTemplate){
-        super(dailyAmountDao,stringRedisTemplate);
-    }
-
-    @Autowired
-    private RedisTemplate<String,String> stringRedisTemplate;
-    @Autowired
-    private IDailyAmountDao dailyAmountDao;
-
-    //自定义Service方法
 
 
 }

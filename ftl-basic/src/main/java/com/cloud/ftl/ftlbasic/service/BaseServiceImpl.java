@@ -9,6 +9,7 @@ import com.cloud.ftl.ftlbasic.mapper.IBaseMapper;
 import com.cloud.ftl.ftlbasic.utils.FieldCacheUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,18 +21,20 @@ import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
 @Slf4j
-public abstract class AbstractBaseService<T> implements IBaseService<T> {
+public class BaseServiceImpl<T> implements IBaseService<T> {
 
     private final static Long START_ID = 1000000L;
 
+    @Autowired
     private IBaseMapper<T> baseMapper;
 
+    @Autowired
     private RedisTemplate redisTemplate;
 
-    public AbstractBaseService() {
+    public BaseServiceImpl() {
     }
 
-    public AbstractBaseService(IBaseMapper<T> baseMapper,RedisTemplate<String, String> redisTemplate) {
+    public BaseServiceImpl(IBaseMapper<T> baseMapper, RedisTemplate<String, String> redisTemplate) {
         this.baseMapper = baseMapper;
         this.redisTemplate = redisTemplate;
     }

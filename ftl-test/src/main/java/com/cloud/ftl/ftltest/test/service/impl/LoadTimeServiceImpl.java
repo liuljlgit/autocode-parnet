@@ -9,7 +9,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.stream.Collectors;
-import com.cloud.ftl.ftlbasic.service.AbstractBaseService;
+import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
 import org.springframework.data.redis.core.RedisTemplate;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
@@ -20,18 +20,8 @@ import com.cloud.ftl.ftltest.test.dao.ILoadTimeDao;
  * @author lijun
  */
 @Service("loadTimeService")
-public class LoadTimeServiceImpl extends AbstractBaseService<LoadTime> implements ILoadTimeService {
+public class LoadTimeServiceImpl extends BaseServiceImpl<LoadTime> implements ILoadTimeService {
 
-    public LoadTimeServiceImpl(ILoadTimeDao loadTimeDao,RedisTemplate<String,String> stringRedisTemplate){
-        super(loadTimeDao,stringRedisTemplate);
-    }
-
-    @Autowired
-    private RedisTemplate<String,String> stringRedisTemplate;
-    @Autowired
-    private ILoadTimeDao loadTimeDao;
-
-    //自定义Service方法
 
 
 }
