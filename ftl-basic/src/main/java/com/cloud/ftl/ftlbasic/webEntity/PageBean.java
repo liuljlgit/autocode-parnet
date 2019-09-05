@@ -21,6 +21,6 @@ public class PageBean<T> {
     private Long total;
 
     @ApiModelProperty("分页列表")
-    private List<T> data;
+    private List<T> list;
 
 }

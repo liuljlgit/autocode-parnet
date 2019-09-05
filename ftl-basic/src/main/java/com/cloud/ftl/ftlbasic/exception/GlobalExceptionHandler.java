@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public CommonResp<Object> defultExcepitonHandler(HttpServletRequest request, HttpServletResponse response,Exception e) {
+    public CommonResp defultExcepitonHandler(HttpServletRequest request, HttpServletResponse response,Exception e) {
         logger.info(e.getMessage(),e);
         return RespEntity.error(CodeEnum.EXEC_ERROR);
     }
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusiException.class)
     @ResponseBody
-    public CommonResp<Object> busiExcepitonHandler(HttpServletRequest request, HttpServletResponse response, BusiException e) {
+    public CommonResp busiExcepitonHandler(HttpServletRequest request, HttpServletResponse response, BusiException e) {
         logger.info(e.getMessage(),e);
         Integer code = e.getCode() == null ? CodeEnum.EXEC_BUSI_ERROR.getCode() : e.getCode();
         String msg = e.getMsg() == null ? CodeEnum.EXEC_BUSI_ERROR.getMsg() : e.getMsg();

@@ -29,31 +29,25 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
     private IBaseMapper<T> baseMapper;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,Object> redisTemplate;
 
-    public BaseServiceImpl() {
-    }
-
-    public BaseServiceImpl(IBaseMapper<T> baseMapper, RedisTemplate<String, String> redisTemplate) {
-        this.baseMapper = baseMapper;
-        this.redisTemplate = redisTemplate;
-    }
+    public BaseServiceImpl() {}
 
     @Override
     public Long selectMaxId() {
         ParameterizedType type = (ParameterizedType)this.getClass().getGenericSuperclass();
         Class tClass = (Class) type.getActualTypeArguments()[0];
         redisTemplate.setEnableTransactionSupport(false);
-        return (Long) redisTemplate.execute((RedisCallback<Long>) connection->{
+        return redisTemplate.execute((RedisCallback<Long>) connection -> {
             String tableIdKey = "SEQ:".concat(tClass.getSimpleName());
-            if ( !connection.exists(tableIdKey.getBytes())){
+            if (!Objects.requireNonNull(connection.exists(tableIdKey.getBytes()))){
                 Long id = baseMapper.selectMaxId();
                 id = ( null == id || id == 0) ?  START_ID +  Long.valueOf("1") : ++ id;
-                if ( connection.setNX(tableIdKey.getBytes(), String.valueOf(id).getBytes())){
+                if (Objects.requireNonNull(connection.setNX(tableIdKey.getBytes(), String.valueOf(id).getBytes()))){
                     return  id;
                 }
             }
-            return connection.incr(redisTemplate.getStringSerializer().serialize(tableIdKey));
+            return connection.incr(Objects.requireNonNull(redisTemplate.getStringSerializer().serialize(tableIdKey)));
         });
     }
 

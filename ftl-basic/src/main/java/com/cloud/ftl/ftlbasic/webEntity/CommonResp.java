@@ -6,14 +6,13 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("CommonResp")
-public class CommonResp<T> {
+public class CommonResp {
 
     @ApiModelProperty("返回代码")
     private Integer code;
@@ -21,11 +20,8 @@ public class CommonResp<T> {
     @ApiModelProperty("返回信息")
     private String msg;
 
-    @ApiModelProperty("返回实体列表")
-    private List<T> listObject;
-
-    @ApiModelProperty("返回单个实体")
-    private T object;
+    @ApiModelProperty("返回数据体")
+    private Object body;
 
     {
         code = CodeEnum.EXEC_OK.getCode();
@@ -42,11 +38,7 @@ public class CommonResp<T> {
         this.msg = codeEnum.getMsg();
     }
 
-    public CommonResp(List<T> listObject) {
-        this.listObject = listObject;
-    }
-
-    public CommonResp(T object) {
-        this.object = object;
+    public CommonResp(Object body) {
+        this.body = body;
     }
 }
