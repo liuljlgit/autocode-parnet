@@ -3,50 +3,91 @@ package com.cloud.ftl.ftlbasic.exception;
 import com.cloud.ftl.ftlbasic.webEntity.CodeEnum;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 全局异常处理类
+ * @author lijun
  */
-
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
-
-    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-
-    /**
-     * 默认异常
-     * @param request
-     * @param e
-     * @return
-     */
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public CommonResp defultExcepitonHandler(HttpServletRequest request, HttpServletResponse response,Exception e) {
-        logger.info(e.getMessage(),e);
-        return RespEntity.error(CodeEnum.EXEC_ERROR);
-    }
 
     /**
      * 业务异常
-     * @param request
-     * @param e
+     * @param ex
      * @return
      */
     @ExceptionHandler(BusiException.class)
     @ResponseBody
-    public CommonResp busiExcepitonHandler(HttpServletRequest request, HttpServletResponse response, BusiException e) {
-        logger.info(e.getMessage(),e);
-        Integer code = e.getCode() == null ? CodeEnum.EXEC_BUSI_ERROR.getCode() : e.getCode();
-        String msg = e.getMsg() == null ? CodeEnum.EXEC_BUSI_ERROR.getMsg() : e.getMsg();
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public CommonResp busiExcepitonHandler(BusiException ex) {
+        log.info(ex.getMessage(),ex);
+        Integer code = ex.getCode() == null ? CodeEnum.EXEC_BUSI_ERROR.getCode() : ex.getCode();
+        String msg = ex.getMsg() == null ? CodeEnum.EXEC_BUSI_ERROR.getMsg() : ex.getMsg();
         return RespEntity.error(code,msg);
+    }
+
+    /**
+     * 表单异常处理
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler({ MethodArgumentNotValidException.class })
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public CommonResp processArgumentBindException(MethodArgumentNotValidException ex) {
+        log.error("表单校验异常",ex);
+        BindingResult bindingResult = ex.getBindingResult();
+        List<FieldError> fieldError = bindingResult.getFieldErrors();
+        CommonResp errorResp = new CommonResp();
+        Map<String,String> validMap = fieldError.stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage,(a, b)->a));
+        errorResp.setCode(CodeEnum.EXEC_PARAM_ERROR.getCode());
+        errorResp.setMsg(CodeEnum.EXEC_PARAM_ERROR.getMsg());
+        errorResp.setValidMap(validMap);
+        return errorResp;
+    }
+
+    /**
+     * spring mvc参数校验
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public CommonResp missingServletRequestParameterException(MissingServletRequestParameterException ex){
+        log.error("参数校验异常",ex);
+        CommonResp errorResp = new CommonResp();
+        errorResp.setCode(CodeEnum.EXEC_SYS_ERROR.getCode());
+        errorResp.setMsg(CodeEnum.EXEC_SYS_ERROR.getMsg() + ":" + ex.getMessage());
+        return errorResp;
+    }
+
+    /**
+     * 默认异常
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public CommonResp defultExcepitonHandler(Exception ex) {
+        log.info(ex.getMessage(),ex);
+        return RespEntity.error(CodeEnum.EXEC_ERROR);
     }
 
 }
