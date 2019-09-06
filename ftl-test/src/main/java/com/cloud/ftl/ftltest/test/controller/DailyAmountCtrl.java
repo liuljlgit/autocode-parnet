@@ -10,11 +10,15 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Slf4j
+@Validated
 @RestController
 @RequestMapping("/dailyamount")
 @Api(tags = "【日前】1、日前报量管理")
@@ -26,7 +30,7 @@ public class DailyAmountCtrl{
     @GetMapping(value = "/obj")
     @ApiOperation(value = "根据主键查询" , notes = "author: llj")
     @ApiImplicitParam(name="daId", value="主键",required = true)
-    public CommonResp selectById(@RequestParam("daId") Long daId) {
+    public CommonResp selectById(@RequestParam("daId") @NotNull(message = "daId不能为空") Long daId) {
         if(Objects.isNull(daId)){
             throw new BusiException("请输入要获取的数据的ID") ;
         }
@@ -35,7 +39,7 @@ public class DailyAmountCtrl{
 
     @PostMapping(value = "/list")
     @ApiOperation(value = "查询所有列表" , notes = "author: llj")
-    public CommonResp selectList(@RequestBody DailyAmount dailyAmount){
+    public CommonResp selectList(@RequestBody  DailyAmount dailyAmount){
         return RespEntity.ok(dailyAmountService.selectList(dailyAmount));
     }
 
@@ -48,7 +52,7 @@ public class DailyAmountCtrl{
 
     @PostMapping(value = "/obj")
     @ApiOperation(value = "更新或者新增", notes = "author: llj")
-    public CommonResp save(@RequestBody DailyAmount dailyAmount) {
+    public CommonResp save(@RequestBody @Valid DailyAmount dailyAmount) {
         dailyAmountService.save(dailyAmount);
         return RespEntity.ok();
     }

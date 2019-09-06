@@ -1,20 +1,22 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.math.BigDecimal;
-import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
+import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
 import com.cloud.ftl.ftlbasic.enums.Opt;
-import lombok.*;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -29,10 +31,12 @@ public class DailyAmount extends BaseQuery {
     private Long daId;
 
 	@ApiModelProperty("电企业ID：来源于cloud_sys.entity.entity_id")
+    @NotNull(message = "123456")
     private Integer entityId;
 
 	@ApiModelProperty("用电时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @NotNull(message = "8961561")
     private Date dateTime;
 
 	@ApiModelProperty("结算盈利")

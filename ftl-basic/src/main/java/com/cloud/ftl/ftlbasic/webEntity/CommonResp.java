@@ -6,7 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.Map;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,7 +26,7 @@ public class CommonResp {
     private Object body;
 
     @ApiModelProperty("错误信息集合")
-    private Map<String,String> validMap;
+    private List<ErrorField> errorFields;
 
     {
         code = CodeEnum.EXEC_OK.getCode();
@@ -44,5 +45,16 @@ public class CommonResp {
 
     public CommonResp(Object body) {
         this.body = body;
+    }
+
+    @ApiModel("ErrorField")
+    @Data
+    public static class ErrorField  {
+
+        @ApiModelProperty("错误域")
+        private String field;
+
+        @ApiModelProperty("错误信息")
+        private String errMsg;
     }
 }

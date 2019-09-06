@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -54,10 +53,15 @@ public class GlobalExceptionHandler {
         BindingResult bindingResult = ex.getBindingResult();
         List<FieldError> fieldError = bindingResult.getFieldErrors();
         CommonResp errorResp = new CommonResp();
-        Map<String,String> validMap = fieldError.stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage,(a, b)->a));
+        List<CommonResp.ErrorField> errorFields = fieldError.stream().map(e -> {
+            CommonResp.ErrorField errorField = new CommonResp.ErrorField();
+            errorField.setField(e.getField());
+            errorField.setErrMsg(e.getDefaultMessage());
+            return errorField;
+        }).collect(Collectors.toList());
         errorResp.setCode(CodeEnum.EXEC_PARAM_ERROR.getCode());
         errorResp.setMsg(CodeEnum.EXEC_PARAM_ERROR.getMsg());
-        errorResp.setValidMap(validMap);
+        errorResp.setErrorFields(errorFields);
         return errorResp;
     }
 
