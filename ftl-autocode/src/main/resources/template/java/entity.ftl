@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
+import com.cloud.ftl.ftlbasic.annotation.PrimaryKey;
 
 @Data
 @Builder

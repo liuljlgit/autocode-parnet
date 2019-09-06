@@ -1,4 +1,4 @@
-package com.cloud.ftl.ftlbasic.aspect;
+package com.cloud.ftl.ftlbasic.annotation;
 
 import java.lang.annotation.*;
 

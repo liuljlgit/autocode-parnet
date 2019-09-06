@@ -1,6 +1,6 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
+import com.cloud.ftl.ftlbasic.annotation.PrimaryKey;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.fasterxml.jackson.annotation.JsonFormat;

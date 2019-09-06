@@ -1,11 +1,8 @@
 package com.cloud.ftl.ftltest.test.entity;
 
-import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.math.BigDecimal;
+
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import lombok.*;
@@ -14,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
+import com.cloud.ftl.ftlbasic.annotation.PrimaryKey;
 
 @Data
 @Builder

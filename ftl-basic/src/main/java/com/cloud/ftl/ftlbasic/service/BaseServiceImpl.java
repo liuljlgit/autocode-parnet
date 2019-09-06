@@ -1,7 +1,7 @@
 package com.cloud.ftl.ftlbasic.service;
 
 
-import com.cloud.ftl.ftlbasic.aspect.PrimaryKey;
+import com.cloud.ftl.ftlbasic.annotation.PrimaryKey;
 import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.func.FuncMap;
