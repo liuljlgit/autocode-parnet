@@ -25,8 +25,11 @@ public class CommonResp {
     @ApiModelProperty("返回数据体")
     private Object body;
 
-    @ApiModelProperty("错误信息集合")
+    @ApiModelProperty("错误信息域列表")
     private List<ErrorField> errorFields;
+
+    @ApiModelProperty("错误信息列表")
+    private List<String> errorMsgs;
 
     {
         code = CodeEnum.EXEC_OK.getCode();

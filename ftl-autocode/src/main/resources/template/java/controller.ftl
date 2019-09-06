@@ -5,6 +5,8 @@ import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.constraints.NotNull;
 import io.swagger.annotations.*;
 import ${inftServicePackagePath}.I${className}Service;
 import ${entityPackagePath}.${className};
@@ -14,6 +16,7 @@ import java.util.Objects;
 
 @Slf4j
 @RestController
+@Validated
 @RequestMapping("/${className?lower_case}")
 @Api(tags = "<#if tableComment == ''>${className}<#else>${tableComment}</#if>")
 public class ${className}Ctrl{
@@ -24,10 +27,7 @@ public class ${className}Ctrl{
     @GetMapping(value = "/obj")
     @ApiOperation(value = "根据主键查询" , notes = "author: llj")
     @ApiImplicitParam(name="${IdColEntity.fieldJavaName}", value="主键",required = true)
-    public CommonResp selectById(@RequestParam("${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) {
-        if(Objects.isNull(${IdColEntity.fieldJavaName})){
-            throw new BusiException("请输入要获取的数据的ID") ;
-        }
+    public CommonResp selectById(@RequestParam("${IdColEntity.fieldJavaName}") @NotNull ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) {
         return RespEntity.ok(${objectName}Service.selectById(${IdColEntity.fieldJavaName},"没有符合条件的记录！"));
     }
 
@@ -54,10 +54,7 @@ public class ${className}Ctrl{
     @DeleteMapping(value = "/obj")
     @ApiOperation(value = "根据主键删除",notes = "author: llj")
     @ApiImplicitParam(name="${IdColEntity.fieldJavaName}", value="主键",required = true)
-    public CommonResp deleteById(@RequestParam(value="${IdColEntity.fieldJavaName}") ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) {
-        if(Objects.isNull(${IdColEntity.fieldJavaName})){
-           throw new BusiException("删除主键不可为空") ;
-        }
+    public CommonResp deleteById(@RequestParam(value="${IdColEntity.fieldJavaName}") @NotNull ${IdColEntity.fieldJavaType} ${IdColEntity.fieldJavaName}) {
         ${objectName}Service.deleteById(${IdColEntity.fieldJavaName});
         return RespEntity.ok();
     }

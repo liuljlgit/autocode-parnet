@@ -45,7 +45,14 @@
 			<groupId>com.github.huanshare</groupId>
 			<artifactId>swagger-ui-layer</artifactId>
 		</dependency>
-	</dependencies>
+        
+        <!-- jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.1.2.RELEASE</version>
+        </dependency>
+    </dependencies>
 	
 	<build>
 		<plugins>

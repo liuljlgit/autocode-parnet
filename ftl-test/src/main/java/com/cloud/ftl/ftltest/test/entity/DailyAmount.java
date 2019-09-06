@@ -13,7 +13,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -31,12 +30,10 @@ public class DailyAmount extends BaseQuery {
     private Long daId;
 
 	@ApiModelProperty("电企业ID：来源于cloud_sys.entity.entity_id")
-    @NotNull(message = "123456")
     private Integer entityId;
 
 	@ApiModelProperty("用电时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    @NotNull(message = "8961561")
     private Date dateTime;
 
 	@ApiModelProperty("结算盈利")

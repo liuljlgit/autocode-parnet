@@ -1,6 +1,5 @@
 package com.cloud.ftl.ftltest.test.controller;
 
-import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
@@ -10,12 +9,14 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
+import javax.validation.constraints.NotNull;
 
 @Slf4j
 @RestController
+@Validated
 @RequestMapping("/loadtime")
 @Api(tags = "LoadTime")
 public class LoadTimeCtrl{
@@ -26,10 +27,7 @@ public class LoadTimeCtrl{
     @GetMapping(value = "/obj")
     @ApiOperation(value = "根据主键查询" , notes = "author: llj")
     @ApiImplicitParam(name="ltId", value="主键",required = true)
-    public CommonResp selectById(@RequestParam("ltId") Long ltId) {
-        if(Objects.isNull(ltId)){
-            throw new BusiException("请输入要获取的数据的ID") ;
-        }
+    public CommonResp selectById(@RequestParam("ltId") @NotNull Long ltId) {
         return RespEntity.ok(loadTimeService.selectById(ltId,"没有符合条件的记录！"));
     }
 
@@ -56,10 +54,7 @@ public class LoadTimeCtrl{
     @DeleteMapping(value = "/obj")
     @ApiOperation(value = "根据主键删除",notes = "author: llj")
     @ApiImplicitParam(name="ltId", value="主键",required = true)
-    public CommonResp deleteById(@RequestParam(value="ltId") Long ltId) {
-        if(Objects.isNull(ltId)){
-           throw new BusiException("删除主键不可为空") ;
-        }
+    public CommonResp deleteById(@RequestParam(value="ltId") @NotNull Long ltId) {
         loadTimeService.deleteById(ltId);
         return RespEntity.ok();
     }
