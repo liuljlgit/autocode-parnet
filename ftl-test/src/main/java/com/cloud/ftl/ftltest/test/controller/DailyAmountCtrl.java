@@ -1,5 +1,6 @@
 package com.cloud.ftl.ftltest.test.controller;
 
+import com.cloud.ftl.ftlbasic.annotation.PatternDate;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
@@ -9,10 +10,12 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Slf4j
 @RestController
@@ -24,11 +27,12 @@ public class DailyAmountCtrl{
     @Autowired
     private IDailyAmountService dailyAmountService;
 
+    @PatternDate
     @GetMapping(value = "/obj")
     @ApiOperation(value = "根据主键查询" , notes = "author: llj")
-    @ApiImplicitParam(name="daId", value="主键",required = true)
-    public CommonResp selectById(@RequestParam("daId") @NotNull Long daId) {
-        return RespEntity.ok(dailyAmountService.selectById(daId,"没有符合条件的记录！"));
+    @ApiImplicitParam(name="startDate", value="主键",required = true)
+    public CommonResp selectById(@RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") @NotNull Date startDate) {
+        return RespEntity.ok(dailyAmountService.selectById(1000L,"没有符合条件的记录！"));
     }
 
     @PostMapping(value = "/list")
