@@ -1,10 +1,10 @@
 package com.cloud.ftl.ftlbasic.aspect;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 @Aspect
 @Slf4j
@@ -21,22 +22,53 @@ public class PatternDateAspect {
     @Pointcut("@annotation(com.cloud.ftl.ftlbasic.annotation.PatternDate)")
     public void annotationPoinCut(){}
 
-    @Before("annotationPoinCut()")
-    public void before(JoinPoint joinPoint) {
+    @Around("annotationPoinCut()")
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
-        String[] strings = methodSignature.getParameterNames();
-        Object[] args = joinPoint.getArgs();
-        Arrays.stream(args).forEach((Object e) -> {
-            if(e instanceof Date && e.getClass().getSimpleName().startsWith("start")){
-                log.info("------- format startDate --------");
-                e = getDayStartDate((Date)e);
+        String[] argNames = methodSignature.getParameterNames();    //参数名
+        Object[] args = joinPoint.getArgs();                        //参数值
+        for(int i=0;i < argNames.length;i++){
+            String argName = argNames[i];
+            Object argVal = args[i];
+            if(argVal instanceof Date){
+                if(argName.startsWith("start")){
+                    argVal = getDayStartDate((Date)argVal);
+                }
+                if(argName.startsWith("end")){
+                    argVal = getDayEndDate((Date)argVal);
+                }
+                args[i] = argVal;
             }
-            if(e instanceof Date && e.getClass().getSimpleName().startsWith("end")){
-                log.info("------- format endDate --------");
-                e = getDayEndDate((Date)e);
+            if(!argVal.getClass().getTypeName().startsWith("java.util")
+                    && !argVal.getClass().getTypeName().startsWith("java.lang")){
+                patternField(argVal);
             }
-        });
+        }
+        return joinPoint.proceed(args);
+    }
+
+    private void patternField(Object arg) {
+        Arrays.stream(arg.getClass().getDeclaredFields())
+                //.filter(field -> Objects.nonNull(field.getAnnotation(PatternDate.class)))
+                .filter(field -> field.getGenericType().getTypeName().equals("java.util.Date"))
+                .peek(field -> field.setAccessible(true))
+                .forEach(field -> {
+                    try {
+                        Object obj = field.get(arg);
+                        if (Objects.isNull(obj)) {
+                            return;
+                        }
+                        String fieldName = field.getName();
+                        if(fieldName.startsWith("start")){
+                            field.set(arg, getDayStartDate((Date)obj));
+                        } else if(fieldName.startsWith("end")) {
+                            field.set(arg, getDayEndDate((Date)obj));
+                        }
+                    } catch (Exception e) {
+                        log.error("反射注入时间报错", e);
+                    }
+                });
     }
 
      private Date getDayStartDate(Date date) {
