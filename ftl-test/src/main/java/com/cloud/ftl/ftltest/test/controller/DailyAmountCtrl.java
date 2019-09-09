@@ -10,12 +10,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Slf4j
 @RestController
@@ -30,9 +28,8 @@ public class DailyAmountCtrl{
     @PatternDate
     @GetMapping(value = "/obj")
     @ApiOperation(value = "根据主键查询" , notes = "author: llj")
-    @ApiImplicitParam(name="startDate", value="主键",required = true)
-    public CommonResp selectById(@RequestParam("startDate") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") @NotNull Date startDate) {
-        return RespEntity.ok(dailyAmountService.selectById(1000L,"没有符合条件的记录！"));
+    public CommonResp selectById(@RequestParam(value="daId") @NotNull Long daId) {
+        return RespEntity.ok(dailyAmountService.selectById(daId,"没有符合条件的记录！"));
     }
 
     @PostMapping(value = "/list")
