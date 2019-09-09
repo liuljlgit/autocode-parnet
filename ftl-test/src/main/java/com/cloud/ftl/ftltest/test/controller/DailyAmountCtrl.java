@@ -1,19 +1,18 @@
 package com.cloud.ftl.ftltest.test.controller;
 
-import com.cloud.ftl.ftlbasic.annotation.PatternDate;
-import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
+import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
+import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
 import javax.validation.constraints.NotNull;
+import io.swagger.annotations.*;
+import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftltest.test.entity.DailyAmount;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -25,10 +24,10 @@ public class DailyAmountCtrl{
     @Autowired
     private IDailyAmountService dailyAmountService;
 
-    @PatternDate
     @GetMapping(value = "/obj")
     @ApiOperation(value = "根据主键查询" , notes = "author: llj")
-    public CommonResp selectById(@RequestParam(value="daId") @NotNull Long daId) {
+    @ApiImplicitParam(name="daId", value="主键",required = true)
+    public CommonResp selectById(@RequestParam("daId") @NotNull Long daId) {
         return RespEntity.ok(dailyAmountService.selectById(daId,"没有符合条件的记录！"));
     }
 
