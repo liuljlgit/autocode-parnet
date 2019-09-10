@@ -51,4 +51,6 @@ public interface IBaseService<T> extends IService<T>{
     void deleteBatchIds(Collection<? extends Serializable> list);
 
     void save(T t, Update... args);
+
+    void saveBatch(List<T> list, Update... args);
 }

@@ -65,6 +65,8 @@ public class GenService {
         GenConst.commonReplaceMap.put("ctrlPackagePath",genReq.getCtrlPath());
         GenConst.commonReplaceMap.put("inftServicePackagePath",genReq.getInftServicePath());
         GenConst.commonReplaceMap.put("implServicePackagePath",genReq.getImplServicePath());
+        GenConst.commonReplaceMap.put("inftCachePackagePath",genReq.getInftCachePath());
+        GenConst.commonReplaceMap.put("implCachePackagePath",genReq.getImplCachePath());
         GenConst.commonReplaceMap.put("daoPackagePath",genReq.getDaoPath());
         GenConst.commonReplaceMap.put("entityPackagePath",genReq.getEntityPath());
         GenConst.commonReplaceMap.put("tableComment",GenConst.tableComment);
@@ -106,6 +108,32 @@ public class GenService {
         FreemarkerUtil.outputFile(genReq.getImplServicePath(),
                 GenConst.IMPL_SERVICE_FTL_PATH,
                 GenConst.commonReplaceMap.get("className").toString().concat("ServiceImpl"),
+                true,
+                genReq.getUpdate(),
+                GenConst.commonReplaceMap);
+    }
+
+    /**
+     * 生成cache接口文件
+     * @param genReq
+     */
+    public void genInftCacheFile(GenReq genReq) {
+        FreemarkerUtil.outputFile(genReq.getInftCachePath(),
+                GenConst.INFT_CACHE_FTL_PATH,
+                "I"+GenConst.commonReplaceMap.get("className").toString().concat("Cache"),
+                true,
+                genReq.getUpdate(),
+                GenConst.commonReplaceMap);
+    }
+
+    /**
+     * 生成cache实现文件
+     * @param genReq
+     */
+    public void genImplCacheFile(GenReq genReq) {
+        FreemarkerUtil.outputFile(genReq.getImplCachePath(),
+                GenConst.IMPL_CACHE_FTL_PATH,
+                GenConst.commonReplaceMap.get("className").toString().concat("CacheImpl"),
                 true,
                 genReq.getUpdate(),
                 GenConst.commonReplaceMap);

@@ -56,6 +56,18 @@ public class GenReq {
     private String implServicePath;
 
     /**
+     * 生成service接口文件的包路径
+     * "com.cloud.gen.ftlautocode.test.cache.inft"
+     */
+    private String inftCachePath;
+
+    /**
+     * 生成service实现文件的包路径
+     * "com.cloud.gen.ftlautocode.test.cache.impl"
+     */
+    private String implCachePath;
+
+    /**
      * 生成dao文件的包路径
      * "com.cloud.gen.ftlautocode.test.dao"
      */
@@ -190,4 +202,19 @@ public class GenReq {
         this.tableNames = tableNames;
     }
 
+    public String getInftCachePath() {
+        return inftCachePath;
+    }
+
+    public void setInftCachePath(String inftCachePath) {
+        this.inftCachePath = inftCachePath;
+    }
+
+    public String getImplCachePath() {
+        return implCachePath;
+    }
+
+    public void setImplCachePath(String implCachePath) {
+        this.implCachePath = implCachePath;
+    }
 }

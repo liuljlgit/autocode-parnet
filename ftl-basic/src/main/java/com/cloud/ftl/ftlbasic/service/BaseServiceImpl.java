@@ -384,6 +384,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         }
     }
 
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveBatch(List<T> list,Update... args){
         if(CollectionUtils.isEmpty(list)){

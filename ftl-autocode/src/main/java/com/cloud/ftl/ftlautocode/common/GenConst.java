@@ -21,6 +21,8 @@ public class GenConst {
     public static final String CTRL_FTL_PATH = "/java/controller.ftl";
     public static final String INFT_SERVICE_FTL_PATH = "/java/inftservice.ftl";
     public static final String IMPL_SERVICE_FTL_PATH = "/java/implservice.ftl";
+    public static final String INFT_CACHE_FTL_PATH = "/java/inftcache.ftl";
+    public static final String IMPL_CACHE_FTL_PATH = "/java/implcache.ftl";
     public static final String DAO_FTL_PATH = "/java/dao.ftl";
     public static final String ENTITY_PATH = "/java/entity.ftl";
     public static final String XML_FTL_PATH = "/xml/mybatis.ftl";

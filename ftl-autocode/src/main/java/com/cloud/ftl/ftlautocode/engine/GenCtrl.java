@@ -19,6 +19,8 @@ import java.util.Objects;
         "ctrlPath":"com.cloud.ftl.ftltest.test.controller",
         "inftServicePath":"com.cloud.ftl.ftltest.test.service.inft",
         "implServicePath":"com.cloud.ftl.ftltest.test.service.impl",
+        "inftCachePath":"com.cloud.ftl.ftltest.test.cache.inft",
+        "implCachePath":"com.cloud.ftl.ftltest.test.cache.impl",
         "daoPath":"com.cloud.ftl.ftltest.test.dao",
         "entityPath":"com.cloud.ftl.ftltest.test.entity",
         "tableConstPath":"com.cloud.ftl.ftltest.test.constant",
@@ -90,5 +92,9 @@ public class GenCtrl {
             genService.genDaoFile(genReq);
             //6.生成xml文件
             genService.genXmlFile(genReq);
+            //7.生成inft cache文件
+            genService.genInftCacheFile(genReq);
+            //8.生成impl cache文件
+            genService.genImplCacheFile(genReq);
         }
 }
