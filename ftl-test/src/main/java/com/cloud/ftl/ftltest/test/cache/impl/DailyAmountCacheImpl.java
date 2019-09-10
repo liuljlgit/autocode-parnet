@@ -6,6 +6,7 @@ import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
 import com.cloud.ftl.ftltest.test.cache.inft.IDailyAmountCache;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,13 @@ import java.util.Objects;
  * @author lijun
  */
 @Service("dailyAmountCache")
+@Slf4j
 public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implements IDailyAmountCache {
 
     private final static String CLS_NAME = DailyAmount.class.getSimpleName();
     private final static String PAGE_IDS_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("IDS");
     private final static String PAGE_TOTAL_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("TOTAL");
+    private final static String CUSTOM_QUERY_KEY = "CUSTOM:QUERY:".concat(CLS_NAME);
 
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
@@ -40,8 +43,10 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         DailyAmount redisVal = (DailyAmount)redisTemplate.opsForValue().get(entityKey);
         if(Objects.nonNull(redisVal)){
+            log.info(" --------- Get Entity From Cache --------- ");
             return redisVal;
         }
+        log.info(" --------- Get Entity From DB --------- ");
         DailyAmount dbVal = super.selectById(id, nullErrMsg);
         if(Objects.nonNull(dbVal)){
             redisTemplate.opsForValue().set(entityKey,dbVal);

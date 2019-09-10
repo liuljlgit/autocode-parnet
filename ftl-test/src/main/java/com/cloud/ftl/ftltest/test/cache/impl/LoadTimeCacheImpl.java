@@ -6,6 +6,7 @@ import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
 import com.cloud.ftl.ftltest.test.cache.inft.ILoadTimeCache;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.Objects;
  * @author lijun
  */
 @Service("loadTimeCache")
+@Slf4j
 public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoadTimeCache {
 
     private final static String CLS_NAME = LoadTime.class.getSimpleName();

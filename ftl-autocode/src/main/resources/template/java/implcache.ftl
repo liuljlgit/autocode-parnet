@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ${entityPackagePath}.${className};
 import ${inftServicePackagePath}.I${className}Service;
 import ${inftCachePackagePath}.I${className}Cache;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -20,12 +21,14 @@ import java.util.Objects;
  * I${className}Cache cache实现类
  * @author lijun
  */
+@Slf4j
 @Service("${objectName}Cache")
 public class ${className}CacheImpl extends BaseServiceImpl<${className}> implements I${className}Cache {
 
     private final static String CLS_NAME = ${className}.class.getSimpleName();
     private final static String PAGE_IDS_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("IDS");
     private final static String PAGE_TOTAL_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("TOTAL");
+    private final static String CUSTOM_QUERY_KEY = "CUSTOM:QUERY:".concat(CLS_NAME);
 
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
@@ -41,8 +44,10 @@ public class ${className}CacheImpl extends BaseServiceImpl<${className}> impleme
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         ${className} redisVal = (${className})redisTemplate.opsForValue().get(entityKey);
         if(Objects.nonNull(redisVal)){
+            log.info(" --------- Get Entity From Cache --------- ");
             return redisVal;
         }
+        log.info(" --------- Get Entity From DB --------- ");
         ${className} dbVal = super.selectById(id, nullErrMsg);
         if(Objects.nonNull(dbVal)){
             redisTemplate.opsForValue().set(entityKey,dbVal);
