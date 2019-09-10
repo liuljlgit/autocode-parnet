@@ -1,15 +1,19 @@
 package com.cloud.ftl.ftltest.test.cache.impl;
 
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
 import com.cloud.ftl.ftltest.test.cache.inft.IDailyAmountCache;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * IDailyAmountCache cache实现类
@@ -18,6 +22,13 @@ import java.util.List;
 @Service("dailyAmountCache")
 public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implements IDailyAmountCache {
 
+    private final static String CLS_NAME = DailyAmount.class.getSimpleName();
+    private final static String PAGE_IDS_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("IDS");
+    private final static String PAGE_TOTAL_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("TOTAL");
+
+    @Autowired
+    RedisTemplate<String,Object> redisTemplate;
+
     @Override
     public Long selectMaxId() {
         return super.selectMaxId();
@@ -25,7 +36,17 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
 
     @Override
     public DailyAmount selectById(Serializable id, String... nullErrMsg) {
-        return super.selectById(id, nullErrMsg);
+        String entityKey = CLS_NAME.concat(":").concat(String.valueOf(id));
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        DailyAmount redisVal = (DailyAmount)redisTemplate.opsForValue().get(entityKey);
+        if(Objects.nonNull(redisVal)){
+            return redisVal;
+        }
+        DailyAmount dbVal = super.selectById(id, nullErrMsg);
+        if(Objects.nonNull(dbVal)){
+            redisTemplate.opsForValue().set(entityKey,dbVal);
+        }
+        return dbVal;
     }
 
     @Override

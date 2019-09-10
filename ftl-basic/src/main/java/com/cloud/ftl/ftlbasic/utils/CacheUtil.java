@@ -44,16 +44,21 @@ public class CacheUtil {
      * field comment:
      * 获取某个类的Field
      */
-    static LoadingCache<Pair<Class<?>,String>,Field> fieldCache = CacheBuilder.newBuilder()
+    static LoadingCache<Tuple3<Class<?>,String,Boolean>,Field> fieldCache = CacheBuilder.newBuilder()
             .maximumSize(100)
             .expireAfterAccess(FC_DURATION, FC_TIMEUNIT)
             .build(
-                    new CacheLoader<Pair<Class<?>,String>,Field>(){
+                    new CacheLoader<Tuple3<Class<?>,String,Boolean>,Field>(){
                         @Override
-                        public Field load(Pair<Class<?>,String> key) throws NoSuchFieldException {
-                            Class<?> classz = key.getLeft();
-                            String fieldName = key.getRight();
-                            return classz.getDeclaredField(fieldName);
+                        public Field load(Tuple3<Class<?>,String,Boolean> key) {
+                            Class<?> classz = key._1;
+                            String fieldName = key._2;
+                            Boolean isContainSuper = key._3;
+                            if(isContainSuper){
+                                return ReflectUtil.getFieldContainSuper(classz,fieldName,false);
+                            } else {
+                                return ReflectUtil.getField(classz,fieldName,false);
+                            }
                         }
                     }
             );
@@ -72,24 +77,6 @@ public class CacheUtil {
                         @Override
                         public Map<Field,Field> load(Tuple3<Class<?>,Class<?>,Boolean> key) {
                             return ReflectUtil.getEqualFields(key._1,key._2,key._3,false);
-                        }
-                    }
-            );
-
-    /**
-     * 获取某个类的Method
-     * key._1：target class
-     * key._2：方法名称
-     * key._3：参数类型
-     */
-    static LoadingCache<Tuple3<Class<?>,String,Class<?>[]>,Method> methodCache = CacheBuilder.newBuilder()
-            .maximumSize(100)
-            .expireAfterAccess(FC_DURATION, FC_TIMEUNIT)
-            .build(
-                    new CacheLoader<Tuple3<Class<?>,String,Class<?>[]>,Method>(){
-                        @Override
-                        public Method load(Tuple3<Class<?>,String,Class<?>[]> key) {
-                            return ReflectUtil.getMethod(false,key._1,key._2,key._3);
                         }
                     }
             );

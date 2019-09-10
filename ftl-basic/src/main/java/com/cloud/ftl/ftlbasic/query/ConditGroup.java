@@ -1,11 +1,12 @@
 package com.cloud.ftl.ftlbasic.query;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cloud.ftl.ftlbasic.constant.SqlConst;
 import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.cloud.ftl.ftlbasic.webEntity.SqlCondition;
 import com.google.common.collect.Lists;
 import lombok.Data;
-import org.javatuples.Quartet;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
@@ -36,16 +37,10 @@ public class ConditGroup {
     private String opt = Opt.AND.getCode();
 
     /**
-     * 这个字段主要是方便转换成redis key而存在的
-     * 一个Quartet对应的是一个Criterion
-     * 一个Criteria生成的redis key值是：opt + quartets
-     * 元组信息：记录四个内容分别是
-     * 1.链接信息 and 还是 or
-     * 2.对象的属性字段（对象的表字段）
-     * 3.操作类型
-     * 4.操作值 使用fastJson转换成字符串
+     * field comment:
+     * 用来记录sql语句,用于生成rediskey
      */
-    private List<Quartet<Opt,String, Opt, String>> quartets = Lists.newArrayList();
+    private List<SqlCondition> sqlConditions = Lists.newArrayList();
 
     public ConditGroup() {}
 
@@ -127,7 +122,7 @@ public class ConditGroup {
         if(values.length > 2){
             throw new RuntimeException("参数个数不正确");
         }
-        addQuartets(Opt.AND,field,opt,values);
+        addSqlCondition(Opt.AND.getCode(),field,opt.getCode(),values);
         if(values.length == 0){
             if(!Opt.IS_NULL.equals(opt) && !Opt.IS_NOT_NULL.equals(opt)){
                 throw new RuntimeException("操作类型不合法,此处只能为‘is null’或者‘is not null’");
@@ -163,7 +158,7 @@ public class ConditGroup {
         if(values.length > 2){
             throw new RuntimeException("参数个数不正确");
         }
-        addQuartets(Opt.OR,field,opt,values);
+        addSqlCondition(Opt.OR.getCode(),field,opt.getCode(),values);
         if(values.length == 0){
             if(!Opt.IS_NULL.equals(opt) && !Opt.IS_NOT_NULL.equals(opt)){
                 throw new RuntimeException("操作类型不合法,此处只能为‘is null’或者‘is not null’");
@@ -188,20 +183,44 @@ public class ConditGroup {
 
 
     /**
-     * 保存sql信息到元组中
-     *
-     * @param conOpt
-     * @param field
-     * @param dbOpt
-     * @param values
      * 例子: and da_id = 1000
+     * @param conStr
+     * @param field
+     * @param optStr
+     * @param values
      */
-    public void addQuartets(Opt conOpt,String field,Opt dbOpt,Object... values){
+    public void addSqlCondition(String conStr,String field,String optStr,Object... values){
         if(values.length > 0){
-            quartets.add(new Quartet<>(conOpt,field,dbOpt, JSON.toJSONString(values)));
+            sqlConditions.add(new SqlCondition(conStr,field,optStr, JSONObject.toJSONString(values)));
         } else {
-            quartets.add(new Quartet<>(conOpt,field,dbOpt, SqlConst.NULL));
+            sqlConditions.add(new SqlCondition(conStr,field,optStr,null));
         }
+    }
+
+    public String getConditionRedisKey(){
+        if(CollectionUtils.isEmpty(sqlConditions)){
+            return "";
+        }
+        if(sqlConditions.size() == 1){
+            StringBuilder str = new StringBuilder("");
+            getConditionStr(str);
+            return str.toString();
+        }
+        StringBuilder str = new StringBuilder("(");
+        getConditionStr(str);
+        str.append(" )");
+        return str.toString();
+    }
+
+    private void getConditionStr(StringBuilder str) {
+        sqlConditions.forEach(e -> {
+            String values = e.getValues();
+            if(StringUtils.isEmpty(values)){
+                str.append(e.getConStr()).append(e.getField()).append(e.getOptStr());
+            } else {
+                str.append(e.getConStr()).append(e.getField()).append(e.getOptStr()).append(e.getValues());
+            }
+        });
     }
 
 }

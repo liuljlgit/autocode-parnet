@@ -76,7 +76,7 @@ public class ReflectUtil {
     public static Field getField(Class<?> clazz,String fieldName, Boolean useCache){
         try {
             if(useCache){
-                return CacheUtil.fieldCache.get(Pair.of(clazz,fieldName));
+                return CacheUtil.fieldCache.get(Tuple.of(clazz,fieldName,false));
             } else {
                 return clazz.getDeclaredField(fieldName);
             }
@@ -89,7 +89,7 @@ public class ReflectUtil {
     public static Field getFieldContainSuper(Class<?> clazz,String fieldName, Boolean useCache){
         try {
             if(useCache){
-                return CacheUtil.fieldCache.get(Pair.of(clazz,fieldName));
+                return CacheUtil.fieldCache.get(Tuple.of(clazz,fieldName,true));
             } else {
                 Map<String, Field> fieldMap = allField(clazz, false)
                         .stream().collect(Collectors.toMap(Field::getName, Function.identity(), (oldValue,newValue)->oldValue));
@@ -230,41 +230,33 @@ public class ReflectUtil {
         }
     }
 
-    public static Method getMethod(Boolean useCache, Class<?> clazz, String methodName, Class<?>... parameterTypes){
+    public static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes){
         try {
-            if(useCache){
-                Class<?>[] parameterArr = Arrays.stream(parameterTypes).toArray(Class<?>[]::new);
-                return CacheUtil.methodCache.get(Tuple.of(clazz,methodName,parameterArr));
-            } else {
-                return clazz.getDeclaredMethod(methodName,parameterTypes);
-            }
+            return clazz.getDeclaredMethod(methodName,parameterTypes);
         } catch (Exception e) {
             log.error("获取实体【{}】Method方法【{}】失败",clazz,methodName);
         }
         return null;
     }
 
-    public static Method getMethodContainSuper(Boolean useCache, Class<?> clazz, String methodName, Class<?>... parameterTypes){
+    public static Method getMethodContainSuper(Class<?> clazz, String methodName, Class<?>... parameterTypes){
         try {
-            if(useCache){
-                Class<?>[] parameterArr = Arrays.stream(parameterTypes).toArray(Class<?>[]::new);
-                return CacheUtil.methodCache.get(Tuple.of(clazz,methodName,parameterArr));
-            } else {
-                Map<Pair<String, Class<?>[]>, Method> methodMap = allMethod(clazz, false)
-                        .stream().collect(Collectors.toMap(e -> Pair.of(e.getName(), e.getParameterTypes()), Function.identity(),
-                                (oldValue, newValue) -> oldValue));
-                return methodMap.getOrDefault(Pair.of(methodName,parameterTypes),null);
+            if(Objects.isNull(clazz)){
+                return null;
             }
+            return clazz.getDeclaredMethod(methodName, parameterTypes);
+        } catch (NoSuchMethodException e){
+            getMethodContainSuper(clazz.getSuperclass(),methodName,parameterTypes);
         } catch (Exception e) {
             log.error("获取实体【{}】Method方法【{}】失败",clazz,methodName);
         }
         return null;
     }
 
-    public static <T> Object invokeMethod(Boolean useCache,T t, String methodName,Object... parameterValues){
+    public static <T> Object invokeMethod(T t, String methodName,Object... parameterValues){
         try {
             Class<?>[] parameterTypes = Arrays.stream(parameterValues).map(Object::getClass).toArray(Class<?>[]::new);
-            Method method = getMethod(useCache, t.getClass(), methodName, parameterTypes);
+            Method method = getMethod(t.getClass(), methodName, parameterTypes);
             if(Objects.nonNull(method)){
                 return method.invoke(t, parameterValues);
             } else {
@@ -276,10 +268,10 @@ public class ReflectUtil {
         }
     }
 
-    public static <T> Object invokeMethodContainSuper(Boolean useCache,T t, String methodName,Object... parameterValues){
+    public static <T> Object invokeMethodContainSuper(T t, String methodName,Object... parameterValues){
         try {
             Class<?>[] parameterTypes = Arrays.stream(parameterValues).map(Object::getClass).toArray(Class<?>[]::new);
-            Method method = getMethodContainSuper(useCache, t.getClass(), methodName, parameterTypes);
+            Method method = getMethodContainSuper(t.getClass(), methodName, parameterTypes);
             if(Objects.nonNull(method)){
                 return method.invoke(t,parameterValues);
             } else {

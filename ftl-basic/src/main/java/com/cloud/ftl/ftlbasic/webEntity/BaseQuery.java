@@ -72,7 +72,7 @@ public class BaseQuery extends BasePage implements Serializable {
         }
         ConditGroup conditGroup = newConditGroup(Opt.AND, field);
         conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode());
-        conditGroup.addQuartets(Opt.AND,field,opt);
+        conditGroup.addSqlCondition(Opt.AND.getCode(),field,opt.getCode());
     }
 
     /**
@@ -85,7 +85,7 @@ public class BaseQuery extends BasePage implements Serializable {
         }
         ConditGroup conditGroup = newConditGroup(Opt.AND, field);
         conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode(),firstParam,secondParam);
-        conditGroup.addQuartets(Opt.AND,field,opt,firstParam,secondParam);
+        conditGroup.addSqlCondition(Opt.AND.getCode(),field,opt.getCode(),firstParam,secondParam);
     }
 
     /**
@@ -106,7 +106,7 @@ public class BaseQuery extends BasePage implements Serializable {
             value = SqlConst.PERCENT + value + SqlConst.PERCENT;
         }
         conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode(),value);
-        conditGroup.addQuartets(Opt.AND,field,opt,value);
+        conditGroup.addSqlCondition(Opt.AND.getCode(),field,opt.getCode(),value);
     }
 
 

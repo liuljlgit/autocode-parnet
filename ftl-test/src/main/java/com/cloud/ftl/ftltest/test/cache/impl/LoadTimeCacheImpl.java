@@ -1,16 +1,19 @@
 package com.cloud.ftl.ftltest.test.cache.impl;
 
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
-import com.cloud.ftl.ftltest.test.entity.LoadTime;
-import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.cache.inft.ILoadTimeCache;
+import com.cloud.ftl.ftltest.test.entity.LoadTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * ILoadTimeCache cache实现类
@@ -19,6 +22,13 @@ import java.util.List;
 @Service("loadTimeCache")
 public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoadTimeCache {
 
+    private final static String CLS_NAME = LoadTime.class.getSimpleName();
+    private final static String PAGE_IDS_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("IDS");
+    private final static String PAGE_TOTAL_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("TOTAL");
+
+    @Autowired
+    RedisTemplate<String,Object> redisTemplate;
+
     @Override
     public Long selectMaxId() {
         return super.selectMaxId();
@@ -26,7 +36,17 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
 
     @Override
     public LoadTime selectById(Serializable id, String... nullErrMsg) {
-        return super.selectById(id, nullErrMsg);
+        String entityKey = CLS_NAME.concat(":").concat(String.valueOf(id));
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        LoadTime redisVal = (LoadTime)redisTemplate.opsForValue().get(entityKey);
+        if(Objects.nonNull(redisVal)){
+            return redisVal;
+        }
+        LoadTime dbVal = super.selectById(id, nullErrMsg);
+        if(Objects.nonNull(dbVal)){
+            redisTemplate.opsForValue().set(entityKey,dbVal);
+        }
+        return dbVal;
     }
 
     @Override

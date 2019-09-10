@@ -1,8 +1,11 @@
 package ${implCachePackagePath};
 
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import ${entityPackagePath}.${className};
 import ${inftServicePackagePath}.I${className}Service;
 import ${inftCachePackagePath}.I${className}Cache;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * I${className}Cache cache实现类
@@ -19,6 +23,13 @@ import java.util.List;
 @Service("${objectName}Cache")
 public class ${className}CacheImpl extends BaseServiceImpl<${className}> implements I${className}Cache {
 
+    private final static String CLS_NAME = ${className}.class.getSimpleName();
+    private final static String PAGE_IDS_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("IDS");
+    private final static String PAGE_TOTAL_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("TOTAL");
+
+    @Autowired
+    RedisTemplate<String,Object> redisTemplate;
+
     @Override
     public Long selectMaxId() {
         return super.selectMaxId();
@@ -26,7 +37,17 @@ public class ${className}CacheImpl extends BaseServiceImpl<${className}> impleme
 
     @Override
     public ${className} selectById(Serializable id, String... nullErrMsg) {
-        return super.selectById(id, nullErrMsg);
+        String entityKey = CLS_NAME.concat(":").concat(String.valueOf(id));
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        ${className} redisVal = (${className})redisTemplate.opsForValue().get(entityKey);
+        if(Objects.nonNull(redisVal)){
+            return redisVal;
+        }
+        ${className} dbVal = super.selectById(id, nullErrMsg);
+        if(Objects.nonNull(dbVal)){
+            redisTemplate.opsForValue().set(entityKey,dbVal);
+        }
+        return dbVal;
     }
 
     @Override

@@ -48,7 +48,6 @@ public class GenService {
             //获取表的注释
             commentRs.next();
             GenConst.tableComment = commentRs.getString("TABLE_COMMENT");
-            System.out.println("aa");
         } catch (SQLException e) {
             e.printStackTrace();
         }
