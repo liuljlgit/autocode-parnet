@@ -1,10 +1,13 @@
 package com.cloud.ftl.ftltest.test.controller;
 
+import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.cloud.ftl.ftlbasic.utils.QueryKeyUtil;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.cache.inft.IDailyAmountCache;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Slf4j
 @RestController
@@ -32,6 +36,16 @@ public class DailyAmountCtrl{
     @ApiOperation(value = "根据主键查询" , notes = "author: llj")
     @ApiImplicitParam(name="daId", value="主键",required = true)
     public CommonResp selectById(@RequestParam("daId") @NotNull Long daId) {
+        DailyAmount dailyAmount = new DailyAmount();
+        dailyAmount.setPage(1);
+        dailyAmount.setPageSize(1000);
+        dailyAmount.setDateTime(new Date());
+        dailyAmount.setDaId(1000L);
+        dailyAmount.andCe(Opt.IS_NULL);
+        dailyAmount.andCe(Opt.IN, Lists.newArrayList((byte)0,(byte)1));
+        dailyAmount.andConditGroup().andCondit(DailyAmount.STATUS,Opt.IS_NULL).orCondit(DailyAmount.STATUS,Opt.EQUAL,(byte)1);
+        dailyAmount.orConditGroup().andCondit(DailyAmount.DA_ID,Opt.EQUAL,1L).andCondit(DailyAmount.DATE_TIME,Opt.EQUAL,new Date());
+        QueryKeyUtil.getQueryKey(dailyAmount,true);
         return RespEntity.ok(dailyAmountCache.selectById(daId,"没有符合条件的记录！"));
     }
 

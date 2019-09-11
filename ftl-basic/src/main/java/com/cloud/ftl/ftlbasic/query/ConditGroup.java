@@ -199,28 +199,36 @@ public class ConditGroup {
 
     public String getConditionRedisKey(){
         if(CollectionUtils.isEmpty(sqlConditions)){
-            return "";
+            return SqlConst.BLANK;
         }
         if(sqlConditions.size() == 1){
-            StringBuilder str = new StringBuilder("");
+            StringBuilder str = new StringBuilder(this.opt);
             getConditionStr(str);
             return str.toString();
         }
-        StringBuilder str = new StringBuilder("(");
+        StringBuilder str = new StringBuilder(this.opt + SqlConst.LEFT_BRACKETS);
         getConditionStr(str);
-        str.append(" )");
+        str.append(SqlConst.RIGHT_BRACKETS);
         return str.toString();
     }
 
     private void getConditionStr(StringBuilder str) {
-        sqlConditions.forEach(e -> {
+        Boolean isFirst = Boolean.TRUE;
+        for (SqlCondition e : sqlConditions) {
             String values = e.getValues();
-            if(StringUtils.isEmpty(values)){
-                str.append(e.getConStr()).append(e.getField()).append(e.getOptStr());
+            String firstConStr;
+            if(isFirst){
+                firstConStr = SqlConst.BLANK;
+                isFirst = Boolean.FALSE;
             } else {
-                str.append(e.getConStr()).append(e.getField()).append(e.getOptStr()).append(e.getValues());
+                firstConStr = e.getConStr();
             }
-        });
+            if(StringUtils.isEmpty(values)){
+                str.append(firstConStr).append(e.getField()).append(e.getOptStr());
+            } else {
+                str.append(firstConStr).append(e.getField()).append(e.getOptStr()).append(e.getValues());
+            }
+        }
     }
 
 }

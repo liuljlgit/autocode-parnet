@@ -77,7 +77,7 @@ public class QueryKeyUtil {
                 if(Objects.isNull(page) || Objects.isNull(pageSize)){
                     throw new BusiException("请设置正确的分页值和分页大小");
                 }
-                sqlKey = sqlKey.append("SQL_PAGE:").append("PAGE:").append(page.toString()).append("PAGESIZE:").append(pageSize.toString());
+                sqlKey = sqlKey.append(":SQL_PAGE:").append("PAGE:").append(page.toString()).append(":PAGESIZE:").append(pageSize.toString());
             }
             log.info("SQL_KEY = {}",sqlKey.toString());
             return SecureUtil.md5X16Str(sqlKey.toString(),"utf-8");

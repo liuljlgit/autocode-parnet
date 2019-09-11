@@ -21,4 +21,10 @@ public interface SqlConst {
     String PERCENT = "%";
 
     String NULL = "null";
+
+    String BLANK = "";
+
+    String LEFT_BRACKETS = "(";
+
+    String RIGHT_BRACKETS = ")";
 }
