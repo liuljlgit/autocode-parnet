@@ -1,33 +1,40 @@
 package com.cloud.ftl.ftltest.test.cache.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.cloud.ftl.ftlbasic.enums.Update;
+import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
+import com.cloud.ftl.ftlbasic.utils.QueryKeyUtil;
 import com.cloud.ftl.ftltest.test.cache.inft.IDailyAmountCache;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * IDailyAmountCache cache实现类
  * @author lijun
  */
-@Service("dailyAmountCache")
 @Slf4j
+@Service("dailyAmountCache")
 public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implements IDailyAmountCache {
 
     private final static String CLS_NAME = DailyAmount.class.getSimpleName();
-    private final static String PAGE_IDS_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("IDS");
-    private final static String PAGE_TOTAL_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("TOTAL");
-    private final static String CUSTOM_QUERY_KEY = "CUSTOM:QUERY:".concat(CLS_NAME);
+    private final static String PAGE_IDS_KEY = CLS_NAME.concat(":PAGE:").concat("IDS:");
+    private final static String PAGE_TOTAL_KEY = CLS_NAME.concat(":PAGE:").concat("TOTAL:");
+    private final static String CUSTOM_QUERY_KEY = CLS_NAME.concat(":CUSTOM_QUERY:");
 
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
@@ -41,32 +48,87 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
     public DailyAmount selectById(Serializable id, String... nullErrMsg) {
         String entityKey = CLS_NAME.concat(":").concat(String.valueOf(id));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
-        DailyAmount redisVal = (DailyAmount)redisTemplate.opsForValue().get(entityKey);
-        if(Objects.nonNull(redisVal)){
+        DailyAmount cacheVal = (DailyAmount)redisTemplate.opsForValue().get(entityKey);
+        if(Objects.nonNull(cacheVal)){
             log.info(" --------- Get Entity From Cache --------- ");
-            return redisVal;
+            return cacheVal;
         }
         log.info(" --------- Get Entity From DB --------- ");
         DailyAmount dbVal = super.selectById(id, nullErrMsg);
         if(Objects.nonNull(dbVal)){
             redisTemplate.opsForValue().set(entityKey,dbVal);
+            redisTemplate.expire(entityKey,30, TimeUnit.MINUTES);
         }
         return dbVal;
     }
 
     @Override
     public DailyAmount selectOne(DailyAmount query, String... nullErrMsg) {
-        return super.selectOne(query, nullErrMsg);
+        query.setPage(1);
+        query.setPageSize(1);
+        String queryKey = CUSTOM_QUERY_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.TRUE));
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        DailyAmount cacheVal = (DailyAmount)redisTemplate.opsForValue().get(queryKey);
+        if(Objects.nonNull(cacheVal)){
+            log.info(" --------- Get Entity From Cache --------- ");
+            return cacheVal;
+        }
+        log.info(" --------- Get Entity From DB --------- ");
+        DailyAmount dbVal = super.selectOne(query, nullErrMsg);
+        if(Objects.nonNull(dbVal)){
+            redisTemplate.opsForValue().set(queryKey,dbVal);
+            redisTemplate.expire(queryKey,30, TimeUnit.MINUTES);
+        }
+        return dbVal;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<DailyAmount> selectList(DailyAmount query, String... emptyErrMsg) {
-        return super.selectList(query, emptyErrMsg);
+        String queryKey = PAGE_IDS_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE));
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        List<String> cacheIds = (List<String>)redisTemplate.opsForValue().get(queryKey);
+        if(!CollectionUtils.isEmpty(cacheIds)){
+            List<Object> cacheValues = redisTemplate.opsForValue().multiGet(cacheIds);
+            if(Objects.nonNull(cacheValues) && cacheIds.size() == cacheValues.size()){
+                log.info(" --------- Get Entity From Cache --------- ");
+                return JSONArray.parseArray(JSON.toJSONString(cacheValues), DailyAmount.class);
+            }
+        }
+        log.info(" --------- Get Entity From DB --------- ");
+        List<DailyAmount> dbValues = super.selectList(query, emptyErrMsg);
+        List<String> dbIds = Lists.newArrayList();
+        dbValues.forEach(e -> {
+            String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getDaId()));
+            dbIds.add(entityKey);
+            redisTemplate.opsForValue().set(entityKey,e);
+            redisTemplate.expire(entityKey,30,TimeUnit.MINUTES);
+        });
+        redisTemplate.opsForValue().set(queryKey,dbIds);
+        redisTemplate.expire(queryKey,30,TimeUnit.MINUTES);
+        return dbValues;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<DailyAmount> selectList(DailyAmount query, List<String> fieldList, String... emptyErrMsg) {
-        return super.selectList(query, fieldList, emptyErrMsg);
+        if(CollectionUtils.isEmpty(fieldList)){
+            throw new BusiException("请指定查询的域");
+        }
+        String queryKey = CUSTOM_QUERY_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE,fieldList.toArray(new String[fieldList.size()])));
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        Object cacheValues = redisTemplate.opsForValue().get(queryKey);
+        if(Objects.nonNull(cacheValues)){
+            log.info(" --------- Get Entity From Cache --------- ");
+            return JSONArray.parseArray(JSON.toJSONString(cacheValues),DailyAmount.class);
+        }
+        log.info(" --------- Get Entity From DB --------- ");
+        List<DailyAmount> dbValues = super.selectList(query, fieldList, emptyErrMsg);
+        if(!CollectionUtils.isEmpty(dbValues)){
+            redisTemplate.opsForValue().set(queryKey,dbValues);
+            redisTemplate.expire(queryKey,30, TimeUnit.MINUTES);
+        }
+        return dbValues;
     }
 
     @Override

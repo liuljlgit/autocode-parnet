@@ -5,6 +5,7 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.query.ConditGroup;
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -37,7 +38,9 @@ public class QueryKeyUtil {
             List<ConditGroup> conditGroups = (List<ConditGroup>) Objects.requireNonNull(conditGroupsMet).invoke(t);
             StringBuilder conditionStr = new StringBuilder("");
             StringBuilder fieldStr = new StringBuilder("");
-            conditGroups.forEach(e -> conditionStr.append(e.getConditionRedisKey()));
+            if(!CollectionUtils.isEmpty(conditGroups)){
+                conditGroups.forEach(e -> conditionStr.append(e.getConditionRedisKey()));
+            }
             List<Field> fields = ReflectUtil.getFields(t.getClass(), true, true);
             fields.stream()
                     .filter(field -> Modifier.isPrivate(field.getModifiers()))

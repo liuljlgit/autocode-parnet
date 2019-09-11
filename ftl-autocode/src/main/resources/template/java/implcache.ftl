@@ -1,21 +1,27 @@
 package ${implCachePackagePath};
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.cloud.ftl.ftlbasic.enums.Update;
+import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import ${entityPackagePath}.${className};
-import ${inftServicePackagePath}.I${className}Service;
+import com.cloud.ftl.ftlbasic.utils.QueryKeyUtil;
 import ${inftCachePackagePath}.I${className}Cache;
+import ${entityPackagePath}.${className};
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * I${className}Cache cache实现类
@@ -26,9 +32,9 @@ import java.util.Objects;
 public class ${className}CacheImpl extends BaseServiceImpl<${className}> implements I${className}Cache {
 
     private final static String CLS_NAME = ${className}.class.getSimpleName();
-    private final static String PAGE_IDS_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("IDS");
-    private final static String PAGE_TOTAL_KEY = "PAGE:".concat(CLS_NAME).concat(":").concat("TOTAL");
-    private final static String CUSTOM_QUERY_KEY = "CUSTOM:QUERY:".concat(CLS_NAME);
+    private final static String PAGE_IDS_KEY = CLS_NAME.concat(":PAGE:").concat("IDS:");
+    private final static String PAGE_TOTAL_KEY = CLS_NAME.concat(":PAGE:").concat("TOTAL:");
+    private final static String CUSTOM_QUERY_KEY = CLS_NAME.concat(":CUSTOM_QUERY:");
 
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
@@ -42,32 +48,87 @@ public class ${className}CacheImpl extends BaseServiceImpl<${className}> impleme
     public ${className} selectById(Serializable id, String... nullErrMsg) {
         String entityKey = CLS_NAME.concat(":").concat(String.valueOf(id));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
-        ${className} redisVal = (${className})redisTemplate.opsForValue().get(entityKey);
-        if(Objects.nonNull(redisVal)){
+        ${className} cacheVal = (${className})redisTemplate.opsForValue().get(entityKey);
+        if(Objects.nonNull(cacheVal)){
             log.info(" --------- Get Entity From Cache --------- ");
-            return redisVal;
+            return cacheVal;
         }
         log.info(" --------- Get Entity From DB --------- ");
         ${className} dbVal = super.selectById(id, nullErrMsg);
         if(Objects.nonNull(dbVal)){
             redisTemplate.opsForValue().set(entityKey,dbVal);
+            redisTemplate.expire(entityKey,30, TimeUnit.MINUTES);
         }
         return dbVal;
     }
 
     @Override
     public ${className} selectOne(${className} query, String... nullErrMsg) {
-        return super.selectOne(query, nullErrMsg);
+        query.setPage(1);
+        query.setPageSize(1);
+        String queryKey = CUSTOM_QUERY_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.TRUE));
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        ${className} cacheVal = (${className})redisTemplate.opsForValue().get(queryKey);
+        if(Objects.nonNull(cacheVal)){
+            log.info(" --------- Get Entity From Cache --------- ");
+            return cacheVal;
+        }
+        log.info(" --------- Get Entity From DB --------- ");
+        ${className} dbVal = super.selectOne(query, nullErrMsg);
+        if(Objects.nonNull(dbVal)){
+            redisTemplate.opsForValue().set(queryKey,dbVal);
+            redisTemplate.expire(queryKey,30, TimeUnit.MINUTES);
+        }
+        return dbVal;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<${className}> selectList(${className} query, String... emptyErrMsg) {
-        return super.selectList(query, emptyErrMsg);
+        String queryKey = PAGE_IDS_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE));
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        List<String> cacheIds = (List<String>)redisTemplate.opsForValue().get(queryKey);
+        if(!CollectionUtils.isEmpty(cacheIds)){
+            List<Object> cacheValues = redisTemplate.opsForValue().multiGet(cacheIds);
+            if(Objects.nonNull(cacheValues) && cacheIds.size() == cacheValues.size()){
+                log.info(" --------- Get Entity From Cache --------- ");
+                return JSONArray.parseArray(JSON.toJSONString(cacheValues), ${className}.class);
+            }
+        }
+        log.info(" --------- Get Entity From DB --------- ");
+        List<${className}> dbValues = super.selectList(query, emptyErrMsg);
+        List<String> dbIds = Lists.newArrayList();
+        dbValues.forEach(e -> {
+            String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.get${IdColEntity.fieldJavaName?cap_first}()));
+            dbIds.add(entityKey);
+            redisTemplate.opsForValue().set(entityKey,e);
+            redisTemplate.expire(entityKey,30,TimeUnit.MINUTES);
+        });
+        redisTemplate.opsForValue().set(queryKey,dbIds);
+        redisTemplate.expire(queryKey,30,TimeUnit.MINUTES);
+        return dbValues;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<${className}> selectList(${className} query, List<String> fieldList, String... emptyErrMsg) {
-        return super.selectList(query, fieldList, emptyErrMsg);
+        if(CollectionUtils.isEmpty(fieldList)){
+            throw new BusiException("请指定查询的域");
+        }
+        String queryKey = CUSTOM_QUERY_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE,fieldList.toArray(new String[fieldList.size()])));
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        Object cacheValues = redisTemplate.opsForValue().get(queryKey);
+        if(Objects.nonNull(cacheValues)){
+            log.info(" --------- Get Entity From Cache --------- ");
+            return JSONArray.parseArray(JSON.toJSONString(cacheValues),${className}.class);
+        }
+        log.info(" --------- Get Entity From DB --------- ");
+        List<${className}> dbValues = super.selectList(query, fieldList, emptyErrMsg);
+        if(!CollectionUtils.isEmpty(dbValues)){
+            redisTemplate.opsForValue().set(queryKey,dbValues);
+            redisTemplate.expire(queryKey,30, TimeUnit.MINUTES);
+        }
+        return dbValues;
     }
 
     @Override

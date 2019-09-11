@@ -100,6 +100,9 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
         if(Objects.isNull(query)){
             throw new BusiException("查询参数不能为空");
         }
+        if(CollectionUtils.isEmpty(fieldList)){
+            throw new BusiException("请指定查询的域");
+        }
         List<T> ts = baseMapper.selectFieldList(query,fieldList);
         if(CollectionUtils.isEmpty(ts) && emptyErrMsg.length > 0){
             throw new BusiException(emptyErrMsg[0]);
@@ -117,7 +120,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
     }
 
     @Override
-    public final PageBean<T> selectPage(T query) {
+    public PageBean<T> selectPage(T query) {
         try {
             Integer page = (Integer)FieldCacheUtil.getPMet.invoke(query);
             Integer pageSize = (Integer)FieldCacheUtil.getPSMet.invoke(query);
@@ -135,17 +138,15 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
     }
 
     @Override
-    public final PageBean<T> selectPage(T query, List<String> fieldList) {
+    public PageBean<T> selectPage(T query, List<String> fieldList) {
         try {
+            if(CollectionUtils.isEmpty(fieldList)){
+                throw new BusiException("请指定查询的域");
+            }
             Integer page = (Integer)FieldCacheUtil.getPMet.invoke(query);
             Integer pageSize = (Integer)FieldCacheUtil.getPSMet.invoke(query);
-            if(Objects.isNull(page)){
-                FieldCacheUtil.setPMet.invoke(query,1);
-                log.warn("due to page field is null,set default page = 1");
-            }
-            if(Objects.isNull(pageSize)){
-                FieldCacheUtil.setPSMet.invoke(query,1000);
-                log.warn("due to pageSize field is null,set default pageSize = 1000");
+            if(Objects.isNull(page) || Objects.isNull(pageSize)){
+                throw new BusiException("请设置正确的分页值和分页大小");
             }
             FieldCacheUtil.setIndexMet.invoke(query,(page-1)*pageSize);
             Long total = selectCount(query);
