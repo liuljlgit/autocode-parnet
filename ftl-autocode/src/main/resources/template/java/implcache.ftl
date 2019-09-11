@@ -239,42 +239,52 @@ public class ${className}CacheImpl extends BaseServiceImpl<${className}> impleme
 
     @Override
     public int add(${className} entity) {
-        return super.add(entity);
+        int addCount = super.add(entity);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
+        return addCount;
     }
 
     @Override
     public void addBatch(List<${className}> list) {
         super.addBatch(list);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
     public void addBatch(List<${className}> list, int batchSize) {
         super.addBatch(list, batchSize);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
     public void delete(${className} entity) {
         super.delete(entity);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
     public int deleteById(Serializable id) {
-        return super.deleteById(id);
+        int deleteCount = super.deleteById(id);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
+        return deleteCount;
     }
 
     @Override
     public void deleteBatchIds(Collection<? extends Serializable> list) {
         super.deleteBatchIds(list);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
     public void save(${className} ${objectName}, Update... args) {
         super.save(${objectName}, args);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
     public void saveBatch(List<${className}> list, Update... args) {
         super.saveBatch(list, args);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
 }

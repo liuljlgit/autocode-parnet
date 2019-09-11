@@ -239,42 +239,52 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
 
     @Override
     public int add(DailyAmount entity) {
-        return super.add(entity);
+        int addCount = super.add(entity);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
+        return addCount;
     }
 
     @Override
     public void addBatch(List<DailyAmount> list) {
         super.addBatch(list);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
     public void addBatch(List<DailyAmount> list, int batchSize) {
         super.addBatch(list, batchSize);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
     public void delete(DailyAmount entity) {
         super.delete(entity);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
     public int deleteById(Serializable id) {
-        return super.deleteById(id);
+        int deleteCount = super.deleteById(id);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
+        return deleteCount;
     }
 
     @Override
     public void deleteBatchIds(Collection<? extends Serializable> list) {
         super.deleteBatchIds(list);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
     public void save(DailyAmount dailyAmount, Update... args) {
         super.save(dailyAmount, args);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
     public void saveBatch(List<DailyAmount> list, Update... args) {
         super.saveBatch(list, args);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
 }
