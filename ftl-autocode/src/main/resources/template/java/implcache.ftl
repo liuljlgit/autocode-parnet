@@ -8,13 +8,13 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
 import com.cloud.ftl.ftlbasic.utils.QueryKeyUtil;
+import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import ${inftCachePackagePath}.I${className}Cache;
 import ${entityPackagePath}.${className};
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
@@ -22,30 +22,24 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * I${className}Cache cache实现类
  * @author lijun
  */
 @Slf4j
-@Service("${objectName}Cache")
 public class ${className}CacheImpl extends BaseServiceImpl<${className}> implements I${className}Cache {
 
     private final static String CLS_NAME = ${className}.class.getSimpleName();
-    private final static String PAGE_IDS_KEY = CLS_NAME.concat(":PAGE:").concat("IDS:");
-    private final static String PAGE_TOTAL_KEY = CLS_NAME.concat(":PAGE:").concat("TOTAL:");
-    private final static String CUSTOM_QUERY_KEY = CLS_NAME.concat(":CUSTOM_QUERY:");
+    private final static String IDS_KEY = CLS_NAME.concat(":IDS:");
+    private final static String QUERY_KEY = CLS_NAME.concat(":QUERY:");
 
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
 
     @Override
-    public Long selectMaxId() {
-        return super.selectMaxId();
-    }
-
-    @Override
-    public ${className} selectById(Serializable id, String... nullErrMsg) {
+    public ${className} cacheSelectById(Serializable id, String... nullErrMsg) {
         String entityKey = CLS_NAME.concat(":").concat(String.valueOf(id));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         ${className} cacheVal = (${className})redisTemplate.opsForValue().get(entityKey);
@@ -63,10 +57,10 @@ public class ${className}CacheImpl extends BaseServiceImpl<${className}> impleme
     }
 
     @Override
-    public ${className} selectOne(${className} query, String... nullErrMsg) {
+    public ${className} cacheSelectOne(${className} query, String... nullErrMsg) {
         query.setPage(1);
         query.setPageSize(1);
-        String queryKey = CUSTOM_QUERY_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.TRUE));
+        String queryKey = QUERY_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.TRUE));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         ${className} cacheVal = (${className})redisTemplate.opsForValue().get(queryKey);
         if(Objects.nonNull(cacheVal)){
@@ -84,8 +78,8 @@ public class ${className}CacheImpl extends BaseServiceImpl<${className}> impleme
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<${className}> selectList(${className} query, String... emptyErrMsg) {
-        String queryKey = PAGE_IDS_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE));
+    public List<${className}> cacheSelectList(${className} query, String... emptyErrMsg) {
+        String queryKey = IDS_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         List<String> cacheIds = (List<String>)redisTemplate.opsForValue().get(queryKey);
         if(!CollectionUtils.isEmpty(cacheIds)){
@@ -111,11 +105,11 @@ public class ${className}CacheImpl extends BaseServiceImpl<${className}> impleme
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<${className}> selectList(${className} query, List<String> fieldList, String... emptyErrMsg) {
+    public List<${className}> cacheSelectList(${className} query, List<String> fieldList, String... emptyErrMsg) {
         if(CollectionUtils.isEmpty(fieldList)){
             throw new BusiException("请指定查询的域");
         }
-        String queryKey = CUSTOM_QUERY_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE,fieldList.toArray(new String[fieldList.size()])));
+        String queryKey = QUERY_KEY.concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE,fieldList.toArray(new String[fieldList.size()])));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         Object cacheValues = redisTemplate.opsForValue().get(queryKey);
         if(Objects.nonNull(cacheValues)){
@@ -132,12 +126,52 @@ public class ${className}CacheImpl extends BaseServiceImpl<${className}> impleme
     }
 
     @Override
-    public List<${className}> selectBatchIds(Collection<? extends Serializable> list, String... emptyErrMsg) {
-        return super.selectBatchIds(list, emptyErrMsg);
+    public List<${className}> cacheSelectBatchIds(Collection<? extends Serializable> list, String... emptyErrMsg) {
+        List<String> queryIds = list.stream().map(e -> CLS_NAME.concat(":").concat(String.valueOf(e))).collect(Collectors.toList());
+        if(!CollectionUtils.isEmpty(queryIds)){
+            List<Object> cacheValues = redisTemplate.opsForValue().multiGet(queryIds);
+            if(Objects.nonNull(cacheValues)){
+                log.info(" --------- Get Entity From Cache --------- ");
+                List<${className}> cacheEntitys = JSONArray.parseArray(JSON.toJSONString(cacheValues), ${className}.class);
+                if(queryIds.size() == cacheEntitys.size()){
+                    return cacheEntitys;
+                } else {
+                    List<String> cacheIds = cacheEntitys.stream()
+                        .map(e -> CLS_NAME.concat(":").concat(String.valueOf(e.get${IdColEntity.fieldJavaName?cap_first}())))
+                        .collect(Collectors.toList());
+                    queryIds.removeAll(cacheIds);
+                    List<${className}> dbValues = super.selectBatchIds(queryIds, emptyErrMsg);
+                    if(!CollectionUtils.isEmpty(dbValues)){
+                        cacheEntitys.addAll(dbValues);
+                    }
+                    return cacheEntitys;
+                }
+            } else {
+                log.info(" --------- Get Entity From DB --------- ");
+                List<${className}> dbValues = super.selectBatchIds(list, emptyErrMsg);
+                dbValues.forEach(e -> {
+                    String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.get${IdColEntity.fieldJavaName?cap_first}()));
+                    redisTemplate.opsForValue().set(entityKey,e);
+                    redisTemplate.expire(entityKey,30,TimeUnit.MINUTES);
+                });
+                return dbValues;
+            }
+        }
+        return Lists.newArrayList();
     }
 
     @Override
-    public Long selectCount(${className} query) {
+    public PageBean<${className}> cacheSelectPage(${className} query) {
+        return super.selectPage(query);
+    }
+
+    @Override
+    public PageBean<${className}> cacheSelectPage(${className} query, List<String> fieldList) {
+        return super.selectPage(query, fieldList);
+    }
+
+    @Override
+    public Long cacheSelectCount(${className} query) {
         return super.selectCount(query);
     }
 
