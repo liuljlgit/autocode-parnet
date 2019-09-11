@@ -219,17 +219,22 @@ public class ${className}CacheImpl extends BaseServiceImpl<${className}> impleme
 
     @Override
     public int update(${className} entity, Update... args) {
-        return super.update(entity, args);
+        int updateCount = super.update(entity, args);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
+        return updateCount;
     }
 
     @Override
     public int updateByMap(${className} oEntity, FuncMap funcMap) {
-        return super.updateByMap(oEntity, funcMap);
+        int updateCount = super.updateByMap(oEntity, funcMap);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
+        return updateCount;
     }
 
     @Override
     public void updateBatch(List<${className}> list, Update... args) {
         super.updateBatch(list, args);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override

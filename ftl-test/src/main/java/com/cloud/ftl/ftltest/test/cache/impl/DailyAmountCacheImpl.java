@@ -219,17 +219,22 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
 
     @Override
     public int update(DailyAmount entity, Update... args) {
-        return super.update(entity, args);
+        int updateCount = super.update(entity, args);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
+        return updateCount;
     }
 
     @Override
     public int updateByMap(DailyAmount oEntity, FuncMap funcMap) {
-        return super.updateByMap(oEntity, funcMap);
+        int updateCount = super.updateByMap(oEntity, funcMap);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
+        return updateCount;
     }
 
     @Override
     public void updateBatch(List<DailyAmount> list, Update... args) {
         super.updateBatch(list, args);
+        redisTemplate.delete(CLS_NAME.concat(":*"));
     }
 
     @Override
