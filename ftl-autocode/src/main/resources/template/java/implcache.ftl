@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -226,71 +227,82 @@ public class ${className}CacheImpl extends BaseServiceImpl<${className}> impleme
     @Override
     public int update(${className} entity, Update... args) {
         int updateCount = super.update(entity, args);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
         return updateCount;
     }
 
     @Override
     public int updateByMap(${className} oEntity, FuncMap funcMap) {
         int updateCount = super.updateByMap(oEntity, funcMap);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
         return updateCount;
     }
 
     @Override
     public void updateBatch(List<${className}> list, Update... args) {
         super.updateBatch(list, args);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
     }
 
     @Override
     public int add(${className} entity) {
         int addCount = super.add(entity);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
         return addCount;
     }
 
     @Override
     public void addBatch(List<${className}> list) {
         super.addBatch(list);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
     }
 
     @Override
     public void addBatch(List<${className}> list, int batchSize) {
         super.addBatch(list, batchSize);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
     }
 
     @Override
     public void delete(${className} entity) {
         super.delete(entity);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
     }
 
     @Override
     public int deleteById(Serializable id) {
         int deleteCount = super.deleteById(id);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
         return deleteCount;
     }
 
     @Override
     public void deleteBatchIds(Collection<? extends Serializable> list) {
         super.deleteBatchIds(list);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
     }
 
     @Override
     public void save(${className} ${objectName}, Update... args) {
         super.save(${objectName}, args);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
     }
 
     @Override
     public void saveBatch(List<${className}> list, Update... args) {
         super.saveBatch(list, args);
-        redisTemplate.delete(CLS_NAME.concat(":*"));
+        clearAllCacheData();
+    }
+
+    private void clearAllCacheData(){
+        try {
+            Set<String> keys = redisTemplate.keys(${className}.class.getSimpleName() + "*");
+            if(!CollectionUtils.isEmpty(keys)){
+                redisTemplate.delete(keys);
+            }
+        } catch (Exception e) {
+            log.error("清除缓存失败，请手动处理",e);
+        }
     }
 
 }

@@ -35,7 +35,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 
     @Override
     public Long selectMaxId() {
-        ParameterizedType type = (ParameterizedType)this.getClass().getGenericSuperclass();
+        ParameterizedType type = (ParameterizedType)this.getClass().getSuperclass().getGenericSuperclass();
         Class tClass = (Class) type.getActualTypeArguments()[0];
         redisTemplate.setEnableTransactionSupport(false);
         return redisTemplate.execute((RedisCallback<Long>) connection -> {
