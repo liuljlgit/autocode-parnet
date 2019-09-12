@@ -31,6 +31,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implements IDailyAmountCache {
 
+    private final static Long DEFAULT_EXPIRE_TIMES = 30L;
+    private final static TimeUnit DEFAULT_EXPIRE_TIMEUNIT = TimeUnit.MINUTES;
     private final static String CLS_NAME = DailyAmount.class.getSimpleName();
     private final static String QUERY_KEY = CLS_NAME.concat(":Query:");
 
@@ -48,7 +50,7 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
         DailyAmount dbVal = super.selectById(id, nullErrMsg);
         if(Objects.nonNull(dbVal)){
             redisTemplate.opsForValue().set(entityKey,dbVal);
-            redisTemplate.expire(entityKey,30, TimeUnit.MINUTES);
+            redisTemplate.expire(entityKey,DEFAULT_EXPIRE_TIMES, DEFAULT_EXPIRE_TIMEUNIT);
         }
         return dbVal;
     }
@@ -57,7 +59,8 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
     public DailyAmount cacheSelectOne(DailyAmount query, String... nullErrMsg) {
         query.setPage(1);
         query.setPageSize(1);
-        String queryKey = QUERY_KEY.concat("SelectOne:").concat(QueryKeyUtil.getQueryKey(query, Boolean.TRUE));
+        String queryKey = QUERY_KEY.concat("SelectOne:")
+                .concat(QueryKeyUtil.getQueryKey(query, Boolean.TRUE));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         DailyAmount cacheVal = (DailyAmount)redisTemplate.opsForValue().get(queryKey);
         if(Objects.nonNull(cacheVal)){
@@ -66,7 +69,7 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
         DailyAmount dbVal = super.selectOne(query, nullErrMsg);
         if(Objects.nonNull(dbVal)){
             redisTemplate.opsForValue().set(queryKey,dbVal);
-            redisTemplate.expire(queryKey,30, TimeUnit.MINUTES);
+            redisTemplate.expire(queryKey,DEFAULT_EXPIRE_TIMES, DEFAULT_EXPIRE_TIMEUNIT);
         }
         return dbVal;
     }
@@ -74,25 +77,26 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
     @Override
     @SuppressWarnings("unchecked")
     public List<DailyAmount> cacheSelectList(DailyAmount query, String... emptyErrMsg) {
-        String queryKey = QUERY_KEY.concat("SelectList:").concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE));
+        String queryKey = QUERY_KEY.concat("SelectList:")
+                .concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
-        List<String> cacheIds = (List<String>)redisTemplate.opsForValue().get(queryKey);
-        if(!CollectionUtils.isEmpty(cacheIds)){
-            List<Object> cacheValues = redisTemplate.opsForValue().multiGet(cacheIds);
-            if(Objects.nonNull(cacheValues) && cacheIds.size() == cacheValues.size()){
+        List<String> cacheKeys = (List<String>)redisTemplate.opsForValue().get(queryKey);
+        if(!CollectionUtils.isEmpty(cacheKeys)){
+            List<Object> cacheValues = redisTemplate.opsForValue().multiGet(cacheKeys);
+            if(Objects.nonNull(cacheValues) && cacheKeys.size() == cacheValues.size()){
                 return JSONArray.parseArray(JSON.toJSONString(cacheValues), DailyAmount.class);
             }
         }
         List<DailyAmount> dbValues = super.selectList(query, emptyErrMsg);
-        List<String> dbIds = Lists.newArrayList();
+        List<String> dbKeys = Lists.newArrayList();
         dbValues.forEach(e -> {
             String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getDaId()));
-            dbIds.add(entityKey);
+            dbKeys.add(entityKey);
             redisTemplate.opsForValue().set(entityKey,e);
-            redisTemplate.expire(entityKey,30,TimeUnit.MINUTES);
+            redisTemplate.expire(entityKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
         });
-        redisTemplate.opsForValue().set(queryKey,dbIds);
-        redisTemplate.expire(queryKey,30,TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(queryKey,dbKeys);
+        redisTemplate.expire(queryKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
         return dbValues;
     }
 
@@ -112,32 +116,32 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
         List<DailyAmount> dbValues = super.selectList(query, fieldList, emptyErrMsg);
         if(!CollectionUtils.isEmpty(dbValues)){
             redisTemplate.opsForValue().set(queryKey,dbValues);
-            redisTemplate.expire(queryKey,30, TimeUnit.MINUTES);
+            redisTemplate.expire(queryKey,DEFAULT_EXPIRE_TIMES, DEFAULT_EXPIRE_TIMEUNIT);
         }
         return dbValues;
     }
 
     @Override
     public List<DailyAmount> cacheSelectBatchIds(Collection<? extends Serializable> list, String... emptyErrMsg) {
-        List<String> queryIds = list.stream().map(e -> CLS_NAME.concat(":").concat(String.valueOf(e))).collect(Collectors.toList());
-        if(!CollectionUtils.isEmpty(queryIds)){
-            List<Object> cacheValues = redisTemplate.opsForValue().multiGet(queryIds);
+        List<String> queryKeys = list.stream().map(e -> CLS_NAME.concat(":").concat(String.valueOf(e))).collect(Collectors.toList());
+        if(!CollectionUtils.isEmpty(queryKeys)){
+            List<Object> cacheValues = redisTemplate.opsForValue().multiGet(queryKeys);
             if(Objects.nonNull(cacheValues)){
                 List<DailyAmount> cacheEntitys = JSONArray.parseArray(JSON.toJSONString(cacheValues), DailyAmount.class);
-                if(queryIds.size() == cacheEntitys.size()){
+                if(queryKeys.size() == cacheEntitys.size()){
                     return cacheEntitys;
                 } else {
-                    List<String> cacheIds = cacheEntitys.stream()
+                    List<String> cacheKeys = cacheEntitys.stream()
                         .map(e -> CLS_NAME.concat(":").concat(String.valueOf(e.getDaId())))
                         .collect(Collectors.toList());
-                    queryIds.removeAll(cacheIds);
-                    List<DailyAmount> dbValues = super.selectBatchIds(queryIds, emptyErrMsg);
+                    queryKeys.removeAll(cacheKeys);
+                    List<DailyAmount> dbValues = super.selectBatchIds(queryKeys, emptyErrMsg);
                     if(!CollectionUtils.isEmpty(dbValues)){
                         cacheEntitys.addAll(dbValues);
                         dbValues.forEach(e -> {
                             String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getDaId()));
                             redisTemplate.opsForValue().set(entityKey,e);
-                            redisTemplate.expire(entityKey,30,TimeUnit.MINUTES);
+                            redisTemplate.expire(entityKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
                         });
                     }
                     return cacheEntitys;
@@ -147,7 +151,7 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
                 dbValues.forEach(e -> {
                     String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getDaId()));
                     redisTemplate.opsForValue().set(entityKey,e);
-                    redisTemplate.expire(entityKey,30,TimeUnit.MINUTES);
+                    redisTemplate.expire(entityKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
                 });
                 return dbValues;
             }
@@ -180,12 +184,12 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
             String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getDaId()));
             dbPageKeys.add(entityKey);
             redisTemplate.opsForValue().set(entityKey,e);
-            redisTemplate.expire(entityKey,30,TimeUnit.MINUTES);
+            redisTemplate.expire(entityKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
         });
         redisTemplate.opsForValue().set(pageBeanKey,new PageBean<>(dbPageBean.getTotalPage(),dbPageBean.getTotal(),null));
         redisTemplate.opsForValue().set(pageIdsKey,dbPageKeys);
-        redisTemplate.expire(pageBeanKey,30,TimeUnit.MINUTES);
-        redisTemplate.expire(pageIdsKey,30,TimeUnit.MINUTES);
+        redisTemplate.expire(pageBeanKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
+        redisTemplate.expire(pageIdsKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
         return dbPageBean;
     }
 
@@ -200,6 +204,7 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
         }
         PageBean<DailyAmount> dbPageBean = super.selectPage(query, fieldList);
         redisTemplate.opsForValue().set(queryKey,dbPageBean);
+        redisTemplate.expire(queryKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
         return dbPageBean;
     }
 
@@ -214,6 +219,7 @@ public class DailyAmountCacheImpl extends BaseServiceImpl<DailyAmount> implement
         }
         Long dbCount = super.selectCount(query);
         redisTemplate.opsForValue().set(queryKey,dbCount);
+        redisTemplate.expire(queryKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
         return dbCount;
     }
 
