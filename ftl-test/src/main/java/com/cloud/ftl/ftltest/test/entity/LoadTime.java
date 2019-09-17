@@ -1,118 +1,194 @@
 package com.cloud.ftl.ftltest.test.entity;
 
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
-import com.cloud.ftl.ftlbasic.webEntity.BasePage;
-import java.io.Serializable;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import com.cloud.ftl.ftlbasic.annotation.PrimaryKey;
 
-public class LoadTime extends BasePage implements Serializable {
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel("LoadTime")
+public class LoadTime extends BaseQuery {
 
-    /**
-     * field comment:实际负荷导入数据记录ID
-     */
-	private Long ltId;
+	@ApiModelProperty("实际负荷导入数据记录ID")
+    @PrimaryKey
+    private Long ltId;
 
-    /**
-     * field comment:电企业ID：来源于cloud_sys.entity.entity_id
-     */
-	private Integer entityId;
+	@ApiModelProperty("电企业ID：来源于cloud_sys.entity.entity_id")
+    private Integer entityId;
 
-    /**
-     * field comment:导入开始时间
-     */
-	private Date startTime;
+	@ApiModelProperty("导入开始时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date startTime;
 
-    /**
-     * field comment:导入结束时间
-     */
-	private Date endTime;
+	@ApiModelProperty("导入结束时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date endTime;
 
-    /**
-     * field comment:状态 (0) 未处理 （1）已处理
-     */
-	private Byte status;
+	@ApiModelProperty("状态 (0) 未处理 （1）已处理")
+    private Byte status;
 
-    /**
-     * field comment:创建时间
-     */
-	private Date createTime;
+	@ApiModelProperty("创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date createTime;
 
-    /**
-     * field comment:更新时间
-     */
-	private Date statusTime;
+	@ApiModelProperty("更新时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date statusTime;
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String LT_ID = "lt_id";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String ENTITY_ID = "entity_id";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String START_TIME = "start_time";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String END_TIME = "end_time";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String STATUS = "status";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String CREATE_TIME = "create_time";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String STATUS_TIME = "status_time";
 
 
-    public static final transient String PROP_LT_ID = "ltId";
-
-    public static final transient String PROP_ENTITY_ID = "entityId";
-
-    public static final transient String PROP_START_TIME = "startTime";
-
-    public static final transient String PROP_END_TIME = "endTime";
-
-    public static final transient String PROP_STATUS = "status";
-
-    public static final transient String PROP_CREATE_TIME = "createTime";
-
-    public static final transient String PROP_STATUS_TIME = "statusTime";
-
-
-    public Long getLtId() {
-        return ltId;
+    public void andLtId(Opt opt) {
+        addConditGroup(LT_ID,opt);
     }
 
-    public void setLtId(Long ltId) {
-        this.ltId = ltId;
+    public void andLtId(Opt opt,Long ltId) {
+        addConditGroup(LT_ID,opt,ltId);
     }
 
-    public Integer getEntityId() {
-        return entityId;
+    public void andLtId(Opt opt,List<Long> list) {
+        addConditGroup(LT_ID,opt,list);
     }
 
-    public void setEntityId(Integer entityId) {
-        this.entityId = entityId;
+    public void andLtId(Opt opt,Long firstParam,Long secondParam) {
+        addConditGroup(LT_ID,opt,firstParam,secondParam);
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public void andEntityId(Opt opt) {
+        addConditGroup(ENTITY_ID,opt);
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void andEntityId(Opt opt,Integer entityId) {
+        addConditGroup(ENTITY_ID,opt,entityId);
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public void andEntityId(Opt opt,List<Integer> list) {
+        addConditGroup(ENTITY_ID,opt,list);
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void andEntityId(Opt opt,Integer firstParam,Integer secondParam) {
+        addConditGroup(ENTITY_ID,opt,firstParam,secondParam);
     }
 
-    public Byte getStatus() {
-        return status;
+    public void andStartTime(Opt opt) {
+        addConditGroup(START_TIME,opt);
     }
 
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void andStartTime(Opt opt,Date startTime) {
+        addConditGroup(START_TIME,opt,startTime);
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public void andStartTime(Opt opt,List<Date> list) {
+        addConditGroup(START_TIME,opt,list);
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void andStartTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(START_TIME,opt,firstParam,secondParam);
     }
 
-    public Date getStatusTime() {
-        return statusTime;
+    public void andEndTime(Opt opt) {
+        addConditGroup(END_TIME,opt);
     }
 
-    public void setStatusTime(Date statusTime) {
-        this.statusTime = statusTime;
+    public void andEndTime(Opt opt,Date endTime) {
+        addConditGroup(END_TIME,opt,endTime);
+    }
+
+    public void andEndTime(Opt opt,List<Date> list) {
+        addConditGroup(END_TIME,opt,list);
+    }
+
+    public void andEndTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(END_TIME,opt,firstParam,secondParam);
+    }
+
+    public void andStatus(Opt opt) {
+        addConditGroup(STATUS,opt);
+    }
+
+    public void andStatus(Opt opt,Byte status) {
+        addConditGroup(STATUS,opt,status);
+    }
+
+    public void andStatus(Opt opt,List<Byte> list) {
+        addConditGroup(STATUS,opt,list);
+    }
+
+    public void andStatus(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(STATUS,opt,firstParam,secondParam);
+    }
+
+    public void andCreateTime(Opt opt) {
+        addConditGroup(CREATE_TIME,opt);
+    }
+
+    public void andCreateTime(Opt opt,Date createTime) {
+        addConditGroup(CREATE_TIME,opt,createTime);
+    }
+
+    public void andCreateTime(Opt opt,List<Date> list) {
+        addConditGroup(CREATE_TIME,opt,list);
+    }
+
+    public void andCreateTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(CREATE_TIME,opt,firstParam,secondParam);
+    }
+
+    public void andStatusTime(Opt opt) {
+        addConditGroup(STATUS_TIME,opt);
+    }
+
+    public void andStatusTime(Opt opt,Date statusTime) {
+        addConditGroup(STATUS_TIME,opt,statusTime);
+    }
+
+    public void andStatusTime(Opt opt,List<Date> list) {
+        addConditGroup(STATUS_TIME,opt,list);
+    }
+
+    public void andStatusTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(STATUS_TIME,opt,firstParam,secondParam);
     }
 
 }

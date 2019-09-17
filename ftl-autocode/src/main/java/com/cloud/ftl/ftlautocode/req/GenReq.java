@@ -56,16 +56,16 @@ public class GenReq {
     private String implServicePath;
 
     /**
-     * 生成redis接口文件的包路径
+     * 生成service接口文件的包路径
      * "com.cloud.gen.ftlautocode.test.cache.inft"
      */
-    private String inftRedisPath;
+    private String inftCachePath;
 
     /**
-     * 生成redis实现文件的包路径
+     * 生成service实现文件的包路径
      * "com.cloud.gen.ftlautocode.test.cache.impl"
      */
-    private String implRedisPath;
+    private String implCachePath;
 
     /**
      * 生成dao文件的包路径
@@ -78,24 +78,6 @@ public class GenReq {
      * "com.cloud.gen.ftlautocode.test.entity"
      */
     private String entityPath;
-
-    /**
-     * 生成查询实体文件的包路径
-     * "com.cloud.gen.ftlautocode.test.queryentity"
-     */
-    private String queryEntityPath;
-
-    /**
-     * 生成请求实体文件的包路径
-     * "com.cloud.gen.ftlautocode.test.webentity.req"
-     */
-    private String reqPath;
-
-    /**
-     * 生成返回实体文件的包路径
-     * "com.cloud.gen.ftlautocode.test.webentity.resp"
-     */
-    private String respPath;
 
     /**
      * 生成xml文件的目录路径
@@ -220,43 +202,19 @@ public class GenReq {
         this.tableNames = tableNames;
     }
 
-    public String getInftRedisPath() {
-        return inftRedisPath;
+    public String getInftCachePath() {
+        return inftCachePath;
     }
 
-    public void setInftRedisPath(String inftRedisPath) {
-        this.inftRedisPath = inftRedisPath;
+    public void setInftCachePath(String inftCachePath) {
+        this.inftCachePath = inftCachePath;
     }
 
-    public String getImplRedisPath() {
-        return implRedisPath;
+    public String getImplCachePath() {
+        return implCachePath;
     }
 
-    public void setImplRedisPath(String implRedisPath) {
-        this.implRedisPath = implRedisPath;
-    }
-
-    public String getReqPath() {
-        return reqPath;
-    }
-
-    public void setReqPath(String reqPath) {
-        this.reqPath = reqPath;
-    }
-
-    public String getRespPath() {
-        return respPath;
-    }
-
-    public void setRespPath(String respPath) {
-        this.respPath = respPath;
-    }
-
-    public String getQueryEntityPath() {
-        return queryEntityPath;
-    }
-
-    public void setQueryEntityPath(String queryEntityPath) {
-        this.queryEntityPath = queryEntityPath;
+    public void setImplCachePath(String implCachePath) {
+        this.implCachePath = implCachePath;
     }
 }

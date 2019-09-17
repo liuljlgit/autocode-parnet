@@ -7,7 +7,6 @@
 		<groupId>com.cloud.ftl</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.cloud.ftl</groupId>
 	<artifactId>ftl-basic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ftl-basic</name>
@@ -18,13 +17,35 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+        
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+		
+		<!--swagger-->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>com.github.huanshare</groupId>
+			<artifactId>huan-swagger-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.huanshare</groupId>
+			<artifactId>swagger-ui-layer</artifactId>
+		</dependency>
+        
+        <!-- jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.1.2.RELEASE</version>
+        </dependency>
+    </dependencies>
 	
 	<build>
 		<plugins>

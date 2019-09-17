@@ -2,8 +2,9 @@ package com.cloud.ftl.ftlautocode.common;
 
 
 import com.cloud.ftl.ftlautocode.entity.TableColEntity;
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import java.util.List;
 import java.util.Map;
 
@@ -19,14 +20,11 @@ public class GenConst {
     //模板文件路径
     public static final String CTRL_FTL_PATH = "/java/controller.ftl";
     public static final String INFT_SERVICE_FTL_PATH = "/java/inftservice.ftl";
-    public static final String INFT_REDIS_FTL_PATH = "/java/inftredis.ftl";
     public static final String IMPL_SERVICE_FTL_PATH = "/java/implservice.ftl";
-    public static final String IMPL_REDIS_FTL_PATH = "/java/implredis.ftl";
+    public static final String INFT_CACHE_FTL_PATH = "/java/inftcache.ftl";
+    public static final String IMPL_CACHE_FTL_PATH = "/java/implcache.ftl";
     public static final String DAO_FTL_PATH = "/java/dao.ftl";
     public static final String ENTITY_PATH = "/java/entity.ftl";
-    public static final String QUERY_ENTITY_PATH = "/java/queryentity.ftl";
-    public static final String REQ_PATH = "/java/req.ftl";
-    public static final String RESP_PATH = "/java/resp.ftl";
     public static final String XML_FTL_PATH = "/xml/mybatis.ftl";
 
     //java的"/"和"."
@@ -44,8 +42,12 @@ public class GenConst {
     public static final String XML_CUSTOM_END_CODE = "<!--~~~~~~~~~~~~~~~~~~~~~~ custom code end ~~~~~~~~~~~~~~~~~~~~~~-->";
 
     //数据库中的列值转换成list
-    public static final List<TableColEntity> tableColEntitys = new ArrayList<>();
+    public static final List<TableColEntity> tableColEntitys = Lists.newArrayList();
+
+    //表的注释
+    public static String tableComment = "";
 
     //公共替换的map
-    public static final Map<String,Object> commonReplaceMap = new HashMap<>();
+    public static final Map<String,Object> commonReplaceMap = Maps.newHashMap();
+
 }

@@ -1,79 +1,62 @@
 package com.cloud.ftl.ftltest.test.controller;
 
-import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftlbasic.utils.BeanUtil;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
-import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.webentity.resp.DailyAmountResp;
-import com.cloud.ftl.ftltest.test.webentity.req.DailyAmountReq;
-import com.cloud.ftl.ftltest.test.query.DailyAmountQuery;
+import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.google.common.collect.Lists;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import java.util.Objects;
 
-/**
- * DailyAmountCtrl 控制层方法
- * @author lijun
- */
+import javax.validation.constraints.NotNull;
+
+@Slf4j
 @RestController
+@Validated
+@RequestMapping("/dailyamount")
+@Api(tags = "【日前】1、日前报量管理")
 public class DailyAmountCtrl{
 
-  @Autowired
-  private IDailyAmountService dailyAmountService;
+    @Autowired
+    private IDailyAmountService dailyAmountService;
 
-
-    /**
-    * DailyAmount 根据主键获取单个数据
-    * @return
-    * @throws Exception
-    */
-    @GetMapping(value = "/dailyamount/{daId}")
-    public CommonResp<DailyAmountResp> loadDailyAmountByKey(@PathVariable(value="daId") Long daId) throws Exception {
-        if(Objects.isNull(daId)){
-         throw new BusiException("请输入要获取的数据的ID") ;
-        }
-        DailyAmount dailyAmount = dailyAmountService.loadDailyAmountByKey(daId);
-        return RespEntity.ok(new DailyAmountResp(dailyAmount));
+    @GetMapping(value = "/obj")
+    @ApiOperation(value = "根据主键查询" , notes = "author: llj")
+    @ApiImplicitParam(name="daId", value="主键",required = true)
+    public CommonResp selectById(@RequestParam("daId") @NotNull Long daId) {
+        return RespEntity.ok(dailyAmountService.cacheSelectById(daId,"没有符合条件的记录！"));
     }
 
-   /**
-    * DailyAmount 根据实体对象查询列表
-    * @return
-    * @throws Exception
-    */
-    @PostMapping(value = "/dailyamount/list")
-    public CommonResp<PageBean<DailyAmountResp>> getDailyAmountPageList(@RequestBody DailyAmountReq dailyAmountReq) throws Exception {
-        DailyAmountQuery query = BeanUtil.createBean(dailyAmountReq, DailyAmountQuery.class);
-        PageBean<DailyAmountResp> pageList = dailyAmountService.getDailyAmountPageList(query);
-        return RespEntity.ok(pageList);
+    @PostMapping(value = "/list")
+    @ApiOperation(value = "查询所有列表" , notes = "author: llj")
+    public CommonResp selectList(@RequestBody DailyAmount dailyAmount){
+        return RespEntity.ok(dailyAmountService.cacheSelectList(dailyAmount, Lists.newArrayList(DailyAmount.DA_ID)));
     }
 
-    /**
-    * DailyAmount 新增或者修改记录，根据主键判断，主键为空则新增，否则修改。
-    * @return
-    * @throws Exception
-    */
-    @PostMapping(value = "/dailyamount")
-    public CommonResp<Object> saveDailyAmount(@RequestBody DailyAmountReq dailyAmountReq) throws  Exception{
-        DailyAmount dailyAmount = BeanUtil.createBean(dailyAmountReq, DailyAmount.class);
-        dailyAmountService.saveDailyAmount(dailyAmount);
+    @PostMapping(value = "/page")
+    @ApiOperation(value = "分页查询" , notes = "author: llj")
+    public CommonResp selectPage(@RequestBody DailyAmount dailyAmount) {
+        return RespEntity.ok(dailyAmountService.cacheSelectPage(dailyAmount));
+    }
+
+
+    @PostMapping(value = "/obj")
+    @ApiOperation(value = "更新或者新增", notes = "author: llj")
+    public CommonResp save(@RequestBody DailyAmount dailyAmount) {
+        dailyAmountService.save(dailyAmount);
         return RespEntity.ok();
     }
 
-    /**
-    * DailyAmount 根据主键删除数据
-    * @return
-    * @throws Exception
-    */
-    @DeleteMapping(value = "/dailyamount/{daId}")
-    public CommonResp<Object> deleteDailyAmount(@PathVariable(value="daId") Long daId) throws  Exception{
-        if(Objects.isNull(daId)){
-           throw new BusiException("删除主键不可为空") ;
-        }
-        dailyAmountService.deleteDailyAmount(daId);
+    @DeleteMapping(value = "/obj")
+    @ApiOperation(value = "根据主键删除",notes = "author: llj")
+    @ApiImplicitParam(name="daId", value="主键",required = true)
+    public CommonResp deleteById(@RequestParam(value="daId") @NotNull Long daId) {
+        dailyAmountService.deleteById(daId);
         return RespEntity.ok();
     }
 

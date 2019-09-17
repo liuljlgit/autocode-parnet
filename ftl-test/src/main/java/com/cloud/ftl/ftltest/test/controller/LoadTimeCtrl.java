@@ -2,78 +2,60 @@ package com.cloud.ftl.ftltest.test.controller;
 
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftlbasic.utils.BeanUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.constraints.NotNull;
+import io.swagger.annotations.*;
 import com.cloud.ftl.ftltest.test.service.inft.ILoadTimeService;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
-import com.cloud.ftl.ftltest.test.webentity.resp.LoadTimeResp;
-import com.cloud.ftl.ftltest.test.webentity.req.LoadTimeReq;
-import com.cloud.ftl.ftltest.test.query.LoadTimeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
-/**
- * LoadTimeCtrl 控制层方法
- * @author lijun
- */
+@Slf4j
 @RestController
+@Validated
+@RequestMapping("/loadtime")
+@Api(tags = "LoadTime")
 public class LoadTimeCtrl{
 
-  @Autowired
-  private ILoadTimeService loadTimeService;
+    @Autowired
+    private ILoadTimeService loadTimeService;
 
-
-    /**
-    * LoadTime 根据主键获取单个数据
-    * @return
-    * @throws Exception
-    */
-    @GetMapping(value = "/loadtime/{ltId}")
-    public CommonResp<LoadTimeResp> loadLoadTimeByKey(@PathVariable(value="ltId") Long ltId) throws Exception {
-        if(Objects.isNull(ltId)){
-         throw new BusiException("请输入要获取的数据的ID") ;
-        }
-        LoadTime loadTime = loadTimeService.loadLoadTimeByKey(ltId);
-        return RespEntity.ok(new LoadTimeResp(loadTime));
+    @GetMapping(value = "/obj")
+    @ApiOperation(value = "根据主键查询" , notes = "author: llj")
+    @ApiImplicitParam(name="ltId", value="主键",required = true)
+    public CommonResp selectById(@RequestParam("ltId") @NotNull Long ltId) {
+        return RespEntity.ok(loadTimeService.selectById(ltId,"没有符合条件的记录！"));
     }
 
-   /**
-    * LoadTime 根据实体对象查询列表
-    * @return
-    * @throws Exception
-    */
-    @PostMapping(value = "/loadtime/list")
-    public CommonResp<PageBean<LoadTimeResp>> getLoadTimePageList(@RequestBody LoadTimeReq loadTimeReq) throws Exception {
-        LoadTimeQuery query = BeanUtil.createBean(loadTimeReq, LoadTimeQuery.class);
-        PageBean<LoadTimeResp> pageList = loadTimeService.getLoadTimePageList(query);
-        return RespEntity.ok(pageList);
+    @PostMapping(value = "/list")
+    @ApiOperation(value = "查询所有列表" , notes = "author: llj")
+    public CommonResp selectList(@RequestBody LoadTime loadTime){
+        return RespEntity.ok(loadTimeService.selectList(loadTime));
     }
 
-    /**
-    * LoadTime 新增或者修改记录，根据主键判断，主键为空则新增，否则修改。
-    * @return
-    * @throws Exception
-    */
-    @PostMapping(value = "/loadtime")
-    public CommonResp<Object> saveLoadTime(@RequestBody LoadTimeReq loadTimeReq) throws  Exception{
-        LoadTime loadTime = BeanUtil.createBean(loadTimeReq, LoadTime.class);
-        loadTimeService.saveLoadTime(loadTime);
+    @PostMapping(value = "/page")
+    @ApiOperation(value = "分页查询" , notes = "author: llj")
+    public CommonResp selectPage(@RequestBody LoadTime loadTime) {
+        return RespEntity.ok(loadTimeService.selectPage(loadTime));
+    }
+
+
+    @PostMapping(value = "/obj")
+    @ApiOperation(value = "更新或者新增", notes = "author: llj")
+    public CommonResp save(@RequestBody LoadTime loadTime) {
+        loadTimeService.save(loadTime);
         return RespEntity.ok();
     }
 
-    /**
-    * LoadTime 根据主键删除数据
-    * @return
-    * @throws Exception
-    */
-    @DeleteMapping(value = "/loadtime/{ltId}")
-    public CommonResp<Object> deleteLoadTime(@PathVariable(value="ltId") Long ltId) throws  Exception{
-        if(Objects.isNull(ltId)){
-           throw new BusiException("删除主键不可为空") ;
-        }
-        loadTimeService.deleteLoadTime(ltId);
+    @DeleteMapping(value = "/obj")
+    @ApiOperation(value = "根据主键删除",notes = "author: llj")
+    @ApiImplicitParam(name="ltId", value="主键",required = true)
+    public CommonResp deleteById(@RequestParam(value="ltId") @NotNull Long ltId) {
+        loadTimeService.deleteById(ltId);
         return RespEntity.ok();
     }
 

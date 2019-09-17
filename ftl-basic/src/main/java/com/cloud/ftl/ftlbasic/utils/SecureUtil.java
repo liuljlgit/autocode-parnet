@@ -1,8 +1,6 @@
 package com.cloud.ftl.ftlbasic.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import lombok.extern.slf4j.Slf4j;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 
@@ -10,8 +8,8 @@ import java.security.MessageDigest;
  * 加密工具类
  * @author lijun
  */
+@Slf4j
 public class SecureUtil {
-    private static final Logger logger = LoggerFactory.getLogger(SecureUtil.class);
 
     /**
      * md5加密
@@ -63,7 +61,7 @@ public class SecureUtil {
             md.update(datas);
             return md.digest();
         } catch (Exception var3) {
-            logger.error(var3.getMessage());
+            log.error(var3.getMessage());
             return null;
         }
     }

@@ -1,55 +1,26 @@
 package com.cloud.ftl.ftlbasic.webEntity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ApiModel("PageBean")
 public class PageBean<T> {
 
-    /**
-     * field comment:总页数
-     */
+    @ApiModelProperty("总页数")
     private Long totalPage;
 
-    /**
-     * field comment:总数
-     */
+    @ApiModelProperty("记录总数")
     private Long total;
 
-    /**
-     * field comment:分页列表
-     */
-    private List<T> data;
+    @ApiModelProperty("分页列表")
+    private List<T> list;
 
-    public PageBean(){
-
-    }
-
-    public PageBean(Long totalPage, Long total, List<T> data) {
-        this.totalPage = totalPage;
-        this.total = total;
-        this.data = data;
-    }
-
-    public Long getTotalPage() {
-        return totalPage;
-    }
-
-    public void setTotalPage(Long totalPage) {
-        this.totalPage = totalPage;
-    }
-
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
-    }
-
-    public List<T> getData() {
-        return data;
-    }
-
-    public void setData(List<T> data) {
-        this.data = data;
-    }
 }

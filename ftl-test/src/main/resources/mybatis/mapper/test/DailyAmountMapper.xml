@@ -24,203 +24,160 @@
     </sql>
 
     <sql id="Base_Object_List">
-        #{daId},#{entityId},#{dateTime},#{settProfit},#{expendProfit},#{incomeProfit},#{profitHours},#{deficitHours},#{minusDeviation},#{positiveDeviation},#{status},#{ce},#{sa},#{createTime},#{statusTime}
+        #{at.daId},#{at.entityId},#{at.dateTime},#{at.settProfit},#{at.expendProfit},#{at.incomeProfit},#{at.profitHours},#{at.deficitHours},#{at.minusDeviation},#{at.positiveDeviation},#{at.status},#{at.ce},#{at.sa},#{at.createTime},#{at.statusTime}
     </sql>
 
-    <sql id="Base_Item_List">
-        #{item.daId},#{item.entityId},#{item.dateTime},#{item.settProfit},#{item.expendProfit},#{item.incomeProfit},#{item.profitHours},#{item.deficitHours},#{item.minusDeviation},#{item.positiveDeviation},#{item.status},#{item.ce},#{item.sa},#{item.createTime},#{item.statusTime}
-    </sql>
-
-    <sql id="Update_Column_Set">
+    <sql id="Set_Not_Null_List">
         <set>
-            <if test="daId != null">
-                da_id = #{daId},
+            <if test="ut.daId != null">
+                da_id = #{ut.daId},
             </if>
-            <if test="entityId != null">
-                entity_id = #{entityId},
+            <if test="ut.entityId != null">
+                entity_id = #{ut.entityId},
             </if>
-            <if test="dateTime != null">
-                date_time = #{dateTime},
+            <if test="ut.dateTime != null">
+                date_time = #{ut.dateTime},
             </if>
-            <if test="settProfit != null">
-                sett_profit = #{settProfit},
+            <if test="ut.settProfit != null">
+                sett_profit = #{ut.settProfit},
             </if>
-            <if test="expendProfit != null">
-                expend_profit = #{expendProfit},
+            <if test="ut.expendProfit != null">
+                expend_profit = #{ut.expendProfit},
             </if>
-            <if test="incomeProfit != null">
-                income_profit = #{incomeProfit},
+            <if test="ut.incomeProfit != null">
+                income_profit = #{ut.incomeProfit},
             </if>
-            <if test="profitHours != null">
-                profit_hours = #{profitHours},
+            <if test="ut.profitHours != null">
+                profit_hours = #{ut.profitHours},
             </if>
-            <if test="deficitHours != null">
-                deficit_hours = #{deficitHours},
+            <if test="ut.deficitHours != null">
+                deficit_hours = #{ut.deficitHours},
             </if>
-            <if test="minusDeviation != null">
-                minus_deviation = #{minusDeviation},
+            <if test="ut.minusDeviation != null">
+                minus_deviation = #{ut.minusDeviation},
             </if>
-            <if test="positiveDeviation != null">
-                positive_deviation = #{positiveDeviation},
+            <if test="ut.positiveDeviation != null">
+                positive_deviation = #{ut.positiveDeviation},
             </if>
-            <if test="status != null">
-                status = #{status},
+            <if test="ut.status != null">
+                status = #{ut.status},
             </if>
-            <if test="ce != null">
-                ce = #{ce},
+            <if test="ut.ce != null">
+                ce = #{ut.ce},
             </if>
-            <if test="sa != null">
-                sa = #{sa},
+            <if test="ut.sa != null">
+                sa = #{ut.sa},
             </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
+            <if test="ut.createTime != null">
+                create_time = #{ut.createTime},
             </if>
-            <if test="statusTime != null">
-                status_time = #{statusTime}
+            <if test="ut.statusTime != null">
+                status_time = #{ut.statusTime}
             </if>
         </set>
     </sql>
 
-    <sql id="Update_Item_Set">
+    <sql id="Set_With_Null_List">
         <set>
-            <if test="item.daId != null">
-                da_id = #{item.daId},
-            </if>
-            <if test="item.entityId != null">
-                entity_id = #{item.entityId},
-            </if>
-            <if test="item.dateTime != null">
-                date_time = #{item.dateTime},
-            </if>
-            <if test="item.settProfit != null">
-                sett_profit = #{item.settProfit},
-            </if>
-            <if test="item.expendProfit != null">
-                expend_profit = #{item.expendProfit},
-            </if>
-            <if test="item.incomeProfit != null">
-                income_profit = #{item.incomeProfit},
-            </if>
-            <if test="item.profitHours != null">
-                profit_hours = #{item.profitHours},
-            </if>
-            <if test="item.deficitHours != null">
-                deficit_hours = #{item.deficitHours},
-            </if>
-            <if test="item.minusDeviation != null">
-                minus_deviation = #{item.minusDeviation},
-            </if>
-            <if test="item.positiveDeviation != null">
-                positive_deviation = #{item.positiveDeviation},
-            </if>
-            <if test="item.status != null">
-                status = #{item.status},
-            </if>
-            <if test="item.ce != null">
-                ce = #{item.ce},
-            </if>
-            <if test="item.sa != null">
-                sa = #{item.sa},
-            </if>
-            <if test="item.createTime != null">
-                create_time = #{item.createTime},
-            </if>
-            <if test="item.statusTime != null">
-                status_time = #{item.statusTime}
-            </if>
+            da_id = #{ut.daId},
+            entity_id = #{ut.entityId},
+            date_time = #{ut.dateTime},
+            sett_profit = #{ut.settProfit},
+            expend_profit = #{ut.expendProfit},
+            income_profit = #{ut.incomeProfit},
+            profit_hours = #{ut.profitHours},
+            deficit_hours = #{ut.deficitHours},
+            minus_deviation = #{ut.minusDeviation},
+            positive_deviation = #{ut.positiveDeviation},
+            status = #{ut.status},
+            ce = #{ut.ce},
+            sa = #{ut.sa},
+            create_time = #{ut.createTime},
+            status_time = #{ut.statusTime}
         </set>
     </sql>
 
-    <sql id="Full_Update_Column_Set">
-        <set>
-            da_id = #{daId},
-            entity_id = #{entityId},
-            date_time = #{dateTime},
-            sett_profit = #{settProfit},
-            expend_profit = #{expendProfit},
-            income_profit = #{incomeProfit},
-            profit_hours = #{profitHours},
-            deficit_hours = #{deficitHours},
-            minus_deviation = #{minusDeviation},
-            positive_deviation = #{positiveDeviation},
-            status = #{status},
-            ce = #{ce},
-            sa = #{sa},
-            create_time = #{createTime},
-            status_time = #{statusTime}
-        </set>
-    </sql>
-
-    <sql id="Full_Update_Item_Set">
-        <set>
-            da_id = #{daId},
-            entity_id = #{entityId},
-            date_time = #{dateTime},
-            sett_profit = #{settProfit},
-            expend_profit = #{expendProfit},
-            income_profit = #{incomeProfit},
-            profit_hours = #{profitHours},
-            deficit_hours = #{deficitHours},
-            minus_deviation = #{minusDeviation},
-            positive_deviation = #{positiveDeviation},
-            status = #{status},
-            ce = #{ce},
-            sa = #{sa},
-            create_time = #{createTime},
-            status_time = #{statusTime}
-        </set>
+    <sql id="For_Each_Condition">
+        <foreach collection="conditGroup.conditions" item="condit">
+            <choose>
+                <when test="condit.noValue">
+                ${condit.condition}
+                </when>
+                <when test="condit.oneValue">
+                ${condit.condition} #{condit.value1}
+                </when>
+                <when test="condit.secondValue">
+                ${condit.condition} #{condit.value1} and #{condit.value2}
+                </when>
+                <when test="condit.listValue">
+                ${condit.condition}
+                    <foreach collection="condit.list" item="listItem" open="(" close=")" separator=",">
+                    #{listItem}
+                    </foreach>
+                </when>
+            </choose>
+        </foreach>
     </sql>
 
     <sql id="where_sql">
-        <if test="query.criterias != null">
-            <foreach collection="query.criterias" item="criteria" separator=" ">
-                <if test="criteria.valid">
-                    ${criteria.opt}
+        <if test="st.daId != null">
+            AND da_id = #{st.daId}
+        </if>
+        <if test="st.entityId != null">
+            AND entity_id = #{st.entityId}
+        </if>
+        <if test="st.dateTime != null">
+            AND date_time = #{st.dateTime}
+        </if>
+        <if test="st.settProfit != null">
+            AND sett_profit = #{st.settProfit}
+        </if>
+        <if test="st.expendProfit != null">
+            AND expend_profit = #{st.expendProfit}
+        </if>
+        <if test="st.incomeProfit != null">
+            AND income_profit = #{st.incomeProfit}
+        </if>
+        <if test="st.profitHours != null">
+            AND profit_hours = #{st.profitHours}
+        </if>
+        <if test="st.deficitHours != null">
+            AND deficit_hours = #{st.deficitHours}
+        </if>
+        <if test="st.minusDeviation != null">
+            AND minus_deviation = #{st.minusDeviation}
+        </if>
+        <if test="st.positiveDeviation != null">
+            AND positive_deviation = #{st.positiveDeviation}
+        </if>
+        <if test="st.status != null">
+            AND status = #{st.status}
+        </if>
+        <if test="st.ce != null">
+            AND ce = #{st.ce}
+        </if>
+        <if test="st.sa != null">
+            AND sa = #{st.sa}
+        </if>
+        <if test="st.createTime != null">
+            AND create_time = #{st.createTime}
+        </if>
+        <if test="st.statusTime != null">
+            AND status_time = #{st.statusTime}
+        </if>
+        <if test="st.conditGroups != null">
+            <foreach collection="st.conditGroups" item="conditGroup" separator=" ">
+                <if test="conditGroup.valid">
+                    ${conditGroup.opt}
                     <choose>
-                        <when test="criteria.criterions.size() > 1">
+                        <when test="conditGroup.conditions.size() > 1">
                             <trim prefix="(" prefixOverrides="and|or" suffix=")">
-                                <foreach collection="criteria.criterions" item="criterion">
-                                    <choose>
-                                        <when test="criterion.noValue">
-                                            ${criterion.condition}
-                                        </when>
-                                        <when test="criterion.oneValue">
-                                            ${criterion.condition} #{criterion.value1}
-                                        </when>
-                                        <when test="criterion.secondValue">
-                                            ${criterion.condition} #{criterion.value1} and #{criterion.value2}
-                                        </when>
-                                        <when test="criterion.listValue">
-                                            ${criterion.condition}
-                                            <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
-                                                #{listItem}
-                                            </foreach>
-                                        </when>
-                                    </choose>
-                                </foreach>
+                                <include refid="For_Each_Condition" />
                             </trim>
                         </when>
                         <otherwise>
                             <trim prefixOverrides="and|or">
-                                <foreach collection="criteria.criterions" item="criterion">
-                                    <choose>
-                                        <when test="criterion.noValue">
-                                            ${criterion.condition}
-                                        </when>
-                                        <when test="criterion.oneValue">
-                                            ${criterion.condition} #{criterion.value1}
-                                        </when>
-                                        <when test="criterion.secondValue">
-                                            ${criterion.condition} #{criterion.value1} and #{criterion.value2}
-                                        </when>
-                                        <when test="criterion.listValue">
-                                            ${criterion.condition}
-                                            <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
-                                                #{listItem}
-                                            </foreach>
-                                        </when>
-                                    </choose>
-                                </foreach>
+                                <include refid="For_Each_Condition" />
                             </trim>
                         </otherwise>
                     </choose>
@@ -230,12 +187,12 @@
     </sql>
 
     <!--获取最大的主键-->
-    <select id="selectMaxDailyAmountId" resultType="java.lang.Long">
+    <select id="selectMaxId" resultType="java.lang.Long">
         select IFNULL(max(da_id), 0) from `daily_amount`
     </select>
 
     <!--根据主键获取对象-->
-    <select id="loadDailyAmountByKey" resultMap="BaseResultMap">
+    <select id="selectById" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from daily_amount
         <where>
             AND da_id = #{daId}
@@ -243,72 +200,123 @@
     </select>
 
     <!--查询列表-->
-    <select id="findDailyAmountList" resultMap="BaseResultMap">
+    <select id="selectList" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from daily_amount
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="query.orderByClause!=null and query.orderByClause!=''">
-            order by ${query.orderByClause}
+        <if test="st.orderByList!=null and st.orderByList.size() > 0">
+            order by
+            <foreach collection="st.orderByList" item="order" separator=",">
+                ${order.field} ${order.mode}
+            </foreach>
         </if>
-        <if test="query.page != null and query.pageSize != null and query.page > 0" >
-            limit #{query.index},#{query.pageSize}
+        <if test="st.index != null and st.pageSize != null and st.pageSize > 0" >
+            limit #{st.index},#{st.pageSize}
+        </if>
+    </select>
+
+    <!--查询列表-->
+    <select id="selectFieldList" resultMap="BaseResultMap">
+        select
+        <foreach collection="fl" item="field" separator=",">
+            ${field}
+        </foreach>
+        from daily_amount
+        <where>
+            <include refid="where_sql" />
+        </where>
+        <if test="st.orderByList!=null and st.orderByList.size() > 0">
+            order by
+            <foreach collection="st.orderByList" item="order" separator=",">
+            ${order.field} ${order.mode}
+            </foreach>
+        </if>
+        <if test="st.index != null and st.pageSize != null and st.pageSize > 0" >
+            limit #{st.index},#{st.pageSize}
         </if>
     </select>
 
     <!--查询列表总数-->
-    <select id="getTotalDailyAmount" resultType="java.lang.Long">
-        select count(*) from daily_amount
+    <select id="selectCount" resultType="java.lang.Long">
+        select count(1) from daily_amount
         <where>
             <include refid="where_sql" />
         </where>
     </select>
 
+    <!--根据ID列表获取记录列表-->
+    <select id="selectBatchIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from daily_amount
+        <where>
+        da_id in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+            </foreach>
+        </where>
+    </select>
+
     <!--插入对象-->
-    <insert id="addDailyAmount">
+    <insert id="add">
         insert into daily_amount(<include refid="Base_Column_List" />)
         values(<include refid="Base_Object_List" />)
     </insert>
 
     <!--批量插入对象-->
-    <insert id="batchAddDailyAmount">
+    <insert id="addBatch">
         insert into daily_amount(<include refid="Base_Column_List" />)
         values
-        <foreach collection="list" index="index" item="item" separator=",">
-            (<include refid="Base_Item_List" />)
+        <foreach collection="list" index="index" item="at" separator=",">
+            (<include refid="Base_Object_List" />)
         </foreach>
     </insert>
 
     <!--更新对象-->
-    <update id="updateDailyAmount">
+    <update id="updateNotNull">
         update daily_amount
+        <include refid="Set_Not_Null_List" />
         <where>
-            <include refid="Update_Column_Set" />
-        </where>
-        <where>
-            AND da_id = #{daId}
+            AND da_id = #{ut.daId}
         </where>
     </update>
 
     <!--批量更新对象-->
-    <update id="batchUpdateDailyAmount">
-        <foreach collection="list" separator=";" item="item">
+    <update id="updateBatchNotNull">
+        <foreach collection="list" separator=";" item="ut">
             update daily_amount
+            <include refid="Set_Not_Null_List" />
             <where>
-                <include refid="Update_Item_Set" />
-            </where>
-            <where>
-                AND da_id = #{item.daId}
+                AND da_id = #{ut.daId}
             </where>
         </foreach>
     </update>
 
-    <!--批量更新对象-->
-    <update id="batchUpdateDailyAmountByQuery">
+    <!--更新对象(全更新)-->
+    <update id="updateWithNull">
+        update daily_amount
+        <include refid="Set_With_Null_List" />
+        <where>
+            AND da_id = #{ut.daId}
+        </where>
+    </update>
+
+    <!--批量更新对象(全更新)-->
+    <update id="updateBatchWithNull">
+        <foreach collection="list" separator=";" item="ut">
+            update daily_amount
+            <include refid="Set_With_Null_List" />
+            <where>
+                AND da_id = #{ut.daId}
+            </where>
+        </foreach>
+    </update>
+
+    <!--更新对象,根据查询条件更新-->
+    <update id="updateByMap">
         update daily_amount
         <set>
-            <foreach collection="params" index="key" item="value" separator=",">
-            ${key} = ${value}
+            <foreach collection="um" index="key" item="value" separator=",">
+                ${key} = #{value}
             </foreach>
         </set>
         <where>
@@ -316,67 +324,33 @@
         </where>
     </update>
 
-    <!--更新对象(全更新)-->
-    <update id="fullUpdateDailyAmount">
-        update daily_amount
-        <where>
-            <include refid="Full_Update_Column_Set" />
-        </where>
-        <where>
-            AND da_id = #{daId}
-        </where>
-    </update>
-
-    <!--批量更新对象(全更新)-->
-    <update id="batchFullUpdateDailyAmount">
-        <foreach collection="list" separator=";" item="item">
-            update daily_amount
-            <where>
-                <include refid="Full_Update_Item_Set" />
-            </where>
-            <where>
-                AND da_id = #{item.daId}
-            </where>
-        </foreach>
-    </update>
-
-    <!--根据主键删除对象-->
-    <delete id="deleteDailyAmount">
-        delete from daily_amount
-        <where>
-            AND da_id = #{daId}
-        </where>
-    </delete>
-
-    <!-- 批量删除对象 -->
-    <delete id="batchDeleteDailyAmount">
-        delete from daily_amount
-        <where>
-            da_id in
-            <foreach collection="list" open="(" close=")" separator="," item="item">
-                #{item}
-            </foreach>
-        </where>
-    </delete>
-
-    <!-- 批量删除对象 -->
-    <delete id="batchDeleteDailyAmountByQuery">
+    <!--根据查询条件删除记录-->
+    <delete id="delete">
         delete from daily_amount
         <where>
             <include refid="where_sql" />
         </where>
     </delete>
 
-    <!--根据ID列表获取记录列表-->
-    <select id="findDailyAmountByIdList" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from daily_amount
+    <!--根据主键删除对象-->
+    <delete id="deleteById">
+        delete from daily_amount
+        <where>
+            AND da_id = #{daId}
+        </where>
+    </delete>
+
+    <!-- 批量删除对象 -->
+    <delete id="deleteBatchIds">
+        delete from daily_amount
         <where>
             da_id in
             <foreach collection="list" open="(" close=")" separator="," item="item">
                 #{item}
             </foreach>
         </where>
-    </select>
+    </delete>
+
 
     <!--~~~~~~~~~~~~~~~~~~~~~~ custom code begin ~~~~~~~~~~~~~~~~~~~~~~-->
     

@@ -1,204 +1,162 @@
 package com.cloud.ftl.ftlbasic.webEntity;
 
+import com.cloud.ftl.ftlbasic.constant.SqlConst;
 import com.cloud.ftl.ftlbasic.enums.Opt;
-import com.cloud.ftl.ftlbasic.query.Criteria;
+import com.cloud.ftl.ftlbasic.query.ConditGroup;
+import com.cloud.ftl.ftlbasic.query.OrderBy;
+import com.cloud.ftl.ftlbasic.utils.MapUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class BaseQuery extends BasePage {
+@Data
+public class BaseQuery extends BasePage implements Serializable {
 
-    private List<Criteria> criterias;
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    private List<ConditGroup> conditGroups;
 
-    private String orderByClause;
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    private List<OrderBy> orderByList;
 
-    private Map<String,List<Criteria>> criteriasMap = new HashMap<>();
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    private Map<String,List<Integer>> conditGroupsMap;
 
-    public List<Criteria> getCriterias() {
-        return criterias;
-    }
-
-    public void setCriterias(List<Criteria> criterias) {
-        this.criterias = criterias;
-    }
-
-    public String getOrderByClause() {
-        return orderByClause;
-    }
-
-    public void setOrderByClause(String orderByClause) {
-        this.orderByClause = orderByClause;
-    }
-
-    /**
-     * and Criteria
-     * @throws Exception
-     */
-    public Criteria andCriteria() {
-        Criteria criteria = new Criteria(Opt.AND.getCode());
-        if(CollectionUtils.isEmpty(criterias)){
-            criterias = new ArrayList<>();
+    private ConditGroup newConditGroup(Opt opt, String... groupNames){
+        ConditGroup conditGroup = new ConditGroup(opt.getCode());
+        if(CollectionUtils.isEmpty(conditGroups)){
+            conditGroups = Lists.newArrayList();
         }
-        criterias.add(criteria);
-        addCriteria2Map("custom",criteria);
-        return criteria;
-    }
-
-    /**
-     * and Criteria
-     * @throws Exception
-     */
-    public Criteria andCriteria(String field) {
-        if(StringUtils.isEmpty(field)){
-            return andCriteria();
-        }else{
-            Criteria criteria = new Criteria(Opt.AND.getCode());
-            if(CollectionUtils.isEmpty(criterias)){
-                criterias = new ArrayList<>();
-            }
-            criterias.add(criteria);
-            addCriteria2Map(field,criteria);
-            return criteria;
+        conditGroups.add(conditGroup);
+        if(groupNames.length != 0 && !StringUtils.isEmpty(groupNames[0])){
+            addConditGroupHashCode(groupNames[0],conditGroup);
+        } else {
+            addConditGroupHashCode(SqlConst.DEFAULT_FIELD,conditGroup);
         }
+        return conditGroup;
     }
 
     /**
-     * or Criteria
-     * @throws Exception
+     * AND ConditGroup
+     * @throws
      */
-    public Criteria orCriteria() {
-        Criteria criteria = new Criteria(Opt.OR.getCode());
-        if(CollectionUtils.isEmpty(criterias)){
-            criterias = new ArrayList<>();
+    public ConditGroup andConditGroup(String... groupName) {
+        return  newConditGroup(Opt.AND,groupName);
+    }
+
+    /**
+     * OR ConditGroup
+     * @throws
+     */
+    public ConditGroup orConditGroup(String... groupName) {
+        return newConditGroup(Opt.OR,groupName);
+    }
+
+    /**
+     * IS NULL或者IS NOT NULL操作
+     * @throws
+     */
+    protected void addConditGroup(String field, Opt opt) {
+        if(!Opt.IS_NULL.equals(opt) && !Opt.IS_NOT_NULL.equals(opt)){
+            throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处只能为‘IS NULL’或者‘IS NOT NULL’");
         }
-        criterias.add(criteria);
-        addCriteria2Map("custom",criteria);
-        return criteria;
+        ConditGroup conditGroup = newConditGroup(Opt.AND, field);
+        conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode());
+        conditGroup.addSqlCondition(Opt.AND.getCode(),field,opt.getCode());
     }
 
     /**
-     * or Criteria
-     * @throws Exception
+     * BETWEEN操作
+     * @throws
      */
-    public Criteria orCriteria(String field) {
-        if(StringUtils.isEmpty(field)){
-            return orCriteria();
-        }else{
-            Criteria criteria = new Criteria(Opt.OR.getCode());
-            if(CollectionUtils.isEmpty(criterias)){
-                criterias = new ArrayList<>();
-            }
-            criterias.add(criteria);
-            addCriteria2Map(field,criteria);
-            return criteria;
-        }
-    }
-
-    /**
-     * 对对象进行set操作的时候调用
-     * @throws Exception
-     */
-    public void addCriteria(String field,Object value) {
-        Criteria criteria = new Criteria(Opt.AND.getCode());
-        if(CollectionUtils.isEmpty(criterias)){
-            criterias = new ArrayList<>();
-        }
-        criteria.addCriterion("and "+field+" "+Opt.EQUAL.getCode()+" ",value);
-        criterias.add(criteria);
-        addCriteria2Map(field,criteria);
-    }
-
-    /**
-     * 对对象进行set操作的时候调用
-     * @throws Exception
-     */
-    public void addCriteria(String field,Opt opt,Object value1,Object value2) throws Exception {
+    protected void addConditGroup(String field, Opt opt, Object firstParam, Object secondParam) {
         if(!Opt.BETWEEN.equals(opt) && !Opt.NOT_BETWEEN.equals(opt)){
-            throw new Exception("opt enums type not support!");
+            throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处只能为‘BETWEEN’或者‘NOT BETWEEN’");
         }
-        Criteria criteria = new Criteria(Opt.AND.getCode());
-        if(CollectionUtils.isEmpty(criterias)){
-            criterias = new ArrayList<>();
-        }
-        criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value1,value2);
-        criterias.add(criteria);
-        addCriteria2Map(field,criteria);
+        ConditGroup conditGroup = newConditGroup(Opt.AND, field);
+        conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode(),firstParam,secondParam);
+        conditGroup.addSqlCondition(Opt.AND.getCode(),field,opt.getCode(),firstParam,secondParam);
     }
 
     /**
-     * 对对象进行set操作的时候调用
-     * @throws Exception
+     * 单值或者list操作
+     * @throws
      */
-    public void addCriteria(String field,Opt opt,Object value) throws Exception {
-        Criteria criteria = new Criteria(Opt.AND.getCode());
-        if(CollectionUtils.isEmpty(criterias)){
-            criterias = new ArrayList<>();
-        }
+    protected void addConditGroup(String field, Opt opt, Object value) {
+        ConditGroup conditGroup = newConditGroup(Opt.AND, field);
         if(Opt.AND.equals(opt) || Opt.OR.equals(opt) || Opt.ASC.equals(opt)
-                || Opt.DESC.equals(opt) || Opt.BETWEEN.equals(opt) || Opt.NOT_BETWEEN.equals(opt)){
-            throw new Exception("opt enums type not support!");
+                || Opt.DESC.equals(opt) || Opt.BETWEEN.equals(opt) || Opt.NOT_BETWEEN.equals(opt)
+                || Opt.IS_NULL.equals(opt) || Opt.IS_NOT_NULL.equals(opt)){
+            throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处不可以为：" + opt.getCode());
+        }
+        if(value instanceof Collection && !Opt.IN.equals(opt)){
+            throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处只能为‘IN’");
         }
         if(Opt.LIKE.equals(opt) || Opt.NOT_LIKE.equals(opt)){
-            value = "%"+value+"%";
+            value = SqlConst.PERCENT + value + SqlConst.PERCENT;
         }
-        if(Opt.IS_NULL.equals(opt) || Opt.IS_NOT_NULL.equals(opt)){
-            value = "";
-        }
-        if(Opt.IS.equals(opt) || Opt.IS_NOT.equals(opt)){
-            value = null;
-        }
-        criteria.addCriterion("and "+field+" "+opt.getCode()+" ",value);
-        criterias.add(criteria);
-        addCriteria2Map(field,criteria);
+        conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode(),value);
+        conditGroup.addSqlCondition(Opt.AND.getCode(),field,opt.getCode(),value);
     }
+
 
     /**
      * 增加排序操作
      * @param field
-     * @param desc
-     * @throws Exception
+     * @param mode
      */
-    public void addOrderBy(String field,Boolean desc) {
-        String order;
-        if(desc){
-            order = Opt.DESC.getCode();
-        }else{
-            order = Opt.ASC.getCode();
+    public void addOrderBy(String field,Opt mode) {
+        if(!Opt.ASC.equals(mode) && !Opt.DESC.equals(mode)){
+            throw new RuntimeException("排序类型不正确");
         }
-        if(StringUtils.isEmpty(orderByClause)){
-            orderByClause = field + " "+order;
-        }else{
-            orderByClause = orderByClause + "," +field + " "+order;
+        if(Objects.isNull(orderByList)){
+            orderByList = Lists.newArrayList();
         }
+        orderByList.add(new OrderBy(field,mode.getCode()));
     }
 
     /**
-     * 增加criteria的hashcode到map中
-     * @param field
-     * @param criteria
+     * 存储conditGroup的HashCode地址
+     *
+     * @param groupName
+     * @param conditGroup
      */
-    private void addCriteria2Map(String field,Criteria criteria){
-        List<Criteria> criteriaList = criteriasMap.getOrDefault(field, new ArrayList<>());
-        criteriaList.add(criteria);
-        criteriasMap.put(field,criteriaList);
+    private void addConditGroupHashCode(String groupName,ConditGroup conditGroup){
+        if(CollectionUtils.isEmpty(conditGroupsMap)){
+            conditGroupsMap = Maps.newHashMap();
+        }
+        MapUtil.getHandleSetVal(conditGroupsMap,groupName,ArrayList::new,(list)->{
+            list.add(conditGroup.hashCode());
+            return list;
+        });
     }
 
     /**
-     * 清除某个field下的查询条件
-     * @param fields
+     * 清除条件组
+     *
+     * @param groupNames
      */
-    public void cleanCriteria(String... fields){
-        for (String field : fields) {
-            List<Criteria> list = criteriasMap.getOrDefault(field, null);
-            if(!StringUtils.isEmpty(list)){
-                Set<Integer> hashCodeSet = list.stream().map(Object::hashCode).collect(Collectors.toSet());
-                criterias = criterias.stream()
-                        .filter(e -> !hashCodeSet.contains(e.hashCode()))
-                        .collect(Collectors.toList());
-                criteriasMap.remove(field);
+    public void clearConditGroup(String... groupNames){
+        Set<Integer> hashCodeSet = new HashSet<>();
+        for (String groupName : groupNames) {
+            List<Integer> hashcodeList = conditGroupsMap.getOrDefault(groupName, Lists.newArrayList());
+            if(!CollectionUtils.isEmpty(hashcodeList)){
+                hashCodeSet.addAll(hashcodeList);
+                conditGroupsMap.remove(groupName);
             }
         }
+        conditGroups = conditGroups.stream()
+                .filter(e -> !hashCodeSet.contains(e.hashCode()))
+                .collect(Collectors.toList());
     }
 }

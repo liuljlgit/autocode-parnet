@@ -1,238 +1,377 @@
 package com.cloud.ftl.ftltest.test.entity;
 
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
-import com.cloud.ftl.ftlbasic.webEntity.BasePage;
-import java.io.Serializable;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import com.cloud.ftl.ftlbasic.annotation.PrimaryKey;
 
-public class DailyAmount extends BasePage implements Serializable {
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel("DailyAmount")
+public class DailyAmount extends BaseQuery {
 
-    /**
-     * field comment:日前报量管理ID
-     */
-	private Long daId;
+	@ApiModelProperty("日前报量管理ID")
+    @PrimaryKey
+    private Long daId;
 
-    /**
-     * field comment:电企业ID：来源于cloud_sys.entity.entity_id
-     */
-	private Integer entityId;
+	@ApiModelProperty("电企业ID：来源于cloud_sys.entity.entity_id")
+    private Integer entityId;
 
-    /**
-     * field comment:用电时间
-     */
-	private Date dateTime;
+	@ApiModelProperty("用电时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date dateTime;
 
-    /**
-     * field comment:结算盈利
-     */
-	private BigDecimal settProfit;
+	@ApiModelProperty("结算盈利")
+    private BigDecimal settProfit;
 
-    /**
-     * field comment:支出金额
-     */
-	private BigDecimal expendProfit;
+	@ApiModelProperty("支出金额")
+    private BigDecimal expendProfit;
 
-    /**
-     * field comment:收入金额
-     */
-	private BigDecimal incomeProfit;
+	@ApiModelProperty("收入金额")
+    private BigDecimal incomeProfit;
 
-    /**
-     * field comment:盈利小时数
-     */
-	private Byte profitHours;
+	@ApiModelProperty("盈利小时数")
+    private Byte profitHours;
 
-    /**
-     * field comment:亏损小时数
-     */
-	private Byte deficitHours;
+	@ApiModelProperty("亏损小时数")
+    private Byte deficitHours;
 
-    /**
-     * field comment:当天最大负偏差率(%)
-     */
-	private BigDecimal minusDeviation;
+	@ApiModelProperty("当天最大负偏差率(%)")
+    private BigDecimal minusDeviation;
 
-    /**
-     * field comment:当天最大正偏差率(%)
-     */
-	private BigDecimal positiveDeviation;
+	@ApiModelProperty("当天最大正偏差率(%)")
+    private BigDecimal positiveDeviation;
 
-    /**
-     * field comment:状态 (0) 弃用 （1）正常
-     */
-	private Byte status;
+	@ApiModelProperty("状态 (0) 弃用 （1）正常")
+    private Byte status;
 
-    /**
-     * field comment:
-     */
-	private Byte ce;
+	@ApiModelProperty("")
+    private Byte ce;
 
-    /**
-     * field comment:
-     */
-	private Byte sa;
+	@ApiModelProperty("")
+    private Byte sa;
 
-    /**
-     * field comment:创建时间
-     */
-	private Date createTime;
+	@ApiModelProperty("创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date createTime;
 
-    /**
-     * field comment:更新时间
-     */
-	private Date statusTime;
+	@ApiModelProperty("更新时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date statusTime;
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String DA_ID = "da_id";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String ENTITY_ID = "entity_id";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String DATE_TIME = "date_time";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String SETT_PROFIT = "sett_profit";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String EXPEND_PROFIT = "expend_profit";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String INCOME_PROFIT = "income_profit";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String PROFIT_HOURS = "profit_hours";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String DEFICIT_HOURS = "deficit_hours";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String MINUS_DEVIATION = "minus_deviation";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String POSITIVE_DEVIATION = "positive_deviation";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String STATUS = "status";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String CE = "ce";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String SA = "sa";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String CREATE_TIME = "create_time";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String STATUS_TIME = "status_time";
 
 
-    public static final transient String PROP_DA_ID = "daId";
-
-    public static final transient String PROP_ENTITY_ID = "entityId";
-
-    public static final transient String PROP_DATE_TIME = "dateTime";
-
-    public static final transient String PROP_SETT_PROFIT = "settProfit";
-
-    public static final transient String PROP_EXPEND_PROFIT = "expendProfit";
-
-    public static final transient String PROP_INCOME_PROFIT = "incomeProfit";
-
-    public static final transient String PROP_PROFIT_HOURS = "profitHours";
-
-    public static final transient String PROP_DEFICIT_HOURS = "deficitHours";
-
-    public static final transient String PROP_MINUS_DEVIATION = "minusDeviation";
-
-    public static final transient String PROP_POSITIVE_DEVIATION = "positiveDeviation";
-
-    public static final transient String PROP_STATUS = "status";
-
-    public static final transient String PROP_CE = "ce";
-
-    public static final transient String PROP_SA = "sa";
-
-    public static final transient String PROP_CREATE_TIME = "createTime";
-
-    public static final transient String PROP_STATUS_TIME = "statusTime";
-
-
-    public Long getDaId() {
-        return daId;
+    public void andDaId(Opt opt) {
+        addConditGroup(DA_ID,opt);
     }
 
-    public void setDaId(Long daId) {
-        this.daId = daId;
+    public void andDaId(Opt opt,Long daId) {
+        addConditGroup(DA_ID,opt,daId);
     }
 
-    public Integer getEntityId() {
-        return entityId;
+    public void andDaId(Opt opt,List<Long> list) {
+        addConditGroup(DA_ID,opt,list);
     }
 
-    public void setEntityId(Integer entityId) {
-        this.entityId = entityId;
+    public void andDaId(Opt opt,Long firstParam,Long secondParam) {
+        addConditGroup(DA_ID,opt,firstParam,secondParam);
     }
 
-    public Date getDateTime() {
-        return dateTime;
+    public void andEntityId(Opt opt) {
+        addConditGroup(ENTITY_ID,opt);
     }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public void andEntityId(Opt opt,Integer entityId) {
+        addConditGroup(ENTITY_ID,opt,entityId);
     }
 
-    public BigDecimal getSettProfit() {
-        return settProfit;
+    public void andEntityId(Opt opt,List<Integer> list) {
+        addConditGroup(ENTITY_ID,opt,list);
     }
 
-    public void setSettProfit(BigDecimal settProfit) {
-        this.settProfit = settProfit;
+    public void andEntityId(Opt opt,Integer firstParam,Integer secondParam) {
+        addConditGroup(ENTITY_ID,opt,firstParam,secondParam);
     }
 
-    public BigDecimal getExpendProfit() {
-        return expendProfit;
+    public void andDateTime(Opt opt) {
+        addConditGroup(DATE_TIME,opt);
     }
 
-    public void setExpendProfit(BigDecimal expendProfit) {
-        this.expendProfit = expendProfit;
+    public void andDateTime(Opt opt,Date dateTime) {
+        addConditGroup(DATE_TIME,opt,dateTime);
     }
 
-    public BigDecimal getIncomeProfit() {
-        return incomeProfit;
+    public void andDateTime(Opt opt,List<Date> list) {
+        addConditGroup(DATE_TIME,opt,list);
     }
 
-    public void setIncomeProfit(BigDecimal incomeProfit) {
-        this.incomeProfit = incomeProfit;
+    public void andDateTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(DATE_TIME,opt,firstParam,secondParam);
     }
 
-    public Byte getProfitHours() {
-        return profitHours;
+    public void andSettProfit(Opt opt) {
+        addConditGroup(SETT_PROFIT,opt);
     }
 
-    public void setProfitHours(Byte profitHours) {
-        this.profitHours = profitHours;
+    public void andSettProfit(Opt opt,BigDecimal settProfit) {
+        addConditGroup(SETT_PROFIT,opt,settProfit);
     }
 
-    public Byte getDeficitHours() {
-        return deficitHours;
+    public void andSettProfit(Opt opt,List<BigDecimal> list) {
+        addConditGroup(SETT_PROFIT,opt,list);
     }
 
-    public void setDeficitHours(Byte deficitHours) {
-        this.deficitHours = deficitHours;
+    public void andSettProfit(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
+        addConditGroup(SETT_PROFIT,opt,firstParam,secondParam);
     }
 
-    public BigDecimal getMinusDeviation() {
-        return minusDeviation;
+    public void andExpendProfit(Opt opt) {
+        addConditGroup(EXPEND_PROFIT,opt);
     }
 
-    public void setMinusDeviation(BigDecimal minusDeviation) {
-        this.minusDeviation = minusDeviation;
+    public void andExpendProfit(Opt opt,BigDecimal expendProfit) {
+        addConditGroup(EXPEND_PROFIT,opt,expendProfit);
     }
 
-    public BigDecimal getPositiveDeviation() {
-        return positiveDeviation;
+    public void andExpendProfit(Opt opt,List<BigDecimal> list) {
+        addConditGroup(EXPEND_PROFIT,opt,list);
     }
 
-    public void setPositiveDeviation(BigDecimal positiveDeviation) {
-        this.positiveDeviation = positiveDeviation;
+    public void andExpendProfit(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
+        addConditGroup(EXPEND_PROFIT,opt,firstParam,secondParam);
     }
 
-    public Byte getStatus() {
-        return status;
+    public void andIncomeProfit(Opt opt) {
+        addConditGroup(INCOME_PROFIT,opt);
     }
 
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void andIncomeProfit(Opt opt,BigDecimal incomeProfit) {
+        addConditGroup(INCOME_PROFIT,opt,incomeProfit);
     }
 
-    public Byte getCe() {
-        return ce;
+    public void andIncomeProfit(Opt opt,List<BigDecimal> list) {
+        addConditGroup(INCOME_PROFIT,opt,list);
     }
 
-    public void setCe(Byte ce) {
-        this.ce = ce;
+    public void andIncomeProfit(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
+        addConditGroup(INCOME_PROFIT,opt,firstParam,secondParam);
     }
 
-    public Byte getSa() {
-        return sa;
+    public void andProfitHours(Opt opt) {
+        addConditGroup(PROFIT_HOURS,opt);
     }
 
-    public void setSa(Byte sa) {
-        this.sa = sa;
+    public void andProfitHours(Opt opt,Byte profitHours) {
+        addConditGroup(PROFIT_HOURS,opt,profitHours);
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public void andProfitHours(Opt opt,List<Byte> list) {
+        addConditGroup(PROFIT_HOURS,opt,list);
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void andProfitHours(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(PROFIT_HOURS,opt,firstParam,secondParam);
     }
 
-    public Date getStatusTime() {
-        return statusTime;
+    public void andDeficitHours(Opt opt) {
+        addConditGroup(DEFICIT_HOURS,opt);
     }
 
-    public void setStatusTime(Date statusTime) {
-        this.statusTime = statusTime;
+    public void andDeficitHours(Opt opt,Byte deficitHours) {
+        addConditGroup(DEFICIT_HOURS,opt,deficitHours);
+    }
+
+    public void andDeficitHours(Opt opt,List<Byte> list) {
+        addConditGroup(DEFICIT_HOURS,opt,list);
+    }
+
+    public void andDeficitHours(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(DEFICIT_HOURS,opt,firstParam,secondParam);
+    }
+
+    public void andMinusDeviation(Opt opt) {
+        addConditGroup(MINUS_DEVIATION,opt);
+    }
+
+    public void andMinusDeviation(Opt opt,BigDecimal minusDeviation) {
+        addConditGroup(MINUS_DEVIATION,opt,minusDeviation);
+    }
+
+    public void andMinusDeviation(Opt opt,List<BigDecimal> list) {
+        addConditGroup(MINUS_DEVIATION,opt,list);
+    }
+
+    public void andMinusDeviation(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
+        addConditGroup(MINUS_DEVIATION,opt,firstParam,secondParam);
+    }
+
+    public void andPositiveDeviation(Opt opt) {
+        addConditGroup(POSITIVE_DEVIATION,opt);
+    }
+
+    public void andPositiveDeviation(Opt opt,BigDecimal positiveDeviation) {
+        addConditGroup(POSITIVE_DEVIATION,opt,positiveDeviation);
+    }
+
+    public void andPositiveDeviation(Opt opt,List<BigDecimal> list) {
+        addConditGroup(POSITIVE_DEVIATION,opt,list);
+    }
+
+    public void andPositiveDeviation(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
+        addConditGroup(POSITIVE_DEVIATION,opt,firstParam,secondParam);
+    }
+
+    public void andStatus(Opt opt) {
+        addConditGroup(STATUS,opt);
+    }
+
+    public void andStatus(Opt opt,Byte status) {
+        addConditGroup(STATUS,opt,status);
+    }
+
+    public void andStatus(Opt opt,List<Byte> list) {
+        addConditGroup(STATUS,opt,list);
+    }
+
+    public void andStatus(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(STATUS,opt,firstParam,secondParam);
+    }
+
+    public void andCe(Opt opt) {
+        addConditGroup(CE,opt);
+    }
+
+    public void andCe(Opt opt,Byte ce) {
+        addConditGroup(CE,opt,ce);
+    }
+
+    public void andCe(Opt opt,List<Byte> list) {
+        addConditGroup(CE,opt,list);
+    }
+
+    public void andCe(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(CE,opt,firstParam,secondParam);
+    }
+
+    public void andSa(Opt opt) {
+        addConditGroup(SA,opt);
+    }
+
+    public void andSa(Opt opt,Byte sa) {
+        addConditGroup(SA,opt,sa);
+    }
+
+    public void andSa(Opt opt,List<Byte> list) {
+        addConditGroup(SA,opt,list);
+    }
+
+    public void andSa(Opt opt,Byte firstParam,Byte secondParam) {
+        addConditGroup(SA,opt,firstParam,secondParam);
+    }
+
+    public void andCreateTime(Opt opt) {
+        addConditGroup(CREATE_TIME,opt);
+    }
+
+    public void andCreateTime(Opt opt,Date createTime) {
+        addConditGroup(CREATE_TIME,opt,createTime);
+    }
+
+    public void andCreateTime(Opt opt,List<Date> list) {
+        addConditGroup(CREATE_TIME,opt,list);
+    }
+
+    public void andCreateTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(CREATE_TIME,opt,firstParam,secondParam);
+    }
+
+    public void andStatusTime(Opt opt) {
+        addConditGroup(STATUS_TIME,opt);
+    }
+
+    public void andStatusTime(Opt opt,Date statusTime) {
+        addConditGroup(STATUS_TIME,opt,statusTime);
+    }
+
+    public void andStatusTime(Opt opt,List<Date> list) {
+        addConditGroup(STATUS_TIME,opt,list);
+    }
+
+    public void andStatusTime(Opt opt,Date firstParam,Date secondParam) {
+        addConditGroup(STATUS_TIME,opt,firstParam,secondParam);
     }
 
 }

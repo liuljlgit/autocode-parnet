@@ -16,139 +16,104 @@
     </sql>
 
     <sql id="Base_Object_List">
-        #{ltId},#{entityId},#{startTime},#{endTime},#{status},#{createTime},#{statusTime}
+        #{at.ltId},#{at.entityId},#{at.startTime},#{at.endTime},#{at.status},#{at.createTime},#{at.statusTime}
     </sql>
 
-    <sql id="Base_Item_List">
-        #{item.ltId},#{item.entityId},#{item.startTime},#{item.endTime},#{item.status},#{item.createTime},#{item.statusTime}
-    </sql>
-
-    <sql id="Update_Column_Set">
+    <sql id="Set_Not_Null_List">
         <set>
-            <if test="ltId != null">
-                lt_id = #{ltId},
+            <if test="ut.ltId != null">
+                lt_id = #{ut.ltId},
             </if>
-            <if test="entityId != null">
-                entity_id = #{entityId},
+            <if test="ut.entityId != null">
+                entity_id = #{ut.entityId},
             </if>
-            <if test="startTime != null">
-                start_time = #{startTime},
+            <if test="ut.startTime != null">
+                start_time = #{ut.startTime},
             </if>
-            <if test="endTime != null">
-                end_time = #{endTime},
+            <if test="ut.endTime != null">
+                end_time = #{ut.endTime},
             </if>
-            <if test="status != null">
-                status = #{status},
+            <if test="ut.status != null">
+                status = #{ut.status},
             </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
+            <if test="ut.createTime != null">
+                create_time = #{ut.createTime},
             </if>
-            <if test="statusTime != null">
-                status_time = #{statusTime}
+            <if test="ut.statusTime != null">
+                status_time = #{ut.statusTime}
             </if>
         </set>
     </sql>
 
-    <sql id="Update_Item_Set">
+    <sql id="Set_With_Null_List">
         <set>
-            <if test="item.ltId != null">
-                lt_id = #{item.ltId},
-            </if>
-            <if test="item.entityId != null">
-                entity_id = #{item.entityId},
-            </if>
-            <if test="item.startTime != null">
-                start_time = #{item.startTime},
-            </if>
-            <if test="item.endTime != null">
-                end_time = #{item.endTime},
-            </if>
-            <if test="item.status != null">
-                status = #{item.status},
-            </if>
-            <if test="item.createTime != null">
-                create_time = #{item.createTime},
-            </if>
-            <if test="item.statusTime != null">
-                status_time = #{item.statusTime}
-            </if>
+            lt_id = #{ut.ltId},
+            entity_id = #{ut.entityId},
+            start_time = #{ut.startTime},
+            end_time = #{ut.endTime},
+            status = #{ut.status},
+            create_time = #{ut.createTime},
+            status_time = #{ut.statusTime}
         </set>
     </sql>
 
-    <sql id="Full_Update_Column_Set">
-        <set>
-            lt_id = #{ltId},
-            entity_id = #{entityId},
-            start_time = #{startTime},
-            end_time = #{endTime},
-            status = #{status},
-            create_time = #{createTime},
-            status_time = #{statusTime}
-        </set>
-    </sql>
-
-    <sql id="Full_Update_Item_Set">
-        <set>
-            lt_id = #{ltId},
-            entity_id = #{entityId},
-            start_time = #{startTime},
-            end_time = #{endTime},
-            status = #{status},
-            create_time = #{createTime},
-            status_time = #{statusTime}
-        </set>
+    <sql id="For_Each_Condition">
+        <foreach collection="conditGroup.conditions" item="condit">
+            <choose>
+                <when test="condit.noValue">
+                ${condit.condition}
+                </when>
+                <when test="condit.oneValue">
+                ${condit.condition} #{condit.value1}
+                </when>
+                <when test="condit.secondValue">
+                ${condit.condition} #{condit.value1} and #{condit.value2}
+                </when>
+                <when test="condit.listValue">
+                ${condit.condition}
+                    <foreach collection="condit.list" item="listItem" open="(" close=")" separator=",">
+                    #{listItem}
+                    </foreach>
+                </when>
+            </choose>
+        </foreach>
     </sql>
 
     <sql id="where_sql">
-        <if test="query.criterias != null">
-            <foreach collection="query.criterias" item="criteria" separator=" ">
-                <if test="criteria.valid">
-                    ${criteria.opt}
+        <if test="st.ltId != null">
+            AND lt_id = #{st.ltId}
+        </if>
+        <if test="st.entityId != null">
+            AND entity_id = #{st.entityId}
+        </if>
+        <if test="st.startTime != null">
+            AND start_time = #{st.startTime}
+        </if>
+        <if test="st.endTime != null">
+            AND end_time = #{st.endTime}
+        </if>
+        <if test="st.status != null">
+            AND status = #{st.status}
+        </if>
+        <if test="st.createTime != null">
+            AND create_time = #{st.createTime}
+        </if>
+        <if test="st.statusTime != null">
+            AND status_time = #{st.statusTime}
+        </if>
+        <if test="st.conditGroups != null">
+            <foreach collection="st.conditGroups" item="conditGroup" separator=" ">
+                <if test="conditGroup.valid">
+                    ${conditGroup.opt}
                     <choose>
-                        <when test="criteria.criterions.size() > 1">
+                        <when test="conditGroup.conditions.size() > 1">
                             <trim prefix="(" prefixOverrides="and|or" suffix=")">
-                                <foreach collection="criteria.criterions" item="criterion">
-                                    <choose>
-                                        <when test="criterion.noValue">
-                                            ${criterion.condition}
-                                        </when>
-                                        <when test="criterion.oneValue">
-                                            ${criterion.condition} #{criterion.value1}
-                                        </when>
-                                        <when test="criterion.secondValue">
-                                            ${criterion.condition} #{criterion.value1} and #{criterion.value2}
-                                        </when>
-                                        <when test="criterion.listValue">
-                                            ${criterion.condition}
-                                            <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
-                                                #{listItem}
-                                            </foreach>
-                                        </when>
-                                    </choose>
-                                </foreach>
+                                <include refid="For_Each_Condition" />
                             </trim>
                         </when>
                         <otherwise>
                             <trim prefixOverrides="and|or">
-                                <foreach collection="criteria.criterions" item="criterion">
-                                    <choose>
-                                        <when test="criterion.noValue">
-                                            ${criterion.condition}
-                                        </when>
-                                        <when test="criterion.oneValue">
-                                            ${criterion.condition} #{criterion.value1}
-                                        </when>
-                                        <when test="criterion.secondValue">
-                                            ${criterion.condition} #{criterion.value1} and #{criterion.value2}
-                                        </when>
-                                        <when test="criterion.listValue">
-                                            ${criterion.condition}
-                                            <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
-                                                #{listItem}
-                                            </foreach>
-                                        </when>
-                                    </choose>
-                                </foreach>
+                                <include refid="For_Each_Condition" />
                             </trim>
                         </otherwise>
                     </choose>
@@ -158,12 +123,12 @@
     </sql>
 
     <!--获取最大的主键-->
-    <select id="selectMaxLoadTimeId" resultType="java.lang.Long">
+    <select id="selectMaxId" resultType="java.lang.Long">
         select IFNULL(max(lt_id), 0) from `load_time`
     </select>
 
     <!--根据主键获取对象-->
-    <select id="loadLoadTimeByKey" resultMap="BaseResultMap">
+    <select id="selectById" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from load_time
         <where>
             AND lt_id = #{ltId}
@@ -171,72 +136,123 @@
     </select>
 
     <!--查询列表-->
-    <select id="findLoadTimeList" resultMap="BaseResultMap">
+    <select id="selectList" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from load_time
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="query.orderByClause!=null and query.orderByClause!=''">
-            order by ${query.orderByClause}
+        <if test="st.orderByList!=null and st.orderByList.size() > 0">
+            order by
+            <foreach collection="st.orderByList" item="order" separator=",">
+                ${order.field} ${order.mode}
+            </foreach>
         </if>
-        <if test="query.page != null and query.pageSize != null and query.page > 0" >
-            limit #{query.index},#{query.pageSize}
+        <if test="st.index != null and st.pageSize != null and st.pageSize > 0" >
+            limit #{st.index},#{st.pageSize}
+        </if>
+    </select>
+
+    <!--查询列表-->
+    <select id="selectFieldList" resultMap="BaseResultMap">
+        select
+        <foreach collection="fl" item="field" separator=",">
+            ${field}
+        </foreach>
+        from load_time
+        <where>
+            <include refid="where_sql" />
+        </where>
+        <if test="st.orderByList!=null and st.orderByList.size() > 0">
+            order by
+            <foreach collection="st.orderByList" item="order" separator=",">
+            ${order.field} ${order.mode}
+            </foreach>
+        </if>
+        <if test="st.index != null and st.pageSize != null and st.pageSize > 0" >
+            limit #{st.index},#{st.pageSize}
         </if>
     </select>
 
     <!--查询列表总数-->
-    <select id="getTotalLoadTime" resultType="java.lang.Long">
-        select count(*) from load_time
+    <select id="selectCount" resultType="java.lang.Long">
+        select count(1) from load_time
         <where>
             <include refid="where_sql" />
         </where>
     </select>
 
+    <!--根据ID列表获取记录列表-->
+    <select id="selectBatchIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from load_time
+        <where>
+        lt_id in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+            </foreach>
+        </where>
+    </select>
+
     <!--插入对象-->
-    <insert id="addLoadTime">
+    <insert id="add">
         insert into load_time(<include refid="Base_Column_List" />)
         values(<include refid="Base_Object_List" />)
     </insert>
 
     <!--批量插入对象-->
-    <insert id="batchAddLoadTime">
+    <insert id="addBatch">
         insert into load_time(<include refid="Base_Column_List" />)
         values
-        <foreach collection="list" index="index" item="item" separator=",">
-            (<include refid="Base_Item_List" />)
+        <foreach collection="list" index="index" item="at" separator=",">
+            (<include refid="Base_Object_List" />)
         </foreach>
     </insert>
 
     <!--更新对象-->
-    <update id="updateLoadTime">
+    <update id="updateNotNull">
         update load_time
+        <include refid="Set_Not_Null_List" />
         <where>
-            <include refid="Update_Column_Set" />
-        </where>
-        <where>
-            AND lt_id = #{ltId}
+            AND lt_id = #{ut.ltId}
         </where>
     </update>
 
     <!--批量更新对象-->
-    <update id="batchUpdateLoadTime">
-        <foreach collection="list" separator=";" item="item">
+    <update id="updateBatchNotNull">
+        <foreach collection="list" separator=";" item="ut">
             update load_time
+            <include refid="Set_Not_Null_List" />
             <where>
-                <include refid="Update_Item_Set" />
-            </where>
-            <where>
-                AND lt_id = #{item.ltId}
+                AND lt_id = #{ut.ltId}
             </where>
         </foreach>
     </update>
 
-    <!--批量更新对象-->
-    <update id="batchUpdateLoadTimeByQuery">
+    <!--更新对象(全更新)-->
+    <update id="updateWithNull">
+        update load_time
+        <include refid="Set_With_Null_List" />
+        <where>
+            AND lt_id = #{ut.ltId}
+        </where>
+    </update>
+
+    <!--批量更新对象(全更新)-->
+    <update id="updateBatchWithNull">
+        <foreach collection="list" separator=";" item="ut">
+            update load_time
+            <include refid="Set_With_Null_List" />
+            <where>
+                AND lt_id = #{ut.ltId}
+            </where>
+        </foreach>
+    </update>
+
+    <!--更新对象,根据查询条件更新-->
+    <update id="updateByMap">
         update load_time
         <set>
-            <foreach collection="params" index="key" item="value" separator=",">
-            ${key} = ${value}
+            <foreach collection="um" index="key" item="value" separator=",">
+                ${key} = #{value}
             </foreach>
         </set>
         <where>
@@ -244,67 +260,33 @@
         </where>
     </update>
 
-    <!--更新对象(全更新)-->
-    <update id="fullUpdateLoadTime">
-        update load_time
-        <where>
-            <include refid="Full_Update_Column_Set" />
-        </where>
-        <where>
-            AND lt_id = #{ltId}
-        </where>
-    </update>
-
-    <!--批量更新对象(全更新)-->
-    <update id="batchFullUpdateLoadTime">
-        <foreach collection="list" separator=";" item="item">
-            update load_time
-            <where>
-                <include refid="Full_Update_Item_Set" />
-            </where>
-            <where>
-                AND lt_id = #{item.ltId}
-            </where>
-        </foreach>
-    </update>
-
-    <!--根据主键删除对象-->
-    <delete id="deleteLoadTime">
-        delete from load_time
-        <where>
-            AND lt_id = #{ltId}
-        </where>
-    </delete>
-
-    <!-- 批量删除对象 -->
-    <delete id="batchDeleteLoadTime">
-        delete from load_time
-        <where>
-            lt_id in
-            <foreach collection="list" open="(" close=")" separator="," item="item">
-                #{item}
-            </foreach>
-        </where>
-    </delete>
-
-    <!-- 批量删除对象 -->
-    <delete id="batchDeleteLoadTimeByQuery">
+    <!--根据查询条件删除记录-->
+    <delete id="delete">
         delete from load_time
         <where>
             <include refid="where_sql" />
         </where>
     </delete>
 
-    <!--根据ID列表获取记录列表-->
-    <select id="findLoadTimeByIdList" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from load_time
+    <!--根据主键删除对象-->
+    <delete id="deleteById">
+        delete from load_time
+        <where>
+            AND lt_id = #{ltId}
+        </where>
+    </delete>
+
+    <!-- 批量删除对象 -->
+    <delete id="deleteBatchIds">
+        delete from load_time
         <where>
             lt_id in
             <foreach collection="list" open="(" close=")" separator="," item="item">
                 #{item}
             </foreach>
         </where>
-    </select>
+    </delete>
+
 
     <!--~~~~~~~~~~~~~~~~~~~~~~ custom code begin ~~~~~~~~~~~~~~~~~~~~~~-->
     

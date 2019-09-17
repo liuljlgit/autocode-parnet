@@ -1,35 +1,22 @@
 package com.cloud.ftl.ftlbasic.webEntity;
 
-import java.util.List;
-
 public class RespEntity {
 
 	/**
 	 * 正确返回
 	 * @return
 	 */
-	public static CommonResp<Object> ok(){
-		return new CommonResp<>();
+	public static CommonResp ok(){
+		return new CommonResp();
 	}
 
 	/**
 	 * 返回对象
 	 * @param data
-	 * @param <T>
 	 * @return
 	 */
-	public static <T> CommonResp<T> ok(T data){
-		return new CommonResp<>(data);
-	}
-
-	/**
-	 * 返回列表
-	 * @param list
-	 * @param <T>
-	 * @return
-	 */
-	public static <T> CommonResp<T> ok(List<T> list){
-		return new CommonResp<>(list);
+	public static CommonResp ok(Object data){
+		return new CommonResp(data);
 	}
 
 	/**
@@ -37,8 +24,8 @@ public class RespEntity {
 	 * @param codeEnum
 	 * @return
 	 */
-	public static CommonResp<Object> error(CodeEnum codeEnum){
-		return new CommonResp<>(codeEnum);
+	public static CommonResp error(CodeEnum codeEnum){
+		return new CommonResp(codeEnum);
 	}
 
 	/**
@@ -47,8 +34,8 @@ public class RespEntity {
 	 * @param msg
 	 * @return
 	 */
-	public static CommonResp<Object> error(Integer code,String msg){
-		return new CommonResp<>(code,msg);
+	public static CommonResp error(Integer code,String msg){
+		return new CommonResp(code,msg);
 	}
 
 }

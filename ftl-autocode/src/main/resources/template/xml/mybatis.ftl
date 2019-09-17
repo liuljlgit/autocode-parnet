@@ -19,104 +19,70 @@
 
     <sql id="Base_Object_List">
     <#list tableColEntitys as col>
-<#if col_index == 0>        ${r'#{'}${col.fieldJavaName}}<#else>${r'#{'}${col.fieldJavaName}}</#if><#if col_index < (tableColEntitys?size - 1)>,</#if><#rt>
+<#if col_index == 0>        ${r'#{at.'}${col.fieldJavaName}}<#else>${r'#{at.'}${col.fieldJavaName}}</#if><#if col_index < (tableColEntitys?size - 1)>,</#if><#rt>
     </#list>
 
     </sql>
 
-    <sql id="Base_Item_List">
-    <#list tableColEntitys as col>
-<#if col_index == 0>        ${r'#{item.'}${col.fieldJavaName}}<#else>${r'#{item.'}${col.fieldJavaName}}</#if><#if col_index < (tableColEntitys?size - 1)>,</#if><#rt>
-    </#list>
-
-    </sql>
-
-    <sql id="Update_Column_Set">
+    <sql id="Set_Not_Null_List">
         <set>
         <#list tableColEntitys as col>
-            <if test="${col.fieldJavaName} != null">
-                ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
+            <if test="ut.${col.fieldJavaName} != null">
+                ${col.field} = ${r'#{ut.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
             </if>
         </#list>
         </set>
     </sql>
 
-    <sql id="Update_Item_Set">
+    <sql id="Set_With_Null_List">
         <set>
         <#list tableColEntitys as col>
-            <if test="item.${col.fieldJavaName} != null">
-                ${col.field} = ${r'#{item.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-            </if>
+            ${col.field} = ${r'#{ut.'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
         </#list>
         </set>
     </sql>
 
-    <sql id="Full_Update_Column_Set">
-        <set>
-        <#list tableColEntitys as col>
-            ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-        </#list>
-        </set>
-    </sql>
-
-    <sql id="Full_Update_Item_Set">
-        <set>
-        <#list tableColEntitys as col>
-            ${col.field} = ${r'#{'}${col.fieldJavaName}}<#if col_index < (tableColEntitys?size - 1)>,</#if>
-        </#list>
-        </set>
+    <sql id="For_Each_Condition">
+        <foreach collection="conditGroup.conditions" item="condit">
+            <choose>
+                <when test="condit.noValue">
+                ${r'${'}condit.condition}
+                </when>
+                <when test="condit.oneValue">
+                ${r'${'}condit.condition} ${r'#{'}condit.value1}
+                </when>
+                <when test="condit.secondValue">
+                ${r'${'}condit.condition} ${r'#{'}condit.value1} and ${r'#{'}condit.value2}
+                </when>
+                <when test="condit.listValue">
+                ${r'${'}condit.condition}
+                    <foreach collection="condit.list" item="listItem" open="(" close=")" separator=",">
+                    ${r'#{'}listItem}
+                    </foreach>
+                </when>
+            </choose>
+        </foreach>
     </sql>
 
     <sql id="where_sql">
-        <if test="query.criterias != null">
-            <foreach collection="query.criterias" item="criteria" separator=" ">
-                <if test="criteria.valid">
-                    ${r'${'}criteria.opt}
+        <#list tableColEntitys as col>
+        <if test="st.${col.fieldJavaName} != null">
+            AND ${col.field} = ${r'#{st.'}${col.fieldJavaName}}
+        </if>
+        </#list>
+        <if test="st.conditGroups != null">
+            <foreach collection="st.conditGroups" item="conditGroup" separator=" ">
+                <if test="conditGroup.valid">
+                    ${r'${'}conditGroup.opt}
                     <choose>
-                        <when test="criteria.criterions.size() > 1">
+                        <when test="conditGroup.conditions.size() > 1">
                             <trim prefix="(" prefixOverrides="and|or" suffix=")">
-                                <foreach collection="criteria.criterions" item="criterion">
-                                    <choose>
-                                        <when test="criterion.noValue">
-                                            ${r'${'}criterion.condition}
-                                        </when>
-                                        <when test="criterion.oneValue">
-                                            ${r'${'}criterion.condition} ${r'#{'}criterion.value1}
-                                        </when>
-                                        <when test="criterion.secondValue">
-                                            ${r'${'}criterion.condition} ${r'#{'}criterion.value1} and ${r'#{'}criterion.value2}
-                                        </when>
-                                        <when test="criterion.listValue">
-                                            ${r'${'}criterion.condition}
-                                            <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
-                                                ${r'#{'}listItem}
-                                            </foreach>
-                                        </when>
-                                    </choose>
-                                </foreach>
+                                <include refid="For_Each_Condition" />
                             </trim>
                         </when>
                         <otherwise>
                             <trim prefixOverrides="and|or">
-                                <foreach collection="criteria.criterions" item="criterion">
-                                    <choose>
-                                        <when test="criterion.noValue">
-                                            ${r'${'}criterion.condition}
-                                        </when>
-                                        <when test="criterion.oneValue">
-                                            ${r'${'}criterion.condition} ${r'#{'}criterion.value1}
-                                        </when>
-                                        <when test="criterion.secondValue">
-                                            ${r'${'}criterion.condition} ${r'#{'}criterion.value1} and ${r'#{'}criterion.value2}
-                                        </when>
-                                        <when test="criterion.listValue">
-                                            ${r'${'}criterion.condition}
-                                            <foreach collection="criterion.list" item="listItem" open="(" close=")" separator=",">
-                                                ${r'#{'}listItem}
-                                            </foreach>
-                                        </when>
-                                    </choose>
-                                </foreach>
+                                <include refid="For_Each_Condition" />
                             </trim>
                         </otherwise>
                     </choose>
@@ -126,12 +92,12 @@
     </sql>
 
     <!--获取最大的主键-->
-    <select id="selectMax${className}Id" resultType="java.lang.Long">
+    <select id="selectMaxId" resultType="java.lang.Long">
         select IFNULL(max(${IdColEntity.field}), 0) from `${tableName}`
     </select>
 
     <!--根据主键获取对象-->
-    <select id="load${className}ByKey" resultMap="BaseResultMap">
+    <select id="selectById" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from ${tableName}
         <where>
             AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
@@ -139,72 +105,123 @@
     </select>
 
     <!--查询列表-->
-    <select id="find${className}List" resultMap="BaseResultMap">
+    <select id="selectList" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" /> from ${tableName}
         <where>
             <include refid="where_sql" />
         </where>
-        <if test="query.orderByClause!=null and query.orderByClause!=''">
-            order by ${r'${'}query.orderByClause}
+        <if test="st.orderByList!=null and st.orderByList.size() > 0">
+            order by
+            <foreach collection="st.orderByList" item="order" separator=",">
+                ${r'${'}order.field} ${r'${'}order.mode}
+            </foreach>
         </if>
-        <if test="query.page != null and query.pageSize != null and query.page > 0" >
-            limit ${r'#{'}query.index},${r'#{'}query.pageSize}
+        <if test="st.index != null and st.pageSize != null and st.pageSize > 0" >
+            limit ${r'#{st.'}index},${r'#{st.'}pageSize}
+        </if>
+    </select>
+
+    <!--查询列表-->
+    <select id="selectFieldList" resultMap="BaseResultMap">
+        select
+        <foreach collection="fl" item="field" separator=",">
+            ${r'${'}field}
+        </foreach>
+        from ${tableName}
+        <where>
+            <include refid="where_sql" />
+        </where>
+        <if test="st.orderByList!=null and st.orderByList.size() > 0">
+            order by
+            <foreach collection="st.orderByList" item="order" separator=",">
+            ${r'${'}order.field} ${r'${'}order.mode}
+            </foreach>
+        </if>
+        <if test="st.index != null and st.pageSize != null and st.pageSize > 0" >
+            limit ${r'#{st.'}index},${r'#{st.'}pageSize}
         </if>
     </select>
 
     <!--查询列表总数-->
-    <select id="getTotal${className}" resultType="java.lang.Long">
-        select count(*) from ${tableName}
+    <select id="selectCount" resultType="java.lang.Long">
+        select count(1) from ${tableName}
         <where>
             <include refid="where_sql" />
         </where>
     </select>
 
+    <!--根据ID列表获取记录列表-->
+    <select id="selectBatchIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from ${tableName}
+        <where>
+        ${IdColEntity.field} in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+            ${r'#{'}item}
+            </foreach>
+        </where>
+    </select>
+
     <!--插入对象-->
-    <insert id="add${className}">
+    <insert id="add">
         insert into ${tableName}(<include refid="Base_Column_List" />)
         values(<include refid="Base_Object_List" />)
     </insert>
 
     <!--批量插入对象-->
-    <insert id="batchAdd${className}">
+    <insert id="addBatch">
         insert into ${tableName}(<include refid="Base_Column_List" />)
         values
-        <foreach collection="list" index="index" item="item" separator=",">
-            (<include refid="Base_Item_List" />)
+        <foreach collection="list" index="index" item="at" separator=",">
+            (<include refid="Base_Object_List" />)
         </foreach>
     </insert>
 
     <!--更新对象-->
-    <update id="update${className}">
+    <update id="updateNotNull">
         update ${tableName}
+        <include refid="Set_Not_Null_List" />
         <where>
-            <include refid="Update_Column_Set" />
-        </where>
-        <where>
-            AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
+            AND ${IdColEntity.field} = ${r'#{ut.'}${IdColEntity.fieldJavaName}}
         </where>
     </update>
 
     <!--批量更新对象-->
-    <update id="batchUpdate${className}">
-        <foreach collection="list" separator=";" item="item">
+    <update id="updateBatchNotNull">
+        <foreach collection="list" separator=";" item="ut">
             update ${tableName}
+            <include refid="Set_Not_Null_List" />
             <where>
-                <include refid="Update_Item_Set" />
-            </where>
-            <where>
-                AND ${IdColEntity.field} = ${r'#{item.'}${IdColEntity.fieldJavaName}}
+                AND ${IdColEntity.field} = ${r'#{ut.'}${IdColEntity.fieldJavaName}}
             </where>
         </foreach>
     </update>
 
-    <!--批量更新对象-->
-    <update id="batchUpdate${className}ByQuery">
+    <!--更新对象(全更新)-->
+    <update id="updateWithNull">
+        update ${tableName}
+        <include refid="Set_With_Null_List" />
+        <where>
+            AND ${IdColEntity.field} = ${r'#{ut.'}${IdColEntity.fieldJavaName}}
+        </where>
+    </update>
+
+    <!--批量更新对象(全更新)-->
+    <update id="updateBatchWithNull">
+        <foreach collection="list" separator=";" item="ut">
+            update ${tableName}
+            <include refid="Set_With_Null_List" />
+            <where>
+                AND ${IdColEntity.field} = ${r'#{ut.'}${IdColEntity.fieldJavaName}}
+            </where>
+        </foreach>
+    </update>
+
+    <!--更新对象,根据查询条件更新-->
+    <update id="updateByMap">
         update ${tableName}
         <set>
-            <foreach collection="params" index="key" item="value" separator=",">
-            ${r'${'}key} = ${r'${'}value}
+            <foreach collection="um" index="key" item="value" separator=",">
+                ${r'${'}key} = ${r'#{'}value}
             </foreach>
         </set>
         <where>
@@ -212,67 +229,33 @@
         </where>
     </update>
 
-    <!--更新对象(全更新)-->
-    <update id="fullUpdate${className}">
-        update ${tableName}
-        <where>
-            <include refid="Full_Update_Column_Set" />
-        </where>
-        <where>
-            AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
-        </where>
-    </update>
-
-    <!--批量更新对象(全更新)-->
-    <update id="batchFullUpdate${className}">
-        <foreach collection="list" separator=";" item="item">
-            update ${tableName}
-            <where>
-                <include refid="Full_Update_Item_Set" />
-            </where>
-            <where>
-                AND ${IdColEntity.field} = ${r'#{item.'}${IdColEntity.fieldJavaName}}
-            </where>
-        </foreach>
-    </update>
-
-    <!--根据主键删除对象-->
-    <delete id="delete${className}">
-        delete from ${tableName}
-        <where>
-            AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
-        </where>
-    </delete>
-
-    <!-- 批量删除对象 -->
-    <delete id="batchDelete${className}">
-        delete from ${tableName}
-        <where>
-            ${IdColEntity.field} in
-            <foreach collection="list" open="(" close=")" separator="," item="item">
-                ${r'#{'}item}
-            </foreach>
-        </where>
-    </delete>
-
-    <!-- 批量删除对象 -->
-    <delete id="batchDelete${className}ByQuery">
+    <!--根据查询条件删除记录-->
+    <delete id="delete">
         delete from ${tableName}
         <where>
             <include refid="where_sql" />
         </where>
     </delete>
 
-    <!--根据ID列表获取记录列表-->
-    <select id="find${className}ByIdList" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from ${tableName}
+    <!--根据主键删除对象-->
+    <delete id="deleteById">
+        delete from ${tableName}
+        <where>
+            AND ${IdColEntity.field} = ${r'#{'}${IdColEntity.fieldJavaName}}
+        </where>
+    </delete>
+
+    <!-- 批量删除对象 -->
+    <delete id="deleteBatchIds">
+        delete from ${tableName}
         <where>
             ${IdColEntity.field} in
             <foreach collection="list" open="(" close=")" separator="," item="item">
                 ${r'#{'}item}
             </foreach>
         </where>
-    </select>
+    </delete>
+
 
     <!--~~~~~~~~~~~~~~~~~~~~~~ custom code begin ~~~~~~~~~~~~~~~~~~~~~~-->
     ${customCode!""}

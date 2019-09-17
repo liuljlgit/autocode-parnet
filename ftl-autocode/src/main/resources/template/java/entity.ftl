@@ -1,33 +1,64 @@
 package ${entityPackagePath};
 
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
-import com.cloud.ftl.ftlbasic.webEntity.BasePage;
-import java.io.Serializable;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import com.cloud.ftl.ftlbasic.annotation.PrimaryKey;
 
-public class ${className} extends BasePage implements Serializable {
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel("${className}")
+public class ${className} extends BaseQuery {
 <#list tableColEntitys as col>
 
-    /**
-     * field comment:${col.comment}
-     */
-	private ${col.fieldJavaType} ${col.fieldJavaName};
+	@ApiModelProperty("${col.comment}")
+    <#if col.fieldJavaName == IdColEntity.fieldJavaName>
+    @PrimaryKey
+    private ${col.fieldJavaType} ${col.fieldJavaName};
+    <#elseif col.fieldJavaType == 'Date'>
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private ${col.fieldJavaType} ${col.fieldJavaName};
+    <#else>
+    private ${col.fieldJavaType} ${col.fieldJavaName};
+    </#if>
+</#list>
+<#list tableColEntitys as col>
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String ${col.field?upper_case} = "${col.field}";
 </#list>
 
 <#list tableColEntitys as col>
 
-    public static final transient String PROP_${col.field?upper_case} = "${col.fieldJavaName}";
-</#list>
-
-<#list tableColEntitys as col>
-
-    public ${col.fieldJavaType} get${col.fieldJavaName?cap_first}() {
-        return ${col.fieldJavaName};
+    public void and${col.fieldJavaName?cap_first}(Opt opt) {
+        addConditGroup(${col.field?upper_case},opt);
     }
 
-    public void set${col.fieldJavaName?cap_first}(${col.fieldJavaType} ${col.fieldJavaName}) {
-        this.${col.fieldJavaName} = ${col.fieldJavaName};
+    public void and${col.fieldJavaName?cap_first}(Opt opt,${col.fieldJavaType} ${col.fieldJavaName}) {
+        addConditGroup(${col.field?upper_case},opt,${col.fieldJavaName});
+    }
+
+    public void and${col.fieldJavaName?cap_first}(Opt opt,List<${col.fieldJavaType}> list) {
+        addConditGroup(${col.field?upper_case},opt,list);
+    }
+
+    public void and${col.fieldJavaName?cap_first}(Opt opt,${col.fieldJavaType} firstParam,${col.fieldJavaType} secondParam) {
+        addConditGroup(${col.field?upper_case},opt,firstParam,secondParam);
     }
 </#list>
 
