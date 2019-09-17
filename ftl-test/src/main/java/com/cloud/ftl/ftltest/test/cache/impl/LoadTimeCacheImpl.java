@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
 import com.cloud.ftl.ftlbasic.utils.QueryKeyUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
@@ -18,10 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -232,8 +228,8 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
     }
 
     @Override
-    public int updateByMap(LoadTime oEntity, FuncMap funcMap) {
-        int updateCount = super.updateByMap(oEntity, funcMap);
+    public int updateByMap(LoadTime oEntity, Map<String, Object> updateMap) {
+        int updateCount = super.updateByMap(oEntity, updateMap);
         clearAllCacheData();
         return updateCount;
     }
@@ -296,7 +292,7 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
 
     private void clearAllCacheData(){
         try {
-            Set<String> keys = redisTemplate.keys(LoadTime.class.getSimpleName());
+            Set<String> keys = redisTemplate.keys(LoadTime.class.getSimpleName() + "*");
             if(!CollectionUtils.isEmpty(keys)){
                 redisTemplate.delete(keys);
             }

@@ -1,8 +1,6 @@
 package ${ctrlPackagePath};
 
-import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -12,7 +10,6 @@ import ${inftServicePackagePath}.I${className}Service;
 import ${entityPackagePath}.${className};
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.Objects;
 
 @Slf4j
 @RestController

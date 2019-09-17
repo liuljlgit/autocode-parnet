@@ -1,19 +1,15 @@
 package com.cloud.ftl.ftltest.test.controller;
 
-import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
-import com.cloud.ftl.ftltest.test.entity.DailyAmount;
-import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
-import com.google.common.collect.Lists;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
 import javax.validation.constraints.NotNull;
+import io.swagger.annotations.*;
+import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.cloud.ftl.ftltest.test.entity.DailyAmount;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -29,19 +25,19 @@ public class DailyAmountCtrl{
     @ApiOperation(value = "根据主键查询" , notes = "author: llj")
     @ApiImplicitParam(name="daId", value="主键",required = true)
     public CommonResp selectById(@RequestParam("daId") @NotNull Long daId) {
-        return RespEntity.ok(dailyAmountService.cacheSelectById(daId,"没有符合条件的记录！"));
+        return RespEntity.ok(dailyAmountService.selectById(daId,"没有符合条件的记录！"));
     }
 
     @PostMapping(value = "/list")
     @ApiOperation(value = "查询所有列表" , notes = "author: llj")
     public CommonResp selectList(@RequestBody DailyAmount dailyAmount){
-        return RespEntity.ok(dailyAmountService.cacheSelectList(dailyAmount, Lists.newArrayList(DailyAmount.DA_ID)));
+        return RespEntity.ok(dailyAmountService.selectList(dailyAmount));
     }
 
     @PostMapping(value = "/page")
     @ApiOperation(value = "分页查询" , notes = "author: llj")
     public CommonResp selectPage(@RequestBody DailyAmount dailyAmount) {
-        return RespEntity.ok(dailyAmountService.cacheSelectPage(dailyAmount));
+        return RespEntity.ok(dailyAmountService.selectPage(dailyAmount));
     }
 
 
