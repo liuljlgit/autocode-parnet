@@ -4,7 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/autocode-parnet.iml" filepath="$PROJECT_DIR$/autocode-parnet.iml" />
       <module fileurl="file://$PROJECT_DIR$/ftl-autocode/ftl-autocode.iml" filepath="$PROJECT_DIR$/ftl-autocode/ftl-autocode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ftl-autocode/ftl-autocode.iml" filepath="$PROJECT_DIR$/ftl-autocode/ftl-autocode.iml" />
       <module fileurl="file://$PROJECT_DIR$/ftl-basic/ftl-basic.iml" filepath="$PROJECT_DIR$/ftl-basic/ftl-basic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ftl-basic/ftl-basic.iml" filepath="$PROJECT_DIR$/ftl-basic/ftl-basic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ftl-test/ftl-test.iml" filepath="$PROJECT_DIR$/ftl-test/ftl-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/ftl-test/ftl-test.iml" filepath="$PROJECT_DIR$/ftl-test/ftl-test.iml" />
     </modules>
   </component>

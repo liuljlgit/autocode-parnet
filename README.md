@@ -20,26 +20,23 @@ b）在你的项目中加入jar包<br>
 ```
 c）启动ftl-autocode项目，使用postman请求接口生成代码<br>
 ```
-  {
-    "mySqlUrl":"jdbc:mysql://192.168.123.170:3306/test",            //mysql地址
-    "mySqlName":"root",                                             //mysql账号  
-    "mySqlPass":"root",                                             //mysql密码
-    "mySqlDriver":"com.mysql.jdbc.Driver",                          //mysql驱动类  
-    "projectBasePath":"E:\\myProject\\autocode-parnet\\ftl-test",   //项目存放本地目录
-    "ctrlPath":"com.cloud.ftl.ftltest.test.controller",             //controller包目录
-    "inftServicePath":"com.cloud.ftl.ftltest.test.service.inft",    //service接口包目录
-    "implServicePath":"com.cloud.ftl.ftltest.test.service.impl",    //service实现包目录
-    "inftRedisPath":"com.cloud.ftl.ftltest.test.cache.inft",        //redis接口包目录
-    "implRedisPath":"com.cloud.ftl.ftltest.test.cache.impl",        //redis实现包目录
-    "daoPath":"com.cloud.ftl.ftltest.test.dao",                     //dao层包目录    
-    "entityPath":"com.cloud.ftl.ftltest.test.entity",               //entity层包目录
-    "queryEntityPath":"com.cloud.ftl.ftltest.test.query",           //查询对象包目录
-    "respPath":"com.cloud.ftl.ftltest.test.webentity.resp",         //返回实体包目录
-    "reqPath":"com.cloud.ftl.ftltest.test.webentity.req",           //请求实体包目录
-    "xmlPath":"mybatis.mapper.test",                                //xml文件生成目录  
-    "update":false,                                                 //false:生成所有文件，true:用于数据库表接口更新，只更新部分文件
-    "tableNames":["daily_amount","load_time"]                       //需要生成的表，json数组，可生成多个
-  }
+ {
+ 	"mySqlUrl":"jdbc:mysql://localhost:3306/test",                                 
+ 	"mySqlName":"root",
+ 	"mySqlPass":"root",
+ 	"mySqlDriver":"com.mysql.jdbc.Driver",
+ 	"projectBasePath":"E:\\myProject\\autocode-parnet\\ftl-test",   //项目模块在本地地址
+ 	"ctrlPath":"com.cloud.ftl.ftltest.test.controller",
+ 	"inftServicePath":"com.cloud.ftl.ftltest.test.service.inft",
+ 	"implServicePath":"com.cloud.ftl.ftltest.test.service.impl",
+ 	"inftCachePath":"com.cloud.ftl.ftltest.test.cache.inft",
+ 	"implCachePath":"com.cloud.ftl.ftltest.test.cache.impl",
+ 	"daoPath":"com.cloud.ftl.ftltest.test.dao",
+ 	"entityPath":"com.cloud.ftl.ftltest.test.entity",
+ 	"xmlPath":"mybatis.mapper.test",    
+ 	"update":false,                                                //是否是更新操作，更新操作只会重新生成xml、dao和entity等文件             
+ 	"tableNames":["daily_amount","load_time"]
+ }
 ```
 <br>
     
