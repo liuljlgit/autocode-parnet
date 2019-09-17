@@ -4,6 +4,7 @@ import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -34,7 +35,7 @@ public class DailyAmountCtrl{
     @PostMapping(value = "/list")
     @ApiOperation(value = "查询所有列表" , notes = "author: llj")
     public CommonResp selectList(@RequestBody DailyAmount dailyAmount){
-        return RespEntity.ok(dailyAmountService.cacheSelectList(dailyAmount));
+        return RespEntity.ok(dailyAmountService.cacheSelectList(dailyAmount, Lists.newArrayList(DailyAmount.DA_ID)));
     }
 
     @PostMapping(value = "/page")
