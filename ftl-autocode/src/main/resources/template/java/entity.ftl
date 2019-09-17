@@ -1,10 +1,7 @@
 package ${entityPackagePath};
 
-import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.math.BigDecimal;
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;

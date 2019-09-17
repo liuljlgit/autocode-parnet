@@ -198,15 +198,14 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int updateByMap(T oEntity, FuncMap funcMap) {
+    public int updateByMap(T oEntity, Map<String, Object> updateMap) {
         if(Objects.isNull(oEntity)){
             return 0;
         }
-        Map<String, Object> updateField = funcMap.call();
-        if(Objects.isNull(updateField) || updateField.size() == 0){
+        if(Objects.isNull(updateMap) || updateMap.size() == 0){
             return 0;
         }
-        return baseMapper.updateByMap(updateField,oEntity);
+        return baseMapper.updateByMap(updateMap,oEntity);
     }
 
     private <T> Field getPriKeyField(T entity) {
