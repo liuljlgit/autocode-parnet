@@ -4,7 +4,6 @@ package com.cloud.ftl.ftlbasic.service;
 import com.cloud.ftl.ftlbasic.annotation.PrimaryKey;
 import com.cloud.ftl.ftlbasic.enums.Update;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.mapper.IBaseMapper;
 import com.cloud.ftl.ftlbasic.utils.FieldCacheUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;

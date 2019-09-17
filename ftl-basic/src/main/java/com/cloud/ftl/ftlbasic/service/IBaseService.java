@@ -1,7 +1,6 @@
 package com.cloud.ftl.ftlbasic.service;
 
 import com.cloud.ftl.ftlbasic.enums.Update;
-import com.cloud.ftl.ftlbasic.func.FuncMap;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 
 import java.io.Serializable;
