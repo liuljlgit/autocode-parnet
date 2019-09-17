@@ -6,8 +6,8 @@ public class RespEntity {
 	 * 正确返回
 	 * @return
 	 */
-	public static CommonResp ok(){
-		return new CommonResp();
+	public static <T> CommonResp<T> ok(){
+		return new CommonResp<>();
 	}
 
 	/**
@@ -15,8 +15,8 @@ public class RespEntity {
 	 * @param data
 	 * @return
 	 */
-	public static CommonResp ok(Object data){
-		return new CommonResp(data);
+	public static <T> CommonResp<T> ok(T data){
+		return new CommonResp<>(data);
 	}
 
 	/**
@@ -24,8 +24,8 @@ public class RespEntity {
 	 * @param codeEnum
 	 * @return
 	 */
-	public static CommonResp error(CodeEnum codeEnum){
-		return new CommonResp(codeEnum);
+	public static <T> CommonResp<T> error(CodeEnum codeEnum){
+		return new CommonResp<>(codeEnum);
 	}
 
 	/**
@@ -34,8 +34,8 @@ public class RespEntity {
 	 * @param msg
 	 * @return
 	 */
-	public static CommonResp error(Integer code,String msg){
-		return new CommonResp(code,msg);
+	public static <T> CommonResp<T> error(Integer code,String msg){
+		return new CommonResp<>(code,msg);
 	}
 
 }

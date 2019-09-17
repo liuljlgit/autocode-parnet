@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel("CommonResp")
-public class CommonResp {
+public class CommonResp<T> {
 
     @ApiModelProperty("返回代码")
     private Integer code;
@@ -23,7 +23,7 @@ public class CommonResp {
     private String msg;
 
     @ApiModelProperty("返回数据体")
-    private Object body;
+    private T body;
 
     @ApiModelProperty("错误信息域列表")
     private List<ErrorField> errorFields;
@@ -46,7 +46,7 @@ public class CommonResp {
         this.msg = codeEnum.getMsg();
     }
 
-    public CommonResp(Object body) {
+    public CommonResp(T body) {
         this.body = body;
     }
 

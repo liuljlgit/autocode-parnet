@@ -464,14 +464,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_definitions">3. 定义</a>
 <ul class="sectlevel2">
 <li><a href="#_b51de9484648b7837162aa4212eddeb3">3.1. CommonResp«DailyAmount»</a></li>
-<li><a href="#_59982fac31b6cd94487028db780f5062">3.2. CommonResp«LoadTime»</a></li>
-<li><a href="#_2c2454067540cb0bb08ac5ceae8a260c">3.3. CommonResp«PageBean«DailyAmount»»</a></li>
-<li><a href="#_afb52b43b73cc9d90ef15afa8b689564">3.4. CommonResp«PageBean«LoadTime»»</a></li>
-<li><a href="#_7bbe818310985680d25789ccaa2b1408">3.5. CommonResp«object»</a></li>
-<li><a href="#_dailyamount">3.6. DailyAmount</a></li>
-<li><a href="#_loadtime">3.7. LoadTime</a></li>
-<li><a href="#_8adb1c8bc3075adc3e047952ce05cac0">3.8. PageBean«DailyAmount»</a></li>
-<li><a href="#_2ed76d6da693998c2605319426cdec07">3.9. PageBean«LoadTime»</a></li>
+<li><a href="#_1a83726f19ebf4db6f19b20303067fa1">3.2. CommonResp«List«DailyAmount»»</a></li>
+<li><a href="#_52dba4112640d0a17fc61f8ed8205376">3.3. CommonResp«List«LoadTime»»</a></li>
+<li><a href="#_59982fac31b6cd94487028db780f5062">3.4. CommonResp«LoadTime»</a></li>
+<li><a href="#_2c2454067540cb0bb08ac5ceae8a260c">3.5. CommonResp«PageBean«DailyAmount»»</a></li>
+<li><a href="#_afb52b43b73cc9d90ef15afa8b689564">3.6. CommonResp«PageBean«LoadTime»»</a></li>
+<li><a href="#_7bbe818310985680d25789ccaa2b1408">3.7. CommonResp«object»</a></li>
+<li><a href="#_dailyamount">3.8. DailyAmount</a></li>
+<li><a href="#_errorfield">3.9. ErrorField</a></li>
+<li><a href="#_loadtime">3.10. LoadTime</a></li>
+<li><a href="#_8adb1c8bc3075adc3e047952ce05cac0">3.11. PageBean«DailyAmount»</a></li>
+<li><a href="#_2ed76d6da693998c2605319426cdec07">3.12. PageBean«LoadTime»</a></li>
 </ul>
 </li>
 </ul>
@@ -587,7 +590,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">OK</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_59982fac31b6cd94487028db780f5062">CommonResp«LoadTime»</a></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_52dba4112640d0a17fc61f8ed8205376">CommonResp«List«LoadTime»»</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -648,8 +651,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
-  "code" : 0,
-  "listObject" : [ {
+  "body" : [ {
     "createTime" : "string",
     "endTime" : "string",
     "entityId" : 0,
@@ -660,18 +662,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
     "status" : 0,
     "statusTime" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "createTime" : "string",
-    "endTime" : "string",
-    "entityId" : 0,
-    "ltId" : 0,
-    "page" : 0,
-    "pageSize" : 0,
-    "startTime" : "string",
-    "status" : 0,
-    "statusTime" : "string"
-  }
+  "code" : 0,
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }</code></pre>
 </div>
 </div>
@@ -799,10 +796,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
+  "body" : "object",
   "code" : 0,
-  "listObject" : [ "object" ],
-  "msg" : "string",
-  "object" : "object"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }</code></pre>
 </div>
 </div>
@@ -912,30 +913,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
+  "body" : {
+    "createTime" : "string",
+    "endTime" : "string",
+    "entityId" : 0,
+    "ltId" : 0,
+    "page" : 0,
+    "pageSize" : 0,
+    "startTime" : "string",
+    "status" : 0,
+    "statusTime" : "string"
+  },
   "code" : 0,
-  "listObject" : [ {
-    "createTime" : "string",
-    "endTime" : "string",
-    "entityId" : 0,
-    "ltId" : 0,
-    "page" : 0,
-    "pageSize" : 0,
-    "startTime" : "string",
-    "status" : 0,
-    "statusTime" : "string"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "createTime" : "string",
-    "endTime" : "string",
-    "entityId" : 0,
-    "ltId" : 0,
-    "page" : 0,
-    "pageSize" : 0,
-    "startTime" : "string",
-    "status" : 0,
-    "statusTime" : "string"
-  }
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }</code></pre>
 </div>
 </div>
@@ -1045,10 +1040,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
+  "body" : "object",
   "code" : 0,
-  "listObject" : [ "object" ],
-  "msg" : "string",
-  "object" : "object"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }</code></pre>
 </div>
 </div>
@@ -1176,38 +1175,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
+  "body" : {
+    "list" : [ {
+      "createTime" : "string",
+      "endTime" : "string",
+      "entityId" : 0,
+      "ltId" : 0,
+      "page" : 0,
+      "pageSize" : 0,
+      "startTime" : "string",
+      "status" : 0,
+      "statusTime" : "string"
+    } ],
+    "total" : 0,
+    "totalPage" : 0
+  },
   "code" : 0,
-  "listObject" : [ {
-    "data" : [ {
-      "createTime" : "string",
-      "endTime" : "string",
-      "entityId" : 0,
-      "ltId" : 0,
-      "page" : 0,
-      "pageSize" : 0,
-      "startTime" : "string",
-      "status" : 0,
-      "statusTime" : "string"
-    } ],
-    "total" : 0,
-    "totalPage" : 0
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "data" : [ {
-      "createTime" : "string",
-      "endTime" : "string",
-      "entityId" : 0,
-      "ltId" : 0,
-      "page" : 0,
-      "pageSize" : 0,
-      "startTime" : "string",
-      "status" : 0,
-      "statusTime" : "string"
-    } ],
-    "total" : 0,
-    "totalPage" : 0
-  }
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }</code></pre>
 </div>
 </div>
@@ -1280,7 +1269,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">OK</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_b51de9484648b7837162aa4212eddeb3">CommonResp«DailyAmount»</a></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_1a83726f19ebf4db6f19b20303067fa1">CommonResp«List«DailyAmount»»</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -1349,8 +1338,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
-  "code" : 0,
-  "listObject" : [ {
+  "body" : [ {
     "ce" : 0,
     "createTime" : "string",
     "daId" : 0,
@@ -1369,26 +1357,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
     "status" : 0,
     "statusTime" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "ce" : 0,
-    "createTime" : "string",
-    "daId" : 0,
-    "dateTime" : "string",
-    "deficitHours" : 0,
-    "entityId" : 0,
-    "expendProfit" : 0.0,
-    "incomeProfit" : 0.0,
-    "minusDeviation" : 0.0,
-    "page" : 0,
-    "pageSize" : 0,
-    "positiveDeviation" : 0.0,
-    "profitHours" : 0,
-    "sa" : 0,
-    "settProfit" : 0.0,
-    "status" : 0,
-    "statusTime" : "string"
-  }
+  "code" : 0,
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }</code></pre>
 </div>
 </div>
@@ -1524,10 +1499,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
+  "body" : "object",
   "code" : 0,
-  "listObject" : [ "object" ],
-  "msg" : "string",
-  "object" : "object"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }</code></pre>
 </div>
 </div>
@@ -1637,46 +1616,32 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
+  "body" : {
+    "ce" : 0,
+    "createTime" : "string",
+    "daId" : 0,
+    "dateTime" : "string",
+    "deficitHours" : 0,
+    "entityId" : 0,
+    "expendProfit" : 0.0,
+    "incomeProfit" : 0.0,
+    "minusDeviation" : 0.0,
+    "page" : 0,
+    "pageSize" : 0,
+    "positiveDeviation" : 0.0,
+    "profitHours" : 0,
+    "sa" : 0,
+    "settProfit" : 0.0,
+    "status" : 0,
+    "statusTime" : "string"
+  },
   "code" : 0,
-  "listObject" : [ {
-    "ce" : 0,
-    "createTime" : "string",
-    "daId" : 0,
-    "dateTime" : "string",
-    "deficitHours" : 0,
-    "entityId" : 0,
-    "expendProfit" : 0.0,
-    "incomeProfit" : 0.0,
-    "minusDeviation" : 0.0,
-    "page" : 0,
-    "pageSize" : 0,
-    "positiveDeviation" : 0.0,
-    "profitHours" : 0,
-    "sa" : 0,
-    "settProfit" : 0.0,
-    "status" : 0,
-    "statusTime" : "string"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "ce" : 0,
-    "createTime" : "string",
-    "daId" : 0,
-    "dateTime" : "string",
-    "deficitHours" : 0,
-    "entityId" : 0,
-    "expendProfit" : 0.0,
-    "incomeProfit" : 0.0,
-    "minusDeviation" : 0.0,
-    "page" : 0,
-    "pageSize" : 0,
-    "positiveDeviation" : 0.0,
-    "profitHours" : 0,
-    "sa" : 0,
-    "settProfit" : 0.0,
-    "status" : 0,
-    "statusTime" : "string"
-  }
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }</code></pre>
 </div>
 </div>
@@ -1786,10 +1751,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
+  "body" : "object",
   "code" : 0,
-  "listObject" : [ "object" ],
-  "msg" : "string",
-  "object" : "object"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }</code></pre>
 </div>
 </div>
@@ -1925,54 +1894,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-json" data-lang="json">{
+  "body" : {
+    "list" : [ {
+      "ce" : 0,
+      "createTime" : "string",
+      "daId" : 0,
+      "dateTime" : "string",
+      "deficitHours" : 0,
+      "entityId" : 0,
+      "expendProfit" : 0.0,
+      "incomeProfit" : 0.0,
+      "minusDeviation" : 0.0,
+      "page" : 0,
+      "pageSize" : 0,
+      "positiveDeviation" : 0.0,
+      "profitHours" : 0,
+      "sa" : 0,
+      "settProfit" : 0.0,
+      "status" : 0,
+      "statusTime" : "string"
+    } ],
+    "total" : 0,
+    "totalPage" : 0
+  },
   "code" : 0,
-  "listObject" : [ {
-    "data" : [ {
-      "ce" : 0,
-      "createTime" : "string",
-      "daId" : 0,
-      "dateTime" : "string",
-      "deficitHours" : 0,
-      "entityId" : 0,
-      "expendProfit" : 0.0,
-      "incomeProfit" : 0.0,
-      "minusDeviation" : 0.0,
-      "page" : 0,
-      "pageSize" : 0,
-      "positiveDeviation" : 0.0,
-      "profitHours" : 0,
-      "sa" : 0,
-      "settProfit" : 0.0,
-      "status" : 0,
-      "statusTime" : "string"
-    } ],
-    "total" : 0,
-    "totalPage" : 0
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "data" : [ {
-      "ce" : 0,
-      "createTime" : "string",
-      "daId" : 0,
-      "dateTime" : "string",
-      "deficitHours" : 0,
-      "entityId" : 0,
-      "expendProfit" : 0.0,
-      "incomeProfit" : 0.0,
-      "minusDeviation" : 0.0,
-      "page" : 0,
-      "pageSize" : 0,
-      "positiveDeviation" : 0.0,
-      "profitHours" : 0,
-      "sa" : 0,
-      "settProfit" : 0.0,
-      "status" : 0,
-      "statusTime" : "string"
-    } ],
-    "total" : 0,
-    "totalPage" : 0
-  }
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }</code></pre>
 </div>
 </div>
@@ -2002,6 +1953,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回数据体<br>
+<strong>样例</strong> : <code>"<a href="#_dailyamount">DailyAmount</a>"</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_dailyamount">DailyAmount</a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>code</strong><br>
 <em>可选</em></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">返回代码<br>
@@ -2009,31 +1967,85 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>listObject</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorFields</strong><br>
 <em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回实体列表<br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息域列表<br>
+<strong>样例</strong> : <code>[ "<a href="#_errorfield">ErrorField</a>" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_errorfield">ErrorField</a> &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorMsgs</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息列表<br>
+<strong>样例</strong> : <code>[ "string" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; string &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>msg</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回信息<br>
+<strong>样例</strong> : <code>"string"</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_1a83726f19ebf4db6f19b20303067fa1"><a class="anchor" href="#_1a83726f19ebf4db6f19b20303067fa1"></a><a class="link" href="#_1a83726f19ebf4db6f19b20303067fa1">3.2. CommonResp«List«DailyAmount»»</a></h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">名称</th>
+<th class="tableblock halign-left valign-middle">说明</th>
+<th class="tableblock halign-left valign-middle">类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回数据体<br>
 <strong>样例</strong> : <code>[ "<a href="#_dailyamount">DailyAmount</a>" ]</code></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_dailyamount">DailyAmount</a> &gt; array</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>code</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回代码<br>
+<strong>样例</strong> : <code>0</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorFields</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息域列表<br>
+<strong>样例</strong> : <code>[ "<a href="#_errorfield">ErrorField</a>" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_errorfield">ErrorField</a> &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorMsgs</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息列表<br>
+<strong>样例</strong> : <code>[ "string" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; string &gt; array</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>msg</strong><br>
 <em>可选</em></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">返回信息<br>
 <strong>样例</strong> : <code>"string"</code></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>object</strong><br>
-<em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回单个实体<br>
-<strong>样例</strong> : <code>"<a href="#_dailyamount">DailyAmount</a>"</code></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_dailyamount">DailyAmount</a></p></td>
-</tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_59982fac31b6cd94487028db780f5062"><a class="anchor" href="#_59982fac31b6cd94487028db780f5062"></a><a class="link" href="#_59982fac31b6cd94487028db780f5062">3.2. CommonResp«LoadTime»</a></h3>
+<h3 id="_52dba4112640d0a17fc61f8ed8205376"><a class="anchor" href="#_52dba4112640d0a17fc61f8ed8205376"></a><a class="link" href="#_52dba4112640d0a17fc61f8ed8205376">3.3. CommonResp«List«LoadTime»»</a></h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -2049,38 +2061,99 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>code</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br>
 <em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回代码<br>
-<strong>样例</strong> : <code>0</code></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>listObject</strong><br>
-<em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回实体列表<br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回数据体<br>
 <strong>样例</strong> : <code>[ "<a href="#_loadtime">LoadTime</a>" ]</code></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_loadtime">LoadTime</a> &gt; array</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>code</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回代码<br>
+<strong>样例</strong> : <code>0</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorFields</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息域列表<br>
+<strong>样例</strong> : <code>[ "<a href="#_errorfield">ErrorField</a>" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_errorfield">ErrorField</a> &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorMsgs</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息列表<br>
+<strong>样例</strong> : <code>[ "string" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; string &gt; array</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>msg</strong><br>
 <em>可选</em></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">返回信息<br>
 <strong>样例</strong> : <code>"string"</code></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_59982fac31b6cd94487028db780f5062"><a class="anchor" href="#_59982fac31b6cd94487028db780f5062"></a><a class="link" href="#_59982fac31b6cd94487028db780f5062">3.4. CommonResp«LoadTime»</a></h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>object</strong><br>
+<th class="tableblock halign-left valign-middle">名称</th>
+<th class="tableblock halign-left valign-middle">说明</th>
+<th class="tableblock halign-left valign-middle">类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br>
 <em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回单个实体<br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回数据体<br>
 <strong>样例</strong> : <code>"<a href="#_loadtime">LoadTime</a>"</code></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_loadtime">LoadTime</a></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>code</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回代码<br>
+<strong>样例</strong> : <code>0</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorFields</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息域列表<br>
+<strong>样例</strong> : <code>[ "<a href="#_errorfield">ErrorField</a>" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_errorfield">ErrorField</a> &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorMsgs</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息列表<br>
+<strong>样例</strong> : <code>[ "string" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; string &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>msg</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回信息<br>
+<strong>样例</strong> : <code>"string"</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_2c2454067540cb0bb08ac5ceae8a260c"><a class="anchor" href="#_2c2454067540cb0bb08ac5ceae8a260c"></a><a class="link" href="#_2c2454067540cb0bb08ac5ceae8a260c">3.3. CommonResp«PageBean«DailyAmount»»</a></h3>
+<h3 id="_2c2454067540cb0bb08ac5ceae8a260c"><a class="anchor" href="#_2c2454067540cb0bb08ac5ceae8a260c"></a><a class="link" href="#_2c2454067540cb0bb08ac5ceae8a260c">3.5. CommonResp«PageBean«DailyAmount»»</a></h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -2096,38 +2169,45 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>code</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br>
 <em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回代码<br>
-<strong>样例</strong> : <code>0</code></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>listObject</strong><br>
-<em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回实体列表<br>
-<strong>样例</strong> : <code>[ "<a href="#_8adb1c8bc3075adc3e047952ce05cac0">PageBean«DailyAmount»</a>" ]</code></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_8adb1c8bc3075adc3e047952ce05cac0">PageBean«DailyAmount»</a> &gt; array</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>msg</strong><br>
-<em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回信息<br>
-<strong>样例</strong> : <code>"string"</code></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>object</strong><br>
-<em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回单个实体<br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回数据体<br>
 <strong>样例</strong> : <code>"<a href="#_8adb1c8bc3075adc3e047952ce05cac0">PageBean«DailyAmount»</a>"</code></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_8adb1c8bc3075adc3e047952ce05cac0">PageBean«DailyAmount»</a></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>code</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回代码<br>
+<strong>样例</strong> : <code>0</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorFields</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息域列表<br>
+<strong>样例</strong> : <code>[ "<a href="#_errorfield">ErrorField</a>" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_errorfield">ErrorField</a> &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorMsgs</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息列表<br>
+<strong>样例</strong> : <code>[ "string" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; string &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>msg</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回信息<br>
+<strong>样例</strong> : <code>"string"</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_afb52b43b73cc9d90ef15afa8b689564"><a class="anchor" href="#_afb52b43b73cc9d90ef15afa8b689564"></a><a class="link" href="#_afb52b43b73cc9d90ef15afa8b689564">3.4. CommonResp«PageBean«LoadTime»»</a></h3>
+<h3 id="_afb52b43b73cc9d90ef15afa8b689564"><a class="anchor" href="#_afb52b43b73cc9d90ef15afa8b689564"></a><a class="link" href="#_afb52b43b73cc9d90ef15afa8b689564">3.6. CommonResp«PageBean«LoadTime»»</a></h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -2143,38 +2223,45 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>code</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br>
 <em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回代码<br>
-<strong>样例</strong> : <code>0</code></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>listObject</strong><br>
-<em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回实体列表<br>
-<strong>样例</strong> : <code>[ "<a href="#_2ed76d6da693998c2605319426cdec07">PageBean«LoadTime»</a>" ]</code></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_2ed76d6da693998c2605319426cdec07">PageBean«LoadTime»</a> &gt; array</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>msg</strong><br>
-<em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回信息<br>
-<strong>样例</strong> : <code>"string"</code></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>object</strong><br>
-<em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回单个实体<br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回数据体<br>
 <strong>样例</strong> : <code>"<a href="#_2ed76d6da693998c2605319426cdec07">PageBean«LoadTime»</a>"</code></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_2ed76d6da693998c2605319426cdec07">PageBean«LoadTime»</a></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>code</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回代码<br>
+<strong>样例</strong> : <code>0</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorFields</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息域列表<br>
+<strong>样例</strong> : <code>[ "<a href="#_errorfield">ErrorField</a>" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_errorfield">ErrorField</a> &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorMsgs</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息列表<br>
+<strong>样例</strong> : <code>[ "string" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; string &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>msg</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回信息<br>
+<strong>样例</strong> : <code>"string"</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_7bbe818310985680d25789ccaa2b1408"><a class="anchor" href="#_7bbe818310985680d25789ccaa2b1408"></a><a class="link" href="#_7bbe818310985680d25789ccaa2b1408">3.5. CommonResp«object»</a></h3>
+<h3 id="_7bbe818310985680d25789ccaa2b1408"><a class="anchor" href="#_7bbe818310985680d25789ccaa2b1408"></a><a class="link" href="#_7bbe818310985680d25789ccaa2b1408">3.7. CommonResp«object»</a></h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -2190,6 +2277,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>body</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">返回数据体<br>
+<strong>样例</strong> : <code>"object"</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">object</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>code</strong><br>
 <em>可选</em></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">返回代码<br>
@@ -2197,11 +2291,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>listObject</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorFields</strong><br>
 <em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回实体列表<br>
-<strong>样例</strong> : <code>[ "object" ]</code></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; object &gt; array</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息域列表<br>
+<strong>样例</strong> : <code>[ "<a href="#_errorfield">ErrorField</a>" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_errorfield">ErrorField</a> &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errorMsgs</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息列表<br>
+<strong>样例</strong> : <code>[ "string" ]</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; string &gt; array</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>msg</strong><br>
@@ -2210,18 +2311,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <strong>样例</strong> : <code>"string"</code></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>object</strong><br>
-<em>可选</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">返回单个实体<br>
-<strong>样例</strong> : <code>"object"</code></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">object</p></td>
-</tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_dailyamount"><a class="anchor" href="#_dailyamount"></a><a class="link" href="#_dailyamount">3.6. DailyAmount</a></h3>
+<h3 id="_dailyamount"><a class="anchor" href="#_dailyamount"></a><a class="link" href="#_dailyamount">3.8. DailyAmount</a></h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -2365,7 +2459,40 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 <div class="sect2">
-<h3 id="_loadtime"><a class="anchor" href="#_loadtime"></a><a class="link" href="#_loadtime">3.7. LoadTime</a></h3>
+<h3 id="_errorfield"><a class="anchor" href="#_errorfield"></a><a class="link" href="#_errorfield">3.9. ErrorField</a></h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">名称</th>
+<th class="tableblock halign-left valign-middle">说明</th>
+<th class="tableblock halign-left valign-middle">类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>errMsg</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误信息<br>
+<strong>样例</strong> : <code>"string"</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>field</strong><br>
+<em>可选</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">错误域<br>
+<strong>样例</strong> : <code>"string"</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_loadtime"><a class="anchor" href="#_loadtime"></a><a class="link" href="#_loadtime">3.10. LoadTime</a></h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -2449,7 +2576,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 <div class="sect2">
-<h3 id="_8adb1c8bc3075adc3e047952ce05cac0"><a class="anchor" href="#_8adb1c8bc3075adc3e047952ce05cac0"></a><a class="link" href="#_8adb1c8bc3075adc3e047952ce05cac0">3.8. PageBean«DailyAmount»</a></h3>
+<h3 id="_8adb1c8bc3075adc3e047952ce05cac0"><a class="anchor" href="#_8adb1c8bc3075adc3e047952ce05cac0"></a><a class="link" href="#_8adb1c8bc3075adc3e047952ce05cac0">3.11. PageBean«DailyAmount»</a></h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -2465,7 +2592,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>data</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>list</strong><br>
 <em>可选</em></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">分页列表<br>
 <strong>样例</strong> : <code>[ "<a href="#_dailyamount">DailyAmount</a>" ]</code></p></td>
@@ -2489,7 +2616,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 <div class="sect2">
-<h3 id="_2ed76d6da693998c2605319426cdec07"><a class="anchor" href="#_2ed76d6da693998c2605319426cdec07"></a><a class="link" href="#_2ed76d6da693998c2605319426cdec07">3.9. PageBean«LoadTime»</a></h3>
+<h3 id="_2ed76d6da693998c2605319426cdec07"><a class="anchor" href="#_2ed76d6da693998c2605319426cdec07"></a><a class="link" href="#_2ed76d6da693998c2605319426cdec07">3.12. PageBean«LoadTime»</a></h3>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -2505,7 +2632,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>data</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>list</strong><br>
 <em>可选</em></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">分页列表<br>
 <strong>样例</strong> : <code>[ "<a href="#_loadtime">LoadTime</a>" ]</code></p></td>
@@ -2533,7 +2660,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-08-30 15:33:07 CST
+Last updated 2019-09-17 16:12:07 CST
 </div>
 </div>
 </body>

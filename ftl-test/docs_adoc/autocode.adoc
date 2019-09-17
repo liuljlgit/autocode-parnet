@@ -65,7 +65,7 @@ __必填__|loadTime|<<_loadtime,LoadTime>>
 [options="header", cols=".^2,.^14,.^4"]
 |===
 |HTTP代码|说明|类型
-|**200**|OK|<<_59982fac31b6cd94487028db780f5062,CommonResp«LoadTime»>>
+|**200**|OK|<<_52dba4112640d0a17fc61f8ed8205376,CommonResp«List«LoadTime»»>>
 |===
 
 
@@ -110,8 +110,7 @@ __必填__|loadTime|<<_loadtime,LoadTime>>
 [source,json]
 ----
 {
-  "code" : 0,
-  "listObject" : [ {
+  "body" : [ {
     "createTime" : "string",
     "endTime" : "string",
     "entityId" : 0,
@@ -122,18 +121,13 @@ __必填__|loadTime|<<_loadtime,LoadTime>>
     "status" : 0,
     "statusTime" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "createTime" : "string",
-    "endTime" : "string",
-    "entityId" : 0,
-    "ltId" : 0,
-    "page" : 0,
-    "pageSize" : 0,
-    "startTime" : "string",
-    "status" : 0,
-    "statusTime" : "string"
-  }
+  "code" : 0,
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }
 ----
 
@@ -209,10 +203,14 @@ __必填__|loadTime|<<_loadtime,LoadTime>>
 [source,json]
 ----
 {
+  "body" : "object",
   "code" : 0,
-  "listObject" : [ "object" ],
-  "msg" : "string",
-  "object" : "object"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }
 ----
 
@@ -275,30 +273,24 @@ __必填__|主键|string
 [source,json]
 ----
 {
+  "body" : {
+    "createTime" : "string",
+    "endTime" : "string",
+    "entityId" : 0,
+    "ltId" : 0,
+    "page" : 0,
+    "pageSize" : 0,
+    "startTime" : "string",
+    "status" : 0,
+    "statusTime" : "string"
+  },
   "code" : 0,
-  "listObject" : [ {
-    "createTime" : "string",
-    "endTime" : "string",
-    "entityId" : 0,
-    "ltId" : 0,
-    "page" : 0,
-    "pageSize" : 0,
-    "startTime" : "string",
-    "status" : 0,
-    "statusTime" : "string"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "createTime" : "string",
-    "endTime" : "string",
-    "entityId" : 0,
-    "ltId" : 0,
-    "page" : 0,
-    "pageSize" : 0,
-    "startTime" : "string",
-    "status" : 0,
-    "statusTime" : "string"
-  }
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }
 ----
 
@@ -361,10 +353,14 @@ __必填__|主键|string
 [source,json]
 ----
 {
+  "body" : "object",
   "code" : 0,
-  "listObject" : [ "object" ],
-  "msg" : "string",
-  "object" : "object"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }
 ----
 
@@ -440,38 +436,28 @@ __必填__|loadTime|<<_loadtime,LoadTime>>
 [source,json]
 ----
 {
+  "body" : {
+    "list" : [ {
+      "createTime" : "string",
+      "endTime" : "string",
+      "entityId" : 0,
+      "ltId" : 0,
+      "page" : 0,
+      "pageSize" : 0,
+      "startTime" : "string",
+      "status" : 0,
+      "statusTime" : "string"
+    } ],
+    "total" : 0,
+    "totalPage" : 0
+  },
   "code" : 0,
-  "listObject" : [ {
-    "data" : [ {
-      "createTime" : "string",
-      "endTime" : "string",
-      "entityId" : 0,
-      "ltId" : 0,
-      "page" : 0,
-      "pageSize" : 0,
-      "startTime" : "string",
-      "status" : 0,
-      "statusTime" : "string"
-    } ],
-    "total" : 0,
-    "totalPage" : 0
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "data" : [ {
-      "createTime" : "string",
-      "endTime" : "string",
-      "entityId" : 0,
-      "ltId" : 0,
-      "page" : 0,
-      "pageSize" : 0,
-      "startTime" : "string",
-      "status" : 0,
-      "statusTime" : "string"
-    } ],
-    "total" : 0,
-    "totalPage" : 0
-  }
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }
 ----
 
@@ -507,7 +493,7 @@ __必填__|dailyAmount|<<_dailyamount,DailyAmount>>
 [options="header", cols=".^2,.^14,.^4"]
 |===
 |HTTP代码|说明|类型
-|**200**|OK|<<_b51de9484648b7837162aa4212eddeb3,CommonResp«DailyAmount»>>
+|**200**|OK|<<_1a83726f19ebf4db6f19b20303067fa1,CommonResp«List«DailyAmount»»>>
 |===
 
 
@@ -560,8 +546,7 @@ __必填__|dailyAmount|<<_dailyamount,DailyAmount>>
 [source,json]
 ----
 {
-  "code" : 0,
-  "listObject" : [ {
+  "body" : [ {
     "ce" : 0,
     "createTime" : "string",
     "daId" : 0,
@@ -580,26 +565,13 @@ __必填__|dailyAmount|<<_dailyamount,DailyAmount>>
     "status" : 0,
     "statusTime" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "ce" : 0,
-    "createTime" : "string",
-    "daId" : 0,
-    "dateTime" : "string",
-    "deficitHours" : 0,
-    "entityId" : 0,
-    "expendProfit" : 0.0,
-    "incomeProfit" : 0.0,
-    "minusDeviation" : 0.0,
-    "page" : 0,
-    "pageSize" : 0,
-    "positiveDeviation" : 0.0,
-    "profitHours" : 0,
-    "sa" : 0,
-    "settProfit" : 0.0,
-    "status" : 0,
-    "statusTime" : "string"
-  }
+  "code" : 0,
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }
 ----
 
@@ -683,10 +655,14 @@ __必填__|dailyAmount|<<_dailyamount,DailyAmount>>
 [source,json]
 ----
 {
+  "body" : "object",
   "code" : 0,
-  "listObject" : [ "object" ],
-  "msg" : "string",
-  "object" : "object"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }
 ----
 
@@ -749,46 +725,32 @@ __必填__|主键|string
 [source,json]
 ----
 {
+  "body" : {
+    "ce" : 0,
+    "createTime" : "string",
+    "daId" : 0,
+    "dateTime" : "string",
+    "deficitHours" : 0,
+    "entityId" : 0,
+    "expendProfit" : 0.0,
+    "incomeProfit" : 0.0,
+    "minusDeviation" : 0.0,
+    "page" : 0,
+    "pageSize" : 0,
+    "positiveDeviation" : 0.0,
+    "profitHours" : 0,
+    "sa" : 0,
+    "settProfit" : 0.0,
+    "status" : 0,
+    "statusTime" : "string"
+  },
   "code" : 0,
-  "listObject" : [ {
-    "ce" : 0,
-    "createTime" : "string",
-    "daId" : 0,
-    "dateTime" : "string",
-    "deficitHours" : 0,
-    "entityId" : 0,
-    "expendProfit" : 0.0,
-    "incomeProfit" : 0.0,
-    "minusDeviation" : 0.0,
-    "page" : 0,
-    "pageSize" : 0,
-    "positiveDeviation" : 0.0,
-    "profitHours" : 0,
-    "sa" : 0,
-    "settProfit" : 0.0,
-    "status" : 0,
-    "statusTime" : "string"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "ce" : 0,
-    "createTime" : "string",
-    "daId" : 0,
-    "dateTime" : "string",
-    "deficitHours" : 0,
-    "entityId" : 0,
-    "expendProfit" : 0.0,
-    "incomeProfit" : 0.0,
-    "minusDeviation" : 0.0,
-    "page" : 0,
-    "pageSize" : 0,
-    "positiveDeviation" : 0.0,
-    "profitHours" : 0,
-    "sa" : 0,
-    "settProfit" : 0.0,
-    "status" : 0,
-    "statusTime" : "string"
-  }
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }
 ----
 
@@ -851,10 +813,14 @@ __必填__|主键|string
 [source,json]
 ----
 {
+  "body" : "object",
   "code" : 0,
-  "listObject" : [ "object" ],
-  "msg" : "string",
-  "object" : "object"
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
+  } ],
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }
 ----
 
@@ -938,54 +904,36 @@ __必填__|dailyAmount|<<_dailyamount,DailyAmount>>
 [source,json]
 ----
 {
+  "body" : {
+    "list" : [ {
+      "ce" : 0,
+      "createTime" : "string",
+      "daId" : 0,
+      "dateTime" : "string",
+      "deficitHours" : 0,
+      "entityId" : 0,
+      "expendProfit" : 0.0,
+      "incomeProfit" : 0.0,
+      "minusDeviation" : 0.0,
+      "page" : 0,
+      "pageSize" : 0,
+      "positiveDeviation" : 0.0,
+      "profitHours" : 0,
+      "sa" : 0,
+      "settProfit" : 0.0,
+      "status" : 0,
+      "statusTime" : "string"
+    } ],
+    "total" : 0,
+    "totalPage" : 0
+  },
   "code" : 0,
-  "listObject" : [ {
-    "data" : [ {
-      "ce" : 0,
-      "createTime" : "string",
-      "daId" : 0,
-      "dateTime" : "string",
-      "deficitHours" : 0,
-      "entityId" : 0,
-      "expendProfit" : 0.0,
-      "incomeProfit" : 0.0,
-      "minusDeviation" : 0.0,
-      "page" : 0,
-      "pageSize" : 0,
-      "positiveDeviation" : 0.0,
-      "profitHours" : 0,
-      "sa" : 0,
-      "settProfit" : 0.0,
-      "status" : 0,
-      "statusTime" : "string"
-    } ],
-    "total" : 0,
-    "totalPage" : 0
+  "errorFields" : [ {
+    "errMsg" : "string",
+    "field" : "string"
   } ],
-  "msg" : "string",
-  "object" : {
-    "data" : [ {
-      "ce" : 0,
-      "createTime" : "string",
-      "daId" : 0,
-      "dateTime" : "string",
-      "deficitHours" : 0,
-      "entityId" : 0,
-      "expendProfit" : 0.0,
-      "incomeProfit" : 0.0,
-      "minusDeviation" : 0.0,
-      "page" : 0,
-      "pageSize" : 0,
-      "positiveDeviation" : 0.0,
-      "profitHours" : 0,
-      "sa" : 0,
-      "settProfit" : 0.0,
-      "status" : 0,
-      "statusTime" : "string"
-    } ],
-    "total" : 0,
-    "totalPage" : 0
-  }
+  "errorMsgs" : [ "string" ],
+  "msg" : "string"
 }
 ----
 
@@ -1001,18 +949,69 @@ __必填__|dailyAmount|<<_dailyamount,DailyAmount>>
 [options="header", cols=".^3,.^11,.^4"]
 |===
 |名称|说明|类型
+|**body** +
+__可选__|返回数据体 +
+**样例** : `"<<_dailyamount>>"`|<<_dailyamount,DailyAmount>>
 |**code** +
 __可选__|返回代码 +
 **样例** : `0`|integer (int32)
-|**listObject** +
-__可选__|返回实体列表 +
-**样例** : `[ "<<_dailyamount>>" ]`|< <<_dailyamount,DailyAmount>> > array
+|**errorFields** +
+__可选__|错误信息域列表 +
+**样例** : `[ "<<_errorfield>>" ]`|< <<_errorfield,ErrorField>> > array
+|**errorMsgs** +
+__可选__|错误信息列表 +
+**样例** : `[ "string" ]`|< string > array
 |**msg** +
 __可选__|返回信息 +
 **样例** : `"string"`|string
-|**object** +
-__可选__|返回单个实体 +
-**样例** : `"<<_dailyamount>>"`|<<_dailyamount,DailyAmount>>
+|===
+
+
+[[_1a83726f19ebf4db6f19b20303067fa1]]
+=== CommonResp«List«DailyAmount»»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|名称|说明|类型
+|**body** +
+__可选__|返回数据体 +
+**样例** : `[ "<<_dailyamount>>" ]`|< <<_dailyamount,DailyAmount>> > array
+|**code** +
+__可选__|返回代码 +
+**样例** : `0`|integer (int32)
+|**errorFields** +
+__可选__|错误信息域列表 +
+**样例** : `[ "<<_errorfield>>" ]`|< <<_errorfield,ErrorField>> > array
+|**errorMsgs** +
+__可选__|错误信息列表 +
+**样例** : `[ "string" ]`|< string > array
+|**msg** +
+__可选__|返回信息 +
+**样例** : `"string"`|string
+|===
+
+
+[[_52dba4112640d0a17fc61f8ed8205376]]
+=== CommonResp«List«LoadTime»»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|名称|说明|类型
+|**body** +
+__可选__|返回数据体 +
+**样例** : `[ "<<_loadtime>>" ]`|< <<_loadtime,LoadTime>> > array
+|**code** +
+__可选__|返回代码 +
+**样例** : `0`|integer (int32)
+|**errorFields** +
+__可选__|错误信息域列表 +
+**样例** : `[ "<<_errorfield>>" ]`|< <<_errorfield,ErrorField>> > array
+|**errorMsgs** +
+__可选__|错误信息列表 +
+**样例** : `[ "string" ]`|< string > array
+|**msg** +
+__可选__|返回信息 +
+**样例** : `"string"`|string
 |===
 
 
@@ -1022,18 +1021,21 @@ __可选__|返回单个实体 +
 [options="header", cols=".^3,.^11,.^4"]
 |===
 |名称|说明|类型
+|**body** +
+__可选__|返回数据体 +
+**样例** : `"<<_loadtime>>"`|<<_loadtime,LoadTime>>
 |**code** +
 __可选__|返回代码 +
 **样例** : `0`|integer (int32)
-|**listObject** +
-__可选__|返回实体列表 +
-**样例** : `[ "<<_loadtime>>" ]`|< <<_loadtime,LoadTime>> > array
+|**errorFields** +
+__可选__|错误信息域列表 +
+**样例** : `[ "<<_errorfield>>" ]`|< <<_errorfield,ErrorField>> > array
+|**errorMsgs** +
+__可选__|错误信息列表 +
+**样例** : `[ "string" ]`|< string > array
 |**msg** +
 __可选__|返回信息 +
 **样例** : `"string"`|string
-|**object** +
-__可选__|返回单个实体 +
-**样例** : `"<<_loadtime>>"`|<<_loadtime,LoadTime>>
 |===
 
 
@@ -1043,18 +1045,21 @@ __可选__|返回单个实体 +
 [options="header", cols=".^3,.^11,.^4"]
 |===
 |名称|说明|类型
+|**body** +
+__可选__|返回数据体 +
+**样例** : `"<<_8adb1c8bc3075adc3e047952ce05cac0>>"`|<<_8adb1c8bc3075adc3e047952ce05cac0,PageBean«DailyAmount»>>
 |**code** +
 __可选__|返回代码 +
 **样例** : `0`|integer (int32)
-|**listObject** +
-__可选__|返回实体列表 +
-**样例** : `[ "<<_8adb1c8bc3075adc3e047952ce05cac0>>" ]`|< <<_8adb1c8bc3075adc3e047952ce05cac0,PageBean«DailyAmount»>> > array
+|**errorFields** +
+__可选__|错误信息域列表 +
+**样例** : `[ "<<_errorfield>>" ]`|< <<_errorfield,ErrorField>> > array
+|**errorMsgs** +
+__可选__|错误信息列表 +
+**样例** : `[ "string" ]`|< string > array
 |**msg** +
 __可选__|返回信息 +
 **样例** : `"string"`|string
-|**object** +
-__可选__|返回单个实体 +
-**样例** : `"<<_8adb1c8bc3075adc3e047952ce05cac0>>"`|<<_8adb1c8bc3075adc3e047952ce05cac0,PageBean«DailyAmount»>>
 |===
 
 
@@ -1064,18 +1069,21 @@ __可选__|返回单个实体 +
 [options="header", cols=".^3,.^11,.^4"]
 |===
 |名称|说明|类型
+|**body** +
+__可选__|返回数据体 +
+**样例** : `"<<_2ed76d6da693998c2605319426cdec07>>"`|<<_2ed76d6da693998c2605319426cdec07,PageBean«LoadTime»>>
 |**code** +
 __可选__|返回代码 +
 **样例** : `0`|integer (int32)
-|**listObject** +
-__可选__|返回实体列表 +
-**样例** : `[ "<<_2ed76d6da693998c2605319426cdec07>>" ]`|< <<_2ed76d6da693998c2605319426cdec07,PageBean«LoadTime»>> > array
+|**errorFields** +
+__可选__|错误信息域列表 +
+**样例** : `[ "<<_errorfield>>" ]`|< <<_errorfield,ErrorField>> > array
+|**errorMsgs** +
+__可选__|错误信息列表 +
+**样例** : `[ "string" ]`|< string > array
 |**msg** +
 __可选__|返回信息 +
 **样例** : `"string"`|string
-|**object** +
-__可选__|返回单个实体 +
-**样例** : `"<<_2ed76d6da693998c2605319426cdec07>>"`|<<_2ed76d6da693998c2605319426cdec07,PageBean«LoadTime»>>
 |===
 
 
@@ -1085,18 +1093,21 @@ __可选__|返回单个实体 +
 [options="header", cols=".^3,.^11,.^4"]
 |===
 |名称|说明|类型
+|**body** +
+__可选__|返回数据体 +
+**样例** : `"object"`|object
 |**code** +
 __可选__|返回代码 +
 **样例** : `0`|integer (int32)
-|**listObject** +
-__可选__|返回实体列表 +
-**样例** : `[ "object" ]`|< object > array
+|**errorFields** +
+__可选__|错误信息域列表 +
+**样例** : `[ "<<_errorfield>>" ]`|< <<_errorfield,ErrorField>> > array
+|**errorMsgs** +
+__可选__|错误信息列表 +
+**样例** : `[ "string" ]`|< string > array
 |**msg** +
 __可选__|返回信息 +
 **样例** : `"string"`|string
-|**object** +
-__可选__|返回单个实体 +
-**样例** : `"object"`|object
 |===
 
 
@@ -1166,6 +1177,21 @@ __可选__|更新时间 +
 |===
 
 
+[[_errorfield]]
+=== ErrorField
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|名称|说明|类型
+|**errMsg** +
+__可选__|错误信息 +
+**样例** : `"string"`|string
+|**field** +
+__可选__|错误域 +
+**样例** : `"string"`|string
+|===
+
+
 [[_loadtime]]
 === LoadTime
 
@@ -1210,7 +1236,7 @@ __可选__|更新时间 +
 [options="header", cols=".^3,.^11,.^4"]
 |===
 |名称|说明|类型
-|**data** +
+|**list** +
 __可选__|分页列表 +
 **样例** : `[ "<<_dailyamount>>" ]`|< <<_dailyamount,DailyAmount>> > array
 |**total** +
@@ -1228,7 +1254,7 @@ __可选__|总页数 +
 [options="header", cols=".^3,.^11,.^4"]
 |===
 |名称|说明|类型
-|**data** +
+|**list** +
 __可选__|分页列表 +
 **样例** : `[ "<<_loadtime>>" ]`|< <<_loadtime,LoadTime>> > array
 |**total** +
