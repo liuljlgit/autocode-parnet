@@ -151,6 +151,13 @@
                 <version>RELEASE</version>
                 <scope>compile</scope>
             </dependency>
+    
+            <!-- orika快速的bean复制工具 -->
+            <dependency>
+                <groupId>ma.glasnost.orika</groupId>
+                <artifactId>orika-core</artifactId>
+                <version>1.5.2</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     
