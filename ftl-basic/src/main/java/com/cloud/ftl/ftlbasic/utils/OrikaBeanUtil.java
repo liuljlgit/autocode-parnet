@@ -11,7 +11,11 @@ public class OrikaBeanUtil {
     private static final MapperFacade mapperFacade;
 
     static {
-        MapperFactory mapperFactory = new DefaultMapperFactory.Builder().useAutoMapping(true).mapNulls(true).build();
+        MapperFactory mapperFactory = new DefaultMapperFactory.Builder()
+                .useAutoMapping(true)
+                .mapNulls(true)
+                .useBuiltinConverters(false)
+                .build();
         mapperFacade = mapperFactory.getMapperFacade();
     }
 
