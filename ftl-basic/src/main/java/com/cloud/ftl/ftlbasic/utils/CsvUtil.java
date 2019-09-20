@@ -8,6 +8,7 @@ import cn.afterturn.easypoi.excel.entity.params.ExcelExportEntity;
 import cn.afterturn.easypoi.handler.inter.IReadHandler;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.util.IOUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.ServletOutputStream;
@@ -26,28 +27,42 @@ public class CsvUtil {
      * Csv 导入流适合大数据导入
      * 导入 数据源IO流,不返回校验结果 导入 字段类型 Integer,Long,Double,Date,String,Boolean
      *
-     * @param inputstream
+     * @param in
      * @param pojoClass
      * @param params
      * @return
      */
-    public static <T> List<T> importCsv(InputStream inputstream, Class<?> pojoClass,
+    public static <T> List<T> importCsv(InputStream in, Class<?> pojoClass,
                                         CsvImportParams params) {
-        return new CsvImportService().readExcel(inputstream, pojoClass, params, null);
+        try{
+            return new CsvImportService().readExcel(in, pojoClass, params, null);
+        } catch (Exception e){
+            log.error("导入csv数据失败",e);
+            throw new BusiException(e.getMessage());
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
     }
 
     /**
      * Csv 导入流适合大数据导入
      * 导入 数据源IO流,不返回校验结果 导入 字段类型 Integer,Long,Double,Date,String,Boolean
      *
-     * @param inputstream
+     * @param in
      * @param pojoClass
      * @param params
      * @return
      */
-    public static void importCsv(InputStream inputstream, Class<?> pojoClass,
+    public static void importCsv(InputStream in, Class<?> pojoClass,
                                  CsvImportParams params, IReadHandler readHandler) {
-        new CsvImportService().readExcel(inputstream, pojoClass, params, readHandler);
+        try{
+            new CsvImportService().readExcel(in, pojoClass, params, readHandler);
+        } catch (Exception e){
+            log.error("导入csv数据失败",e);
+            throw new BusiException(e.getMessage());
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
     }
 
     /**
@@ -57,12 +72,15 @@ public class CsvUtil {
      */
     public static void exportCsv(CsvExportParams params, Class<?> pojoClass,
                                  Collection<?> dataSet, String fileName) {
+        OutputStream outputStream = null;
         try {
-            OutputStream outputStream = getCsvOutPutStream(fileName);
+            outputStream = getCsvOutPutStream(fileName);
             new CsvExportService().createCsv(outputStream, params, pojoClass, dataSet);
         } catch (IOException e) {
             log.error("导出csv失败:",e);
             throw new BusiException(e.getMessage());
+        } finally {
+            IOUtils.closeQuietly(outputStream);
         }
     }
 
@@ -75,12 +93,15 @@ public class CsvUtil {
      */
     public static void exportCsv(CsvExportParams params, List<ExcelExportEntity> entityList,
                                  Collection<?> dataSet,String fileName) {
+        OutputStream outputStream = null;
         try {
-            OutputStream outputStream = getCsvOutPutStream(fileName);
+            outputStream = getCsvOutPutStream(fileName);
             new CsvExportService().createCsvOfList(outputStream, params, entityList, dataSet);
         } catch (IOException e) {
             log.error("导出csv失败:",e);
             throw new BusiException(e.getMessage());
+        } finally {
+            IOUtils.closeQuietly(outputStream);
         }
     }
 

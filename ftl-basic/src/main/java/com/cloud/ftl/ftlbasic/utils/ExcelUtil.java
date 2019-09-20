@@ -8,7 +8,6 @@ import cn.afterturn.easypoi.excel.export.ExcelBatchExportService;
 import cn.afterturn.easypoi.excel.export.ExcelExportService;
 import cn.afterturn.easypoi.excel.imports.ExcelImportService;
 import cn.afterturn.easypoi.excel.imports.sax.SaxReadExcel;
-import cn.afterturn.easypoi.exception.excel.ExcelImportException;
 import cn.afterturn.easypoi.handler.inter.IReadHandler;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import lombok.extern.slf4j.Slf4j;
@@ -42,8 +41,8 @@ public class ExcelUtil {
         try {
             return new ExcelImportService().importExcelByIs(in, pojoClass, params, false).getList();
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw new ExcelImportException(e.getMessage(), e);
+            log.error("导入Excel数据失败", e);
+            throw new BusiException(e.getMessage(), e);
         } finally {
             IOUtils.closeQuietly(in);
         }
@@ -53,14 +52,21 @@ public class ExcelUtil {
      * Excel 通过SAX解析方法,适合大数据导入,不支持图片
      * 导入 数据源本地文件,不返回校验结果 导入 字 段类型 Integer,Long,Double,Date,String,Boolean
      *
-     * @param inputstream
+     * @param in
      * @param pojoClass
      * @param params
      * @param handler
      */
-    public static void importExcelBySax(InputStream inputstream, Class<?> pojoClass,
+    public static void importExcelBySax(InputStream in, Class<?> pojoClass,
                                         ImportParams params, IReadHandler handler) {
-        new SaxReadExcel().readExcel(inputstream, pojoClass, params, handler);
+        try {
+            new SaxReadExcel().readExcel(in, pojoClass, params, handler);
+        } catch (Exception e) {
+            log.error("Sax导入Excel数据失败", e);
+            throw new BusiException(e.getMessage(), e);
+        } finally {
+            IOUtils.closeQuietly(in);
+        }
     }
 
     /**
@@ -74,7 +80,7 @@ public class ExcelUtil {
                                        Collection<?> dataSet,String fileName) {
         Workbook workbook = getWorkbook(entity.getType());
         new ExcelExportService().createSheet(workbook, entity, pojoClass, dataSet);
-        download(entity,fileName,workbook);
+        downloadExcel(entity,fileName,workbook);
     }
 
     /**
@@ -88,7 +94,7 @@ public class ExcelUtil {
                                        Collection<?> dataSet,String fileName) {
         Workbook workbook = getWorkbook(entity.getType());
         new ExcelExportService().createSheetForMap(workbook, entity, entityList, dataSet);
-        download(entity,fileName,workbook);
+        downloadExcel(entity,fileName,workbook);
     }
 
     /**
@@ -134,7 +140,7 @@ public class ExcelUtil {
      * @param workbook
      * @throws IOException
      */
-    static void download(ExportParams entity,String fileName, Workbook workbook) {
+    static void downloadExcel(ExportParams entity,String fileName, Workbook workbook) {
         try {
             if(entity.getType().equals(ExcelType.HSSF)){
                 downloadXls(fileName,workbook);
@@ -155,7 +161,7 @@ public class ExcelUtil {
      * @throws IOException
      */
     static void downloadXls(String downloadFileName, Workbook workbook) throws IOException {
-        downloadExcel(downloadFileName, workbook, ".xls");
+        download(downloadFileName, workbook, ".xls");
     }
 
     /**
@@ -166,7 +172,7 @@ public class ExcelUtil {
      * @throws IOException
      */
     static void downloadXlsx(String downloadFileName, Workbook workbook) throws IOException {
-        downloadExcel(downloadFileName, workbook, ".xlsx");
+        download(downloadFileName, workbook, ".xlsx");
     }
 
     /**
@@ -177,7 +183,7 @@ public class ExcelUtil {
      * @param fileSuffix
      * @throws IOException
      */
-    static void downloadExcel(String downloadFileName, Workbook workbook, String fileSuffix) throws IOException {
+    static void download(String downloadFileName, Workbook workbook, String fileSuffix) throws IOException {
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert servletRequestAttributes != null;
         HttpServletResponse response = servletRequestAttributes.getResponse();
