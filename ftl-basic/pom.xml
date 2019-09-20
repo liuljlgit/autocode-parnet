@@ -51,6 +51,11 @@
 			<groupId>ma.glasnost.orika</groupId>
 			<artifactId>orika-core</artifactId>
 		</dependency>
+        
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 	
 	<build>

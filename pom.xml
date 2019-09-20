@@ -158,6 +158,13 @@
                 <artifactId>orika-core</artifactId>
                 <version>1.5.2</version>
             </dependency>
+    
+            <!-- EasyPoi -->
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-spring-boot-starter</artifactId>
+                <version>4.0.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     
