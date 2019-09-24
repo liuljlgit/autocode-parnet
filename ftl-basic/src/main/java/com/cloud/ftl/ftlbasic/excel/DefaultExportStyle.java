@@ -110,7 +110,12 @@ public class DefaultExportStyle implements IExcelExportStyler {
      */
     private CellStyle initHeaderStyle(Workbook workbook) {
         CellStyle style = getBaseCellStyle(workbook);
-        style.setFont(getFont(workbook, FONT_SIZE_TWELVE, true));
+        Font font = getFont(workbook, FONT_SIZE_TWELVE, true);
+        font.setColor(IndexedColors.GREY_80_PERCENT.getIndex());
+        style.setFont(font);
+        //背景色
+        style.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         return style;
     }
 
