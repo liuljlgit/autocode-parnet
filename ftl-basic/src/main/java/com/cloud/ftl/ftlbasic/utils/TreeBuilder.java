@@ -36,7 +36,7 @@ public class TreeBuilder {
      * 构建树形结构
      * @return
      */
-    public List<Node> buildTree() {
+    private List<Node> buildTree() {
         List<Node> treeNodes = Lists.newArrayList();
         List<Node> rootNodes = getRootNodes();
         for (Node rootNode : rootNodes) {
@@ -50,7 +50,7 @@ public class TreeBuilder {
      * 递归子节点
      * @param node
      */
-    public void buildChildNodes(Node node) {
+    private void buildChildNodes(Node node) {
         List<Node> childrens = getChildNodes(node);
         if (!childrens.isEmpty()) {
             for(Node child : childrens) {
@@ -82,7 +82,7 @@ public class TreeBuilder {
      * @param node
      * @return
      */
-    public boolean isRootNode(Node node) {
+    private boolean isRootNode(Node node) {
         return this.rootPid.equals(node.pid);
     }
 
@@ -90,7 +90,7 @@ public class TreeBuilder {
      * 获取集合中所有的根节点
      * @return
      */
-    public List<Node> getRootNodes() {
+    private List<Node> getRootNodes() {
         List<Node> rootNodes = Lists.newArrayList();
         for (Node n : nodes){
             if (isRootNode(n)) {
