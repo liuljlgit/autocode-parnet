@@ -11,7 +11,7 @@ import org.apache.poi.ss.usermodel.*;
  * @version v 0.1 2019/9/24 18:38
  */
 @Slf4j
-public class DefaultExportStyle implements IExcelExportStyler {
+public class DefaultExportStyleHandler implements IExcelExportStyler {
 
     private static final short STRING_FORMAT = (short) BuiltinFormats.getBuiltinFormat("TEXT");
     private static final short FONT_SIZE_TEN = 10;
@@ -33,7 +33,7 @@ public class DefaultExportStyle implements IExcelExportStyler {
      */
     private CellStyle styles;
 
-    public DefaultExportStyle(Workbook workbook) {
+    public DefaultExportStyleHandler(Workbook workbook) {
         this.init(workbook);
     }
 

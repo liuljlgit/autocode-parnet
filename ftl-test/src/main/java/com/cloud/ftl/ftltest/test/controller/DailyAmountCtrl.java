@@ -5,7 +5,10 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
-import com.cloud.ftl.ftlbasic.excel.DefaultExportStyle;
+import cn.afterturn.easypoi.handler.inter.IExcelDataHandler;
+import cn.afterturn.easypoi.handler.inter.IExcelDataModel;
+import cn.afterturn.easypoi.handler.inter.IExcelVerifyHandler;
+import com.cloud.ftl.ftlbasic.excel.DefaultExportStyleHandler;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.excel.ExcelUtil;
 import com.cloud.ftl.ftlbasic.excel.ExcelErrorResp;
@@ -79,7 +82,8 @@ public class DailyAmountCtrl{
     public void export() {
         try {
             ExportParams exportParams = new ExportParams("大数据测试","大数据测试", ExcelType.XSSF);
-            exportParams.setStyle(DefaultExportStyle.class);
+            exportParams.setDataHandler(new DailyAmountExcelEntity.DataHandler());
+            exportParams.setStyle(DefaultExportStyleHandler.class);
             Workbook workbook = null;
             List<DailyAmountExcelEntity> list = Lists.newArrayList();
             for (int i = 0; i < 10000; i++) {
@@ -108,6 +112,7 @@ public class DailyAmountCtrl{
     public List<ExcelErrorResp> importData(@RequestParam("file") MultipartFile file) {
         List<ExcelErrorResp> errors = Lists.newArrayList();
         ImportParams importParams = new ImportParams();
+        importParams.setVerifyHandler(new DailyAmountExcelEntity.Verify());
         importParams.setNeedVerify(true);
         importParams.setTitleRows(1);
         importParams.setHeadRows(1);
