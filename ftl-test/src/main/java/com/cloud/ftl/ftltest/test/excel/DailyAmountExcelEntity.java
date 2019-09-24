@@ -2,7 +2,7 @@ package com.cloud.ftl.ftltest.test.excel;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.cloud.ftl.ftlbasic.constant.DatePatternConst;
-import com.cloud.ftl.ftlbasic.webEntity.ExcelErrorResp;
+import com.cloud.ftl.ftlbasic.excel.ExcelErrorResp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

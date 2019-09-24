@@ -5,18 +5,17 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
+import com.cloud.ftl.ftlbasic.excel.DefaultExportStyle;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
-import com.cloud.ftl.ftlbasic.utils.ExcelCopyUtil;
-import com.cloud.ftl.ftlbasic.utils.ExcelUtil;
+import com.cloud.ftl.ftlbasic.excel.ExcelUtil;
+import com.cloud.ftl.ftlbasic.excel.ExcelErrorResp;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
 import com.cloud.ftl.ftltest.test.excel.DailyAmountExcelEntity;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotNull;
 import io.swagger.annotations.*;
@@ -80,15 +79,16 @@ public class DailyAmountCtrl{
     public void export() {
         try {
             ExportParams exportParams = new ExportParams("大数据测试","大数据测试", ExcelType.XSSF);
+            exportParams.setStyle(DefaultExportStyle.class);
             Workbook workbook = null;
             List<DailyAmountExcelEntity> list = Lists.newArrayList();
-            for (int i = 0; i < 100000; i++) {
+            for (int i = 0; i < 10000; i++) {
                 DailyAmountExcelEntity dailyAmountExcel = new DailyAmountExcelEntity();
                 dailyAmountExcel.setDaId((long) i);
                 dailyAmountExcel.setDateTime(new Date());
                 dailyAmountExcel.setName("lijun" + i);
                 list.add(dailyAmountExcel);
-                if(list.size() == 10000 || i == 99999){
+                if(list.size() == 1000 || i == 9999){
                     workbook = cn.afterturn.easypoi.excel.ExcelExportUtil.exportBigExcel(exportParams, DailyAmountExcelEntity.class, list);
                     list.clear();
                 }
@@ -105,8 +105,8 @@ public class DailyAmountCtrl{
     @PostMapping(value = "/import")
     @ApiOperation(value = "导入数据" , notes = "author: llj")
     @ApiImplicitParam(name="file", value="导入文件",required = true)
-    public void importData(@RequestParam("file") MultipartFile file) {
-//        List<ExcelError> errors = Lists.newArrayList();
+    public List<ExcelErrorResp> importData(@RequestParam("file") MultipartFile file) {
+        List<ExcelErrorResp> errors = Lists.newArrayList();
         ImportParams importParams = new ImportParams();
         importParams.setNeedVerify(true);
         importParams.setTitleRows(1);
@@ -115,19 +115,18 @@ public class DailyAmountCtrl{
         try {
             ExcelImportResult<DailyAmountExcelEntity> importExcelMore = ExcelImportUtil.importExcelMore(file.getInputStream(), DailyAmountExcelEntity.class, importParams);
             List<DailyAmountExcelEntity> succList = importExcelMore.getList();
-            Workbook failWorkbook = importExcelMore.getFailWorkbook();
-            boolean verfiyFail = importExcelMore.isVerfiyFail();
-            ExcelUtil.downloadExcel(ExcelCopyUtil.copyWorkBook(failWorkbook),"错误的导入",ExcelType.XSSF);
-            //List<DailyAmountExcel> failList = importExcelMore.getFailList();
-//            for (DailyAmountExcel fail : failList) {
-//                ExcelError error = new ExcelError(fail.getErrorMsg(),fail.getRowNum());
-//                errors.add(error);
-//            }
+            if(importExcelMore.isVerfiyFail()){
+                List<DailyAmountExcelEntity> failList = importExcelMore.getFailList();
+                for (DailyAmountExcelEntity fail : failList) {
+                    ExcelErrorResp error = new ExcelErrorResp(fail.getErrorMsg(),fail.getRowNum());
+                    errors.add(error);
+                }
+            }
         } catch (Exception e) {
             log.error("导入数据失败",e);
             throw new BusiException(e.getMessage());
         }
-//        return errors;
+        return errors;
     }
 
 }

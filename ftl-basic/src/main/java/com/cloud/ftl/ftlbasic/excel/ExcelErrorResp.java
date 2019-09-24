@@ -1,4 +1,4 @@
-package com.cloud.ftl.ftlbasic.webEntity;
+package com.cloud.ftl.ftlbasic.excel;
 
 import cn.afterturn.easypoi.handler.inter.IExcelDataModel;
 import cn.afterturn.easypoi.handler.inter.IExcelModel;
