@@ -2,7 +2,7 @@ package com.cloud.ftl.ftltest.test.excel;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.cloud.ftl.ftlbasic.constant.DatePatternConst;
-import com.cloud.ftl.ftlbasic.webEntity.ExcelErrorEntity;
+import com.cloud.ftl.ftlbasic.webEntity.ExcelErrorResp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DailyAmountExcelEntity extends ExcelErrorEntity {
+public class DailyAmountExcelEntity extends ExcelErrorResp {
 
     @Excel(name = "主键",orderNum = "1",isImportField = "true",replace = "_null")
     private Long daId;
