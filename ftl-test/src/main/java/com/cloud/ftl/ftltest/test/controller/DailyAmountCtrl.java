@@ -5,9 +5,8 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
-import cn.afterturn.easypoi.handler.inter.IExcelDataHandler;
-import cn.afterturn.easypoi.handler.inter.IExcelDataModel;
-import cn.afterturn.easypoi.handler.inter.IExcelVerifyHandler;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.cloud.ftl.ftlbasic.excel.DefaultExportStyleHandler;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.excel.ExcelUtil;
@@ -15,7 +14,7 @@ import com.cloud.ftl.ftlbasic.excel.ExcelErrorResp;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
-import com.cloud.ftl.ftltest.test.excel.DailyAmountExcelEntity;
+import com.cloud.ftl.ftltest.test.excel.DailyAmountExcel;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -81,19 +80,19 @@ public class DailyAmountCtrl{
     @ApiOperation(value = "导出数据" , notes = "author: llj")
     public void export() {
         try {
+            JSONArray.parseArray(JSON.toJSONString("aa"),Long.class);
             ExportParams exportParams = new ExportParams("大数据测试","大数据测试", ExcelType.XSSF);
-            exportParams.setDataHandler(new DailyAmountExcelEntity.DataHandler());
             exportParams.setStyle(DefaultExportStyleHandler.class);
             Workbook workbook = null;
-            List<DailyAmountExcelEntity> list = Lists.newArrayList();
+            List<DailyAmountExcel> list = Lists.newArrayList();
             for (int i = 0; i < 10000; i++) {
-                DailyAmountExcelEntity dailyAmountExcel = new DailyAmountExcelEntity();
+                DailyAmountExcel dailyAmountExcel = new DailyAmountExcel();
                 dailyAmountExcel.setDaId((long) i);
                 dailyAmountExcel.setDateTime(new Date());
                 dailyAmountExcel.setName("lijun" + i);
                 list.add(dailyAmountExcel);
                 if(list.size() == 1000 || i == 9999){
-                    workbook = cn.afterturn.easypoi.excel.ExcelExportUtil.exportBigExcel(exportParams, DailyAmountExcelEntity.class, list);
+                    workbook = cn.afterturn.easypoi.excel.ExcelExportUtil.exportBigExcel(exportParams, DailyAmountExcel.class, list);
                     list.clear();
                 }
             }
@@ -112,17 +111,16 @@ public class DailyAmountCtrl{
     public List<ExcelErrorResp> importData(@RequestParam("file") MultipartFile file) {
         List<ExcelErrorResp> errors = Lists.newArrayList();
         ImportParams importParams = new ImportParams();
-        importParams.setVerifyHandler(new DailyAmountExcelEntity.Verify());
         importParams.setNeedVerify(true);
         importParams.setTitleRows(1);
         importParams.setHeadRows(1);
         importParams.setStartRows(0);
         try {
-            ExcelImportResult<DailyAmountExcelEntity> importExcelMore = ExcelImportUtil.importExcelMore(file.getInputStream(), DailyAmountExcelEntity.class, importParams);
-            List<DailyAmountExcelEntity> succList = importExcelMore.getList();
+            ExcelImportResult<DailyAmountExcel> importExcelMore = ExcelImportUtil.importExcelMore(file.getInputStream(), DailyAmountExcel.class, importParams);
+            List<DailyAmountExcel> succList = importExcelMore.getList();
             if(importExcelMore.isVerfiyFail()){
-                List<DailyAmountExcelEntity> failList = importExcelMore.getFailList();
-                for (DailyAmountExcelEntity fail : failList) {
+                List<DailyAmountExcel> failList = importExcelMore.getFailList();
+                for (DailyAmountExcel fail : failList) {
                     ExcelErrorResp error = new ExcelErrorResp(fail.getErrorMsg(),fail.getRowNum());
                     errors.add(error);
                 }

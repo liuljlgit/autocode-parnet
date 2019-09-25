@@ -3,11 +3,17 @@ package com.cloud.ftl.ftlbasic.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Lists;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Liulj
@@ -18,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TreeBuilder {
 
-    private List<TreeBuilder.Node> nodes;
+    private List<Node> nodes;
 
     private String rootPid;
 
@@ -36,7 +42,7 @@ public class TreeBuilder {
      * 构建树形结构
      * @return
      */
-    private List<Node> buildTree() {
+    public List<Node> buildTree() {
         List<Node> treeNodes = Lists.newArrayList();
         List<Node> rootNodes = getRootNodes();
         for (Node rootNode : rootNodes) {
@@ -69,11 +75,16 @@ public class TreeBuilder {
     private List<Node> getChildNodes(Node pnode) {
         List<Node> childNodes = Lists.newArrayList();
         for (Node n : nodes){
+            if(StringUtils.isEmpty(n.getPid())){
+                continue;
+            }
             if (pnode.getId().equals(n.getPid())) {
                 childNodes.add(n);
             }
         }
-        return childNodes;
+        return childNodes.stream()
+                .sorted(Comparator.comparing(Node::getWgt))
+                .collect(Collectors.toList());
     }
 
 
@@ -97,64 +108,58 @@ public class TreeBuilder {
                 rootNodes.add(n);
             }
         }
-        return rootNodes;
+        return rootNodes.stream()
+                .sorted(Comparator.comparing(Node::getWgt))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 得到某个节点下的所有节点和子节点Id
+     * @param pnode
+     * @return
+     */
+    public List<Long> getNodeChildIds(Node pnode){
+        List<String> ids = Lists.newArrayList();
+        ids.add(pnode.getId());
+        buildNodeChildIds(pnode,ids);
+        return JSONArray.parseArray(JSON.toJSONString(ids), Long.class);
+    }
+
+    /**
+     * 递归获取子节点id
+     * @param node
+     * @param ids
+     */
+    private void buildNodeChildIds(Node node, List<String> ids) {
+        List<Node> childrens = getChildNodes(node);
+        if (!childrens.isEmpty()) {
+            for(Node child : childrens) {
+                ids.add(child.getId());
+                buildNodeChildIds(child,ids);
+            }
+        }
     }
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
+    @ApiModel("树形节点")
     public static class Node {
 
+        @ApiModelProperty(value = "主键",hidden = true)
         private String id;
 
+        @ApiModelProperty(value = "父级主键",hidden = true)
         private String pid;
 
+        @ApiModelProperty(value = "父级名称",hidden = true)
+        private String pname;
+
+        @ApiModelProperty(value = "权重",hidden = true)
+        private Integer wgt = 1;
+
+        @ApiModelProperty(value = "子节点")
         private List<Node> childrens;
-
-        public Node(String id, String pid) {
-            super();
-            this.id = id;
-            this.pid = pid;
-        }
     }
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class MenuEntity extends Node {
-
-        private Integer menuId;
-
-        private String menuName;
-
-        private Integer parMenuId;
-    }
-
-    public static void main(String[] args) {
-        List<MenuEntity> menuEntities = Lists.newArrayList();
-        List<Node> nodes = Lists.newArrayList();
-        MenuEntity m1 = new MenuEntity(1,"1",-1);
-        MenuEntity m2 = new MenuEntity(2,"1",-1);
-        MenuEntity m3 = new MenuEntity(201,"201",2);
-        MenuEntity m4 = new MenuEntity(101,"101",1);
-        MenuEntity m5 = new MenuEntity(102,"102",1);
-        MenuEntity m6 = new MenuEntity(10101,"10101",101);
-        MenuEntity m7 = new MenuEntity(10102,"10102",101);
-        MenuEntity m8 = new MenuEntity(3,"3",-1);
-        menuEntities.add(m1);
-        menuEntities.add(m2);
-        menuEntities.add(m3);
-        menuEntities.add(m4);
-        menuEntities.add(m5);
-        menuEntities.add(m6);
-        menuEntities.add(m7);
-        menuEntities.add(m8);
-        for (MenuEntity menuEntity : menuEntities) {
-            menuEntity.setId(String.valueOf(menuEntity.getMenuId()));
-            menuEntity.setPid(menuEntity.getParMenuId() == -1 ? "" : String.valueOf(menuEntity.getParMenuId()));
-            nodes.add(menuEntity);
-        }
-        TreeBuilder treeBuilder = new TreeBuilder(nodes,"");
-        System.out.println(treeBuilder.buildJSONTree());
-    }
 }
