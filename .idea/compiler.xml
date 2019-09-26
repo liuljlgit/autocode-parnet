@@ -7,8 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ftl-autocode" />
-        <module name="ftl-basic" />
         <module name="ftl-test" />
+        <module name="ftl-basic" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,5 +17,12 @@
       <module name="ftl-basic" target="1.8" />
       <module name="ftl-test" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ftl-autocode" options="-parameters" />
+      <module name="ftl-basic" options="-parameters" />
+      <module name="ftl-test" options="-parameters" />
+    </option>
   </component>
 </project>

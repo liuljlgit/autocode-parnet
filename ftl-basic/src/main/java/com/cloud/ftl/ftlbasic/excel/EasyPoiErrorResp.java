@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExcelErrorResp implements IExcelModel,IExcelDataModel {
+public class EasyPoiErrorResp implements IExcelModel,IExcelDataModel {
 
     private String errorMsg;
 

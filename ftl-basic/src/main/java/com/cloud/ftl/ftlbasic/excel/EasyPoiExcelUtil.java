@@ -12,7 +12,7 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 
 @Slf4j
-public class ExcelUtil {
+public class EasyPoiExcelUtil {
 
     /**
      * 获取下载Csv文件流
