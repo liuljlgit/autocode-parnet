@@ -1,4 +1,4 @@
-package com.cloud.ftl.ftlbasic.cache;
+package com.cloud.ftl.ftlbasic.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;

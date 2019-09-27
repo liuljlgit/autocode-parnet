@@ -1,4 +1,4 @@
-package com.cloud.ftl.ftlbasic.cache;
+package com.cloud.ftl.ftlbasic.config;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
