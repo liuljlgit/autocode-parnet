@@ -140,7 +140,7 @@ public class DailyAmountCtrl{
     @ApiImplicitParam(name="file", value="导入文件",required = true)
     public void alibabaImportData(@RequestParam("file") MultipartFile file) {
         try {
-            EasyExcel.read(file.getInputStream(), TestRead.class,new TestReadListener(dailyAmountService)).sheet().doRead();
+            dailyAmountService.saveExcel(file.getInputStream());
         } catch (Exception e) {
             log.error("导入数据失败",e);
             throw new BusiException(e.getMessage());

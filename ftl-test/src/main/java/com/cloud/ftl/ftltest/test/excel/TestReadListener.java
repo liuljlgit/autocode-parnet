@@ -3,6 +3,7 @@ package com.cloud.ftl.ftltest.test.excel;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
+import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import com.cloud.ftl.ftltest.test.service.inft.IDailyAmountService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
@@ -49,6 +50,8 @@ public class TestReadListener extends AnalysisEventListener<TestRead>  {
      */
     private void saveData() {
         log.info("{}条数据，开始存储数据库！", list.size());
+        DailyAmount dailyAmount = new DailyAmount();
+        dailyAmountService.save(dailyAmount);
         log.info("存储数据库成功！");
     }
 }
