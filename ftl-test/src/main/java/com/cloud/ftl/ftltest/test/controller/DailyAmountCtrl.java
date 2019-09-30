@@ -8,6 +8,7 @@ import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.cloud.ftl.ftlbasic.excel.CustomExcelUtil;
 import com.cloud.ftl.ftlbasic.excel.DefaultExportStyleHandler;
 import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.excel.EasyPoiExcelUtil;
@@ -20,7 +21,9 @@ import com.cloud.ftl.ftltest.test.excel.TestRead;
 import com.cloud.ftl.ftltest.test.excel.TestReadListener;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotNull;
 import io.swagger.annotations.*;
@@ -31,8 +34,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -118,6 +124,9 @@ public class DailyAmountCtrl{
         importParams.setTitleRows(1);
         importParams.setHeadRows(1);
         importParams.setStartRows(0);
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheetAt = workbook.getSheetAt(0);
+        int physicalNumberOfCells = sheetAt.getRow(0).getPhysicalNumberOfCells();
         try {
             ExcelImportResult<DailyAmountEasyPoi> importExcelMore = ExcelImportUtil.importExcelMore(file.getInputStream(), DailyAmountEasyPoi.class, importParams);
             List<DailyAmountEasyPoi> succList = importExcelMore.getList();
@@ -141,6 +150,38 @@ public class DailyAmountCtrl{
     public void alibabaImportData(@RequestParam("file") MultipartFile file) {
         try {
             dailyAmountService.saveExcel(file.getInputStream());
+        } catch (Exception e) {
+            log.error("导入数据失败",e);
+            throw new BusiException(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/custom/import")
+    @ApiOperation(value = "导入数据" , notes = "author: llj")
+    @ApiImplicitParam(name="file", value="导入文件",required = true)
+    public void customImportData(@RequestParam("file") MultipartFile file) {
+        try {
+            Workbook workbook = new XSSFWorkbook(file.getInputStream());
+            Map<String, List<BigDecimal>> mapDatas = CustomExcelUtil.parseCellsData(workbook, 0, 0,
+                    1, 1, 26, false,BigDecimal.class);
+            System.out.println(mapDatas);
+            log.info("----------------------");
+        } catch (Exception e) {
+            log.error("导入数据失败",e);
+            throw new BusiException(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/custom/import2")
+    @ApiOperation(value = "导入数据" , notes = "author: llj")
+    @ApiImplicitParam(name="file", value="导入文件",required = true)
+    public void customImportData2(@RequestParam("file") MultipartFile file) {
+        try {
+            ArrayList<Integer[]> listsMap = Lists.newArrayList(new Integer[]{1, 1, 1, 2}, new Integer[]{11, 24, 1, 2});
+            Workbook workbook = new XSSFWorkbook(file.getInputStream());
+            List<BigDecimal> bigDecimals = CustomExcelUtil.parseRowsData(workbook, 0, listsMap, true, BigDecimal.class);
+            System.out.println(bigDecimals);
+            log.info("----------------------");
         } catch (Exception e) {
             log.error("导入数据失败",e);
             throw new BusiException(e.getMessage());

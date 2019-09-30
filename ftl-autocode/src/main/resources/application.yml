@@ -7,7 +7,7 @@ spring:
   #数据源配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.123.130:3306/test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    url: jdbc:mysql://192.168.123.146:3306/test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     username: root
     password: root
   #redis配置
@@ -23,6 +23,8 @@ spring:
         max-wait: -1ms
         max-idle: 8
         min-idle: 0
+  main:
+    allow-bean-definition-overriding: true
 
 #打印sql
 DEBUG: true
