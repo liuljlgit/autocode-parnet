@@ -25,10 +25,13 @@ import com.cloud.ftl.ftltest.test.excel.TestReadListener;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotNull;
 import io.swagger.annotations.*;
@@ -37,11 +40,9 @@ import com.cloud.ftl.ftltest.test.entity.DailyAmount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Slf4j
@@ -53,6 +54,9 @@ public class DailyAmountCtrl{
 
     @Autowired
     private IDailyAmountService dailyAmountService;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @GetMapping(value = "/obj")
     @ApiOperation(value = "根据主键查询" , notes = "author: llj")
@@ -195,8 +199,9 @@ public class DailyAmountCtrl{
     @GetMapping(value = "/temp/export")
     @ApiOperation(value = "导出数据" , notes = "author: llj")
     public void fe_map() throws Exception {
-        ClassPathResource resource = new ClassPathResource("E:\\myProject\\autocode-parnet\\ftl-test\\src\\main\\resources\\temp\\aa.xlsx");
-        TemplateExportParams params = new TemplateExportParams(resource.getPath());
+        String location = "classpath:" + Paths.get("/temp", "aa.xlsx").toString();
+        Resource rs = resourceLoader.getResource(location);
+        TemplateExportParams params = new TemplateExportParams(rs.getURL().getPath());
         params.setColForEach(true);
         Map<String, Object> map = Maps.newHashMap();
         map.put("biaoti","这是标题");
