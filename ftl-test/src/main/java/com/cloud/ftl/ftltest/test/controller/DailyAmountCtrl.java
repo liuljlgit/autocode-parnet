@@ -43,6 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Slf4j
@@ -217,6 +218,32 @@ public class DailyAmountCtrl{
         map.put("maplist", listMap);
         Workbook workbook = ExcelExportUtil.exportExcel(params, map);
         PoiMergeCellUtil.addMergedRegion(workbook.getSheetAt(0),0,0,0,4);
+        EasyPoiExcelUtil.downloadExcel(workbook,"test",ExcelType.XSSF);
+    }
+
+    @GetMapping(value = "/temp/export2")
+    @ApiOperation(value = "导出数据2" , notes = "author: llj")
+    public void fe_map2() throws Exception {
+        String location = "classpath:" + Paths.get("/temp", "cc.xlsx").toString();
+        Resource rs = resourceLoader.getResource(location);
+        TemplateExportParams params = new TemplateExportParams(rs.getURL().getPath());
+        params.setColForEach(true);
+        Map<String, Object> excelMap = Maps.newHashMap();
+        List<Map<String, Object>> listMap = Lists.newArrayList();
+        Date beginDate = new Date();
+        String beginDateStrCn = new SimpleDateFormat("yyyy年MM月").format(beginDate);
+        Map<String, Object> rowMap = Maps.newHashMap();
+        for (int i = 1; i <= 24; i++) {
+            int index = i % 6;
+            rowMap.put("date" + (index == 0 ? 6 : index),beginDateStrCn + i);
+            rowMap.put("data" + (index == 0 ? 6 : index),"数据"+i);
+            if(index == 0){
+                listMap.add(rowMap);
+                rowMap = Maps.newHashMap();
+            }
+        }
+        excelMap.put("maplist", listMap);
+        Workbook workbook = ExcelExportUtil.exportExcel(params, excelMap);
         EasyPoiExcelUtil.downloadExcel(workbook,"test",ExcelType.XSSF);
     }
 
