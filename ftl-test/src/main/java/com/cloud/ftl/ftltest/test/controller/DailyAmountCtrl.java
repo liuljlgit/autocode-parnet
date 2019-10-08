@@ -1,10 +1,13 @@
 package com.cloud.ftl.ftltest.test.controller;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
+import cn.afterturn.easypoi.util.PoiMergeCellUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -20,10 +23,12 @@ import com.cloud.ftl.ftltest.test.excel.DailyAmountEasyPoi;
 import com.cloud.ftl.ftltest.test.excel.TestRead;
 import com.cloud.ftl.ftltest.test.excel.TestReadListener;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotNull;
 import io.swagger.annotations.*;
@@ -33,12 +38,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -186,6 +190,29 @@ public class DailyAmountCtrl{
             log.error("导入数据失败",e);
             throw new BusiException(e.getMessage());
         }
+    }
+
+    @GetMapping(value = "/temp/export")
+    @ApiOperation(value = "导出数据" , notes = "author: llj")
+    public void fe_map() throws Exception {
+        ClassPathResource resource = new ClassPathResource("E:\\myProject\\autocode-parnet\\ftl-test\\src\\main\\resources\\temp\\aa.xlsx");
+        TemplateExportParams params = new TemplateExportParams(resource.getPath());
+        params.setColForEach(true);
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("biaoti","这是标题");
+        List<Map<String, Object>> listMap = Lists.newArrayList();
+        for (int i = 0; i < 4; i++) {
+            Map<String, Object> lm = Maps.newHashMap();
+            lm.put("genName", "机组"+i);
+            for(int j = 1;j<=24;j++){
+                lm.put("data"+j,"数据"+i+j);
+            }
+            listMap.add(lm);
+        }
+        map.put("maplist", listMap);
+        Workbook workbook = ExcelExportUtil.exportExcel(params, map);
+        PoiMergeCellUtil.addMergedRegion(workbook.getSheetAt(0),0,0,0,4);
+        EasyPoiExcelUtil.downloadExcel(workbook,"test",ExcelType.XSSF);
     }
 
 }
