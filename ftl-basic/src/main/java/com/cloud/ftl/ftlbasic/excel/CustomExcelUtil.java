@@ -301,6 +301,32 @@ public class CustomExcelUtil {
     }
 
     /**
+     * 获取列数据的值
+     * @param workbook
+     * @param sheetIndex
+     * @param cellIndex
+     * @param startRowIndex
+     * @param endRowIndex
+     * @param isAllowNull
+     * @param cls
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> parseCellsData(Workbook workbook,Integer sheetIndex, Integer cellIndex,
+                                             Integer startRowIndex, Integer endRowIndex, Boolean isAllowNull,Class<T> cls){
+        Sheet sheet = workbook.getSheetAt(sheetIndex);
+        List<T> listData = Lists.newArrayList();
+        for(int i = startRowIndex;i <= endRowIndex;i++){
+            T cellValue = getCellValue(getCell(sheet, i, cellIndex), cls);
+            if(Objects.isNull(cellValue) && !isAllowNull) {
+                throw new BusiException(formatErrMsg(i,cellIndex).concat("数据存在空值"));
+            }
+            listData.add(cellValue);
+        }
+        return listData;
+    }
+
+    /**
      * 把excel表数据解析成一个list
      * @param workbook
      * @param sheetIndex
