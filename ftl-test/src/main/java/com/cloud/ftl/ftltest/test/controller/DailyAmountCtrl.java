@@ -247,4 +247,38 @@ public class DailyAmountCtrl{
         EasyPoiExcelUtil.downloadExcel(workbook,"test",ExcelType.XSSF);
     }
 
+    @GetMapping(value = "/temp/export3")
+    @ApiOperation(value = "导出数据3" , notes = "author: llj")
+    public void fe_map3() throws Exception {
+        String location = "classpath:" + Paths.get("/temp", "gen_out_price_temp.xlsx").toString();
+        Resource rs = resourceLoader.getResource(location);
+        TemplateExportParams params = new TemplateExportParams(rs.getURL().getPath());
+        params.setColForEach(true);
+        Map<String, Object> excelMap = Maps.newHashMap();
+
+        //机组数据
+        List<Map<String, Object>> maplist = Lists.newArrayList();
+        for (int i = 0; i < 4; i++) {
+            Map<String, Object> lm = Maps.newHashMap();
+            lm.put("genName", "机组"+i);
+            for(int j = 1;j<=24;j++){
+                lm.put("data"+j,"数据"+i+j);
+            }
+            maplist.add(lm);
+        }
+        //价格数据
+        List<Map<String, Object>> pricelist = Lists.newArrayList();
+        for (int i = 0; i < 24; i++) {
+            Map<String, Object> lm = Maps.newHashMap();
+            lm.put("price","价格" + i);
+            pricelist.add(lm);
+        }
+        //渲染数据
+        excelMap.put("maplist", maplist);
+        excelMap.put("pricelist", pricelist);
+        Workbook workbook = ExcelExportUtil.exportExcel(params, excelMap);
+        PoiMergeCellUtil.addMergedRegion(workbook.getSheetAt(0),0,0,1,4);
+        EasyPoiExcelUtil.downloadExcel(workbook,"test",ExcelType.XSSF);
+    }
+
 }
