@@ -13,9 +13,9 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="autocode-parnet" target="1.8" />
-      <module name="ftl-autocode" target="1.8" />
-      <module name="ftl-basic" target="1.8" />
-      <module name="ftl-test" target="1.8" />
+      <module name="ftl-autocode" target="11" />
+      <module name="ftl-basic" target="11" />
+      <module name="ftl-test" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

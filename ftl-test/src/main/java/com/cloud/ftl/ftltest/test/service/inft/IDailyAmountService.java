@@ -11,5 +11,4 @@ import java.io.InputStream;
  */
 public interface IDailyAmountService extends IBaseCache<DailyAmount>{
 
-    void saveExcel(InputStream inputStream);
 }

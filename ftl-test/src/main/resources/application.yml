@@ -7,13 +7,13 @@ spring:
   #数据源配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.123.146:3306/test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    url: jdbc:mysql://${DEV.HOST:192.168.1.125}:3306/test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     username: root
     password: root
   #redis配置
   redis:
     database: 0
-    host: localhost
+    host: ${DEV.HOST:localhost}
     port: 6379
     password:
     timeout: 10000ms
