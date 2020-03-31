@@ -1,4 +1,4 @@
-package com.cloud.ftl.ftlbasic.func;
+package com.cloud.ftl.ftlbasic.utils;
 
 /**
  * 回调函数入参
