@@ -25,16 +25,8 @@
         <ftl.test.version>0.0.1-SNAPSHOT</ftl.test.version>
         <guava.version>25.1-jre</guava.version>
     </properties>
-
-    <modules>
-        <module>ftl-autocode</module>
-        <module>ftl-basic</module>
-        <module>ftl-test</module>
-    </modules>
-    
     
     <dependencies>
-        
         <!-- fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
