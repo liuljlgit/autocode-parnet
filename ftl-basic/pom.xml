@@ -45,12 +45,6 @@
             <artifactId>spring-jdbc</artifactId>
             <version>5.1.2.RELEASE</version>
         </dependency>
-		
-		<!--orika Bean复制工具-->
-		<dependency>
-			<groupId>ma.glasnost.orika</groupId>
-			<artifactId>orika-core</artifactId>
-		</dependency>
     </dependencies>
 	
 	<build>

@@ -32,7 +32,7 @@ public class HumpUtil {
      * @return
      */
     private static String toUppercase4FirstLetter(String... words){
-        StringBuilder buffer = new StringBuilder("");
+        StringBuilder buffer = new StringBuilder();
         if(words != null && words.length > 0){
             for(int i = 0;i < words.length;i++){
                 String word = words[i];
@@ -52,10 +52,8 @@ public class HumpUtil {
      */
     private static String toLowerCaseFirstOne(String str){
         return Character.isLowerCase(str.charAt(0)) ?
-                str : (new StringBuilder())
-                        .append(Character.toLowerCase(str.charAt(0)))
-                        .append(str.substring(1))
-                        .toString();
+                str : Character.toLowerCase(str.charAt(0)) +
+                str.substring(1);
     }
 
     /**
@@ -65,10 +63,8 @@ public class HumpUtil {
      */
     private static String toUpperCaseFirstOne(String str){
         return Character.isUpperCase(str.charAt(0)) ?
-                str : (new StringBuilder())
-                        .append(Character.toUpperCase(str.charAt(0)))
-                        .append(str.substring(1))
-                        .toString();
+                str : Character.toUpperCase(str.charAt(0)) +
+                str.substring(1);
     }
 
 }

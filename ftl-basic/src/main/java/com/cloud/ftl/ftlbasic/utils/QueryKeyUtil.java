@@ -36,8 +36,8 @@ public class QueryKeyUtil {
     public static <T> String getQueryKey(T t,Boolean isPage,String... tableFields){
         try {
             List<ConditGroup> conditGroups = (List<ConditGroup>) Objects.requireNonNull(conditGroupsMet).invoke(t);
-            StringBuilder conditionStr = new StringBuilder("");
-            StringBuilder fieldStr = new StringBuilder("");
+            StringBuilder conditionStr = new StringBuilder();
+            StringBuilder fieldStr = new StringBuilder();
             if(!CollectionUtils.isEmpty(conditGroups)){
                 conditGroups.forEach(e -> conditionStr.append(e.getConditionRedisKey()));
             }
