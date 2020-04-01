@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="NoSqlConfiguration">
+    <option name="serverConfigurations">
+      <list>
+        <ServerConfiguration>
+          <option name="connectOnIdeStartup" value="true" />
+          <option name="databaseVendor" value="DatabaseVendor{name='RedisDB'}" />
+          <option name="label" value="localhost" />
+          <option name="serverUrl" value="localhost:6379" />
+          <option name="userDatabase" value="0" />
+        </ServerConfiguration>
+        <ServerConfiguration>
+          <option name="authenticationSettings">
+            <AuthenticationSettings>
+              <option name="password" value="huidian" />
+            </AuthenticationSettings>
+          </option>
+          <option name="connectOnIdeStartup" value="true" />
+          <option name="databaseVendor" value="DatabaseVendor{name='RedisDB'}" />
+          <option name="label" value="simulqa" />
+          <option name="serverUrl" value="14.23.57.52:3682" />
+          <option name="userDatabase" value="0" />
+        </ServerConfiguration>
+      </list>
+    </option>
+  </component>
+</project>

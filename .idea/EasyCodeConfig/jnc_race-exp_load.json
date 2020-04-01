@@ -1,0 +1,31 @@
+{
+  "name" : "ExpLoad",
+  "comment" : "【118-基础数据】1-负荷类型：定义负荷类型。",
+  "fullColumn" : [ {
+    "name" : "id",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "loadType",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  }, {
+    "name" : "createTime",
+    "comment" : null,
+    "type" : null,
+    "shortType" : null,
+    "custom" : false,
+    "ext" : { }
+  } ],
+  "pkColumn" : null,
+  "otherColumn" : null,
+  "savePackageName" : "com.cloud.ftl.ftltest.test",
+  "savePath" : "./ftl-test/src/main/java/com/cloud/ftl/ftltest/test",
+  "saveModelName" : "ftl-test"
+}

@@ -50,18 +50,18 @@
 			<version>1.3.0</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>io.github.swagger2markup</groupId>
-			<artifactId>swagger2markup</artifactId>
-			<version>1.3.1</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.pegdown</groupId>
-			<artifactId>pegdown</artifactId>
-			<version>1.6.0</version>
-			<scope>test</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>io.github.swagger2markup</groupId>-->
+<!--			<artifactId>swagger2markup</artifactId>-->
+<!--			<version>1.3.1</version>-->
+<!--		</dependency>-->
+<!--		-->
+<!--		<dependency>-->
+<!--			<groupId>org.pegdown</groupId>-->
+<!--			<artifactId>pegdown</artifactId>-->
+<!--			<version>1.6.0</version>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 	</dependencies>
 	
 	<build>
@@ -80,38 +80,38 @@
 			</plugin>
 			
 			<!-- adoc文件转换成html文档插件-->
-			<plugin>
-				<groupId>org.asciidoctor</groupId>
-				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<version>1.5.6</version>
-				<configuration>
-					<sourceDirectory>${project.basedir}/docs_adoc</sourceDirectory>
-					<sourceDocumentName>autocode.adoc</sourceDocumentName>
-					<attributes>
-						<doctype>book</doctype>
-						<toc>left</toc>
-						<toclevels>3</toclevels>
-						<numbered/>
-						<hardbreaks/>
-						<sectlinks/>
-						<sectanchors/>
-						<generated>${project.basedir}/docs_adoc</generated>
-					</attributes>
-				</configuration>
-				<executions>
-					<execution>
-						<id>output-html</id>
-						<phase>test</phase>
-						<goals>
-							<goal>process-asciidoc</goal>
-						</goals>
-						<configuration>
-							<backend>html5</backend>
-							<outputDirectory>${project.basedir}/docs_html</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.asciidoctor</groupId>-->
+<!--				<artifactId>asciidoctor-maven-plugin</artifactId>-->
+<!--				<version>1.5.6</version>-->
+<!--				<configuration>-->
+<!--					<sourceDirectory>${project.basedir}/docs_adoc</sourceDirectory>-->
+<!--					<sourceDocumentName>autocode.adoc</sourceDocumentName>-->
+<!--					<attributes>-->
+<!--						<doctype>book</doctype>-->
+<!--						<toc>left</toc>-->
+<!--						<toclevels>3</toclevels>-->
+<!--						<numbered/>-->
+<!--						<hardbreaks/>-->
+<!--						<sectlinks/>-->
+<!--						<sectanchors/>-->
+<!--						<generated>${project.basedir}/docs_adoc</generated>-->
+<!--					</attributes>-->
+<!--				</configuration>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>output-html</id>-->
+<!--						<phase>test</phase>-->
+<!--						<goals>-->
+<!--							<goal>process-asciidoc</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<backend>html5</backend>-->
+<!--							<outputDirectory>${project.basedir}/docs_html</outputDirectory>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 

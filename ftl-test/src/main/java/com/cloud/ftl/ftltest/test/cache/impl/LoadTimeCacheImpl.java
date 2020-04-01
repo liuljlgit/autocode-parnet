@@ -8,7 +8,7 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
 import com.cloud.ftl.ftlbasic.utils.QueryKeyUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
-import com.cloud.ftl.ftltest.test.cache.inft.ILoadTimeCache;
+import com.cloud.ftl.ftltest.test.cache.ILoadTimeCache;
 import com.cloud.ftl.ftltest.test.entity.LoadTime;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
