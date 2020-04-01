@@ -3,6 +3,7 @@ package com.cloud.ftl.ftltest.test.entity;
 import java.util.Date;
 import java.util.List;
 import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.constant.PatternConst;
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import lombok.*;
@@ -29,22 +30,22 @@ public class LoadTime extends BaseQuery {
     private Integer entityId;
 
 	@ApiModelProperty("导入开始时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
     private Date startTime;
 
 	@ApiModelProperty("导入结束时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
     private Date endTime;
 
 	@ApiModelProperty("状态 (0) 未处理 （1）已处理")
     private Byte status;
 
 	@ApiModelProperty("创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
     private Date createTime;
 
 	@ApiModelProperty("更新时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
     private Date statusTime;
 
     @JsonIgnore

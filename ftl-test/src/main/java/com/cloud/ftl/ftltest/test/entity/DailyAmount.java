@@ -3,6 +3,7 @@ package com.cloud.ftl.ftltest.test.entity;
 import java.util.Date;
 import java.util.List;
 import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.constant.PatternConst;
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import lombok.*;
@@ -29,7 +30,7 @@ public class DailyAmount extends BaseQuery {
     private Integer entityId;
 
 	@ApiModelProperty("用电时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
     private Date dateTime;
 
 	@ApiModelProperty("结算盈利")
@@ -63,11 +64,11 @@ public class DailyAmount extends BaseQuery {
     private Byte sa;
 
 	@ApiModelProperty("创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
     private Date createTime;
 
 	@ApiModelProperty("更新时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
     private Date statusTime;
 
     @JsonIgnore

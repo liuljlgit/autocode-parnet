@@ -3,6 +3,7 @@ package ${entityPackagePath};
 import java.util.Date;
 import java.util.List;
 import java.math.BigDecimal;
+import com.cloud.ftl.ftlbasic.constant.PatternConst;
 import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.enums.Opt;
 import lombok.*;
@@ -27,7 +28,7 @@ public class ${className} extends BaseQuery {
     @PrimaryKey
     private ${col.fieldJavaType} ${col.fieldJavaName};
     <#elseif col.fieldJavaType == 'Date'>
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
     private ${col.fieldJavaType} ${col.fieldJavaName};
     <#else>
     private ${col.fieldJavaType} ${col.fieldJavaName};
