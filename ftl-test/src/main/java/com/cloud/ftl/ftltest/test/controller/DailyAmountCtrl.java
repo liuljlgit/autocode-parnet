@@ -1,9 +1,9 @@
 package com.cloud.ftl.ftltest.test.controller;
 
+import com.cloud.ftl.ftlbasic.enums.Opt;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
 import com.cloud.ftl.ftlbasic.webEntity.RespEntity;
 import com.cloud.ftl.ftlbasic.webEntity.CommonResp;
-import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotNull;
@@ -35,7 +35,7 @@ public class DailyAmountCtrl{
     @PostMapping(value = "/list")
     @ApiOperation(value = "查询所有列表" , tags = "xxx",hidden = true, notes = "author: llj")
     public CommonResp<List<DailyAmount>> selectList(@RequestBody DailyAmount dailyAmount){
-        return RespEntity.ok(dailyAmountService.cacheSelectList(dailyAmount, Lists.newArrayList(DailyAmount.DA_ID)));
+        return RespEntity.ok(dailyAmountService.selectList(dailyAmount));
     }
 
     @PostMapping(value = "/page")

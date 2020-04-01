@@ -131,244 +131,184 @@ public class DailyAmount extends BaseQuery {
     public static final transient String STATUS_TIME = "status_time";
 
 
-    public void andDaId(Opt opt) {
-        addConditGroup(DA_ID,opt);
+    public void andDaId(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(DA_ID,opt);
+        } else if(values.length == 1){
+            addConditGroup(DA_ID,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(DA_ID,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ DA_ID + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andDaId(Opt opt,Long daId) {
-        addConditGroup(DA_ID,opt,daId);
+    public void andEntityId(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(ENTITY_ID,opt);
+        } else if(values.length == 1){
+            addConditGroup(ENTITY_ID,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(ENTITY_ID,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ ENTITY_ID + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andDaId(Opt opt,List<Long> list) {
-        addConditGroup(DA_ID,opt,list);
+    public void andDateTime(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(DATE_TIME,opt);
+        } else if(values.length == 1){
+            addConditGroup(DATE_TIME,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(DATE_TIME,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ DATE_TIME + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andDaId(Opt opt,Long firstParam,Long secondParam) {
-        addConditGroup(DA_ID,opt,firstParam,secondParam);
+    public void andSettProfit(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(SETT_PROFIT,opt);
+        } else if(values.length == 1){
+            addConditGroup(SETT_PROFIT,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(SETT_PROFIT,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ SETT_PROFIT + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andEntityId(Opt opt) {
-        addConditGroup(ENTITY_ID,opt);
+    public void andExpendProfit(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(EXPEND_PROFIT,opt);
+        } else if(values.length == 1){
+            addConditGroup(EXPEND_PROFIT,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(EXPEND_PROFIT,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ EXPEND_PROFIT + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andEntityId(Opt opt,Integer entityId) {
-        addConditGroup(ENTITY_ID,opt,entityId);
+    public void andIncomeProfit(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(INCOME_PROFIT,opt);
+        } else if(values.length == 1){
+            addConditGroup(INCOME_PROFIT,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(INCOME_PROFIT,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ INCOME_PROFIT + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andEntityId(Opt opt,List<Integer> list) {
-        addConditGroup(ENTITY_ID,opt,list);
+    public void andProfitHours(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(PROFIT_HOURS,opt);
+        } else if(values.length == 1){
+            addConditGroup(PROFIT_HOURS,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(PROFIT_HOURS,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ PROFIT_HOURS + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andEntityId(Opt opt,Integer firstParam,Integer secondParam) {
-        addConditGroup(ENTITY_ID,opt,firstParam,secondParam);
+    public void andDeficitHours(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(DEFICIT_HOURS,opt);
+        } else if(values.length == 1){
+            addConditGroup(DEFICIT_HOURS,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(DEFICIT_HOURS,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ DEFICIT_HOURS + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andDateTime(Opt opt) {
-        addConditGroup(DATE_TIME,opt);
+    public void andMinusDeviation(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(MINUS_DEVIATION,opt);
+        } else if(values.length == 1){
+            addConditGroup(MINUS_DEVIATION,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(MINUS_DEVIATION,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ MINUS_DEVIATION + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andDateTime(Opt opt,Date dateTime) {
-        addConditGroup(DATE_TIME,opt,dateTime);
+    public void andPositiveDeviation(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(POSITIVE_DEVIATION,opt);
+        } else if(values.length == 1){
+            addConditGroup(POSITIVE_DEVIATION,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(POSITIVE_DEVIATION,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ POSITIVE_DEVIATION + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andDateTime(Opt opt,List<Date> list) {
-        addConditGroup(DATE_TIME,opt,list);
+    public void andStatus(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(STATUS,opt);
+        } else if(values.length == 1){
+            addConditGroup(STATUS,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(STATUS,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ STATUS + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andDateTime(Opt opt,Date firstParam,Date secondParam) {
-        addConditGroup(DATE_TIME,opt,firstParam,secondParam);
+    public void andCe(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(CE,opt);
+        } else if(values.length == 1){
+            addConditGroup(CE,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(CE,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ CE + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andSettProfit(Opt opt) {
-        addConditGroup(SETT_PROFIT,opt);
+    public void andSa(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(SA,opt);
+        } else if(values.length == 1){
+            addConditGroup(SA,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(SA,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ SA + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andSettProfit(Opt opt,BigDecimal settProfit) {
-        addConditGroup(SETT_PROFIT,opt,settProfit);
+    public void andCreateTime(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(CREATE_TIME,opt);
+        } else if(values.length == 1){
+            addConditGroup(CREATE_TIME,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(CREATE_TIME,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ CREATE_TIME + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andSettProfit(Opt opt,List<BigDecimal> list) {
-        addConditGroup(SETT_PROFIT,opt,list);
-    }
-
-    public void andSettProfit(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
-        addConditGroup(SETT_PROFIT,opt,firstParam,secondParam);
-    }
-
-    public void andExpendProfit(Opt opt) {
-        addConditGroup(EXPEND_PROFIT,opt);
-    }
-
-    public void andExpendProfit(Opt opt,BigDecimal expendProfit) {
-        addConditGroup(EXPEND_PROFIT,opt,expendProfit);
-    }
-
-    public void andExpendProfit(Opt opt,List<BigDecimal> list) {
-        addConditGroup(EXPEND_PROFIT,opt,list);
-    }
-
-    public void andExpendProfit(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
-        addConditGroup(EXPEND_PROFIT,opt,firstParam,secondParam);
-    }
-
-    public void andIncomeProfit(Opt opt) {
-        addConditGroup(INCOME_PROFIT,opt);
-    }
-
-    public void andIncomeProfit(Opt opt,BigDecimal incomeProfit) {
-        addConditGroup(INCOME_PROFIT,opt,incomeProfit);
-    }
-
-    public void andIncomeProfit(Opt opt,List<BigDecimal> list) {
-        addConditGroup(INCOME_PROFIT,opt,list);
-    }
-
-    public void andIncomeProfit(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
-        addConditGroup(INCOME_PROFIT,opt,firstParam,secondParam);
-    }
-
-    public void andProfitHours(Opt opt) {
-        addConditGroup(PROFIT_HOURS,opt);
-    }
-
-    public void andProfitHours(Opt opt,Byte profitHours) {
-        addConditGroup(PROFIT_HOURS,opt,profitHours);
-    }
-
-    public void andProfitHours(Opt opt,List<Byte> list) {
-        addConditGroup(PROFIT_HOURS,opt,list);
-    }
-
-    public void andProfitHours(Opt opt,Byte firstParam,Byte secondParam) {
-        addConditGroup(PROFIT_HOURS,opt,firstParam,secondParam);
-    }
-
-    public void andDeficitHours(Opt opt) {
-        addConditGroup(DEFICIT_HOURS,opt);
-    }
-
-    public void andDeficitHours(Opt opt,Byte deficitHours) {
-        addConditGroup(DEFICIT_HOURS,opt,deficitHours);
-    }
-
-    public void andDeficitHours(Opt opt,List<Byte> list) {
-        addConditGroup(DEFICIT_HOURS,opt,list);
-    }
-
-    public void andDeficitHours(Opt opt,Byte firstParam,Byte secondParam) {
-        addConditGroup(DEFICIT_HOURS,opt,firstParam,secondParam);
-    }
-
-    public void andMinusDeviation(Opt opt) {
-        addConditGroup(MINUS_DEVIATION,opt);
-    }
-
-    public void andMinusDeviation(Opt opt,BigDecimal minusDeviation) {
-        addConditGroup(MINUS_DEVIATION,opt,minusDeviation);
-    }
-
-    public void andMinusDeviation(Opt opt,List<BigDecimal> list) {
-        addConditGroup(MINUS_DEVIATION,opt,list);
-    }
-
-    public void andMinusDeviation(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
-        addConditGroup(MINUS_DEVIATION,opt,firstParam,secondParam);
-    }
-
-    public void andPositiveDeviation(Opt opt) {
-        addConditGroup(POSITIVE_DEVIATION,opt);
-    }
-
-    public void andPositiveDeviation(Opt opt,BigDecimal positiveDeviation) {
-        addConditGroup(POSITIVE_DEVIATION,opt,positiveDeviation);
-    }
-
-    public void andPositiveDeviation(Opt opt,List<BigDecimal> list) {
-        addConditGroup(POSITIVE_DEVIATION,opt,list);
-    }
-
-    public void andPositiveDeviation(Opt opt,BigDecimal firstParam,BigDecimal secondParam) {
-        addConditGroup(POSITIVE_DEVIATION,opt,firstParam,secondParam);
-    }
-
-    public void andStatus(Opt opt) {
-        addConditGroup(STATUS,opt);
-    }
-
-    public void andStatus(Opt opt,Byte status) {
-        addConditGroup(STATUS,opt,status);
-    }
-
-    public void andStatus(Opt opt,List<Byte> list) {
-        addConditGroup(STATUS,opt,list);
-    }
-
-    public void andStatus(Opt opt,Byte firstParam,Byte secondParam) {
-        addConditGroup(STATUS,opt,firstParam,secondParam);
-    }
-
-    public void andCe(Opt opt) {
-        addConditGroup(CE,opt);
-    }
-
-    public void andCe(Opt opt,Byte ce) {
-        addConditGroup(CE,opt,ce);
-    }
-
-    public void andCe(Opt opt,List<Byte> list) {
-        addConditGroup(CE,opt,list);
-    }
-
-    public void andCe(Opt opt,Byte firstParam,Byte secondParam) {
-        addConditGroup(CE,opt,firstParam,secondParam);
-    }
-
-    public void andSa(Opt opt) {
-        addConditGroup(SA,opt);
-    }
-
-    public void andSa(Opt opt,Byte sa) {
-        addConditGroup(SA,opt,sa);
-    }
-
-    public void andSa(Opt opt,List<Byte> list) {
-        addConditGroup(SA,opt,list);
-    }
-
-    public void andSa(Opt opt,Byte firstParam,Byte secondParam) {
-        addConditGroup(SA,opt,firstParam,secondParam);
-    }
-
-    public void andCreateTime(Opt opt) {
-        addConditGroup(CREATE_TIME,opt);
-    }
-
-    public void andCreateTime(Opt opt,Date createTime) {
-        addConditGroup(CREATE_TIME,opt,createTime);
-    }
-
-    public void andCreateTime(Opt opt,List<Date> list) {
-        addConditGroup(CREATE_TIME,opt,list);
-    }
-
-    public void andCreateTime(Opt opt,Date firstParam,Date secondParam) {
-        addConditGroup(CREATE_TIME,opt,firstParam,secondParam);
-    }
-
-    public void andStatusTime(Opt opt) {
-        addConditGroup(STATUS_TIME,opt);
-    }
-
-    public void andStatusTime(Opt opt,Date statusTime) {
-        addConditGroup(STATUS_TIME,opt,statusTime);
-    }
-
-    public void andStatusTime(Opt opt,List<Date> list) {
-        addConditGroup(STATUS_TIME,opt,list);
-    }
-
-    public void andStatusTime(Opt opt,Date firstParam,Date secondParam) {
-        addConditGroup(STATUS_TIME,opt,firstParam,secondParam);
+    public void andStatusTime(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(STATUS_TIME,opt);
+        } else if(values.length == 1){
+            addConditGroup(STATUS_TIME,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(STATUS_TIME,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ STATUS_TIME + "’ 的SQL入参个数不正确 ");
+        }
     }
 
 }

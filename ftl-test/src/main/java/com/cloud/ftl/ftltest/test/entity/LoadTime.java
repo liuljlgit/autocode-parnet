@@ -76,116 +76,88 @@ public class LoadTime extends BaseQuery {
     public static final transient String STATUS_TIME = "status_time";
 
 
-    public void andLtId(Opt opt) {
-        addConditGroup(LT_ID,opt);
+    public void andLtId(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(LT_ID,opt);
+        } else if(values.length == 1){
+            addConditGroup(LT_ID,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(LT_ID,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ LT_ID + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andLtId(Opt opt,Long ltId) {
-        addConditGroup(LT_ID,opt,ltId);
+    public void andEntityId(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(ENTITY_ID,opt);
+        } else if(values.length == 1){
+            addConditGroup(ENTITY_ID,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(ENTITY_ID,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ ENTITY_ID + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andLtId(Opt opt,List<Long> list) {
-        addConditGroup(LT_ID,opt,list);
+    public void andStartTime(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(START_TIME,opt);
+        } else if(values.length == 1){
+            addConditGroup(START_TIME,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(START_TIME,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ START_TIME + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andLtId(Opt opt,Long firstParam,Long secondParam) {
-        addConditGroup(LT_ID,opt,firstParam,secondParam);
+    public void andEndTime(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(END_TIME,opt);
+        } else if(values.length == 1){
+            addConditGroup(END_TIME,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(END_TIME,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ END_TIME + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andEntityId(Opt opt) {
-        addConditGroup(ENTITY_ID,opt);
+    public void andStatus(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(STATUS,opt);
+        } else if(values.length == 1){
+            addConditGroup(STATUS,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(STATUS,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ STATUS + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andEntityId(Opt opt,Integer entityId) {
-        addConditGroup(ENTITY_ID,opt,entityId);
+    public void andCreateTime(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(CREATE_TIME,opt);
+        } else if(values.length == 1){
+            addConditGroup(CREATE_TIME,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(CREATE_TIME,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ CREATE_TIME + "’ 的SQL入参个数不正确 ");
+        }
     }
 
-    public void andEntityId(Opt opt,List<Integer> list) {
-        addConditGroup(ENTITY_ID,opt,list);
-    }
-
-    public void andEntityId(Opt opt,Integer firstParam,Integer secondParam) {
-        addConditGroup(ENTITY_ID,opt,firstParam,secondParam);
-    }
-
-    public void andStartTime(Opt opt) {
-        addConditGroup(START_TIME,opt);
-    }
-
-    public void andStartTime(Opt opt,Date startTime) {
-        addConditGroup(START_TIME,opt,startTime);
-    }
-
-    public void andStartTime(Opt opt,List<Date> list) {
-        addConditGroup(START_TIME,opt,list);
-    }
-
-    public void andStartTime(Opt opt,Date firstParam,Date secondParam) {
-        addConditGroup(START_TIME,opt,firstParam,secondParam);
-    }
-
-    public void andEndTime(Opt opt) {
-        addConditGroup(END_TIME,opt);
-    }
-
-    public void andEndTime(Opt opt,Date endTime) {
-        addConditGroup(END_TIME,opt,endTime);
-    }
-
-    public void andEndTime(Opt opt,List<Date> list) {
-        addConditGroup(END_TIME,opt,list);
-    }
-
-    public void andEndTime(Opt opt,Date firstParam,Date secondParam) {
-        addConditGroup(END_TIME,opt,firstParam,secondParam);
-    }
-
-    public void andStatus(Opt opt) {
-        addConditGroup(STATUS,opt);
-    }
-
-    public void andStatus(Opt opt,Byte status) {
-        addConditGroup(STATUS,opt,status);
-    }
-
-    public void andStatus(Opt opt,List<Byte> list) {
-        addConditGroup(STATUS,opt,list);
-    }
-
-    public void andStatus(Opt opt,Byte firstParam,Byte secondParam) {
-        addConditGroup(STATUS,opt,firstParam,secondParam);
-    }
-
-    public void andCreateTime(Opt opt) {
-        addConditGroup(CREATE_TIME,opt);
-    }
-
-    public void andCreateTime(Opt opt,Date createTime) {
-        addConditGroup(CREATE_TIME,opt,createTime);
-    }
-
-    public void andCreateTime(Opt opt,List<Date> list) {
-        addConditGroup(CREATE_TIME,opt,list);
-    }
-
-    public void andCreateTime(Opt opt,Date firstParam,Date secondParam) {
-        addConditGroup(CREATE_TIME,opt,firstParam,secondParam);
-    }
-
-    public void andStatusTime(Opt opt) {
-        addConditGroup(STATUS_TIME,opt);
-    }
-
-    public void andStatusTime(Opt opt,Date statusTime) {
-        addConditGroup(STATUS_TIME,opt,statusTime);
-    }
-
-    public void andStatusTime(Opt opt,List<Date> list) {
-        addConditGroup(STATUS_TIME,opt,list);
-    }
-
-    public void andStatusTime(Opt opt,Date firstParam,Date secondParam) {
-        addConditGroup(STATUS_TIME,opt,firstParam,secondParam);
+    public void andStatusTime(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(STATUS_TIME,opt);
+        } else if(values.length == 1){
+            addConditGroup(STATUS_TIME,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(STATUS_TIME,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ STATUS_TIME + "’ 的SQL入参个数不正确 ");
+        }
     }
 
 }

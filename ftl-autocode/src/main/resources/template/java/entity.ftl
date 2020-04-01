@@ -42,20 +42,16 @@ public class ${className} extends BaseQuery {
 
 <#list tableColEntitys as col>
 
-    public void and${col.fieldJavaName?cap_first}(Opt opt) {
-        addConditGroup(${col.field?upper_case},opt);
-    }
-
-    public void and${col.fieldJavaName?cap_first}(Opt opt,${col.fieldJavaType} ${col.fieldJavaName}) {
-        addConditGroup(${col.field?upper_case},opt,${col.fieldJavaName});
-    }
-
-    public void and${col.fieldJavaName?cap_first}(Opt opt,List<${col.fieldJavaType}> list) {
-        addConditGroup(${col.field?upper_case},opt,list);
-    }
-
-    public void and${col.fieldJavaName?cap_first}(Opt opt,${col.fieldJavaType} firstParam,${col.fieldJavaType} secondParam) {
-        addConditGroup(${col.field?upper_case},opt,firstParam,secondParam);
+    public void and${col.fieldJavaName?cap_first}(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(${col.field?upper_case},opt);
+        } else if(values.length == 1){
+            addConditGroup(${col.field?upper_case},opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(${col.field?upper_case},opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ ${col.field?upper_case} + "’ 的SQL入参个数不正确 ");
+        }
     }
 </#list>
 
