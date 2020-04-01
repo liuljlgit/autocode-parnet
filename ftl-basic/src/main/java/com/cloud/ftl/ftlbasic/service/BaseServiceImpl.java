@@ -41,7 +41,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
             String tableIdKey = "SEQ:".concat(tClass.getSimpleName());
             if (!Objects.requireNonNull(connection.exists(tableIdKey.getBytes()))){
                 Long id = baseMapper.selectMaxId();
-                id = ( null == id || id == 0) ?  START_ID +  Long.valueOf("1") : ++ id;
+                id = ( null == id || id == 0) ?  START_ID +  Long.parseLong("1") : ++ id;
                 if (Objects.requireNonNull(connection.setNX(tableIdKey.getBytes(), String.valueOf(id).getBytes()))){
                     return  id;
                 }
