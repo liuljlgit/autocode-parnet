@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 
 /*  请求参数如下所示:
-    {
-        "mySqlUrl":"jdbc:mysql://localhost:3306/test",
-        "mySqlName":"root",
-        "mySqlPass":"root",
-        "mySqlDriver":"com.mysql.jdbc.Driver",
-        "projectBasePath":"F:\\autocode-parnet\\ftl-test",
-        "ctrlPath":"com.cloud.ftl.ftltest.test.controller",
-        "inftServicePath":"com.cloud.ftl.ftltest.test.service",
-        "implServicePath":"com.cloud.ftl.ftltest.test.service.impl",
-        "inftCachePath":"com.cloud.ftl.ftltest.test.cache",
-        "implCachePath":"com.cloud.ftl.ftltest.test.cache.impl",
-        "daoPath":"com.cloud.ftl.ftltest.test.dao",
-        "entityPath":"com.cloud.ftl.ftltest.test.entity",
-        "xmlPath":"mybatis.mapper.test",
-        "update":false,
-        "tableNames":["daily_amount","load_time"]
-    }
+{
+    "mySqlUrl":"jdbc:mysql://192.168.1.114:3306/test",
+    "mySqlName":"root",
+    "mySqlPass":"root",
+    "mySqlDriver":"com.mysql.jdbc.Driver",
+    "projectBasePath":"E:\\myProject\\autocode-parnet\\ftl-test",
+    "ctrlPath":"com.cloud.ftl.ftltest.test.controller",
+    "inftServicePath":"com.cloud.ftl.ftltest.test.service",
+    "implServicePath":"com.cloud.ftl.ftltest.test.service.impl",
+    "inftCachePath":"com.cloud.ftl.ftltest.test.cache",
+    "implCachePath":"com.cloud.ftl.ftltest.test.cache.impl",
+    "daoPath":"com.cloud.ftl.ftltest.test.dao",
+    "entityPath":"com.cloud.ftl.ftltest.test.entity",
+    "xmlPath":"mybatis.mapper.test",
+    "update":false,
+    "tableNames":["daily_amount","load_time"]
+}
 */
 
 @RestController
