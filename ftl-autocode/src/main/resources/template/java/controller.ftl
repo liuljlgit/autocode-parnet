@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/${className?lower_case}")
-@Api(tags = "文档信息",hidden = true)
+@Api(tags = "全局接口信息")
 public class ${className}Ctrl{
 
     @Autowired
