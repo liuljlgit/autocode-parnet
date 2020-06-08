@@ -7,8 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotNull;
 import io.swagger.annotations.*;
-import com.cloud.ftl.ftltest.test.service.ILoadTimeService;
-import com.cloud.ftl.ftltest.test.entity.LoadTime;
+import com.cloud.ftl.ftltest.test.service.IBaseHolidayService;
+import com.cloud.ftl.ftltest.test.entity.BaseHoliday;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,45 +17,45 @@ import java.util.List;
 @Slf4j
 @RestController
 @Validated
-@RequestMapping("/loadtime")
-@Api(tags = "文档信息",hidden = true)
-public class LoadTimeCtrl{
+@RequestMapping("/baseholiday")
+@Api(tags = "全局接口信息")
+public class BaseHolidayCtrl{
 
     @Autowired
-    private ILoadTimeService loadTimeService;
+    private IBaseHolidayService baseHolidayService;
 
     @GetMapping(value = "/obj")
     @ApiOperation(value = "根据主键查询" , tags = "xxx",hidden = true, notes = "author: llj")
-    @ApiImplicitParam(name="ltId", value="主键",required = true)
-    public CommonResp<LoadTime> selectById(@RequestParam("ltId") @NotNull Long ltId) {
-        return RespEntity.ok(loadTimeService.selectById(ltId,"没有符合条件的记录！"));
+    @ApiImplicitParam(name="hId", value="主键",required = true)
+    public CommonResp<BaseHoliday> selectById(@RequestParam("hId") @NotNull Long hId) {
+        return RespEntity.ok(baseHolidayService.selectById(hId,"没有符合条件的记录！"));
     }
 
     @PostMapping(value = "/list")
     @ApiOperation(value = "查询所有列表" , tags = "xxx",hidden = true, notes = "author: llj")
-    public CommonResp<List<LoadTime>> selectList(@RequestBody LoadTime loadTime){
-        return RespEntity.ok(loadTimeService.selectList(loadTime));
+    public CommonResp<List<BaseHoliday>> selectList(@RequestBody BaseHoliday baseHoliday){
+        return RespEntity.ok(baseHolidayService.cacheSelectList(baseHoliday));
     }
 
     @PostMapping(value = "/page")
     @ApiOperation(value = "分页查询" , tags = "xxx",hidden = true, notes = "author: llj")
-    public CommonResp<PageBean<LoadTime>> selectPage(@RequestBody LoadTime loadTime) {
-        return RespEntity.ok(loadTimeService.selectPage(loadTime));
+    public CommonResp<PageBean<BaseHoliday>> selectPage(@RequestBody BaseHoliday baseHoliday) {
+        return RespEntity.ok(baseHolidayService.selectPage(baseHoliday));
     }
 
 
     @PostMapping(value = "/obj")
     @ApiOperation(value = "更新或者新增", tags = "xxx",hidden = true, notes = "author: llj")
-    public CommonResp<Object> save(@RequestBody LoadTime loadTime) {
-        loadTimeService.save(loadTime);
+    public CommonResp<Object> save(@RequestBody BaseHoliday baseHoliday) {
+        baseHolidayService.save(baseHoliday);
         return RespEntity.ok();
     }
 
     @DeleteMapping(value = "/obj")
     @ApiOperation(value = "根据主键删除",tags = "xxx",hidden = true, notes = "author: llj")
-    @ApiImplicitParam(name="ltId", value="主键",required = true)
-    public CommonResp<Object> deleteById(@RequestParam(value="ltId") @NotNull Long ltId) {
-        loadTimeService.deleteById(ltId);
+    @ApiImplicitParam(name="hId", value="主键",required = true)
+    public CommonResp<Object> deleteById(@RequestParam(value="hId") @NotNull Long hId) {
+        baseHolidayService.deleteById(hId);
         return RespEntity.ok();
     }
 

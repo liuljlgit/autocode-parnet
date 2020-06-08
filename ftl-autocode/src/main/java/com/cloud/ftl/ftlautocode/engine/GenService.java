@@ -30,7 +30,7 @@ public class GenService {
             ResultSet commentRs = con.createStatement()
                     .executeQuery("select TABLE_COMMENT from INFORMATION_SCHEMA.Tables where table_schema = '" + tableSchema + "' and TABLE_NAME = '" + tableName + "'");
             while (rs.next()) {
-                String field = rs.getString("Field");
+                String field = rs.getString("Field").toLowerCase();
                 String type = rs.getString("Type");
                 if(type.contains("(")){
                     type = type.substring(0,type.indexOf("("));

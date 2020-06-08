@@ -1,72 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cloud.ftl.ftltest.test.dao.IDailyAmountDao">
-    <resultMap id="BaseResultMap" type="com.cloud.ftl.ftltest.test.entity.DailyAmount">
-        <id column="da_id" jdbcType="BIGINT" property="daId" />
-        <result column="entity_id" jdbcType="INTEGER" property="entityId" />
-        <result column="date_time" jdbcType="TIMESTAMP" property="dateTime" />
-        <result column="sett_profit" jdbcType="DECIMAL" property="settProfit" />
-        <result column="expend_profit" jdbcType="DECIMAL" property="expendProfit" />
-        <result column="income_profit" jdbcType="DECIMAL" property="incomeProfit" />
-        <result column="profit_hours" jdbcType="TINYINT" property="profitHours" />
-        <result column="deficit_hours" jdbcType="TINYINT" property="deficitHours" />
-        <result column="minus_deviation" jdbcType="DECIMAL" property="minusDeviation" />
-        <result column="positive_deviation" jdbcType="DECIMAL" property="positiveDeviation" />
+<mapper namespace="com.cloud.ftl.ftltest.test.dao.IBaseHolidayDao">
+    <resultMap id="BaseResultMap" type="com.cloud.ftl.ftltest.test.entity.BaseHoliday">
+        <id column="h_id" jdbcType="BIGINT" property="hId" />
+        <result column="year" jdbcType="INTEGER" property="year" />
+        <result column="holiday_type" jdbcType="TINYINT" property="holidayType" />
+        <result column="begin_date" jdbcType="DATE" property="beginDate" />
+        <result column="end_date" jdbcType="DATE" property="endDate" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
         <result column="status" jdbcType="TINYINT" property="status" />
-        <result column="ce" jdbcType="TINYINT" property="ce" />
-        <result column="sa" jdbcType="TINYINT" property="sa" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="status_time" jdbcType="TIMESTAMP" property="statusTime" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        da_id,entity_id,date_time,sett_profit,expend_profit,income_profit,profit_hours,deficit_hours,minus_deviation,positive_deviation,status,ce,sa,create_time,status_time
+        h_id,year,holiday_type,begin_date,end_date,remark,status,create_time,status_time
     </sql>
 
     <sql id="Base_Object_List">
-        #{at.daId},#{at.entityId},#{at.dateTime},#{at.settProfit},#{at.expendProfit},#{at.incomeProfit},#{at.profitHours},#{at.deficitHours},#{at.minusDeviation},#{at.positiveDeviation},#{at.status},#{at.ce},#{at.sa},#{at.createTime},#{at.statusTime}
+        #{at.hId},#{at.year},#{at.holidayType},#{at.beginDate},#{at.endDate},#{at.remark},#{at.status},#{at.createTime},#{at.statusTime}
     </sql>
 
     <sql id="Set_Not_Null_List">
         <set>
-            <if test="ut.daId != null">
-                da_id = #{ut.daId},
+            <if test="ut.hId != null">
+                h_id = #{ut.hId},
             </if>
-            <if test="ut.entityId != null">
-                entity_id = #{ut.entityId},
+            <if test="ut.year != null">
+                year = #{ut.year},
             </if>
-            <if test="ut.dateTime != null">
-                date_time = #{ut.dateTime},
+            <if test="ut.holidayType != null">
+                holiday_type = #{ut.holidayType},
             </if>
-            <if test="ut.settProfit != null">
-                sett_profit = #{ut.settProfit},
+            <if test="ut.beginDate != null">
+                begin_date = #{ut.beginDate},
             </if>
-            <if test="ut.expendProfit != null">
-                expend_profit = #{ut.expendProfit},
+            <if test="ut.endDate != null">
+                end_date = #{ut.endDate},
             </if>
-            <if test="ut.incomeProfit != null">
-                income_profit = #{ut.incomeProfit},
-            </if>
-            <if test="ut.profitHours != null">
-                profit_hours = #{ut.profitHours},
-            </if>
-            <if test="ut.deficitHours != null">
-                deficit_hours = #{ut.deficitHours},
-            </if>
-            <if test="ut.minusDeviation != null">
-                minus_deviation = #{ut.minusDeviation},
-            </if>
-            <if test="ut.positiveDeviation != null">
-                positive_deviation = #{ut.positiveDeviation},
+            <if test="ut.remark != null">
+                remark = #{ut.remark},
             </if>
             <if test="ut.status != null">
                 status = #{ut.status},
-            </if>
-            <if test="ut.ce != null">
-                ce = #{ut.ce},
-            </if>
-            <if test="ut.sa != null">
-                sa = #{ut.sa},
             </if>
             <if test="ut.createTime != null">
                 create_time = #{ut.createTime},
@@ -79,19 +55,13 @@
 
     <sql id="Set_With_Null_List">
         <set>
-            da_id = #{ut.daId},
-            entity_id = #{ut.entityId},
-            date_time = #{ut.dateTime},
-            sett_profit = #{ut.settProfit},
-            expend_profit = #{ut.expendProfit},
-            income_profit = #{ut.incomeProfit},
-            profit_hours = #{ut.profitHours},
-            deficit_hours = #{ut.deficitHours},
-            minus_deviation = #{ut.minusDeviation},
-            positive_deviation = #{ut.positiveDeviation},
+            h_id = #{ut.hId},
+            year = #{ut.year},
+            holiday_type = #{ut.holidayType},
+            begin_date = #{ut.beginDate},
+            end_date = #{ut.endDate},
+            remark = #{ut.remark},
             status = #{ut.status},
-            ce = #{ut.ce},
-            sa = #{ut.sa},
             create_time = #{ut.createTime},
             status_time = #{ut.statusTime}
         </set>
@@ -120,44 +90,26 @@
     </sql>
 
     <sql id="where_sql">
-        <if test="st.daId != null">
-            AND da_id = #{st.daId}
+        <if test="st.hId != null">
+            AND h_id = #{st.hId}
         </if>
-        <if test="st.entityId != null">
-            AND entity_id = #{st.entityId}
+        <if test="st.year != null">
+            AND year = #{st.year}
         </if>
-        <if test="st.dateTime != null">
-            AND date_time = #{st.dateTime}
+        <if test="st.holidayType != null">
+            AND holiday_type = #{st.holidayType}
         </if>
-        <if test="st.settProfit != null">
-            AND sett_profit = #{st.settProfit}
+        <if test="st.beginDate != null">
+            AND begin_date = #{st.beginDate}
         </if>
-        <if test="st.expendProfit != null">
-            AND expend_profit = #{st.expendProfit}
+        <if test="st.endDate != null">
+            AND end_date = #{st.endDate}
         </if>
-        <if test="st.incomeProfit != null">
-            AND income_profit = #{st.incomeProfit}
-        </if>
-        <if test="st.profitHours != null">
-            AND profit_hours = #{st.profitHours}
-        </if>
-        <if test="st.deficitHours != null">
-            AND deficit_hours = #{st.deficitHours}
-        </if>
-        <if test="st.minusDeviation != null">
-            AND minus_deviation = #{st.minusDeviation}
-        </if>
-        <if test="st.positiveDeviation != null">
-            AND positive_deviation = #{st.positiveDeviation}
+        <if test="st.remark != null">
+            AND remark = #{st.remark}
         </if>
         <if test="st.status != null">
             AND status = #{st.status}
-        </if>
-        <if test="st.ce != null">
-            AND ce = #{st.ce}
-        </if>
-        <if test="st.sa != null">
-            AND sa = #{st.sa}
         </if>
         <if test="st.createTime != null">
             AND create_time = #{st.createTime}
@@ -188,20 +140,20 @@
 
     <!--获取最大的主键-->
     <select id="selectMaxId" resultType="java.lang.Long">
-        select IFNULL(max(da_id), 0) from `daily_amount`
+        select IFNULL(max(h_id), 0) from `base_holiday`
     </select>
 
     <!--根据主键获取对象-->
     <select id="selectById" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from daily_amount
+        select <include refid="Base_Column_List" /> from base_holiday
         <where>
-            AND da_id = #{daId}
+            AND h_id = #{hId}
         </where>
     </select>
 
     <!--查询列表-->
     <select id="selectList" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from daily_amount
+        select <include refid="Base_Column_List" /> from base_holiday
         <where>
             <include refid="where_sql" />
         </where>
@@ -222,7 +174,7 @@
         <foreach collection="fl" item="field" separator=",">
             ${field}
         </foreach>
-        from daily_amount
+        from base_holiday
         <where>
             <include refid="where_sql" />
         </where>
@@ -239,7 +191,7 @@
 
     <!--查询列表总数-->
     <select id="selectCount" resultType="java.lang.Long">
-        select count(1) from daily_amount
+        select count(1) from base_holiday
         <where>
             <include refid="where_sql" />
         </where>
@@ -247,9 +199,9 @@
 
     <!--根据ID列表获取记录列表-->
     <select id="selectBatchIds" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from daily_amount
+        select <include refid="Base_Column_List" /> from base_holiday
         <where>
-        da_id in
+        h_id in
             <foreach collection="list" open="(" close=")" separator="," item="item">
             #{item}
             </foreach>
@@ -258,13 +210,13 @@
 
     <!--插入对象-->
     <insert id="add">
-        insert into daily_amount(<include refid="Base_Column_List" />)
+        insert into base_holiday(<include refid="Base_Column_List" />)
         values(<include refid="Base_Object_List" />)
     </insert>
 
     <!--批量插入对象-->
     <insert id="addBatch">
-        insert into daily_amount(<include refid="Base_Column_List" />)
+        insert into base_holiday(<include refid="Base_Column_List" />)
         values
         <foreach collection="list" index="index" item="at" separator=",">
             (<include refid="Base_Object_List" />)
@@ -273,47 +225,47 @@
 
     <!--更新对象-->
     <update id="updateNotNull">
-        update daily_amount
+        update base_holiday
         <include refid="Set_Not_Null_List" />
         <where>
-            AND da_id = #{ut.daId}
+            AND h_id = #{ut.hId}
         </where>
     </update>
 
     <!--批量更新对象-->
     <update id="updateBatchNotNull">
         <foreach collection="list" separator=";" item="ut">
-            update daily_amount
+            update base_holiday
             <include refid="Set_Not_Null_List" />
             <where>
-                AND da_id = #{ut.daId}
+                AND h_id = #{ut.hId}
             </where>
         </foreach>
     </update>
 
     <!--更新对象(全更新)-->
     <update id="updateWithNull">
-        update daily_amount
+        update base_holiday
         <include refid="Set_With_Null_List" />
         <where>
-            AND da_id = #{ut.daId}
+            AND h_id = #{ut.hId}
         </where>
     </update>
 
     <!--批量更新对象(全更新)-->
     <update id="updateBatchWithNull">
         <foreach collection="list" separator=";" item="ut">
-            update daily_amount
+            update base_holiday
             <include refid="Set_With_Null_List" />
             <where>
-                AND da_id = #{ut.daId}
+                AND h_id = #{ut.hId}
             </where>
         </foreach>
     </update>
 
     <!--更新对象,根据查询条件更新-->
     <update id="updateByMap">
-        update daily_amount
+        update base_holiday
         <set>
             <foreach collection="um" index="key" item="value" separator=",">
                 ${key} = #{value}
@@ -326,7 +278,7 @@
 
     <!--根据查询条件删除记录-->
     <delete id="delete">
-        delete from daily_amount
+        delete from base_holiday
         <where>
             <include refid="where_sql" />
         </where>
@@ -334,17 +286,17 @@
 
     <!--根据主键删除对象-->
     <delete id="deleteById">
-        delete from daily_amount
+        delete from base_holiday
         <where>
-            AND da_id = #{daId}
+            AND h_id = #{hId}
         </where>
     </delete>
 
     <!-- 批量删除对象 -->
     <delete id="deleteBatchIds">
-        delete from daily_amount
+        delete from base_holiday
         <where>
-            da_id in
+            h_id in
             <foreach collection="list" open="(" close=")" separator="," item="item">
                 #{item}
             </foreach>

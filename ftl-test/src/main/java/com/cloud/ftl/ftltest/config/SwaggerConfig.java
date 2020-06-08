@@ -1,4 +1,4 @@
-package com.cloud.ftl.ftltest.test.config;
+package com.cloud.ftl.ftltest.config;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.context.annotation.Bean;

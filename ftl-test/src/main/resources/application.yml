@@ -7,7 +7,8 @@ spring:
   #数据源配置
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${DEV.HOST:192.168.1.114}:3306/test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://${DEV.HOST:localhost}:3306/reform_auth?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&pinGlobalTxToPhysicalConnection=true&useSSL=false
     username: root
     password: root
   #redis配置

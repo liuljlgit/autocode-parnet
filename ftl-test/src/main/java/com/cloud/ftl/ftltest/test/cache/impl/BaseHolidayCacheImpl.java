@@ -8,8 +8,8 @@ import com.cloud.ftl.ftlbasic.exception.BusiException;
 import com.cloud.ftl.ftlbasic.service.BaseServiceImpl;
 import com.cloud.ftl.ftlbasic.utils.QueryKeyUtil;
 import com.cloud.ftl.ftlbasic.webEntity.PageBean;
-import com.cloud.ftl.ftltest.test.cache.ILoadTimeCache;
-import com.cloud.ftl.ftltest.test.entity.LoadTime;
+import com.cloud.ftl.ftltest.test.cache.IBaseHolidayCache;
+import com.cloud.ftl.ftltest.test.entity.BaseHoliday;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,29 +22,29 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * ILoadTimeCache cache实现类
+ * IBaseHolidayCache cache实现类
  * @author lijun
  */
 @Slf4j
-public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoadTimeCache {
+public class BaseHolidayCacheImpl extends BaseServiceImpl<BaseHoliday> implements IBaseHolidayCache {
 
     private final static Long DEFAULT_EXPIRE_TIMES = 30L;
     private final static TimeUnit DEFAULT_EXPIRE_TIMEUNIT = TimeUnit.MINUTES;
-    private final static String CLS_NAME = LoadTime.class.getSimpleName();
+    private final static String CLS_NAME = BaseHoliday.class.getSimpleName();
     private final static String QUERY_KEY = CLS_NAME.concat(":Query:");
 
     @Autowired
     RedisTemplate<String,Object> redisTemplate;
 
     @Override
-    public LoadTime cacheSelectById(Serializable id, String... nullErrMsg) {
+    public BaseHoliday cacheSelectById(Serializable id, String... nullErrMsg) {
         String entityKey = CLS_NAME.concat(":").concat(String.valueOf(id));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
-        LoadTime cacheVal = (LoadTime)redisTemplate.opsForValue().get(entityKey);
+        BaseHoliday cacheVal = (BaseHoliday)redisTemplate.opsForValue().get(entityKey);
         if(Objects.nonNull(cacheVal)){
             return cacheVal;
         }
-        LoadTime dbVal = super.selectById(id, nullErrMsg);
+        BaseHoliday dbVal = super.selectById(id, nullErrMsg);
         if(Objects.nonNull(dbVal)){
             redisTemplate.opsForValue().set(entityKey,dbVal);
             redisTemplate.expire(entityKey,DEFAULT_EXPIRE_TIMES, DEFAULT_EXPIRE_TIMEUNIT);
@@ -53,17 +53,17 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
     }
 
     @Override
-    public LoadTime cacheSelectOne(LoadTime query, String... nullErrMsg) {
+    public BaseHoliday cacheSelectOne(BaseHoliday query, String... nullErrMsg) {
         query.setPage(1);
         query.setPageSize(1);
         String queryKey = QUERY_KEY.concat("SelectOne:")
                 .concat(QueryKeyUtil.getQueryKey(query, Boolean.TRUE));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
-        LoadTime cacheVal = (LoadTime)redisTemplate.opsForValue().get(queryKey);
+        BaseHoliday cacheVal = (BaseHoliday)redisTemplate.opsForValue().get(queryKey);
         if(Objects.nonNull(cacheVal)){
             return cacheVal;
         }
-        LoadTime dbVal = super.selectOne(query, nullErrMsg);
+        BaseHoliday dbVal = super.selectOne(query, nullErrMsg);
         if(Objects.nonNull(dbVal)){
             redisTemplate.opsForValue().set(queryKey,dbVal);
             redisTemplate.expire(queryKey,DEFAULT_EXPIRE_TIMES, DEFAULT_EXPIRE_TIMEUNIT);
@@ -73,7 +73,7 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<LoadTime> cacheSelectList(LoadTime query, String... emptyErrMsg) {
+    public List<BaseHoliday> cacheSelectList(BaseHoliday query, String... emptyErrMsg) {
         String queryKey = QUERY_KEY.concat("SelectList:")
                 .concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE));
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
@@ -81,13 +81,13 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
         if(!CollectionUtils.isEmpty(cacheKeys)){
             List<Object> cacheValues = redisTemplate.opsForValue().multiGet(cacheKeys);
             if(Objects.nonNull(cacheValues) && cacheKeys.size() == cacheValues.size()){
-                return JSONArray.parseArray(JSON.toJSONString(cacheValues), LoadTime.class);
+                return JSONArray.parseArray(JSON.toJSONString(cacheValues), BaseHoliday.class);
             }
         }
-        List<LoadTime> dbValues = super.selectList(query, emptyErrMsg);
+        List<BaseHoliday> dbValues = super.selectList(query, emptyErrMsg);
         List<String> dbKeys = Lists.newArrayList();
         dbValues.forEach(e -> {
-            String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getLtId()));
+            String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getHId()));
             dbKeys.add(entityKey);
             redisTemplate.opsForValue().set(entityKey,e);
             redisTemplate.expire(entityKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
@@ -99,7 +99,7 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<LoadTime> cacheSelectList(LoadTime query, List<String> fieldList, String... emptyErrMsg) {
+    public List<BaseHoliday> cacheSelectList(BaseHoliday query, List<String> fieldList, String... emptyErrMsg) {
         if(CollectionUtils.isEmpty(fieldList)){
             throw new BusiException("请指定查询的域");
         }
@@ -108,9 +108,9 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         Object cacheValues = redisTemplate.opsForValue().get(queryKey);
         if(Objects.nonNull(cacheValues)){
-            return JSONArray.parseArray(JSON.toJSONString(cacheValues),LoadTime.class);
+            return JSONArray.parseArray(JSON.toJSONString(cacheValues),BaseHoliday.class);
         }
-        List<LoadTime> dbValues = super.selectList(query, fieldList, emptyErrMsg);
+        List<BaseHoliday> dbValues = super.selectList(query, fieldList, emptyErrMsg);
         if(!CollectionUtils.isEmpty(dbValues)){
             redisTemplate.opsForValue().set(queryKey,dbValues);
             redisTemplate.expire(queryKey,DEFAULT_EXPIRE_TIMES, DEFAULT_EXPIRE_TIMEUNIT);
@@ -119,24 +119,24 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
     }
 
     @Override
-    public List<LoadTime> cacheSelectBatchIds(Collection<? extends Serializable> list, String... emptyErrMsg) {
+    public List<BaseHoliday> cacheSelectBatchIds(Collection<? extends Serializable> list, String... emptyErrMsg) {
         List<String> queryKeys = list.stream().map(e -> CLS_NAME.concat(":").concat(String.valueOf(e))).collect(Collectors.toList());
         if(!CollectionUtils.isEmpty(queryKeys)){
             List<Object> cacheValues = redisTemplate.opsForValue().multiGet(queryKeys);
             if(Objects.nonNull(cacheValues)){
-                List<LoadTime> cacheEntitys = JSONArray.parseArray(JSON.toJSONString(cacheValues), LoadTime.class);
+                List<BaseHoliday> cacheEntitys = JSONArray.parseArray(JSON.toJSONString(cacheValues), BaseHoliday.class);
                 if(queryKeys.size() == cacheEntitys.size()){
                     return cacheEntitys;
                 } else {
                     List<String> cacheKeys = cacheEntitys.stream()
-                        .map(e -> CLS_NAME.concat(":").concat(String.valueOf(e.getLtId())))
+                        .map(e -> CLS_NAME.concat(":").concat(String.valueOf(e.getHId())))
                         .collect(Collectors.toList());
                     queryKeys.removeAll(cacheKeys);
-                    List<LoadTime> dbValues = super.selectBatchIds(queryKeys, emptyErrMsg);
+                    List<BaseHoliday> dbValues = super.selectBatchIds(queryKeys, emptyErrMsg);
                     if(!CollectionUtils.isEmpty(dbValues)){
                         cacheEntitys.addAll(dbValues);
                         dbValues.forEach(e -> {
-                            String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getLtId()));
+                            String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getHId()));
                             redisTemplate.opsForValue().set(entityKey,e);
                             redisTemplate.expire(entityKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
                         });
@@ -144,9 +144,9 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
                     return cacheEntitys;
                 }
             } else {
-                List<LoadTime> dbValues = super.selectBatchIds(list, emptyErrMsg);
+                List<BaseHoliday> dbValues = super.selectBatchIds(list, emptyErrMsg);
                 dbValues.forEach(e -> {
-                    String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getLtId()));
+                    String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getHId()));
                     redisTemplate.opsForValue().set(entityKey,e);
                     redisTemplate.expire(entityKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
                 });
@@ -158,11 +158,11 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
 
     @Override
     @SuppressWarnings("unchecked")
-    public PageBean<LoadTime> cacheSelectPage(LoadTime query) {
+    public PageBean<BaseHoliday> cacheSelectPage(BaseHoliday query) {
         String queryKey = QueryKeyUtil.getQueryKey(query, Boolean.TRUE);
         String pageBeanKey = QUERY_KEY.concat("SelectPage:PageBean:").concat(queryKey);
         String pageIdsKey = QUERY_KEY.concat("SelectPage:Ids:").concat(queryKey);
-        PageBean<LoadTime> cachePageBean = (PageBean<LoadTime>)redisTemplate.opsForValue().get(pageBeanKey);
+        PageBean<BaseHoliday> cachePageBean = (PageBean<BaseHoliday>)redisTemplate.opsForValue().get(pageBeanKey);
         List<String> cahcePageKeys = (List<String>)redisTemplate.opsForValue().get(pageIdsKey);
         if(Objects.nonNull(cachePageBean) && Objects.nonNull(cahcePageKeys)){
         List<Object> cacheValues = redisTemplate.opsForValue().multiGet(cahcePageKeys);
@@ -170,15 +170,15 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
                 cacheValues = Lists.newArrayList();
             }
             if(cahcePageKeys.size() == cacheValues.size()){
-            List<LoadTime> list = JSONArray.parseArray(JSON.toJSONString(cacheValues), LoadTime.class);
+            List<BaseHoliday> list = JSONArray.parseArray(JSON.toJSONString(cacheValues), BaseHoliday.class);
                 cachePageBean.setList(list);
                 return cachePageBean;
             }
         }
-        PageBean<LoadTime> dbPageBean = super.selectPage(query);
+        PageBean<BaseHoliday> dbPageBean = super.selectPage(query);
         List<String> dbPageKeys = Lists.newArrayList();
         dbPageBean.getList().forEach(e -> {
-            String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getLtId()));
+            String entityKey = CLS_NAME.concat(":").concat(String.valueOf(e.getHId()));
             dbPageKeys.add(entityKey);
             redisTemplate.opsForValue().set(entityKey,e);
             redisTemplate.expire(entityKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
@@ -192,26 +192,26 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
 
     @Override
     @SuppressWarnings("unchecked")
-    public PageBean<LoadTime> cacheSelectPage(LoadTime query, List<String> fieldList) {
+    public PageBean<BaseHoliday> cacheSelectPage(BaseHoliday query, List<String> fieldList) {
         String queryKey = QUERY_KEY.concat("FieldSelectPage:")
                 .concat(QueryKeyUtil.getQueryKey(query, Boolean.TRUE,fieldList.toArray(new String[fieldList.size()])));
-        PageBean<LoadTime> cachePageBean = (PageBean<LoadTime>)redisTemplate.opsForValue().get(queryKey);
+        PageBean<BaseHoliday> cachePageBean = (PageBean<BaseHoliday>)redisTemplate.opsForValue().get(queryKey);
         if(Objects.nonNull(cachePageBean)){
             return cachePageBean;
         }
-        PageBean<LoadTime> dbPageBean = super.selectPage(query, fieldList);
+        PageBean<BaseHoliday> dbPageBean = super.selectPage(query, fieldList);
         redisTemplate.opsForValue().set(queryKey,dbPageBean);
         redisTemplate.expire(queryKey,DEFAULT_EXPIRE_TIMES,DEFAULT_EXPIRE_TIMEUNIT);
         return dbPageBean;
     }
 
     @Override
-    public Long cacheSelectCount(LoadTime query) {
+    public Long cacheSelectCount(BaseHoliday query) {
         String queryKey = QUERY_KEY.concat("SelectCount:")
                 .concat(QueryKeyUtil.getQueryKey(query, Boolean.FALSE));
         Long cacheCount = (Long)redisTemplate.opsForValue().get(queryKey);
         if(Objects.nonNull(cacheCount)){
-            log.info("Cache Class = {}, Entity = {} Count",LoadTime.class.getName(),query);
+            log.info("Cache Class = {}, Entity = {} Count",BaseHoliday.class.getName(),query);
             return cacheCount;
         }
         Long dbCount = super.selectCount(query);
@@ -221,46 +221,46 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
     }
 
     @Override
-    public int update(LoadTime entity, Update... args) {
+    public int update(BaseHoliday entity, Update... args) {
         int updateCount = super.update(entity, args);
         clearAllCacheData();
         return updateCount;
     }
 
     @Override
-    public int updateByMap(LoadTime oEntity, Map<String, Object> updateMap) {
+    public int updateByMap(BaseHoliday oEntity, Map<String, Object> updateMap) {
         int updateCount = super.updateByMap(oEntity, updateMap);
         clearAllCacheData();
         return updateCount;
     }
 
     @Override
-    public void updateBatch(List<LoadTime> list, Update... args) {
+    public void updateBatch(List<BaseHoliday> list, Update... args) {
         super.updateBatch(list, args);
         clearAllCacheData();
     }
 
     @Override
-    public int add(LoadTime entity) {
+    public int add(BaseHoliday entity) {
         int addCount = super.add(entity);
         clearAllCacheData();
         return addCount;
     }
 
     @Override
-    public void addBatch(List<LoadTime> list) {
+    public void addBatch(List<BaseHoliday> list) {
         super.addBatch(list);
         clearAllCacheData();
     }
 
     @Override
-    public void addBatch(List<LoadTime> list, int batchSize) {
+    public void addBatch(List<BaseHoliday> list, int batchSize) {
         super.addBatch(list, batchSize);
         clearAllCacheData();
     }
 
     @Override
-    public void delete(LoadTime entity) {
+    public void delete(BaseHoliday entity) {
         super.delete(entity);
         clearAllCacheData();
     }
@@ -279,20 +279,20 @@ public class LoadTimeCacheImpl extends BaseServiceImpl<LoadTime> implements ILoa
     }
 
     @Override
-    public void save(LoadTime loadTime, Update... args) {
-        super.save(loadTime, args);
+    public void save(BaseHoliday baseHoliday, Update... args) {
+        super.save(baseHoliday, args);
         clearAllCacheData();
     }
 
     @Override
-    public void saveBatch(List<LoadTime> list, Update... args) {
+    public void saveBatch(List<BaseHoliday> list, Update... args) {
         super.saveBatch(list, args);
         clearAllCacheData();
     }
 
     private void clearAllCacheData(){
         try {
-            Set<String> keys = redisTemplate.keys(LoadTime.class.getSimpleName() + "*");
+            Set<String> keys = redisTemplate.keys(BaseHoliday.class.getSimpleName() + "*");
             if(!CollectionUtils.isEmpty(keys)){
                 redisTemplate.delete(keys);
             }

@@ -19,50 +19,64 @@ import com.cloud.ftl.ftlbasic.annotation.PrimaryKey;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel("LoadTime")
-public class LoadTime extends BaseQuery {
+@ApiModel("BaseHoliday")
+public class BaseHoliday extends BaseQuery {
 
-	@ApiModelProperty("实际负荷导入数据记录ID")
+	@ApiModelProperty("主键，没有具体意义")
     @PrimaryKey
-    private Long ltId;
+    private Long hId;
 
-	@ApiModelProperty("电企业ID：来源于cloud_sys.entity.entity_id")
-    private Integer entityId;
+	@ApiModelProperty("")
+    private Integer year;
 
-	@ApiModelProperty("导入开始时间")
+	@ApiModelProperty("1-法定假日;2-法定周末调班;")
+    private Byte holidayType;
+
+	@ApiModelProperty("1-春节；2-国庆；3-三天的小长假")
     @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
-    private Date startTime;
+    private Date beginDate;
 
-	@ApiModelProperty("导入结束时间")
+	@ApiModelProperty("1-春节；2-国庆；3-三天的小长假")
     @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
-    private Date endTime;
+    private Date endDate;
 
-	@ApiModelProperty("状态 (0) 未处理 （1）已处理")
+	@ApiModelProperty("")
+    private String remark;
+
+	@ApiModelProperty("状态")
     private Byte status;
 
-	@ApiModelProperty("创建时间")
+	@ApiModelProperty("")
     @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
     private Date createTime;
 
-	@ApiModelProperty("更新时间")
+	@ApiModelProperty("")
     @JsonFormat(pattern = PatternConst.NORM_DATETIME,timezone = PatternConst.TIMEZONE)
     private Date statusTime;
 
     @JsonIgnore
     @ApiModelProperty(hidden = true)
-    public static final transient String LT_ID = "lt_id";
+    public static final transient String H_ID = "h_id";
 
     @JsonIgnore
     @ApiModelProperty(hidden = true)
-    public static final transient String ENTITY_ID = "entity_id";
+    public static final transient String YEAR = "year";
 
     @JsonIgnore
     @ApiModelProperty(hidden = true)
-    public static final transient String START_TIME = "start_time";
+    public static final transient String HOLIDAY_TYPE = "holiday_type";
 
     @JsonIgnore
     @ApiModelProperty(hidden = true)
-    public static final transient String END_TIME = "end_time";
+    public static final transient String BEGIN_DATE = "begin_date";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String END_DATE = "end_date";
+
+    @JsonIgnore
+    @ApiModelProperty(hidden = true)
+    public static final transient String REMARK = "remark";
 
     @JsonIgnore
     @ApiModelProperty(hidden = true)
@@ -77,51 +91,75 @@ public class LoadTime extends BaseQuery {
     public static final transient String STATUS_TIME = "status_time";
 
 
-    public void andLtId(Opt opt,Object... values) {
+    public void andHId(Opt opt,Object... values) {
         if(values.length == 0){
-            addConditGroup(LT_ID,opt);
+            addConditGroup(H_ID,opt);
         } else if(values.length == 1){
-            addConditGroup(LT_ID,opt,values[0]);
+            addConditGroup(H_ID,opt,values[0]);
         } else if(values.length == 2){
-            addConditGroup(LT_ID,opt,values[0],values[1]);
+            addConditGroup(H_ID,opt,values[0],values[1]);
         } else {
-            throw new RuntimeException("‘"+ LT_ID + "’ 的SQL入参个数不正确 ");
+            throw new RuntimeException("‘"+ H_ID + "’ 的SQL入参个数不正确 ");
         }
     }
 
-    public void andEntityId(Opt opt,Object... values) {
+    public void andYear(Opt opt,Object... values) {
         if(values.length == 0){
-            addConditGroup(ENTITY_ID,opt);
+            addConditGroup(YEAR,opt);
         } else if(values.length == 1){
-            addConditGroup(ENTITY_ID,opt,values[0]);
+            addConditGroup(YEAR,opt,values[0]);
         } else if(values.length == 2){
-            addConditGroup(ENTITY_ID,opt,values[0],values[1]);
+            addConditGroup(YEAR,opt,values[0],values[1]);
         } else {
-            throw new RuntimeException("‘"+ ENTITY_ID + "’ 的SQL入参个数不正确 ");
+            throw new RuntimeException("‘"+ YEAR + "’ 的SQL入参个数不正确 ");
         }
     }
 
-    public void andStartTime(Opt opt,Object... values) {
+    public void andHolidayType(Opt opt,Object... values) {
         if(values.length == 0){
-            addConditGroup(START_TIME,opt);
+            addConditGroup(HOLIDAY_TYPE,opt);
         } else if(values.length == 1){
-            addConditGroup(START_TIME,opt,values[0]);
+            addConditGroup(HOLIDAY_TYPE,opt,values[0]);
         } else if(values.length == 2){
-            addConditGroup(START_TIME,opt,values[0],values[1]);
+            addConditGroup(HOLIDAY_TYPE,opt,values[0],values[1]);
         } else {
-            throw new RuntimeException("‘"+ START_TIME + "’ 的SQL入参个数不正确 ");
+            throw new RuntimeException("‘"+ HOLIDAY_TYPE + "’ 的SQL入参个数不正确 ");
         }
     }
 
-    public void andEndTime(Opt opt,Object... values) {
+    public void andBeginDate(Opt opt,Object... values) {
         if(values.length == 0){
-            addConditGroup(END_TIME,opt);
+            addConditGroup(BEGIN_DATE,opt);
         } else if(values.length == 1){
-            addConditGroup(END_TIME,opt,values[0]);
+            addConditGroup(BEGIN_DATE,opt,values[0]);
         } else if(values.length == 2){
-            addConditGroup(END_TIME,opt,values[0],values[1]);
+            addConditGroup(BEGIN_DATE,opt,values[0],values[1]);
         } else {
-            throw new RuntimeException("‘"+ END_TIME + "’ 的SQL入参个数不正确 ");
+            throw new RuntimeException("‘"+ BEGIN_DATE + "’ 的SQL入参个数不正确 ");
+        }
+    }
+
+    public void andEndDate(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(END_DATE,opt);
+        } else if(values.length == 1){
+            addConditGroup(END_DATE,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(END_DATE,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ END_DATE + "’ 的SQL入参个数不正确 ");
+        }
+    }
+
+    public void andRemark(Opt opt,Object... values) {
+        if(values.length == 0){
+            addConditGroup(REMARK,opt);
+        } else if(values.length == 1){
+            addConditGroup(REMARK,opt,values[0]);
+        } else if(values.length == 2){
+            addConditGroup(REMARK,opt,values[0],values[1]);
+        } else {
+            throw new RuntimeException("‘"+ REMARK + "’ 的SQL入参个数不正确 ");
         }
     }
 

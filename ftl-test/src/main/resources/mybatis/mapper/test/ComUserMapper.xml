@@ -1,59 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cloud.ftl.ftltest.test.dao.ILoadTimeDao">
-    <resultMap id="BaseResultMap" type="com.cloud.ftl.ftltest.test.entity.LoadTime">
-        <id column="lt_id" jdbcType="BIGINT" property="ltId" />
-        <result column="entity_id" jdbcType="INTEGER" property="entityId" />
-        <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
-        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+<mapper namespace="com.cloud.ftl.ftltest.test.dao.IComUserDao">
+    <resultMap id="BaseResultMap" type="com.cloud.ftl.ftltest.test.entity.ComUser">
+        <id column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="account" jdbcType="VARCHAR" property="account" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
         <result column="status" jdbcType="TINYINT" property="status" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-        <result column="status_time" jdbcType="TIMESTAMP" property="statusTime" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        lt_id,entity_id,start_time,end_time,status,create_time,status_time
+        user_id,account,user_name,password,status,create_time
     </sql>
 
     <sql id="Base_Object_List">
-        #{at.ltId},#{at.entityId},#{at.startTime},#{at.endTime},#{at.status},#{at.createTime},#{at.statusTime}
+        #{at.userId},#{at.account},#{at.userName},#{at.password},#{at.status},#{at.createTime}
     </sql>
 
     <sql id="Set_Not_Null_List">
         <set>
-            <if test="ut.ltId != null">
-                lt_id = #{ut.ltId},
+            <if test="ut.userId != null">
+                user_id = #{ut.userId},
             </if>
-            <if test="ut.entityId != null">
-                entity_id = #{ut.entityId},
+            <if test="ut.account != null">
+                account = #{ut.account},
             </if>
-            <if test="ut.startTime != null">
-                start_time = #{ut.startTime},
+            <if test="ut.userName != null">
+                user_name = #{ut.userName},
             </if>
-            <if test="ut.endTime != null">
-                end_time = #{ut.endTime},
+            <if test="ut.password != null">
+                password = #{ut.password},
             </if>
             <if test="ut.status != null">
                 status = #{ut.status},
             </if>
             <if test="ut.createTime != null">
-                create_time = #{ut.createTime},
-            </if>
-            <if test="ut.statusTime != null">
-                status_time = #{ut.statusTime}
+                create_time = #{ut.createTime}
             </if>
         </set>
     </sql>
 
     <sql id="Set_With_Null_List">
         <set>
-            lt_id = #{ut.ltId},
-            entity_id = #{ut.entityId},
-            start_time = #{ut.startTime},
-            end_time = #{ut.endTime},
+            user_id = #{ut.userId},
+            account = #{ut.account},
+            user_name = #{ut.userName},
+            password = #{ut.password},
             status = #{ut.status},
-            create_time = #{ut.createTime},
-            status_time = #{ut.statusTime}
+            create_time = #{ut.createTime}
         </set>
     </sql>
 
@@ -80,26 +75,23 @@
     </sql>
 
     <sql id="where_sql">
-        <if test="st.ltId != null">
-            AND lt_id = #{st.ltId}
+        <if test="st.userId != null">
+            AND user_id = #{st.userId}
         </if>
-        <if test="st.entityId != null">
-            AND entity_id = #{st.entityId}
+        <if test="st.account != null">
+            AND account = #{st.account}
         </if>
-        <if test="st.startTime != null">
-            AND start_time = #{st.startTime}
+        <if test="st.userName != null">
+            AND user_name = #{st.userName}
         </if>
-        <if test="st.endTime != null">
-            AND end_time = #{st.endTime}
+        <if test="st.password != null">
+            AND password = #{st.password}
         </if>
         <if test="st.status != null">
             AND status = #{st.status}
         </if>
         <if test="st.createTime != null">
             AND create_time = #{st.createTime}
-        </if>
-        <if test="st.statusTime != null">
-            AND status_time = #{st.statusTime}
         </if>
         <if test="st.conditGroups != null">
             <foreach collection="st.conditGroups" item="conditGroup" separator=" ">
@@ -124,20 +116,20 @@
 
     <!--获取最大的主键-->
     <select id="selectMaxId" resultType="java.lang.Long">
-        select IFNULL(max(lt_id), 0) from `load_time`
+        select IFNULL(max(user_id), 0) from `com_user`
     </select>
 
     <!--根据主键获取对象-->
     <select id="selectById" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from load_time
+        select <include refid="Base_Column_List" /> from com_user
         <where>
-            AND lt_id = #{ltId}
+            AND user_id = #{userId}
         </where>
     </select>
 
     <!--查询列表-->
     <select id="selectList" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from load_time
+        select <include refid="Base_Column_List" /> from com_user
         <where>
             <include refid="where_sql" />
         </where>
@@ -158,7 +150,7 @@
         <foreach collection="fl" item="field" separator=",">
             ${field}
         </foreach>
-        from load_time
+        from com_user
         <where>
             <include refid="where_sql" />
         </where>
@@ -175,7 +167,7 @@
 
     <!--查询列表总数-->
     <select id="selectCount" resultType="java.lang.Long">
-        select count(1) from load_time
+        select count(1) from com_user
         <where>
             <include refid="where_sql" />
         </where>
@@ -183,9 +175,9 @@
 
     <!--根据ID列表获取记录列表-->
     <select id="selectBatchIds" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from load_time
+        select <include refid="Base_Column_List" /> from com_user
         <where>
-        lt_id in
+        user_id in
             <foreach collection="list" open="(" close=")" separator="," item="item">
             #{item}
             </foreach>
@@ -194,13 +186,13 @@
 
     <!--插入对象-->
     <insert id="add">
-        insert into load_time(<include refid="Base_Column_List" />)
+        insert into com_user(<include refid="Base_Column_List" />)
         values(<include refid="Base_Object_List" />)
     </insert>
 
     <!--批量插入对象-->
     <insert id="addBatch">
-        insert into load_time(<include refid="Base_Column_List" />)
+        insert into com_user(<include refid="Base_Column_List" />)
         values
         <foreach collection="list" index="index" item="at" separator=",">
             (<include refid="Base_Object_List" />)
@@ -209,47 +201,47 @@
 
     <!--更新对象-->
     <update id="updateNotNull">
-        update load_time
+        update com_user
         <include refid="Set_Not_Null_List" />
         <where>
-            AND lt_id = #{ut.ltId}
+            AND user_id = #{ut.userId}
         </where>
     </update>
 
     <!--批量更新对象-->
     <update id="updateBatchNotNull">
         <foreach collection="list" separator=";" item="ut">
-            update load_time
+            update com_user
             <include refid="Set_Not_Null_List" />
             <where>
-                AND lt_id = #{ut.ltId}
+                AND user_id = #{ut.userId}
             </where>
         </foreach>
     </update>
 
     <!--更新对象(全更新)-->
     <update id="updateWithNull">
-        update load_time
+        update com_user
         <include refid="Set_With_Null_List" />
         <where>
-            AND lt_id = #{ut.ltId}
+            AND user_id = #{ut.userId}
         </where>
     </update>
 
     <!--批量更新对象(全更新)-->
     <update id="updateBatchWithNull">
         <foreach collection="list" separator=";" item="ut">
-            update load_time
+            update com_user
             <include refid="Set_With_Null_List" />
             <where>
-                AND lt_id = #{ut.ltId}
+                AND user_id = #{ut.userId}
             </where>
         </foreach>
     </update>
 
     <!--更新对象,根据查询条件更新-->
     <update id="updateByMap">
-        update load_time
+        update com_user
         <set>
             <foreach collection="um" index="key" item="value" separator=",">
                 ${key} = #{value}
@@ -262,7 +254,7 @@
 
     <!--根据查询条件删除记录-->
     <delete id="delete">
-        delete from load_time
+        delete from com_user
         <where>
             <include refid="where_sql" />
         </where>
@@ -270,17 +262,17 @@
 
     <!--根据主键删除对象-->
     <delete id="deleteById">
-        delete from load_time
+        delete from com_user
         <where>
-            AND lt_id = #{ltId}
+            AND user_id = #{userId}
         </where>
     </delete>
 
     <!-- 批量删除对象 -->
     <delete id="deleteBatchIds">
-        delete from load_time
+        delete from com_user
         <where>
-            lt_id in
+            user_id in
             <foreach collection="list" open="(" close=")" separator="," item="item">
                 #{item}
             </foreach>
