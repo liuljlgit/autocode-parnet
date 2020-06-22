@@ -2,11 +2,11 @@
 ====
 autocode是自动代码生成工具，对比mybatis-plus,功能更加丰富，优化复杂查询，优化表更新重新生成代码，增加缓存设计，swagger注解，或者feign client的自动生成。只需一键就能生成包括controller,service,dao,xml,redis，feign等文件。使项目可高效开发，项目集成了复杂查询和简单查询，提供更加丰富的APi，可配合mysql索引优化查询。
 
-二、表设计原则
+二、表设计
 ====
 表的主键类型需为BIGINT类型
 
-三、使用流程
+三、简单上手使用
 ====
 
 a）克隆autocode-parnet仓库,并把里面的ftl-basic打成一个jar包<br>
@@ -40,7 +40,7 @@ c）启动ftl-autocode项目，使用postman请求接口生成代码<br>
 ```
 <br>
     
-四、总结
+四、项目说明
 ====
 ftl-autocode模块为生成代码模块,启动然后请求接口即可；<br>
 ftl-basic模块为基础类模块，生成的代码需要用到此包里面的类；<br>
