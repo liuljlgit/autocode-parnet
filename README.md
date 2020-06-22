@@ -1,6 +1,6 @@
 一、概述
 ====
-autocode是自动代码生成工具，对比mybatis-plus,功能更加丰富，优化复杂查询，优化表更新重新生成代码，增加缓存设计，swagger注解，或者feign client的自动生成。只需一键就能生成包括controller,service,dao,xml,redis，feign等文件。使项目可高效开发，项目集成了复杂查询和简单查询，提供更加丰富的APi，可配合mysql索引优化查询。
+autocode是完全无入侵式的自动代码生成工具。对比mybatis-plus,功能更加丰富，模板改动更加简单，优化复杂查询，优化表更新重新生成代码，增加缓存设计，swagger注解，或者feign client的自动生成。只需一键就能生成包括controller,service,dao,xml,redis，feign等文件。使项目可高效开发，项目集成了复杂查询和简单查询，提供更加丰富的APi，可配合mysql索引优化查询。
 
 二、表设计
 ====
