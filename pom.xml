@@ -32,7 +32,6 @@
 
         <ftl.autocode.version>0.0.1-SNAPSHOT</ftl.autocode.version>
         <ftl.basic.version>0.0.1-SNAPSHOT</ftl.basic.version>
-        <ftl.test.version>0.0.1-SNAPSHOT</ftl.test.version>
     </properties>
     
     <dependencies>
@@ -132,12 +131,6 @@
                 <groupId>com.cloud.ftl</groupId>
                 <artifactId>ftl-basic</artifactId>
                 <version>${ftl.basic.version}</version>
-            </dependency>
-    
-            <dependency>
-                <groupId>com.cloud.ftl</groupId>
-                <artifactId>ftl-test</artifactId>
-                <version>${ftl.test.version}</version>
             </dependency>
     
             <!--swagger文档相关的依赖-->

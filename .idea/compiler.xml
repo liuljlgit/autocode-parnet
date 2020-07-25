@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ftl-autocode" />
-        <module name="ftl-test" />
         <module name="ftl-basic" />
       </profile>
     </annotationProcessing>
