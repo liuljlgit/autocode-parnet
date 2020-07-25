@@ -32,10 +32,34 @@ public class GenReq {
     private String mySqlDriver;
 
     /**
-     * 设定文件生成的路径
+     * 设定文件生成的项目基础路径
      * "E:\\myProject\\ftl-autocode"
      */
     private String projectBasePath;
+
+    /**
+     * 设定文件生成的项目feign路径
+     * "E:\\myProject\\ftl-autocode-client"
+     */
+    private String feignBasePath;
+
+    /**
+     * 生成feign文件的路径
+     * "com.cloud.gen.ftlautocode.test.feign"
+     */
+    private String feignPath;
+
+    /**
+     * 生成feign client key
+     * 例如：fm.data.server
+     */
+    private String defaultClientKey;
+
+    /**
+     * 生成feign client value
+     * 例如：fm-data-server
+     */
+    private String defaultClientValue;
 
     /**
      * 生成控制层文件的包路径
@@ -91,6 +115,11 @@ public class GenReq {
      * 2.如果不是，将会生成新的文件
      */
     private Boolean update = Boolean.FALSE;
+
+    /**
+     * 是否生成feign文件
+     */
+    private Boolean isCreateFeign = Boolean.FALSE;
 
     /**
      * 表名称数组
@@ -216,5 +245,45 @@ public class GenReq {
 
     public void setImplCachePath(String implCachePath) {
         this.implCachePath = implCachePath;
+    }
+
+    public String getFeignBasePath() {
+        return feignBasePath;
+    }
+
+    public void setFeignBasePath(String feignBasePath) {
+        this.feignBasePath = feignBasePath;
+    }
+
+    public String getFeignPath() {
+        return feignPath;
+    }
+
+    public void setFeignPath(String feignPath) {
+        this.feignPath = feignPath;
+    }
+
+    public String getDefaultClientKey() {
+        return defaultClientKey;
+    }
+
+    public void setDefaultClientKey(String defaultClientKey) {
+        this.defaultClientKey = defaultClientKey;
+    }
+
+    public String getDefaultClientValue() {
+        return defaultClientValue;
+    }
+
+    public void setDefaultClientValue(String defaultClientValue) {
+        this.defaultClientValue = defaultClientValue;
+    }
+
+    public Boolean getCreateFeign() {
+        return isCreateFeign;
+    }
+
+    public void setCreateFeign(Boolean createFeign) {
+        isCreateFeign = createFeign;
     }
 }

@@ -18,7 +18,9 @@ public class GenConst {
     public static final String TEMPLATE_PATH = "ftl-autocode/src/main/resources/template/";
 
     //模板文件路径
-    public static final String CTRL_FTL_PATH = "/java/controller.ftl";
+    public static final String FEIGN_FTL_PATH = "/java/feign.ftl";
+    public static final String CTRL_WITH_FEIGN_FTL_PATH = "/java/controller_withfeign.ftl";
+    public static final String CTRL_NO_FFEIGN_FTL_PATH = "/java/controller_nofeign.ftl";
     public static final String INFT_SERVICE_FTL_PATH = "/java/inftservice.ftl";
     public static final String IMPL_SERVICE_FTL_PATH = "/java/implservice.ftl";
     public static final String INFT_CACHE_FTL_PATH = "/java/inftcache.ftl";

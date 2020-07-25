@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.cloud")
 public class FtlAutocodeApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FtlAutocodeApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FtlAutocodeApplication.class, args);
+    }
 
 }

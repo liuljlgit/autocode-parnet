@@ -45,7 +45,7 @@ public class TableColEntity {
      */
     private String fieldMybatisType;
 
-    public TableColEntity(String field, String type, String key, String comment, String fieldJavaType, String fieldJavaName,String fieldDbType,String fieldMybatisType) {
+    public TableColEntity(String field, String type, String key, String comment, String fieldJavaType, String fieldJavaName, String fieldDbType, String fieldMybatisType) {
         this.field = field;
         this.type = type;
         this.key = key;

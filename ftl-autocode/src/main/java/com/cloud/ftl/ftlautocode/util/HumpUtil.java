@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 把字符串转换成驼峰式命名法
+ *
  * @author lijun
  */
 @Slf4j
@@ -31,13 +32,14 @@ public class HumpUtil {
 
     /**
      * 转换成驼峰式命名法
+     *
      * @param words
      * @return
      */
-    private static String toUppercase4FirstLetter(String... words){
+    private static String toUppercase4FirstLetter(String... words) {
         StringBuilder buffer = new StringBuilder("");
-        if(words != null && words.length > 0){
-            for(int i = 0;i < words.length;i++){
+        if (words != null && words.length > 0) {
+            for (int i = 0; i < words.length; i++) {
                 String word = words[i];
                 String others = word.substring(1);
                 String firstLetter = word.substring(0, 1);
@@ -50,28 +52,30 @@ public class HumpUtil {
 
     /**
      * 首字母转小写
+     *
      * @param str
      * @return
      */
-    private static String toLowerCaseFirstOne(String str){
+    private static String toLowerCaseFirstOne(String str) {
         return Character.isLowerCase(str.charAt(0)) ?
                 str : (new StringBuilder())
-                        .append(Character.toLowerCase(str.charAt(0)))
-                        .append(str.substring(1))
-                        .toString();
+                .append(Character.toLowerCase(str.charAt(0)))
+                .append(str.substring(1))
+                .toString();
     }
 
     /**
      * 首字母转大写
+     *
      * @param str
      * @return
      */
-    private static String toUpperCaseFirstOne(String str){
+    private static String toUpperCaseFirstOne(String str) {
         return Character.isUpperCase(str.charAt(0)) ?
                 str : (new StringBuilder())
-                        .append(Character.toUpperCase(str.charAt(0)))
-                        .append(str.substring(1))
-                        .toString();
+                .append(Character.toUpperCase(str.charAt(0)))
+                .append(str.substring(1))
+                .toString();
     }
 
 }
