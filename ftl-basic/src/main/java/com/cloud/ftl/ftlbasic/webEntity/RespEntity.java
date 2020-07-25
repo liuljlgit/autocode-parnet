@@ -34,7 +34,7 @@ public class RespEntity {
 	 * @param msg
 	 * @return
 	 */
-	public static <T> CommonResp<T> error(Integer code,String msg){
+	public static <T> CommonResp<T> error(Integer code, String msg){
 		return new CommonResp<>(code,msg);
 	}
 
