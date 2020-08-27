@@ -32,8 +32,8 @@ public class BaseQuery extends BasePage implements Serializable {
     @ApiModelProperty(hidden = true)
     private Map<String,List<Integer>> conditGroupsMap;
 
-    private ConditGroup newConditGroup(Opt opt, String... groupNames){
-        ConditGroup conditGroup = new ConditGroup(opt.getCode());
+    public ConditGroup newConditGroup(Opt opt, BaseQuery superThis,String... groupNames){
+        ConditGroup conditGroup = new ConditGroup(opt.getCode(),superThis);
         if(CollectionUtils.isEmpty(conditGroups)){
             conditGroups = Lists.newArrayList();
         }
@@ -51,7 +51,7 @@ public class BaseQuery extends BasePage implements Serializable {
      * @throws
      */
     public ConditGroup andConditGroup(String... groupName) {
-        return  newConditGroup(Opt.AND,groupName);
+        return  newConditGroup(Opt.AND,this,groupName);
     }
 
     /**
@@ -59,7 +59,7 @@ public class BaseQuery extends BasePage implements Serializable {
      * @throws
      */
     public ConditGroup orConditGroup(String... groupName) {
-        return newConditGroup(Opt.OR,groupName);
+        return newConditGroup(Opt.OR,this,groupName);
     }
 
     /**
@@ -70,7 +70,7 @@ public class BaseQuery extends BasePage implements Serializable {
         if(!Opt.IS_NULL.equals(opt) && !Opt.IS_NOT_NULL.equals(opt)){
             throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处只能为‘IS NULL’或者‘IS NOT NULL’");
         }
-        ConditGroup conditGroup = newConditGroup(Opt.AND, field);
+        ConditGroup conditGroup = newConditGroup(Opt.AND, this,field);
         conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode());
         conditGroup.addSqlCondition(Opt.AND.getCode(),field,opt.getCode());
     }
@@ -83,7 +83,7 @@ public class BaseQuery extends BasePage implements Serializable {
         if(!Opt.BETWEEN.equals(opt) && !Opt.NOT_BETWEEN.equals(opt)){
             throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处只能为‘BETWEEN’或者‘NOT BETWEEN’");
         }
-        ConditGroup conditGroup = newConditGroup(Opt.AND, field);
+        ConditGroup conditGroup = newConditGroup(Opt.AND, this,field);
         conditGroup.addCondition(SqlConst.AND_SPACE + field + opt.getCode(),firstParam,secondParam);
         conditGroup.addSqlCondition(Opt.AND.getCode(),field,opt.getCode(),firstParam,secondParam);
     }
@@ -93,7 +93,7 @@ public class BaseQuery extends BasePage implements Serializable {
      * @throws
      */
     protected void addConditGroup(String field, Opt opt, Object value) {
-        ConditGroup conditGroup = newConditGroup(Opt.AND, field);
+        ConditGroup conditGroup = newConditGroup(Opt.AND, this,field);
         if(Opt.AND.equals(opt) || Opt.OR.equals(opt) || Opt.ASC.equals(opt)
                 || Opt.DESC.equals(opt) || Opt.BETWEEN.equals(opt) || Opt.NOT_BETWEEN.equals(opt)
                 || Opt.IS_NULL.equals(opt) || Opt.IS_NOT_NULL.equals(opt)){

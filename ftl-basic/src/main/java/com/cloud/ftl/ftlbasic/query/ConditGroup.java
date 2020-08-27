@@ -3,6 +3,7 @@ package com.cloud.ftl.ftlbasic.query;
 import com.alibaba.fastjson.JSONObject;
 import com.cloud.ftl.ftlbasic.constant.SqlConst;
 import com.cloud.ftl.ftlbasic.enums.Opt;
+import com.cloud.ftl.ftlbasic.webEntity.BaseQuery;
 import com.cloud.ftl.ftlbasic.webEntity.SqlCondition;
 import com.google.common.collect.Lists;
 import lombok.Data;
@@ -42,10 +43,33 @@ public class ConditGroup {
      */
     private List<SqlCondition> sqlConditions = Lists.newArrayList();
 
+    /**
+     * field comment:
+     * 父级类对象的引用
+     */
+    BaseQuery superThis;
+
     public ConditGroup() {}
 
-    public ConditGroup(String opt) {
+    public ConditGroup(String opt,BaseQuery superThis) {
         this.opt = opt;
+        this.superThis = superThis;
+    }
+
+    /**
+     * AND ConditGroup
+     * @throws
+     */
+    public ConditGroup andConditGroup(String... groupName) {
+        return  superThis.newConditGroup(Opt.AND,superThis,groupName);
+    }
+
+    /**
+     * OR ConditGroup
+     * @throws
+     */
+    public ConditGroup orConditGroup(String... groupName) {
+        return superThis.newConditGroup(Opt.OR,superThis,groupName);
     }
 
     /**
