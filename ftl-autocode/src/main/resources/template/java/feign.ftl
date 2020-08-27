@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Validated
-@Api(tags = "文档信息",hidden = true)
+@Api(tags = "文档管理",hidden = true)
 @FeignClient(name = "${r'${'}${defaultClientKey}:${defaultClientValue}}")
 public interface ${className}Feign {
 

@@ -99,8 +99,8 @@ public class BaseQuery extends BasePage implements Serializable {
                 || Opt.IS_NULL.equals(opt) || Opt.IS_NOT_NULL.equals(opt)){
             throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处不可以为：" + opt.getCode());
         }
-        if(value instanceof Collection && !Opt.IN.equals(opt)){
-            throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处只能为‘IN’");
+        if(value instanceof Collection && !Opt.IN.equals(opt) && !Opt.NOT_IN.equals(opt)){
+            throw new RuntimeException("操作域‘" + field + "’的操作类型不合法,此处只能为‘IN’或者‘NOT_IN’");
         }
         if(Opt.LIKE.equals(opt) || Opt.NOT_LIKE.equals(opt)){
             value = SqlConst.PERCENT + value + SqlConst.PERCENT;

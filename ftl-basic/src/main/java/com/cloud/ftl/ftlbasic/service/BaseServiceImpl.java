@@ -251,8 +251,7 @@ public class BaseServiceImpl<T> implements IBaseService<T> {
             //更新不为空的操作
             if(args.length == 0 || args[0].equals(Update.NOT_NULL)){
                 baseMapper.updateBatchNotNull(list);
-            }
-            if(args[0].equals(Update.WITH_NULL)){
+            } else if(args[0].equals(Update.WITH_NULL)){
                 baseMapper.updateBatchWithNull(list);
             }
         }catch (Exception e){
